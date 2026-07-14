@@ -2,7 +2,7 @@
 
 <!--
 Bestand: device_connection_proof_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Definieer veilige, herhaalbare bewys dat die bedoelde CircuitPython-kode op die fisiese bord loop.
 Sprint: Sprint 1
 Epic: MCP-EPIC-001 en MCP-EPIC-008
@@ -44,3 +44,35 @@ private-identifiers: REDACTED
 ```
 
 Die bewys is aanvanklik verpligtend. Ná 'n eksplisiete Product Owner-vertrouensbesluit mag dit vir host-only stories opsioneel word; HIL, recovery en release bly altyd verpligtend.
+
+## MCP-US-003 fisiese bewys, 2026-07-14
+
+| Kontrole | Resultaat | Geredigeerde bewys |
+|---|---|---|
+| Connection | PASS | USB CDC-poort ontdek; CIRCUITPY gemonteer; `lolin_s2_mini`; CircuitPython 10.0.3 |
+| Deployment | PASS | Commit `3994f46`; ses bron-/toestelpaar-hashes was identies |
+| Minimal boot | PASS | `v0.2.0`, `story=MCP-US-003`, `BOOT_STATUS=PASS` |
+| USB identity | PASS | Vendor `pappavis`; produk `CircuitPython MIDI Chip Platform` |
+| USB MIDI descriptors | PASS | USB AudioControl en MIDIStreaming-interface is deur macOS IOKit ontdek |
+| Device MIDI runtime | PASS | `usb_midi.ports` het een `PortIn` en een `PortOut` bevat |
+| Application execution | PASS | `DEVICE_EXECUTION_STATUS=READY` direk via CircuitPython REPL |
+| Host RtMidi scan | IMPEDIMENT | Python/RtMidi kon nie 'n CoreMIDI client skep nie (`-10833`); Logic-aanvaarding bly MCP-US-055 |
+| Private identifiers | REDACTED | Geen UID, MAC, SSID, wagwoord of private rugsteuninhoud gepubliseer nie |
+
+Die eerste volume-kopie met `rsync` is deur CircuitPython se onmiddellike auto-reload onderbreek. Die herstelpad het gewerk: stop, bevestig mount/REPL, skakel auto-reload tydelik af, kopieer biblioteke eerste en `boot.py` laaste, vergelyk hashes, voer 'n harde reset uit en verwyder slegs die geskepte tydelike lêers.
+
+## MCP-US-051 runnerbewys, 2026-07-14
+
+Die herhaalbare CLI het teen dieselfde fisiese bord geslaag:
+
+```text
+circuitpython-midi-chip-platform v0.3.0 | story=MCP-US-051 | release-date=2026-07-14
+DEVICE CONNECTION PROOF
+connection: PASS - USB CDC + CIRCUITPY
+deployment: PASS - approved manifest SHA-256 pairs
+boot: PASS - current release and USB-MIDI boot marker
+execution: PASS - current release marker via serial REPL
+private-identifiers: REDACTED
+```
+
+Hierdie uitvoer bewys nie nog klank nie. Die runner se klankmeetadapter en menslike hoorbare aanvaarding volg nadat US-015/016 'n fisiese uitvoerpad lewer.

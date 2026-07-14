@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.3.0
-# Doel: Toets host-diagnose en gedeelde MCP-US-003 release-naspeurbaarheid.
+# Versienommer: 0.4.0
+# Doel: Toets host-diagnose, HIL-CLI en gedeelde release-naspeurbaarheid.
 # Sprint: Sprint 1
-# Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-003 Minimal Safe Boot And USB Profile
-# Actienr: MCP-ACT-003-RED-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
+# Epic: MCP-EPIC-008 Portability, Quality And Release
+# User-Story: MCP-US-051 Hardware-In-The-Loop Test Runner
+# Actienr: MCP-ACT-051-RED-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051
 
 from io import StringIO
 from pathlib import Path
@@ -16,6 +16,22 @@ from midi_chip_platform.release import ReleaseMetadata
 
 
 class TestCommandLineApplication:
+    class FakeVerifier:
+        def __init__(self, passed):
+            self._passed = passed
+
+        def run(self):
+            return self._passed
+
+    class FakeVerifierFactory:
+        def __init__(self, passed=True):
+            self._passed = passed
+            self.arguments = None
+
+        def create(self, source_root, device_root, serial_port, output):
+            self.arguments = (source_root, device_root, serial_port, output)
+            return TestCommandLineApplication.FakeVerifier(self._passed)
+
     def test_runtime_version_matches_package_version(self) -> None:
         project_path = Path(__file__).parents[1] / "pyproject.toml"
         project_data = tomllib.loads(project_path.read_text(encoding="utf-8"))
@@ -30,8 +46,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.2.0 | "
-            "story=MCP-US-003 | release-date=2026-07-14\n"
+            "circuitpython-midi-chip-platform v0.3.0 | "
+            "story=MCP-US-051 | release-date=2026-07-14\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:
@@ -44,3 +60,24 @@ class TestCommandLineApplication:
         assert "circuitpython-midi-chip-platform" in output.getvalue()
         assert "host skeleton ready" in output.getvalue()
         assert "hardware access: disabled" in output.getvalue()
+
+    def test_hil_verify_delegates_paths_without_echoing_them(self) -> None:
+        output = StringIO()
+        factory = self.FakeVerifierFactory()
+        application = CommandLineApplication(output=output, hil_verifier_factory=factory)
+
+        exit_code = application.run(
+            (
+                "hil-verify",
+                "--source-root",
+                "source-root",
+                "--device-root",
+                "device-root",
+                "--serial-port",
+                "private-port-id",
+            )
+        )
+
+        assert exit_code == 0
+        assert factory.arguments[:3] == ("source-root", "device-root", "private-port-id")
+        assert "private-port-id" not in output.getvalue()

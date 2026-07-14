@@ -2,7 +2,7 @@
 
 <!--
 Bestand: backlog_sanity_check_v0.1.0.md
-Versienommer: 0.3.0
+Versienommer: 0.4.0
 Doel: Bewys backlog-volledigheid en verminder hallusinasie-/scope-drift-risiko.
 Sprint: Sprint 0
 Epic: Alle epics
@@ -61,7 +61,8 @@ Status: **PASS ná MIDI-transport-, multi-core- en device-proof-amendment**.
 ## Amendment-kontrole
 
 - MCP-US-002 is ná menslike installasie-, diagnose- en toetsbewys `Done`.
-- MCP-US-003 is die enigste `In Progress` story; MCP-US-051 se volledige runner wag op US-015.
+- MCP-US-003 is ná fisiese connection/deploy/execution/USB-MIDI-bewys `Done`.
+- MCP-US-051 is die enigste `In Progress` story; connection/deploy/execution word nou geoutomatiseer en klankmeting sluit ná US-015 aan.
 - Die eerste hoorbare volgorde is US-003, US-004, US-014 en US-016; PWM US-015 bly fallback.
 - US-058 skei platform-onafhanklike guitar-MIDI bend/slide-semantiek van US-059 se fisiese Fishman/generiese HIL-aanvaarding.
 - Fishman, MAX98357 en penname is verwysings-/profieldata, nie universele kodekonstantes nie.

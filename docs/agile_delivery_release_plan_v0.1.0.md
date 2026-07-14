@@ -104,7 +104,7 @@ Die bestaande D1 lessons-learned-dokument mag gelees word vir bevestigde patrone
 2. **Deployment:** vergelyk die broncommit en SHA-256-hashes van die bedoelde firmwarelêers met die gedeployde kopie.
 3. **Execution:** vang die toestel se eie weergawe-, story- en statusbanner ná reset/reload vas.
 
-'n Seriële bewys mag `code.py` onderbreek. Die operateur meld dit vooraf, kontroleer dat geen ander serial client die poort besit nie en behou 'n private herstelkopie. Volledige MCP-US-051-uitvoering bly afhanklik van die latere klankpad; MCP-US-003 lewer slegs die eerste USB/boot-bewys.
+'n Seriële bewys mag `code.py` onderbreek. Die operateur meld dit vooraf, kontroleer dat geen ander serial client die poort besit nie en behou 'n private herstelkopie. MCP-US-051 se connection/deploy/boot/execution-runner is groen; volledige klankmeting bly afhanklik van US-015/016.
 
 ## Anti-hallusinasie-maatreels
 

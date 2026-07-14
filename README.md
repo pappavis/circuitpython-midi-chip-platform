@@ -4,7 +4,7 @@
 
 ## Projekstatus
 
-Die projek is in **Sprint 1: platformfondasie**. MCP-US-003 se minimale, herstelbare CircuitPython USB-MIDI-profiel is in uitvoering; daar is nog geen hoorbare chip-emulasie nie. Die eerste hoorbare ontwikkelsny gebruik een MAX98357 in mono-I2S-modus, met PWM as diagnostiese fallback.
+Die projek is in **Sprint 1: platformfondasie**. MCP-US-003 se minimale, herstelbare CircuitPython USB-MIDI-profiel is op die fisiese ESP32-S2 bewys. MCP-US-051 bou nou die herhaalbare HIL-runner; daar is nog geen hoorbare chip-emulasie nie. Die eerste hoorbare ontwikkelsny gebruik een MAX98357 in mono-I2S-modus, met PWM as diagnostiese fallback.
 
 ## Begin hier
 
@@ -40,6 +40,8 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [Afdwingbare agent- en kodereels](AGENTS.md)
 - [Snelbegin, installasie en ontwikkelomgewings](docs/quickstart_installation_v0.1.0.md)
 - [MCP-US-002 review en toetsbewys](docs/mcp_us_002_project_skeleton_review_v0.1.0.md)
+- [MCP-US-003 safe-boot review en HIL-bewys](docs/mcp_us_003_safe_boot_review_v0.1.0.md)
+- [MCP-US-051 HIL-runner review](docs/mcp_us_051_hil_runner_review_v0.1.0.md)
 - [Audio-prioriteit en MIDI-kitaar amendment](docs/audio_priority_amendment_v0.1.0.md)
 - [MIDI-transport en multi-core amendment](docs/midi_transport_multicore_amendment_v0.1.0.md)
 - [Device Connection Proof](docs/device_connection_proof_v0.1.0.md)

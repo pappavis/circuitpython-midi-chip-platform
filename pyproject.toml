@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "circuitpython-midi-chip-platform"
-version = "0.2.0"
-description = "Import-safe host and CircuitPython USB-MIDI foundation for a retro-synth platform"
+version = "0.3.0"
+description = "Import-safe host, USB-MIDI foundation and redacted HIL runner for a retro-synth platform"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { file = "LICENSE" }

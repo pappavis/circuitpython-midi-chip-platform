@@ -2,7 +2,7 @@
 
 <!--
 Bestand: board_capability_matrix_v0.1.0.md
-Versienommer: 0.2.0
+Versienommer: 0.3.0
 Doel: Skeiding tussen bevestigde verwysingsbord en toekomstige adapterteikens.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
 
 | Teiken | Runtime | USB-MIDI | Wi-Fi/web | PWM stereo | I2S | Status |
 |---|---|---|---|---|---|---|
-| LOLIN/Wemos ESP32-S2 Mini | CircuitPython 10.0.3 fisies ontdek | USB CDC/CIRCUITPY teenwoordig; MCP-US-003 profiel benodig finale HIL | Beskikbaar, maar verbode in `boot.py` | Bestaande prototipe bewys | Spike nodig | Primêre MVP |
+| LOLIN/Wemos ESP32-S2 Mini | CircuitPython 10.0.3 fisies bewys | MCP-US-003 USB CDC, CIRCUITPY, AudioControl, MIDIStreaming, PortIn en PortOut bewys | Beskikbaar, maar verbode in `boot.py` | Bestaande prototipe bewys | Spike nodig | Primêre MVP |
 | Generiese ESP32-S2 | CircuitPython | Bordprofiel-afhanklik | Gewoonlik beskikbaar | Pen/module-afhanklik | Firmware/bord-afhanklik | Later profiel |
 | ESP32-S3 | CircuitPython | Tipies beskikbaar | Beskikbaar | Profiel nodig | Sterk kandidaat | Later profiel |
 | RP2040-mikrobeheerder | CircuitPython | Bordafhanklik | Slegs Wi-Fi-variante/eksterne netwerk | Profiel nodig | Bordafhanklik | Later profiel |

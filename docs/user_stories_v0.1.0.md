@@ -28,7 +28,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 |---|---|---|---|---|
 | MCP-US-001 | Device And Source Baseline Inventory | Done | - | Bord, bronne, rugsteun, risiko’s en hergebruik is gedokumenteer |
 | MCP-US-002 | Clean Repository And Project Skeleton | Done | US-001 | Klasgebaseerde poorte, host-toetse en headers bestaan; geen toestel-I/O nie |
-| MCP-US-003 | Minimal Safe Boot And USB Profile | In Progress/MVP | US-002 | USB-MIDI begin vóór runtime; bord-VID/PID bly verstek; CIRCUITPY/REPL herstel en drieledige device-proof slaag |
+| MCP-US-003 | Minimal Safe Boot And USB Profile | Done | US-002 | USB-MIDI begin vóór runtime; bord-VID/PID bly verstek; CIRCUITPY/REPL herstel en drieledige device-proof slaag |
 | MCP-US-004 | Board Capability Discovery | MVP | US-002 | Bordprofiel rapporteer penne, modules, geheue en ondersteunde klankbackends |
 | MCP-US-005 | Configuration And Secret Boundary | MVP | US-003 | Publieke verstekke en private `settings.toml` werk; geheime-lektoets is groen |
 
@@ -113,7 +113,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-050 | Host Simulator And Contract Tests | MVP | US-002, US-006 | Kern/MIDI/clock-toetse loop op macOS, Windows en Linux sonder bord |
-| MCP-US-051 | Hardware-In-The-Loop Test Runner | MVP | US-003, US-015 | Connection, deploy en execution proof plus USB-MIDI en klankmeetstappe lewer 'n geredigeerde naspeurbare verslag |
+| MCP-US-051 | Hardware-In-The-Loop Test Runner | In Progress/MVP | US-003, US-015 | Connection, deploy en execution proof plus USB-MIDI en klankmeetstappe lewer 'n geredigeerde naspeurbare verslag |
 | MCP-US-052 | Cross-Board Capability Profiles | Later | US-004 | ’n tweede CircuitPython-mikrobeheerder werk via ’n profiel |
 | MCP-US-053 | Raspberry Pi Linux Blinka Adapter | Later | US-014, US-050 | Pi Zero/2/3 gebruik Linux/Blinka sonder om firmwareportabiliteit te beweer |
 | MCP-US-054 | Windows USB MIDI Acceptance | MVP | US-003, US-007 | Toestel verskyn en ontvang note op ’n skoon Windows-rekenaar |
