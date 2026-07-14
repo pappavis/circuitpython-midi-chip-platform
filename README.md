@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr: USB-MIDI, BLE-MIDI en DIN/UART word na een d
 
 ## Projekstatus
 
-Die projek is in **Sprint 1: platformfondasie**. MCP-US-004 se klasgebaseerde capability discovery rapporteer nou bordprofiel, beskikbare CircuitPython-modules, geheue, I2S-penne en veilige klankbackend-kandidate. Die LOLIN S2 Mini het `audiobusio`, `synthio`, `usb_midi` en `wifi` fisies gerapporteer; `audiopwmio` is nie in die huidige firmwarebou beskikbaar nie. Daar is nog geen synth core en geen geaktiveerde klankuitvoer nie. Die volgende hoorbare ontwikkelsny gebruik een MAX98357 in mono-I2S-modus.
+Die projek is in **Sprint 1: platformfondasie**. MCP-US-004 se klasgebaseerde capability discovery is op die fisiese LOLIN S2 Mini aanvaar: bordprofiel, geheue, I2S-penne en modules is gerapporteer en die volledige connection/deployment/boot/execution-HIL het geslaag. `audiobusio`, `synthio`, `usb_midi` en `wifi` is beskikbaar; `audiopwmio` is nie in die huidige firmwarebou beskikbaar nie. Daar is nog geen synth core en geen geaktiveerde klankuitvoer nie. Die volgende hoorbare ontwikkelsny gebruik een MAX98357 in mono-I2S-modus.
 
 ## Begin hier
 

@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004-IN-REVIEW
 
 ## Status
 
-**IN REVIEW / IMPEDIMENT.** Die klasgebaseerde implementering, host-regressie en sagte toestel-capability-run is groen. Finale harde-reset/deployment-HIL wag op 'n fisiese USB power-cycle nadat macOS USB-identiteit gesien het, maar nie CIRCUITPY of CDC/REPL herenumerateer het nie.
+**DONE.** Die klasgebaseerde implementering, host-regressie, sagte toestel-capability-run, fisiese power-cycle recovery en finale connection/deployment/boot/execution-HIL is groen.
 
 ## Gelewer
 
@@ -44,15 +44,15 @@ Belangrik: 'n pen wat letterlik `SD/MODE` gemerk is, is shutdown/kanaalseleksie 
 - Fisiese runtime: `audiobusio:yes`, `audiopwmio:no`, `synthio:yes`, `usb_midi:yes`, `wifi:yes`; I2S-backend is kandidaat, maar nie gestart nie.
 - Private herstelkopie: buite Git geskep; geen inhoud word gepubliseer nie.
 
-## Impediment en herstelhek
+## Opgeloste impediment en herstelbewys
 
-1. Ontkoppel die ESP32-S2 se USB-C-kabel van die Mac.
-2. Wag vyf sekondes.
-3. Koppel dieselfde kabel weer aan sonder om BOOT in te hou.
-4. Bevestig dat `CIRCUITPY` en 'n CircuitPython REPL weer verskyn.
-5. Codex herhaal die sewe-lêer manifest-HIL en bevestig `v0.4.0` in `boot_out.txt` en die runtime.
+1. Die ESP32-S2 en versterkerkrag is veilig afgeskakel.
+2. Ná vyf sekondes is USB sonder die BOOT-knoppie herkoppel.
+3. Finder het `CIRCUITPY` weer gewys en CDC/REPL het teruggekeer.
+4. `boot_out.txt` het `v0.4.0`, `MCP-US-004` en `BOOT_STATUS=PASS` gewys.
+5. Die sewe-lêer manifest-HIL het connection, deployment, boot en execution as `PASS` gerapporteer.
 
-Geen UF2-flash, formattering of bootloaderaksie is tans nodig of goedgekeur nie.
+Geen UF2-flash, formattering of bootloaderaksie was nodig nie.
 
 ## Virtuele spanreview
 

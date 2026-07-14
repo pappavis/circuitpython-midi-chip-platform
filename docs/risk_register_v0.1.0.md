@@ -40,7 +40,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
 | R-025 | MIDI-HIL hang of faal deur ’n poortkonflik met Thonny of ’n serial monitor | Medium | Hoog | QA/HIL | Preflight poorte; presies een REPL-kliënt; timeout, cleanup en herstelpad | Oop |
 | R-026 | Fallback access point is oop, voorspelbaar of lek credentials/kliëntidentiteit | Medium | Kritiek | Security/Web | Beveiligde AP as verstek; credentials uit private config of veilige provisioning; geen geheime, MAC’s of unieke ID’s in logs/repo nie | Oop |
 | R-027 | Onbegrensde join/reconnect, HTTP polling of debuglogging veroorsaak dropout, RAM-druk of flashslytasie | Hoog | Hoog | Embedded/Web/QA | Timeout en backoff; koöperatiewe poll; een kliënt; debug af in produksie; gebeurtenis-/koersbegrensde serial logging en geen normale flashlog nie | Oop |
-| R-028 | Programmatiese harde reset laat USB-toestel sonder CIRCUITPY/CDC-herenumerasie | Medium | Hoog | Embedded/QA | Fisiese power-cycle; safe-mode/recovery-runbook; geen volgende story of release totdat volume, REPL, bootbanner en HIL-manifest herstel is nie | Oop - US-004 impediment |
+| R-028 | Programmatiese harde reset laat USB-toestel soms sonder CIRCUITPY/CDC-herenumerasie | Medium | Hoog | Embedded/QA | Fisiese power-cycle het volume/REPL herstel; recovery-runbook en finale manifest-HIL is bewys | Beheer aktief |
 
 ## Hoogste onmiddellike aksies
 

@@ -93,4 +93,4 @@ AUDIO_BACKENDS=i2s-max98357a-mono
 DEVICE_EXECUTION_STATUS=READY
 ```
 
-Die opvolgende programmatiese harde reset het USB-identiteit behou, maar macOS het nie CIRCUITPY of CDC/REPL herenumerateer nie. Finale HIL bly geblokkeer totdat 'n fisiese power-cycle die volume en REPL herstel en die sewe manifesthashes slaag.
+Die opvolgende programmatiese harde reset het USB-identiteit behou, maar macOS het aanvanklik nie CIRCUITPY of CDC/REPL herenumerateer nie. 'n Fisiese power-cycle het beide herstel. Die finale runner het connection, sewe manifesthashes, `v0.4.0` boot en werklike REPL-uitvoering as `PASS` gerapporteer; private identifiseerders is geredigeer.

@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
 
 | Teiken | Runtime | USB-MIDI | BLE-MIDI | Wi-Fi/web | PWM stereo | I2S | Status |
 |---|---|---|---|---|---|---|---|
-| LOLIN/Wemos ESP32-S2 Mini | CircuitPython 10.0.3 fisies bewys | MCP-US-003 USB CDC, CIRCUITPY, AudioControl, MIDIStreaming, PortIn en PortOut bewys | Nie native ondersteun nie; veilige negatiewe capability-toets | `wifi:yes`; runtime-fallback-HIL nog nodig; verbode in `boot.py` | `audiopwmio:no` in huidige bou; aparte fallbackbesluit nodig | `audiobusio:yes`; IO5 BCLK, IO3 WS, IO7 DATA/DIN fisies deur runtime bevestig | Primêre MVP; US-004 In Review |
+| LOLIN/Wemos ESP32-S2 Mini | CircuitPython 10.0.3 fisies bewys | MCP-US-003 USB CDC, CIRCUITPY, AudioControl, MIDIStreaming, PortIn en PortOut bewys | Nie native ondersteun nie; veilige negatiewe capability-toets | `wifi:yes`; runtime-fallback-HIL nog nodig; verbode in `boot.py` | `audiopwmio:no` in huidige bou; aparte fallbackbesluit nodig | `audiobusio:yes`; IO5 BCLK, IO3 WS, IO7 DATA/DIN en manifest-HIL fisies bevestig | Primêre MVP; US-004 Done |
 | Generiese ESP32-S2 | CircuitPython | Bordprofiel-afhanklik | Nie native ondersteun nie | Station/AP capability- en firmwarebou-afhanklik | Pen/module-afhanklik | Firmware/bord-afhanklik | Later profiel |
 | ESP32-S3 | CircuitPython | Tipies beskikbaar | Native `_bleio`-kandidaat; BLE-MIDI-HIL nodig | Beskikbaar | Profiel nodig | Sterk kandidaat | Tweede MVP-kandidaat |
 | RP2040-mikrobeheerder | CircuitPython | Bordafhanklik | Slegs BLE-bord/eksterne coprocessor indien amptelik ondersteun | Slegs Wi-Fi-variante/eksterne netwerk | Profiel nodig | Bordafhanklik | Later profiel |

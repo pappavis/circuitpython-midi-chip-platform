@@ -30,7 +30,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | MCP-US-001 | Device And Source Baseline Inventory | Done | - | Bord, bronne, rugsteun, risiko’s en hergebruik is gedokumenteer |
 | MCP-US-002 | Clean Repository And Project Skeleton | Done | US-001 | Klasgebaseerde poorte, host-toetse en headers bestaan; geen toestel-I/O nie |
 | MCP-US-003 | Minimal Safe Boot And USB Profile | Done | US-002 | USB-MIDI begin vóór runtime; bord-VID/PID bly verstek; CIRCUITPY/REPL herstel en drieledige device-proof slaag |
-| MCP-US-004 | Board Capability Discovery | Impediment | US-002 | Host en sagte toestelrun rapporteer profiel, IO3/5/7, modules, geheue en I2S-backend; finale hard-reset/remount-HIL wag |
+| MCP-US-004 | Board Capability Discovery | Done | US-002 | Profiel, IO3/5/7, modules, geheue en I2S-backend is fisies gerapporteer; power-cycle recovery en volledige manifest-HIL slaag |
 | MCP-US-005 | Configuration And Secret Boundary | MVP | US-003 | Publieke verstekke en private `settings.toml` werk; geheime-lektoets is groen |
 
 ## MCP-EPIC-002 MIDI And Clock
