@@ -2,13 +2,13 @@
 
 <!--
 Bestand: risk_register_v0.1.0.md
-Versienommer: 0.4.0
+Versienommer: 0.5.0
 Doel: Tegniese, produk-, veiligheids- en afleweringsrisiko’s vir die MVP.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: SCOPE-AMENDMENT-002
-Actienr: MCP-ACT-SCOPE-AMEND-RISK-002
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
+User-Story: WIFI-RUNTIME-AMENDMENT-001
+Actienr: MCP-ACT-WIFI-AMEND-RISK-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
 -->
 
 | ID | Risiko | Waarskynlikheid | Impak | Eienaar | Beheer/mitigering | Status |
@@ -38,6 +38,8 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
 | R-023 | BLE-MIDI is Must, maar die primêre ESP32-S2 het geen native BLE-ondersteuning nie | Hoog | Hoog | Architect/Embedded | Capability gate; hou USB stabiel; kies ’n BLE-geskikte tweede bord in US-052 en lewer positiewe HIL in US-062 | Beheer aktief |
 | R-024 | Herhaalde macOS host-MIDI-scan abort in `python-rtmidi`/CoreMIDI | Hoog | Medium | QA/Tooling | Moenie dieselfde in-proses scan herhaal nie; isoleer toekomstige host-scan in ’n subprocess; firmware-HIL steun op USB descriptors en device logs | Oop - hostimpediment |
 | R-025 | MIDI-HIL hang of faal deur ’n poortkonflik met Thonny of ’n serial monitor | Medium | Hoog | QA/HIL | Preflight poorte; presies een REPL-kliënt; timeout, cleanup en herstelpad | Oop |
+| R-026 | Fallback access point is oop, voorspelbaar of lek credentials/kliëntidentiteit | Medium | Kritiek | Security/Web | Beveiligde AP as verstek; credentials uit private config of veilige provisioning; geen geheime, MAC’s of unieke ID’s in logs/repo nie | Oop |
+| R-027 | Onbegrensde join/reconnect, HTTP polling of debuglogging veroorsaak dropout, RAM-druk of flashslytasie | Hoog | Hoog | Embedded/Web/QA | Timeout en backoff; koöperatiewe poll; een kliënt; debug af in produksie; gebeurtenis-/koersbegrensde serial logging en geen normale flashlog nie | Oop |
 
 ## Hoogste onmiddellike aksies
 

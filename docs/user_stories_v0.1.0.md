@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.4.0
+Versienommer: 0.5.0
 Doel: Volledige geordende backlog vir MVP en latere inkremente.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: SCOPE-AMENDMENT-002
-Actienr: MCP-ACT-SCOPE-AMEND-BACKLOG-002
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
+User-Story: WIFI-RUNTIME-AMENDMENT-001
+Actienr: MCP-ACT-WIFI-AMEND-BACKLOG-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
 -->
 
 ## Statuslegende
@@ -66,11 +66,11 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-022 | Cooperative Runtime Scheduler | MVP | US-007, US-014 | MIDI, klank en web-polling deel tyd sonder hoorbare blokkasie |
-| MCP-US-023 | Safe Wi-Fi Runtime Service | MVP | US-005, US-022 | Wi-Fi begin buite boot en gee ’n duidelike offline-modus |
-| MCP-US-024 | Local Web Status And Parameters | MVP | US-023 | Een plaaslike kliënt kan status lees en veilige parameters verander |
+| MCP-US-023 | Safe Wi-Fi Station And AP Fallback Service | MVP | US-005, US-022 | Runtime join ’n gekonfigureerde netwerk binne timeout en rapporteer station-IP; by mislukking begin ’n beveiligde AP en rapporteer AP-IP sonder MIDI-/klankblokkasie |
+| MCP-US-024 | Mobile-Friendly Local Web Status And Parameters | MVP | US-023 | Een mobiele plaaslike kliënt lees status en verander veilige parameters in station/AP-modus; polling/logging bly spaarsaam en koersbegrens |
 | MCP-US-025 | Browser Virtual MIDI Keyboard | MVP | US-024 | Klik/touch stuur note via dieselfde event-model |
 | MCP-US-026 | Simple Step Sequencer | MVP | US-011, US-024 | ’n Kort patroon kan teen interne/eksterne klok loop en stop |
-| MCP-US-027 | Web Security And Recovery | MVP | US-024 | Vertroude-LAN-grens, sessielimiet en herstelpad is getoets |
+| MCP-US-027 | Web Security And Recovery | MVP | US-024 | Vertroude-LAN/AP-grens, private credentials, sessielimiet, netwerkafskakeling en herstelpad is getoets |
 
 ## MCP-EPIC-005 Files, Harmony And Performance Tools
 

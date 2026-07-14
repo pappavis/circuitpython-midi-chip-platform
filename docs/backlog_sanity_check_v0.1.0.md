@@ -2,18 +2,18 @@
 
 <!--
 Bestand: backlog_sanity_check_v0.1.0.md
-Versienommer: 0.5.0
+Versienommer: 0.6.0
 Doel: Bewys backlog-volledigheid en verminder hallusinasie-/scope-drift-risiko.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: SCOPE-AMENDMENT-002
-Actienr: MCP-ACT-SCOPE-AMEND-SANITY-002
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
+User-Story: WIFI-RUNTIME-AMENDMENT-001
+Actienr: MCP-ACT-WIFI-AMEND-SANITY-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
 -->
 
 ## Resultaat
 
-Status: **PASS ná BLE-MIDI-, synth-core-prioriteit- en crashrisiko-amendment**.
+Status: **PASS ná Wi-Fi station/AP-fallback- en mobile-web-amendment**.
 
 | Kontrole | Resultaat |
 |---|---|
@@ -44,7 +44,7 @@ Status: **PASS ná BLE-MIDI-, synth-core-prioriteit- en crashrisiko-amendment**.
 | Per-stem links/regs/stereo | MCP-US-019 |
 | MIDI-kitaar bends, slides en hardeware-aanvaarding | MCP-US-058, US-059 |
 | Opsionele G-C-D-opstarttoets | MCP-US-020 |
-| Plaaslike webbeheer | MCP-US-022 tot US-027 |
+| Plaaslike webbeheer, station-IP, beveiligde AP-fallback en mobile-first UI | MCP-US-022 tot US-027 |
 | Virtuele web-MIDI-klawerbord | MCP-US-025 |
 | Eenvoudige sekwenser | MCP-US-026 |
 | MIDI-lêers binne kernlimiete | MCP-US-028 tot US-030 |
@@ -72,6 +72,8 @@ Status: **PASS ná BLE-MIDI-, synth-core-prioriteit- en crashrisiko-amendment**.
 - US-062 maak BLE-MIDI `Must` sonder om native BLE op die ESP32-S2 te hallucineer; US-052 lewer die tweede-bordprofiel.
 - US-063 plaas die draagbare D1-basiskern voor SN76489; 6581 SID en OPL2/OPL3 bly die derde en volgende kernfamilies.
 - Vier onafhanklike macOS crashrapporte wys dieselfde `python-rtmidi`/CoreMIDI-abort; R-024 hou hierdie hosttooling-impediment weg van firmwareclaims.
+- US-023 besit die begrensde station-join en beveiligde AP-fallback; US-024 besit mobile-first UI en spaarsame logging; US-027 besit credentials, sessielimiete en recovery.
+- Geen nuwe story-ID is geskep nie omdat hierdie gedrag binne EPIC-004 se bestaande Wi-Fi-, web- en sekuriteitsgrense val.
 
 ## Governance-gap wat nou gesluit is
 

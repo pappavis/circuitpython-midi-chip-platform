@@ -25,6 +25,10 @@ python -m pytest
 
 Bewys op ’n LOLIN/Wemos ESP32-S2 Mini dat ’n gebruiker via klawerbord of MIDI-kitaar note, akkoorde, bends en slides kan stuur, eers ’n draagbare D1-basiskern en daarna ’n SN76489-agtige driestem-kern kan speel, mono MAX98357-klank en later stereo-uitvoer kan gebruik, en kernparameters op ’n eenvoudige plaaslike webblad kan verander. BLE-MIDI word op ’n tweede BLE-geskikte CircuitPython-bord aanvaar omdat die ESP32-S2 self nie native BLE ondersteun nie.
 
+## Webtoegang
+
+Die synth probeer tydens runtime ’n privaat gekonfigureerde Wi-Fi-netwerk join en rapporteer daarna sy station-IP. Indien die netwerk ontbreek of die begrensde join-poging misluk, begin die synth ’n beveiligde eie access point en rapporteer sy AP-IP. Die mobiele webblad werk in albei modusse, beperk die MVP tot een aktiewe kliënt en skryf geen logreël vir elke poll of UI-verversing nie. Wi-Fi begin nooit in `boot.py` nie.
+
 ## Hoekom ’n skoon repository?
 
 Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasie en ’n ou modulêre CircuitPython-basislyn, maar ook verskillende runtime-generasies. Hierdie repository hergebruik die getoetste kontrakte en leerlesse sonder om historiese eksperimente as produksiekode te behandel.
@@ -49,6 +53,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [Audio-prioriteit en MIDI-kitaar amendment](docs/audio_priority_amendment_v0.1.0.md)
 - [MIDI-transport en multi-core amendment](docs/midi_transport_multicore_amendment_v0.1.0.md)
 - [BLE-MIDI en synth-core-prioriteit](docs/ble_midi_core_priority_amendment_v0.1.0.md)
+- [Wi-Fi station-, access-point- en mobiele webfallback](docs/wifi_runtime_fallback_amendment_v0.1.0.md)
 - [Device Connection Proof](docs/device_connection_proof_v0.1.0.md)
 
 ## Belangrike veiligheidsreëls
@@ -68,6 +73,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - MIDI, kernlogika, klankuitvoer en webbeheer word deur duidelike poorte geskei.
 - Die klankenjin bly vervangbaar: draagbare D1-basiskern eerste, SN76489 tweede, 6581 SID derde en OPL2/OPL3 daarna.
 - BLE-MIDI is ’n MVP-vereiste, maar word capability-gated: die ESP32-S2 rapporteer dit veilig as nie-ondersteun; ’n BLE-geskikte tweede bord lewer die fisiese aanvaardingsbewys.
+- Wi-Fi-runtime gebruik ’n eksplisiete toestandmasjien: station join, begrensde mislukking, beveiligde AP-fallback en sigbare IP; logging is spaarsaam en koersbegrens.
 - Die span volg backlogvolgorde; side quests word georden en nie stilweg geimplementeer nie.
 - Lessons learned word na elke drie of vier voltooide stories en by epic-/releasegrense opgedateer.
 - `python-d1-synth` is produksiekode en word uitsluitlik as 'n leesalleen-verwysing gebruik.

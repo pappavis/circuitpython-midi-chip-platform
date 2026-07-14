@@ -2,13 +2,13 @@
 
 <!--
 Bestand: source_register_v0.1.0.md
-Versienommer: 0.4.0
+Versienommer: 0.5.0
 Doel: Registreer primêre tegniese en plaaslike bronne met gebruiksgrense.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: SCOPE-AMENDMENT-002
-Actienr: MCP-ACT-SCOPE-AMEND-SRC-002
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
+User-Story: WIFI-RUNTIME-AMENDMENT-001
+Actienr: MCP-ACT-WIFI-AMEND-SRC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
 -->
 
 ## Primêre tegniese bronne
@@ -30,6 +30,8 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
 | [Espressif ESP32-S2 datasheet](https://documentation.espressif.com/esp32-s2_datasheet_en.html) | S2-radio-, Wi-Fi-, USB-, I2S- en geheuevermoëns | Primêre silikonbron; BLE-afwesigheid word ook eksplisiet deur CircuitPython `_bleio` bevestig |
 | [Adafruit HTTP Server](https://docs.circuitpython.org/projects/httpserver/en/stable/) | Plaaslike HTTP, routing, WebSocket en SSE | Geheue-/sokbeperkings vereis eenkliënt-MVP |
 | [HTTP server polling examples](https://docs.circuitpython.org/projects/httpserver/en/stable/examples.html) | Koöperatiewe polling en asyncio-opsies | Voorbeeld is nie ’n real-time klankwaarborg nie |
+| [CircuitPython `wifi`](https://docs.circuitpython.org/en/stable/shared-bindings/wifi/) | Station/AP-modus, connect timeout, IP-adresse, AP-auth en DHCP | Primêre amptelike API; capability- en bord-HIL bly verpligtend |
+| [HTTP server starting methods](https://docs.circuitpython.org/projects/httpserver/en/latest/starting_methods.html) | Handmatige station- en AP-bedieneropstart | Primêre biblioteekvoorbeeld; produksiekode gebruik dependency injection en debug af |
 | [CircuitPython `settings.toml`](https://learn.adafruit.com/networking-in-circuitpython/network-settings) | Moderne private netwerkconfig | Geen geheime in Git nie |
 | [Raspberry Pi OS documentation](https://www.raspberrypi.com/documentation/computers/os.html) | Skeiding van Linux/Python-teikens van mikrobeheerderfirmware | Pi Zero/3 kry ’n adapter, nie dieselfde firmwareclaim nie |
 | [Fishman TriplePlay Support](https://fishman.com/tripleplay-support/) | USB-MIDI-kitaar, polyfonie en individuele string bends | Amptelike produkondersteuning; TriplePlay is 'n HIL-verwysing, nie 'n kodekonstante nie |

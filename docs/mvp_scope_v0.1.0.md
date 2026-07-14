@@ -2,13 +2,13 @@
 
 <!--
 Bestand: mvp_scope_v0.1.0.md
-Versienommer: 0.4.0
+Versienommer: 0.5.0
 Doel: Definieer die eerste toetsbare CircuitPython MIDI Chip Platform MVP.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: SCOPE-AMENDMENT-002
-Actienr: MCP-ACT-SCOPE-AMEND-DOC-002
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
+User-Story: WIFI-RUNTIME-AMENDMENT-001
+Actienr: MCP-ACT-WIFI-AMEND-DOC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
 -->
 
 ## Produkdefinisie
@@ -29,7 +29,7 @@ Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 4. Die eerste hoorbare vertikale sny werk mono via een MAX98357 I2S-versterker; PWM bly 'n diagnostiese fallback.
 5. Elke stem kan links, regs of stereo gerouteer word.
 6. ’n Opsionele G-C-D-opstartreeks laat ’n gebruiker die klankpad hoor.
-7. ’n Eenvoudige plaaslike webblad kan die aktiewe kern en veilige kernparameters wys en verander.
+7. ’n Mobile-first plaaslike webblad kan die aktiewe kern en veilige kernparameters wys en verander via ’n gejoinde netwerk of die synth se beveiligde fallback access point.
 8. Die oplossing kan vanaf ’n skoon toestel geïnstalleer, gediagnoseer en herstel word.
 9. ’n Laat-MVP, geheuebegrensde delay/echo en eenvoudige reverb-spike kan omseil en beheer word sonder om MIDI te destabiliseer.
 10. 'n Generiese USB-MIDI-kitaarkontroleerder kan note, akkoorde, per-kanaal bends en slides stuur; Fishman TriplePlay dien as verwysings-HIL-toestel, nie as hardgekodeerde afhanklikheid nie.
@@ -52,6 +52,8 @@ Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 - Later-MVP stereo via twee MAX98357-modules of 'n geprofileerde stereo-I2S-backend soos PCM5102; geen komponent word as universeel aanvaar nie.
 - Klasgebaseerde poorte vir MIDI, kern, klok, klank en konfigurasie.
 - Klein webbeheerblad op ’n vertroude plaaslike netwerk, een kliënt as ontwerpteiken.
+- Begrensde station join met sigbare IP; beveiligde access-point fallback met sigbare AP-IP wanneer geen netwerk beskikbaar is nie.
+- Mobile-first station/AP-webbediening met spaarsame, vlak- en koersbegrensde logging; geen per-poll-/per-note-flashlogging nie.
 - Laat-MVP DSP: ’n klein delay/echo en eenvoudige reverb-spike met harde geheue- en latensiegrense.
 - Host-eenheidstoetse plus eksplisiete hardeware-in-die-lus-toetse.
 
@@ -77,6 +79,8 @@ Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 - MIDI-klok kan 120 BPM intern loop en ’n eksterne klok se tempo rapporteer.
 - Die opstarttoets kan in konfigurasie aan/af geskakel word.
 - Webparameterverandering onderbreek nie ’n aangehoue noot onaanvaarbaar nie.
+- Station-IP word ná sukses gerapporteer; ’n geforseerde join-mislukking bereik AP-fallback binne die timeout en ’n telefoon kan die mobiele statusblad via die AP-IP open.
+- Polling en normale MIDI-aktiwiteit veroorsaak geen logvloed of geheime-/kliëntidentifiseerderlek nie.
 - DSP-bypass en ten minste een hoorbare delay/reverb-proef loop binne die ooreengekome geheue- en latensiebegroting.
 - Alle host-toetse is groen en die hardeware-aanvaardingstappe is gedokumenteer.
 - 'n Controller kan sonder Logic via 'n eksterne USB-host/DIN-roete hoorbare MIDI aan die pedaal lewer.
@@ -86,7 +90,7 @@ Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 ## Besluithekke
 
 1. **Klankhek:** MAX98357 mono-I2S is die primêre vroeë pad; indien bordvermoë of stabiliteit faal, bewys PWM die debugpad en die impediment word gemeet.
-2. **Webhek:** webbeheer mag nie MIDI/klanktydsberekening merkbaar benadeel nie.
+2. **Webhek:** station join, AP-fallback, mobiele webbeheer en logging mag nie MIDI/klanktydsberekening merkbaar benadeel of geheime publiseer nie.
 3. **Kernhek:** SN76489 begin eers nadat die draagbare D1-basiskern groen en hoorbaar is; SID en OPL volg eers ná die registry- en resource-kontrakte.
 4. **Bordhek:** ’n nuwe bord kry eers ’n vermoënsprofiel en hardeware-toets; geen stil aannames nie.
 5. **BLE-hek:** ESP32-S2 is ’n verpligte veilige negatiewe toets; positiewe BLE-MIDI-aanvaarding gebeur slegs op ’n bord waarop `_bleio` werklik beskikbaar is.
