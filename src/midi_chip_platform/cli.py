@@ -1,21 +1,25 @@
 # Bestand: cli.py
-# Versienommer: 0.1.0
-# Doel: Bied 'n minimale IDE-onafhanklike host-diagnosecommando.
+# Versienommer: 0.2.0
+# Doel: Bied IDE-onafhanklike diagnose met verpligte release-naspeurbaarheid.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-002 Clean Repository And Project Skeleton
-# Actienr: MCP-ACT-002-GREEN-007
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-002
+# User-Story: AUDIO-PRIORITY-AMENDMENT-001
+# Actienr: MCP-ACT-AUDIO-AMEND-GREEN-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 
 import argparse
 import sys
 
+from midi_chip_platform.release import ReleaseMetadata
+
 
 class CommandLineApplication:
-    def __init__(self, output=None):
+    def __init__(self, output=None, release_metadata=None):
         self._output = output if output is not None else sys.stdout
+        self._release_metadata = release_metadata if release_metadata is not None else ReleaseMetadata()
 
     def run(self, arguments=None):
+        self._output.write(f"{self._release_metadata.banner()}\n")
         parser = self._build_parser()
         parsed = parser.parse_args(arguments)
         if parsed.command == "diagnose":

@@ -2,13 +2,13 @@
 
 <!--
 Bestand: quickstart_installation_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Beginnerstappe vir installasie, diagnose en ontwikkeling sonder IDE-afhanklikheid.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-002 Clean Repository And Project Skeleton
-Actienr: MCP-ACT-002-DOC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-002
+User-Story: AUDIO-PRIORITY-AMENDMENT-001
+Actienr: MCP-ACT-AUDIO-AMEND-DOC-002
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 -->
 
 ## Wat hierdie weergawe doen
@@ -74,6 +74,7 @@ python -m pytest
 Die diagnose behoort onder meer te wys:
 
 ```text
+circuitpython-midi-chip-platform v0.1.1 | story=AUDIO-PRIORITY-AMENDMENT-001 | release-date=2026-07-14
 circuitpython-midi-chip-platform: host skeleton ready
 hardware access: disabled
 runtime state: class instances only

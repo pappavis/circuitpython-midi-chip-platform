@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Volledige geordende backlog vir MVP en latere inkremente.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-001 Device And Source Baseline Inventory
-Actienr: MCP-ACT-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001
+User-Story: AUDIO-PRIORITY-AMENDMENT-001
+Actienr: MCP-ACT-AUDIO-AMEND-BACKLOG-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 -->
 
 ## Statuslegende
@@ -20,13 +20,15 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001
 - **Stretch:** slegs indien die vaste MVP stabiel en binne begroting is.
 - **Later:** geprioritiseerde voortsetting ná MVP.
 
+Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgorde; 'n later toegevoegde stabiele story-ID word nie hernommer om 'n kunsmatige numeriese volgorde te skep nie. `Synth` beteken in hierdie katalogus die CircuitPython MIDI Chip Platform.
+
 ## MCP-EPIC-001 Platform Foundation
 
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-001 | Device And Source Baseline Inventory | Done | - | Bord, bronne, rugsteun, risiko’s en hergebruik is gedokumenteer |
-| MCP-US-002 | Clean Repository And Project Skeleton | In Review/MVP | US-001 | Klasgebaseerde poorte, host-toetse en headers bestaan; geen toestel-I/O nie |
-| MCP-US-003 | Minimal Safe Boot And USB Profile | MVP | US-002 | USB-MIDI begin vóór runtime; geen netwerk of geheime in `boot.py` nie |
+| MCP-US-002 | Clean Repository And Project Skeleton | Done | US-001 | Klasgebaseerde poorte, host-toetse en headers bestaan; geen toestel-I/O nie |
+| MCP-US-003 | Minimal Safe Boot And USB Profile | Next/MVP | US-002 | USB-MIDI begin vóór runtime; geen netwerk of geheime in `boot.py` nie |
 | MCP-US-004 | Board Capability Discovery | MVP | US-002 | Bordprofiel rapporteer penne, modules, geheue en ondersteunde klankbackends |
 | MCP-US-005 | Configuration And Secret Boundary | MVP | US-003 | Publieke verstekke en private `settings.toml` werk; geheime-lektoets is groen |
 
@@ -39,6 +41,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001
 | MCP-US-008 | MIDI Channel Router | MVP | US-007 | Kanaal 1-16 word konfigureerbaar na ’n kerninstansie gerouteer |
 | MCP-US-009 | Velocity And Note-Off Semantics | MVP | US-007 | Velocity nul sluit note; geen hangende stem ná All Notes Off nie |
 | MCP-US-010 | Pitch Bend And CC1 Modulation | MVP | US-007 | Bend en vibrato word hoorbaar en diagnosties gemeet |
+| MCP-US-058 | Guitar MIDI Bend And Slide Event Semantics | MVP | US-008, US-010 | Multi-kanaal note en per-kanaal bends behou onafhanklike string/slide-semantiek met konfigureerbare bend range |
 | MCP-US-011 | Internal 120 BPM Clock | MVP | US-002 | Interne klok lewer stabiele 24 PPQN-afgeleides en BPM-metriek |
 | MCP-US-012 | External MIDI Clock Sync | MVP | US-007, US-011 | USB of adapter-klok kan Start/Stop/Continue en tempo beheer |
 | MCP-US-013 | External IO MIDI Transport Spike | Later | US-007 | UART/DIN- of ander IO-adapter word deur dieselfde MIDI-poort geabstraheer |
@@ -48,13 +51,13 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-014 | AudioOutput Port And Null Backend | MVP | US-002 | Kernlogika kan sonder fisiese klank host-getoets word |
-| MCP-US-015 | Stereo PWM Diagnostic Backend | MVP | US-004, US-014 | Twee gekose penne lewer meetbare links/regs PWM-klank |
-| MCP-US-016 | I2S Feasibility Spike | MVP | US-004, US-014 | Ondersteuning, penne, DAC, RAM, latensie en kwaliteit is gemeet |
+| MCP-US-016 | MAX98357 Mono I2S Audible Diagnostic | MVP | US-004, US-014 | Een geprofileerde MAX98357 speel 'n veilige hoorbare toetssein; penne, RAM, latensie en dropout is gemeet |
+| MCP-US-015 | PWM Diagnostic Fallback | MVP | US-004, US-014 | Gekose debugpenne lewer 'n meetbare fallback-sein wanneer I2S nie beskikbaar is nie |
 | MCP-US-017 | SN76489-Lite Three-Voice Core | MVP | US-006, US-014 | Drie toonstemme speel onafhanklik met gedokumenteerde akkuraatheid |
 | MCP-US-018 | Voice Allocation And Stealing | MVP | US-017 | Vierde noot volg ’n toetsbare steal-policy sonder vasloop |
-| MCP-US-019 | Per-Voice Left Right Stereo Routing | MVP | US-015, US-017 | Elke stem kan links, regs of stereo gemonitor word |
-| MCP-US-020 | Optional G-C-D Startup Test | MVP | US-015, US-017 | Opsionele sestiendenootreeks bewys die klankpad by start |
-| MCP-US-021 | Audio Backend Decision | MVP | US-015, US-016 | ADR kies primêre uitvoer; PWM-diagnostiek bly beskikbaar |
+| MCP-US-020 | Optional G-C-D Startup Test | MVP | US-016, US-017 | Opsionele sestiendenootreeks bewys die mono-I2S-klankpad by start |
+| MCP-US-019 | Per-Voice Left Right Stereo Routing | MVP | US-016, US-017, US-021 | Elke stem kan links, regs of stereo gemonitor word |
+| MCP-US-021 | Stereo I2S Expansion Decision | MVP | US-015, US-016 | HIL kies twee MAX98357-modules of 'n stereo-I2S-backend; PWM bly fallback |
 
 ## MCP-EPIC-004 Local Web Control
 
@@ -115,6 +118,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001
 | MCP-US-054 | Windows USB MIDI Acceptance | MVP | US-003, US-007 | Toestel verskyn en ontvang note op ’n skoon Windows-rekenaar |
 | MCP-US-055 | macOS Logic Pro Acceptance | MVP | US-003, US-007 | Logic stuur note/clock en ontvang ’n stabiele uitvoerpad |
 | MCP-US-056 | Install Recovery And Diagnostics | MVP | US-005, US-051 | Beginner-runbook dek geen MIDI, geen klank, safe mode en herstel |
+| MCP-US-059 | MIDI Guitar Hardware Acceptance | MVP | US-018, US-058 | 'n Generiese MIDI-kitaar en Fishman-verwysing speel note, akkoorde, bends en slides; geen toestelnaam is 'n kodekonstante nie |
 | MCP-US-057 | MVP Release Candidate And Demo | MVP | Alle MVP-stories | Tag, release notes, bekende beperkings en demo is gereed |
 
 ## Definition of Ready
@@ -137,6 +141,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001
 - Die synthmodules kan as biblioteek ingevoer word en die weblaag kan afhanklikhede instansieer sonder outomatiese startup.
 - Relevante hardewaretoets is deur mens of meetinstrument aanvaar.
 - Dokumentasie, headers, backlog, ChatID en story-ID is bygewerk.
+- Startup toon die huidige projekweergawe, aktiewe story/amendment en release-datum.
 - Die span het bepaal of hierdie closure 'n drie-/vier-story lessons-learned-checkpoint aktiveer en dit, indien verskuldig, voltooi.
 - Geen geheime, plaaslike konstantes of onbedoelde binêre lêers is gestage nie.
 - Commit en push is voltooi; demo- teenoor produksestatus is eerlik.

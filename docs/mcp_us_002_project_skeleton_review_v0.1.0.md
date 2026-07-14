@@ -2,14 +2,18 @@
 
 <!--
 Bestand: mcp_us_002_project_skeleton_review_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Storyreview, spanbydraes, toetsbewys en menslike aanvaarding vir die host-skelet.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
 User-Story: MCP-US-002 Clean Repository And Project Skeleton
-Actienr: MCP-ACT-002-REV-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-002
+Actienr: MCP-ACT-002-ACCEPT-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 -->
+
+## Status
+
+**Done en menslik aanvaar op 2026-07-14.** Die Product Owner het vanaf die primêre checkout `pip install -e ".[dev]"`, die host-diagnose en die volledige oorspronklike suite uitgevoer; `14 passed` is gerapporteer. Die latere amendment verhoog die suite na 15 toetse sonder MCP-US-002-regressie.
 
 ## Uitkoms
 

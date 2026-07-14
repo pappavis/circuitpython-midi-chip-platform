@@ -2,13 +2,13 @@
 
 <!--
 Bestand: AGENTS.md
-Versienommer: 0.2.0
+Versienommer: 0.3.0
 Doel: Afdwingbare werkreels vir mense, Codex en ander ontwikkelagente.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-002 Clean Repository And Project Skeleton
-Actienr: MCP-ACT-002-GOV-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-002
+User-Story: AUDIO-PRIORITY-AMENDMENT-001
+Actienr: MCP-ACT-AUDIO-AMEND-GOV-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 -->
 
 ## Harde argitektuurreels
@@ -20,9 +20,18 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-002
 5. Alle veranderlike status word deur 'n klasinstansie besit en eksplisiet via constructors/dependency injection deurgegee.
 6. 'n Module mag by import geen USB, MIDI, klank, Wi-Fi, webserver, pen of lêerstelsel-diens begin nie.
 7. Geen modulevlak diensobjek soos `app = App()`, `midi = MidiService()` of `audio = AudioOutput()` nie.
-8. Imports, klasdefinisies en beperkte pakketmetadata soos `__all__`/`__version__` is toegelaat; hulle mag geen runtime-status verberg nie.
+8. Imports, klasdefinisies en docstrings is toegelaat; release-metadata word deur 'n klasinstansie besit en nie as modulevlakveranderlikes versteek nie.
 9. 'n Uitvoerbare `code.py` of CLI-entrypoint mag slegs binne 'n main guard 'n topvlak `Application`-instansie skep en onmiddellik `run()` roep.
 10. Die synth moet veilig as 'n biblioteek ingevoer kan word, veral deur die latere webinterface en host-simulator.
+11. Sonder verdere kwalifikasie beteken `synth` in gesprekke, stories en dokumentasie hierdie CircuitPython MIDI Chip Platform; die desktop D1-projek word altyd eksplisiet as `python-d1-synth` benoem.
+
+## Kodeweergawe en naspeurbaarheid
+
+1. Elke gegenereerde of gewysigde `.py`-lêer bevat 'n header met bestand, kodeweergawe, doel, sprint, epic, user story, aksienommer en relevante ChatID.
+2. 'n Host-CLI of toestel-runtime toon by verstek tydens startup minstens projekweergawe, aktiewe user story/amendment en release-datum.
+3. Startup-metadata word deur 'n geïnjekteerde klasinstansie gelewer; geen globale metadata- of toepassingsstatus word ingestel nie.
+4. `pyproject.toml`, runtime-banner, story-artefak en release-notas moet dieselfde weergawe rapporteer voordat 'n commit gepubliseer word.
+5. Die argitektuurtoetse kontroleer headers en importveiligheid; 'n release-identiteitstoets kontroleer die startup-banner.
 
 ## Afdwinging
 

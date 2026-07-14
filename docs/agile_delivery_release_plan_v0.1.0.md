@@ -2,13 +2,13 @@
 
 <!--
 Bestand: agile_delivery_release_plan_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Definieer die werklike Agile uitvoerings-, beheer- en releaseproses.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-001 Device And Source Baseline Inventory
-Actienr: MCP-ACT-001-GOV-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / GOVERNANCE-AMENDMENT-001
+User-Story: AUDIO-PRIORITY-AMENDMENT-001
+Actienr: MCP-ACT-AUDIO-AMEND-REL-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 -->
 
 ## Doel
@@ -35,6 +35,8 @@ Hierdie projek word bestuur as 'n werklike klein produkspan. Dokumentasie is nie
 - Dokumentasie-/impedimentwerk binne dieselfde story tel nie as 'n tweede story nie.
 - 'n Nuwe idee word geklassifiseer en georden; dit onderbreek nie die aktiewe story nie.
 - Die Scrum Master en Architect moet enige versoek stop wat 'n ongetoetste kernpad, werkende klankpad of importgrens kan breek.
+- Die eerste hoorbare vertikale sny volg `MCP-US-003 -> MCP-US-004 -> MCP-US-014 -> MCP-US-016`; MAX98357 mono-I2S is primêr en PWM is fallback.
+- Sonder verdere kwalifikasie beteken `synth` hierdie CircuitPython-projek; `python-d1-synth` word slegs as 'n eksplisiet benoemde leesalleen-verwysing gebruik.
 
 ## Storyritme
 
@@ -69,9 +71,9 @@ Lessons learned word nie tot die einde van die MVP uitgestel nie.
 - Die Scrum Master skeduleer dit; QA bevestig bewys; PO aanvaar backlog-/scopeveranderinge.
 - Die release manager blokkeer 'n release as 'n verskuldigde checkpoint ontbreek.
 
-### D1-synth oordrag
+### Leesalleen D1-leerlesse
 
-Die bestaande D1 lessons-learned-dokument word vanaf US-042 as lewende register behandel. By toekomstige D1-werk word dit na elke drie of vier voltooide stories bygewerk, nie net by 'n sprint- of MVP-einde nie. Relevante lesse word na hierdie CircuitPython-projek oorgedra, maar nie blind as implementasie-instruksies gekopieer nie.
+Die bestaande D1 lessons-learned-dokument mag gelees word vir bevestigde patrone. Geen toekomstige D1-wysiging, dokumentasie-update, commit of push is deel van hierdie projek nie. Relevante lesse word as nuwe CircuitPython-toetse en stories herskryf, nie blind gekopieer nie.
 
 ## Releasevlakke
 
@@ -93,6 +95,7 @@ Die bestaande D1 lessons-learned-dokument word vanaf US-042 as lewende register 
 5. Dokumentasie, Kanban, ADR's, risiko's en lessons learned is op datum.
 6. Release notes onderskei Concept, Demo, MVP en Validated sonder oordrywing.
 7. Git-tag wys na presies die geverifieerde commit; rollback-instruksie bestaan.
+8. Elke startup toon projekweergawe, aktiewe story/amendment en release-datum; dit stem met package- en release-metadata ooreen.
 
 ## Anti-hallusinasie-maatreels
 
@@ -102,4 +105,4 @@ Die bestaande D1 lessons-learned-dokument word vanaf US-042 as lewende register 
 - Hardewaretoestelname, penne en paaie word nie uit gesprekke as universele konstantes oorgeneem nie.
 - Aannames het 'n eienaar en vervaldatum/story; onbevestigde aannames bly sigbaar.
 - Backlog-sanity word by elke release herhaal: unieke/opeenvolgende IDs, geldige afhanklikhede, dekking en statusversoening.
-
+- Elke gegenereerde of gewysigde Python-lêer bevat die verpligte weergawe-, story-, aksie- en ChatID-header.

@@ -4,7 +4,7 @@
 
 ## Projekstatus
 
-Die projek is in **Sprint 0: platformfondasie**. MCP-US-002 lewer 'n invoerveilige, klasgebaseerde host-skelet met poorte vir MIDI, klank, klok en konfigurasie. Daar is nog geen toestel-firmware of hoorbare chip-emulasie in hierdie repository nie; daardie werk volg volgens backlogvolgorde.
+Die projek is in **Sprint 0: platformfondasie**. MCP-US-002 is aanvaar; MCP-US-003 is volgende. Die eerste hoorbare ontwikkelsny gebruik een MAX98357 in mono-I2S-modus, met PWM as diagnostiese fallback. Daar is nog geen toestel-firmware of hoorbare chip-emulasie in hierdie repository nie.
 
 ## Begin hier
 
@@ -19,7 +19,7 @@ python -m pytest
 
 ## MVP in een sin
 
-Bewys op ’n LOLIN/Wemos ESP32-S2 Mini dat ’n gebruiker USB-MIDI-note kan stuur, ’n SN76489-agtige driestem-kern kan speel, links/regs/stereo-uitvoer kan kies, ’n hoorbare opstarttoets kan uitvoer en kernparameters op ’n eenvoudige plaaslike webblad kan verander.
+Bewys op ’n LOLIN/Wemos ESP32-S2 Mini dat ’n gebruiker via klawerbord of MIDI-kitaar note, akkoorde, bends en slides kan stuur, ’n SN76489-agtige driestem-kern kan speel, eers mono MAX98357-klank en later stereo-uitvoer kan gebruik, en kernparameters op ’n eenvoudige plaaslike webblad kan verander.
 
 ## Hoekom ’n skoon repository?
 
@@ -40,6 +40,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [Afdwingbare agent- en kodereels](AGENTS.md)
 - [Snelbegin, installasie en ontwikkelomgewings](docs/quickstart_installation_v0.1.0.md)
 - [MCP-US-002 review en toetsbewys](docs/mcp_us_002_project_skeleton_review_v0.1.0.md)
+- [Audio-prioriteit en MIDI-kitaar amendment](docs/audio_priority_amendment_v0.1.0.md)
 
 ## Belangrike veiligheidsreëls
 
@@ -61,6 +62,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - Lessons learned word na elke drie of vier voltooide stories en by epic-/releasegrense opgedateer.
 - `python-d1-synth` is produksiekode en word uitsluitlik as 'n leesalleen-verwysing gebruik.
 - Ollama is opsioneel vir goedgekeurde klein ontwikkeltake; dit is nooit nodig om die synth te bou of uit te voer nie.
+- Startup toon altyd projekweergawe, aktiewe story/amendment en release-datum.
 
 ## Lisensie
 

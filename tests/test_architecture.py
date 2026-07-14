@@ -1,11 +1,11 @@
 # Bestand: test_architecture.py
-# Versienommer: 0.1.0
-# Doel: Dwing klasgebaseerde, import-veilige bronkode sonder globale state af.
+# Versienommer: 0.2.0
+# Doel: Dwing klasgebaseerde importveiligheid en volledige kodeheaders af.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-002 Clean Repository And Project Skeleton
-# Actienr: MCP-ACT-002-RED-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-002
+# User-Story: AUDIO-PRIORITY-AMENDMENT-001
+# Actienr: MCP-ACT-AUDIO-AMEND-GREEN-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 
 import ast
 import subprocess
@@ -74,3 +74,12 @@ class TestArchitectureRules:
                 "# ChatID:",
             ):
                 assert required_label in content, f"{source_path}: missing {required_label}"
+
+            for required_value_label in ("Versienommer", "User-Story", "Actienr", "ChatID"):
+                matching_lines = [
+                    line for line in content.splitlines() if line.startswith(f"# {required_value_label}:")
+                ]
+                assert len(matching_lines) == 1, f"{source_path}: invalid {required_value_label} count"
+                assert matching_lines[0].split(":", 1)[1].strip(), (
+                    f"{source_path}: empty {required_value_label}"
+                )

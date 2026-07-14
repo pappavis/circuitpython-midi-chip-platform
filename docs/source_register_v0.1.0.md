@@ -2,13 +2,13 @@
 
 <!--
 Bestand: source_register_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Registreer primêre tegniese en plaaslike bronne met gebruiksgrense.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-001 Device And Source Baseline Inventory
-Actienr: MCP-ACT-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001
+User-Story: AUDIO-PRIORITY-AMENDMENT-001
+Actienr: MCP-ACT-AUDIO-AMEND-SRC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 -->
 
 ## Primêre tegniese bronne
@@ -17,6 +17,8 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001
 |---|---|---|
 | [CircuitPython `usb_midi`](https://docs.circuitpython.org/en/latest/shared-bindings/usb_midi/) | USB-MIDI enable/disable, poorte, name en ESP32-S2 endpointwaarskuwing | Primêre amptelike API; firmwareweergawe moet tydens implementering bevestig word |
 | [CircuitPython `audiobusio.I2SOut`](https://docs.circuitpython.org/en/stable/shared-bindings/audiobusio/) | I2S-penkontrak en sample-uitvoer | Primêre amptelike API; beskikbaarheid is bordbou-afhanklik |
+| [Adafruit MAX98357 overview](https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp/overview) | Mono-I2S-versterker, sample rates, mono-meng en geen MCLK | Amptelike produkhandleiding; werklike bord/HIL bly verpligtend |
+| [Adafruit MAX98357 pinouts](https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp/pinouts) | BCLK/LRC/DIN, bridge-tied luidsprekeruitgang, krag en gain/mode | Primêre veiligheids- en bedradingbron |
 | [CircuitPython `synthio`](https://docs.circuitpython.org/en/latest/shared-bindings/synthio/) | Eksperimentele synth, panning, envelope en bend-spike | Primêre API, maar eksplisiet eksperimenteel; nie ons enigste kernbasis nie |
 | [Adafruit MIDI Library](https://docs.circuitpython.org/projects/midi/en/latest/) | Note On/Off, CC, pitch bend, clock, start/stop/continue | Amptelike biblioteek; bundelweergawe moet vasgepen word |
 | [Adafruit MIDI API](https://docs.circuitpython.org/projects/midi/en/latest/api.html) | 14-bit bend, 7-bit CC en 24 PPQN timing clock | Primêre boodskapsemantiek |
@@ -24,6 +26,8 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001
 | [HTTP server polling examples](https://docs.circuitpython.org/projects/httpserver/en/stable/examples.html) | Koöperatiewe polling en asyncio-opsies | Voorbeeld is nie ’n real-time klankwaarborg nie |
 | [CircuitPython `settings.toml`](https://learn.adafruit.com/networking-in-circuitpython/network-settings) | Moderne private netwerkconfig | Geen geheime in Git nie |
 | [Raspberry Pi OS documentation](https://www.raspberrypi.com/documentation/computers/os.html) | Skeiding van Linux/Python-teikens van mikrobeheerderfirmware | Pi Zero/3 kry ’n adapter, nie dieselfde firmwareclaim nie |
+| [Fishman TriplePlay Support](https://fishman.com/tripleplay-support/) | USB-MIDI-kitaar, polyfonie en individuele string bends | Amptelike produkondersteuning; TriplePlay is 'n HIL-verwysing, nie 'n kodekonstante nie |
+| [Fishman TriplePlay Utility User Guide](https://a11.fishman.com/wp-content/uploads/2024/12/TriplePlayUtility-UserGuide.pdf) | Trigger/Auto/Smooth/Step bend- en slide-semantiek | Amptelike handleiding; synth bend range moet konfigureerbaar en ooreenstemmend wees |
 
 ## Plaaslike en projekbronne
 
@@ -38,4 +42,3 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001
 ## Bronreël
 
 Dokumentasie of video bewys nie dat ’n spesifieke bordbou ’n module bevat of dat real-time klank stabiel is nie. Elke kritieke eis kry ’n runtime-vermoënscheck en, waar toepaslik, ’n ossilloskoop-/luistertoets.
-
