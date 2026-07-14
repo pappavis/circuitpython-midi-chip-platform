@@ -4,7 +4,18 @@
 
 ## Projekstatus
 
-Die projek is in **Sprint 0: ontdekking en basislyn-inventaris**. Hierdie weergawe bevat die goedgekeurde MVP-grense, argitektuurbesluite, bron- en hergebruiksmatriks, risiko’s, spanverantwoordelikhede, user stories en Kanban-agterstand. Daar is nog geen nuwe firmware in hierdie skoon repository nie.
+Die projek is in **Sprint 0: platformfondasie**. MCP-US-002 lewer 'n invoerveilige, klasgebaseerde host-skelet met poorte vir MIDI, klank, klok en konfigurasie. Daar is nog geen toestel-firmware of hoorbare chip-emulasie in hierdie repository nie; daardie werk volg volgens backlogvolgorde.
+
+## Begin hier
+
+Die [snelbegin- en installasiegids](docs/quickstart_installation_v0.1.0.md) neem 'n beginner stap vir stap deur Git, Python, 'n virtuele omgewing, installasie, diagnose en toetse op macOS, Windows en Raspberry Pi. VS Code en Thonny is opsionele hulpmiddels; die projek is nie van enige IDE afhanklik nie.
+
+Nadat die installasie voltooi is:
+
+```bash
+python -m midi_chip_platform diagnose
+python -m pytest
+```
 
 ## MVP in een sin
 
@@ -27,6 +38,8 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [Agile delivery- en releaseplan](docs/agile_delivery_release_plan_v0.1.0.md)
 - [Backlog sanity check](docs/backlog_sanity_check_v0.1.0.md)
 - [Afdwingbare agent- en kodereels](AGENTS.md)
+- [Snelbegin, installasie en ontwikkelomgewings](docs/quickstart_installation_v0.1.0.md)
+- [MCP-US-002 review en toetsbewys](docs/mcp_us_002_project_skeleton_review_v0.1.0.md)
 
 ## Belangrike veiligheidsreëls
 
@@ -46,6 +59,8 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - Die klankenjin bly vervangbaar: SN76489 eerste; SID, OPL2/OPL3 en ander kerne later.
 - Die span volg backlogvolgorde; side quests word georden en nie stilweg geimplementeer nie.
 - Lessons learned word na elke drie of vier voltooide stories en by epic-/releasegrense opgedateer.
+- `python-d1-synth` is produksiekode en word uitsluitlik as 'n leesalleen-verwysing gebruik.
+- Ollama is opsioneel vir goedgekeurde klein ontwikkeltake; dit is nooit nodig om die synth te bou of uit te voer nie.
 
 ## Lisensie
 

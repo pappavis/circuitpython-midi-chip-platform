@@ -14,6 +14,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001
 ## Statuslegende
 
 - **Done:** artefakte en bewys is gereed vir aanvaarding.
+- **In Review:** implementering en outomatiese bewys is gereed vir menslike aanvaarding.
 - **Next:** logiese volgende story; nog nie begin nie.
 - **MVP:** nodig vir die eerste aanvaarbare produkdemonstrasie.
 - **Stretch:** slegs indien die vaste MVP stabiel en binne begroting is.
@@ -24,7 +25,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-001 | Device And Source Baseline Inventory | Done | - | Bord, bronne, rugsteun, risiko’s en hergebruik is gedokumenteer |
-| MCP-US-002 | Clean Repository And Project Skeleton | Next/MVP | US-001 | Klasgebaseerde poorte, host-toetse en headers bestaan; geen toestel-I/O nie |
+| MCP-US-002 | Clean Repository And Project Skeleton | In Review/MVP | US-001 | Klasgebaseerde poorte, host-toetse en headers bestaan; geen toestel-I/O nie |
 | MCP-US-003 | Minimal Safe Boot And USB Profile | MVP | US-002 | USB-MIDI begin vóór runtime; geen netwerk of geheime in `boot.py` nie |
 | MCP-US-004 | Board Capability Discovery | MVP | US-002 | Bordprofiel rapporteer penne, modules, geheue en ondersteunde klankbackends |
 | MCP-US-005 | Configuration And Secret Boundary | MVP | US-003 | Publieke verstekke en private `settings.toml` werk; geheime-lektoets is groen |

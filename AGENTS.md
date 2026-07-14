@@ -2,13 +2,13 @@
 
 <!--
 Bestand: AGENTS.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Afdwingbare werkreels vir mense, Codex en ander ontwikkelagente.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-001 Device And Source Baseline Inventory
-Actienr: MCP-ACT-001-GOV-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / GOVERNANCE-AMENDMENT-001
+User-Story: MCP-US-002 Clean Repository And Project Skeleton
+Actienr: MCP-ACT-002-GOV-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-002
 -->
 
 ## Harde argitektuurreels
@@ -46,6 +46,14 @@ Toetse self word ook in toetsklasse georganiseer. 'n Uitsondering op hierdie ree
 6. Geen GUI-, web-, nuwe kern-, DSP-, PCB- of packaging-werk word vroeer ingetrek omdat dit interessant lyk nie.
 7. Codex waarsku die Product Owner wanneer 'n versoek die logiese volgorde, argitektuur of werkende synth kan breek.
 
+## Produksie-repositorygrens
+
+1. `pappavis/python-d1-synth` en elke plaaslike checkout daarvan is produksiekode en absoluut leesalleen.
+2. Geen bronkode, toetse, dokumentasie, konfigurasie, backlog, Git-geskiedenis, commit of push mag daar verander word nie.
+3. Die repository mag slegs gelees word vir bevestigde gedrag, kontrakte en lessons learned.
+4. Hergebruik beteken dat 'n nuwe, aangepaste implementering in hierdie repository geskryf en hier getoets word; kode word nie terug in `python-d1-synth` geplaas nie.
+5. Enige taak wat die grens sou oorskry, word gestop en as 'n scope- of veiligheidsimpediment gerapporteer.
+
 ## Virtuele span
 
 Elke story bevat 'n sigbare bydraerekord van:
@@ -71,3 +79,11 @@ Elke story bevat 'n sigbare bydraerekord van:
 - Lessons learned word na elke groep van drie of vier voltooide stories bygewerk, en ook by elke epic-/releasegrens of ernstige impedimentgroep.
 - Geen commit/push indien geheime, private rugsteune, plaaslike toestel-ID's of onbevestigde release-aansprake teenwoordig is nie.
 
+## Opsionele plaaslike LLM-beleid
+
+1. Ollama is slegs 'n opsionele ontwikkelhulpmiddel en nooit 'n firmware-, synth-runtime-, bou- of IDE-afhanklikheid nie.
+2. Gebruik vereis 'n goedgekeurde, benoemde taak en voorafkontrole met `ollama list` plus 'n klein tydbegrensde proefaanroep.
+3. Geen geheime, toestelrugsteune, privaat data of produksiekode word na 'n modelprompt gestuur nie.
+4. Die verstekverskaffer is `default`; enige toekomstige host-hulpmiddel moet ook `--llm-provider default` aanvaar om Ollama eksplisiet af te skakel.
+5. Indien die rekenaar stadiger word, word die plaaslike versoek gestop en die taak gaan met die verstek-Codex/LLM-pad voort.
+6. Codex hersien alle plaaslike modeluitset en gewone toetse en menslike aanvaarding bly verpligtend.

@@ -57,11 +57,14 @@ Legenda: **A** aanspreeklik, **R** uitvoerend verantwoordelik, **C** geraadpleeg
 ## Plaaslike Ollama-beleid
 
 - Delegering gebeur slegs ná overleg met die gebruiker vir ’n benoemde klein taak.
+- Voor enige gebruik word die model se beskikbaarheid met `ollama list` bevestig en 'n klein tydbegrensde proefaanroep uitgevoer.
 - Geskikte take: taalversorging, tabelnormalisering, toetsnaamvoorstelle en nie-sensitiewe opsommings.
 - Ongeskikte take: geheime, toestelrugsteune, argitektuurbesluite, veiligheidskritieke kode en finale Git-publikasie.
 - Codex hersien altyd die uitset; gewone toetse en menslike aanvaarding bly verpligtend.
-- Fallback is altyd Codex wanneer Ollama stadig, onbeskikbaar of onseker is.
+- Ollama is nooit deel van die firmware, synth-runtime of verpligte ontwikkelketting nie.
+- Die verstek is `default`; 'n toekomstige host-hulpmiddel moet `--llm-provider default` bied om plaaslike modelgebruik af te skakel.
+- Fallback is altyd die verstek-Codex/LLM-pad wanneer Ollama stadig, onbeskikbaar of onseker is.
 
-## Voorstel vir eerste Ollama-delegering
+## Huidige gebruikstatus
 
-In MCP-US-002 kan `phi4-mini` ’n konseplys van host-toetsname vir die poortinterfaces voorstel. Geen kode, geheime of toesteldata word gedeel nie; Codex keur die lys, skryf die toetse en bewys die rooi/groen-fases.
+MCP-US-002 het geen plaaslike model gebruik nie. Ollama-integrasie bly buite die synth-runtime en vereis 'n afsonderlik goedgekeurde ontwikkelhulpmiddel-story.
