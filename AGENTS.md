@@ -2,13 +2,13 @@
 
 <!--
 Bestand: AGENTS.md
-Versienommer: 0.3.0
+Versienommer: 0.4.0
 Doel: Afdwingbare werkreels vir mense, Codex en ander ontwikkelagente.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: AUDIO-PRIORITY-AMENDMENT-001
-Actienr: MCP-ACT-AUDIO-AMEND-GOV-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
+User-Story: MCP-US-003 Minimal Safe Boot And USB Profile
+Actienr: MCP-ACT-003-GOV-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
 -->
 
 ## Harde argitektuurreels
@@ -78,11 +78,15 @@ Elke story bevat 'n sigbare bydraerekord van:
 
 'Not impacted' is toelaatbaar, maar moet met een sin gemotiveer word. Dit verhoed denkbeeldige spanaktiwiteit en maak werklike besluitneming naspeurbaar.
 
+Copilot kan as eksterne argitektuurreviewer inset lewer. Dié inset is adviserend: die Solution Architect en QA toets dit teen hierdie repository, amptelike bronne en Product Owner-besluite voordat enige voorstel kode of backlog word.
+
 ## Kwaliteits- en releasehekke
 
 - Red-toets voor groen implementering.
 - Alle host-toetse groen voor toestelontplooiing.
 - Hardeware-aanvaarding vir enige fisiese MIDI-, klank-, klok- of penverandering.
+- Vroeë HIL-stories toon in die chat 'n drieledige Device Connection Proof: verbinding, gedeployde artefak en werklike toesteluitvoering. Ná eksplisiete Product Owner-vertroue mag dit vir host-only werk opsioneel word, maar nooit vir HIL-, herstel- of releasebewys nie.
+- Seriële poorte, volume-name en toestel-ID's word ontdek en nie as universele konstantes gestoor nie; private UID-, MAC-, netwerk- en geheime-data word uit logs en Git gehou.
 - Headers bevat bestand, weergawe, doel, sprint, epic, story, aksie en ChatID.
 - Backlog, dokumentasie en Kanban word saam bygewerk.
 - Lessons learned word na elke groep van drie of vier voltooide stories bygewerk, en ook by elke epic-/releasegrens of ernstige impedimentgroep.

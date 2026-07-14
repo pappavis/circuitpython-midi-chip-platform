@@ -1,11 +1,11 @@
 # Bestand: test_architecture.py
-# Versienommer: 0.2.0
-# Doel: Dwing klasgebaseerde importveiligheid en volledige kodeheaders af.
+# Versienommer: 0.3.0
+# Doel: Dwing klasgebaseerde host- en toestelfirmware-argitektuur en kodeheaders af.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: AUDIO-PRIORITY-AMENDMENT-001
-# Actienr: MCP-ACT-AUDIO-AMEND-GREEN-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
+# User-Story: MCP-US-003 Minimal Safe Boot And USB Profile
+# Actienr: MCP-ACT-003-RED-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
 
 import ast
 import subprocess
@@ -59,7 +59,11 @@ class TestArchitectureRules:
 
     def test_python_files_contain_required_traceability_header(self) -> None:
         repository_root = Path(__file__).parents[1]
-        source_paths = list((repository_root / "src").rglob("*.py")) + list((repository_root / "tests").rglob("*.py"))
+        source_paths = (
+            list((repository_root / "src").rglob("*.py"))
+            + list((repository_root / "device").rglob("*.py"))
+            + list((repository_root / "tests").rglob("*.py"))
+        )
 
         for source_path in source_paths:
             content = source_path.read_text(encoding="utf-8")
@@ -83,3 +87,28 @@ class TestArchitectureRules:
                 assert matching_lines[0].split(":", 1)[1].strip(), (
                     f"{source_path}: empty {required_value_label}"
                 )
+
+    def test_device_entrypoints_exist_and_remain_class_only(self) -> None:
+        repository_root = Path(__file__).parents[1]
+        device_paths = (repository_root / "device" / "boot.py", repository_root / "device" / "code.py")
+        forbidden_nodes = (ast.Assign, ast.AnnAssign, ast.AugAssign, ast.FunctionDef, ast.AsyncFunctionDef)
+
+        for device_path in device_paths:
+            assert device_path.is_file(), f"missing CircuitPython entrypoint: {device_path}"
+            syntax_tree = ast.parse(device_path.read_text(encoding="utf-8"), filename=str(device_path))
+            violations = [type(node).__name__ for node in syntax_tree.body if isinstance(node, forbidden_nodes)]
+            assert violations == [], f"{device_path}: forbidden module-level nodes {violations}"
+
+    def test_device_boot_has_no_runtime_service_imports(self) -> None:
+        boot_path = Path(__file__).parents[1] / "device" / "boot.py"
+        syntax_tree = ast.parse(boot_path.read_text(encoding="utf-8"), filename=str(boot_path))
+        forbidden_modules = {"audiobusio", "audiopwmio", "socketpool", "synthio", "wifi"}
+        imported_names = set()
+
+        for node in ast.walk(syntax_tree):
+            if isinstance(node, ast.Import):
+                imported_names.update(alias.name.split(".")[0] for alias in node.names)
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                imported_names.add(node.module.split(".")[0])
+
+        assert imported_names.isdisjoint(forbidden_modules), "boot.py starts a forbidden runtime service"

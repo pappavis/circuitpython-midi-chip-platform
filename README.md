@@ -4,7 +4,7 @@
 
 ## Projekstatus
 
-Die projek is in **Sprint 0: platformfondasie**. MCP-US-002 is aanvaar; MCP-US-003 is volgende. Die eerste hoorbare ontwikkelsny gebruik een MAX98357 in mono-I2S-modus, met PWM as diagnostiese fallback. Daar is nog geen toestel-firmware of hoorbare chip-emulasie in hierdie repository nie.
+Die projek is in **Sprint 1: platformfondasie**. MCP-US-003 se minimale, herstelbare CircuitPython USB-MIDI-profiel is in uitvoering; daar is nog geen hoorbare chip-emulasie nie. Die eerste hoorbare ontwikkelsny gebruik een MAX98357 in mono-I2S-modus, met PWM as diagnostiese fallback.
 
 ## Begin hier
 
@@ -41,6 +41,8 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [Snelbegin, installasie en ontwikkelomgewings](docs/quickstart_installation_v0.1.0.md)
 - [MCP-US-002 review en toetsbewys](docs/mcp_us_002_project_skeleton_review_v0.1.0.md)
 - [Audio-prioriteit en MIDI-kitaar amendment](docs/audio_priority_amendment_v0.1.0.md)
+- [MIDI-transport en multi-core amendment](docs/midi_transport_multicore_amendment_v0.1.0.md)
+- [Device Connection Proof](docs/device_connection_proof_v0.1.0.md)
 
 ## Belangrike veiligheidsreëls
 

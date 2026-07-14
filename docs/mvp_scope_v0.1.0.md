@@ -2,13 +2,13 @@
 
 <!--
 Bestand: mvp_scope_v0.1.0.md
-Versienommer: 0.2.0
+Versienommer: 0.3.0
 Doel: Definieer die eerste toetsbare CircuitPython MIDI Chip Platform MVP.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: AUDIO-PRIORITY-AMENDMENT-001
-Actienr: MCP-ACT-AUDIO-AMEND-DOC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
+User-Story: MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
+Actienr: MCP-ACT-MTM-AMEND-DOC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
 -->
 
 ## Produkdefinisie
@@ -33,14 +33,17 @@ Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 8. Die oplossing kan vanaf ’n skoon toestel geïnstalleer, gediagnoseer en herstel word.
 9. ’n Laat-MVP, geheuebegrensde delay/echo en eenvoudige reverb-spike kan omseil en beheer word sonder om MIDI te destabiliseer.
 10. 'n Generiese USB-MIDI-kitaarkontroleerder kan note, akkoorde, per-kanaal bends en slides stuur; Fishman TriplePlay dien as verwysings-HIL-toestel, nie as hardgekodeerde afhanklikheid nie.
+11. Die pedaal ontvang MIDI sonder DAW via 'n klas-kompatibele eksterne USB-host/Raspberry Pi-roete na 'n geabstraheerde DIN/UART-invoer.
+12. Minstens twee verskillende geregistreerde kerninstansies kan laat in die MVP parallel loop met meetbare en veilige oorladinggedrag.
 
 ## Binne MVP
 
 - Een verwysingsbord: LOLIN/Wemos ESP32-S2 Mini met CircuitPython 10.x.
-- Een aktiewe kern: SN76489-lite, maksimum drie toonstemme.
+- SN76489-lite is die eerste musikale kern; 'n minimale tweede kernadapter bewys laat-MVP parallelle multi-core-uitvoering voordat SID/OPL-akkuraatheid geëis word.
 - USB-MIDI-invoer en MIDI-kanale 1-16.
 - Note On, Note Off, velocity, pitch bend, CC1, All Notes Off en MIDI Clock/Start/Stop/Continue.
 - Konfigureerbare pitch-bend range en multi-kanaal bend/slide-semantiek vir MIDI-kitaarkontroleerders.
+- USB-MIDI device mode vir Logic/ander hosts plus 'n DIN/UART-transport vir 'n eksterne USB-MIDI-host soos 'n Raspberry Pi- of DOREMiDi-klas toestel.
 - Interne klok teen standaard 120 BPM met eksterne MIDI-klok-oorskakeling.
 - Een MAX98357 as die primêre vroeë mono-I2S-uitvoer, gevolg deur 'n hoorbare diagnostiese toetssein.
 - PWM as altyd-beskikbare debug-/ossilloskoop-fallback wanneer I2S nie op 'n bord beskikbaar is nie.
@@ -55,8 +58,7 @@ Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 - Oudio-invoer, pedalboard-through en verwerking van eksterne kitaarklank.
 - Volledige SID-lêer-afspeel of internetstroming.
 - Volledige GM MIDI-lêer-afspeel.
-- Meer as een kern gelyktydig.
-- OPL2/OPL3- of 6581-SID-klankakkuraatheid.
+- Cycle-accurate OPL2/OPL3- of 6581-SID-klankakkuraatheid; dié adapters bly opvolgwerk ná die multi-core-kontrakbewys.
 - ’n Volwaardige sekwenser, arpeggiator of akkoordkomponis.
 - Bluetooth MIDI, DIN-MIDI-elektronika en ’n finale PCB/omhulsel.
 - Ondersteuning wat beweer dat alle CircuitPython-borde identies werk.
@@ -74,6 +76,8 @@ Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 - Webparameterverandering onderbreek nie ’n aangehoue noot onaanvaarbaar nie.
 - DSP-bypass en ten minste een hoorbare delay/reverb-proef loop binne die ooreengekome geheue- en latensiebegroting.
 - Alle host-toetse is groen en die hardeware-aanvaardingstappe is gedokumenteer.
+- 'n Controller kan sonder Logic via 'n eksterne USB-host/DIN-roete hoorbare MIDI aan die pedaal lewer.
+- Twee kerninstansies kan parallel loop of die runtime weier 'n onveilige tweede kern deterministies met 'n duidelike resource-diagnose.
 - Geen geheime of toestelspesifieke konstantes is in die openbare repository nie.
 
 ## Besluithekke

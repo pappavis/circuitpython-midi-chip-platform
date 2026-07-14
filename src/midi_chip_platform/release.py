@@ -1,18 +1,18 @@
 # Bestand: release.py
-# Versienommer: 0.1.0
-# Doel: Besit en formateer runtime-release- en storynaspeurbaarheid.
-# Sprint: Sprint 0
+# Versienommer: 0.2.0
+# Doel: Besit en formateer gedeelde host- en toestel-release-naspeurbaarheid.
+# Sprint: Sprint 1
 # Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: AUDIO-PRIORITY-AMENDMENT-001
-# Actienr: MCP-ACT-AUDIO-AMEND-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
+# User-Story: MCP-US-003 Minimal Safe Boot And USB Profile
+# Actienr: MCP-ACT-003-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.1.1",
-        user_story="AUDIO-PRIORITY-AMENDMENT-001",
+        version="0.2.0",
+        user_story="MCP-US-003",
         release_date="2026-07-14",
     ):
         self._version = str(version)

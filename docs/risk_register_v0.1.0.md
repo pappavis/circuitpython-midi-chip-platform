@@ -2,13 +2,13 @@
 
 <!--
 Bestand: risk_register_v0.1.0.md
-Versienommer: 0.2.0
+Versienommer: 0.3.0
 Doel: Tegniese, produk-, veiligheids- en afleweringsrisiko’s vir die MVP.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: AUDIO-PRIORITY-AMENDMENT-001
-Actienr: MCP-ACT-AUDIO-AMEND-RISK-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
+User-Story: MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
+Actienr: MCP-ACT-MTM-AMEND-RISK-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
 -->
 
 | ID | Risiko | Waarskynlikheid | Impak | Eienaar | Beheer/mitigering | Status |
@@ -21,7 +21,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 | R-006 | Webserver gebruik te veel RAM/sokke | Hoog | Hoog | Web/QA | Een kliënt; klein statiese bates; pollingbegroting; geheuemeting | Oop |
 | R-007 | “Alle CircuitPython-borde” word verkeerd as identies aangebied | Hoog | Hoog | Architect/Docs | Profielkontrak; ondersteuningsmatriks; geen onbevestigde eis nie | Beheer aktief |
 | R-008 | Raspberry Pi Linux en mikrobeheerderfirmware word vermeng | Medium | Medium | Architect | Afsonderlike Blinka/host-adapter en toetsbaan | Beheer aktief |
-| R-009 | Meer kerne oorskry CPU/RAM en beïnvloed klank | Hoog | Hoog | DSP/Architect | Een kern in eerste MVP; begroting vóór tweede kern | Oop |
+| R-009 | Meer kerne oorskry CPU/RAM en beïnvloed klank | Hoog | Hoog | DSP/Architect | Vroeë enkelkernpad; laat-MVP twee-kern-bewys met heap/latensie/dropout-metriek en deterministiese weiering | Oop - risiko aanvaar |
 | R-010 | SID/OPL-emulasie skep lisensie- of akkuraatheidsaansprake | Medium | Hoog | PO/Release | Bronlisensie-register; akkuraatheidsvlakke; geen “cycle accurate” sonder bewys | Oop |
 | R-011 | MIDI clock (24 PPQN) oorlaai ontvangslus | Medium | Hoog | MIDI | Prioriteitsry, geen onnodige logging, klok-jittertoetse | Oop |
 | R-012 | Dedupe-logika verwyder geldige note of clock | Medium | Hoog | MIDI/QA | Boodskapspesifieke dedupe; nooit blind op clock toepas nie | Oop |
@@ -32,6 +32,9 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 | R-017 | Plaaslike LLM lewer onbetroubare kode of lek konteks | Medium | Medium | Architect/QA | Slegs klein nie-geheime take ná overleg; Codex-review en toetse verpligtend | Oop |
 | R-018 | Privaat toestelrugsteun word per ongeluk gepubliseer | Laag | Kritiek | Release | Buite repo; beperkte regte; `.gitignore`; pre-commit inhoudkontrole | Beheer aktief |
 | R-019 | MIDI-kitaar se bend range/kanaalmodus verskil van die synth en maak slides vals | Hoog | Hoog | MIDI/QA | Konfigureerbare bend range; per-kanaal bend-state; Fishman plus generiese HIL; diagnose wys modus | Oop |
+| R-020 | Twee USB-device-endpoints word sonder 'n USB-host verbind en geen MIDI vloei nie | Hoog | Hoog | MIDI/Docs | Dokumenteer host/device-rolle; gebruik rekenaar, Raspberry Pi of eksterne USB-host; DIN/UART HIL | Oop |
+| R-021 | Device-proof publiseer UID, MAC, SSID of ander plaaslike data | Medium | Kritiek | QA/Release | Redigeer uitvoer; publiseer slegs poorttipe, bord-ID, firmwareweergawe, commit/hash en status | Beheer aktief |
+| R-022 | Eksterne USB-host ondersteun nie die betrokke controller of bend/clock-boodskap nie | Medium | Hoog | MIDI/QA | Klas-kompatibiliteitsmatriks; generiese plus Fishman HIL; geen handelsnaamwaarborg sonder toets nie | Oop |
 
 ## Hoogste onmiddellike aksies
 

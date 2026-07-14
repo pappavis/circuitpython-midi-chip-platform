@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.2.0
-# Doel: Toets die IDE-onafhanklike host-diagnose en startup-naspeurbaarheid.
+# Versienommer: 0.3.0
+# Doel: Toets host-diagnose en gedeelde MCP-US-003 release-naspeurbaarheid.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: AUDIO-PRIORITY-AMENDMENT-001
-# Actienr: MCP-ACT-AUDIO-AMEND-RED-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
+# User-Story: MCP-US-003 Minimal Safe Boot And USB Profile
+# Actienr: MCP-ACT-003-RED-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
 
 from io import StringIO
 from pathlib import Path
@@ -30,8 +30,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.1.1 | "
-            "story=AUDIO-PRIORITY-AMENDMENT-001 | release-date=2026-07-14\n"
+            "circuitpython-midi-chip-platform v0.2.0 | "
+            "story=MCP-US-003 | release-date=2026-07-14\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:

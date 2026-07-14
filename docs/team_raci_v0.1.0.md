@@ -2,13 +2,13 @@
 
 <!--
 Bestand: team_raci_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Definieer spanrolle, bydraes, besluitregte en samewerkingsritme.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-001 Device And Source Baseline Inventory
-Actienr: MCP-ACT-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001
+User-Story: MCP-US-003 Minimal Safe Boot And USB Profile
+Actienr: MCP-ACT-003-RACI-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
 -->
 
 ## Spanrolle
@@ -27,6 +27,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001
 | QA/HIL Engineer | Rooi/groen, simulators, meettoerusting en hardeware-aanvaarding | Toetsmatriks en objektiewe bewys |
 | Release/Documentation | Git, weergawe, installasie, sekuriteit en naspeurbaarheid | Publikasiehek en gebruikersdokumentasie |
 | Devil’s Advocate | Kritiese teenargumente, mislukkingmodusse en scope creep | Ten minste een risiko of falsifiseerbare vraag |
+| External Architecture Reviewer (Copilot) | Tweede opinie oor argitektuur en scope | Adviserende bevindinge; geen direkte implementasie- of besluitreg nie |
 
 ## RACI per werkstroom
 
@@ -53,6 +54,7 @@ Legenda: **A** aanspreeklik, **R** uitvoerend verantwoordelik, **C** geraadpleeg
 6. Na groen host-toetse volg hardeware-aanvaarding indien fisiese gedrag geraak word.
 7. Dokumentasie, Kanban, commit en push sluit die story af.
 8. Na elke drie of vier voltooide stories fasiliteer die Scrum Master 'n lessons-learned-checkpoint voor die volgende releasebesluit.
+9. Copilot-feedback word as review-input gelog; Codex/Solution Architect klassifiseer dit as aanvaar, wysig, uitstel of verwerp voordat die PO dit bekragtig.
 
 ## Plaaslike Ollama-beleid
 
@@ -67,4 +69,4 @@ Legenda: **A** aanspreeklik, **R** uitvoerend verantwoordelik, **C** geraadpleeg
 
 ## Huidige gebruikstatus
 
-MCP-US-002 het geen plaaslike model gebruik nie. Ollama-integrasie bly buite die synth-runtime en vereis 'n afsonderlik goedgekeurde ontwikkelhulpmiddel-story.
+MCP-US-002 en MCP-US-003 het geen plaaslike Ollama-model gebruik nie. Ollama-integrasie bly buite die synth-runtime en vereis 'n afsonderlik goedgekeurde ontwikkelhulpmiddel-story.

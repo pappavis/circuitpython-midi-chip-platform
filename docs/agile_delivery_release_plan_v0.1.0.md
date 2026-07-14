@@ -2,13 +2,13 @@
 
 <!--
 Bestand: agile_delivery_release_plan_v0.1.0.md
-Versienommer: 0.2.0
+Versienommer: 0.3.0
 Doel: Definieer die werklike Agile uitvoerings-, beheer- en releaseproses.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: AUDIO-PRIORITY-AMENDMENT-001
-Actienr: MCP-ACT-AUDIO-AMEND-REL-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
+User-Story: MCP-US-003 Minimal Safe Boot And USB Profile
+Actienr: MCP-ACT-003-REL-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
 -->
 
 ## Doel
@@ -45,7 +45,7 @@ Hierdie projek word bestuur as 'n werklike klein produkspan. Dokumentasie is nie
 3. **Red phase:** QA en ontwikkelaar bewys die ontbrekende gedrag met 'n falende toets.
 4. **Green phase:** Die kleinste klasgebaseerde implementering maak die toets groen.
 5. **Regression:** Volle relevante suite, importveiligheid en geheimekontrole slaag.
-6. **HIL/review:** PO voer die gepaste MIDI-/klank-/Logic-/ossilloskooptoets uit.
+6. **HIL/review:** QA bewys eers verbinding, deploy en toesteluitvoering; PO voer daarna die gepaste MIDI-/klank-/Logic-/ossilloskooptoets uit.
 7. **Closure:** docs, Kanban, rolbydraes, commit en push word voltooi.
 8. **Next proposal:** net die volgende logiese story word voorgestel.
 
@@ -96,6 +96,15 @@ Die bestaande D1 lessons-learned-dokument mag gelees word vir bevestigde patrone
 6. Release notes onderskei Concept, Demo, MVP en Validated sonder oordrywing.
 7. Git-tag wys na presies die geverifieerde commit; rollback-instruksie bestaan.
 8. Elke startup toon projekweergawe, aktiewe story/amendment en release-datum; dit stem met package- en release-metadata ooreen.
+9. Fisiese claims bevat Device Connection Proof met ontdekte transport, broncommit/manifest en 'n runtimebanner vanaf die toestel. UID, MAC, SSID en geheime word geredigeer.
+
+## Device Connection Proof
+
+1. **Connection:** ontdek CIRCUITPY en/of 'n seriële poort en lees bord plus CircuitPython-weergawe sonder hardgekodeerde toestelname.
+2. **Deployment:** vergelyk die broncommit en SHA-256-hashes van die bedoelde firmwarelêers met die gedeployde kopie.
+3. **Execution:** vang die toestel se eie weergawe-, story- en statusbanner ná reset/reload vas.
+
+'n Seriële bewys mag `code.py` onderbreek. Die operateur meld dit vooraf, kontroleer dat geen ander serial client die poort besit nie en behou 'n private herstelkopie. Volledige MCP-US-051-uitvoering bly afhanklik van die latere klankpad; MCP-US-003 lewer slegs die eerste USB/boot-bewys.
 
 ## Anti-hallusinasie-maatreels
 

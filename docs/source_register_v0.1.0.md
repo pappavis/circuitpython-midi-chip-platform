@@ -2,13 +2,13 @@
 
 <!--
 Bestand: source_register_v0.1.0.md
-Versienommer: 0.2.0
+Versienommer: 0.3.0
 Doel: Registreer primêre tegniese en plaaslike bronne met gebruiksgrense.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: AUDIO-PRIORITY-AMENDMENT-001
-Actienr: MCP-ACT-AUDIO-AMEND-SRC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
+User-Story: MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
+Actienr: MCP-ACT-MTM-AMEND-SRC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MIDI-TRANSPORT-MULTICORE-AMENDMENT-001
 -->
 
 ## Primêre tegniese bronne
@@ -16,6 +16,8 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 | Bron | Gebruik | Vertroue/beperking |
 |---|---|---|
 | [CircuitPython `usb_midi`](https://docs.circuitpython.org/en/latest/shared-bindings/usb_midi/) | USB-MIDI enable/disable, poorte, name en ESP32-S2 endpointwaarskuwing | Primêre amptelike API; firmwareweergawe moet tydens implementering bevestig word |
+| [CircuitPython `supervisor`](https://docs.circuitpython.org/en/latest/shared-bindings/supervisor/) | USB-identiteit, run reason, safe-mode-rede en runtime-status | Omitted VID/PID behou bordverstekke; USB-wysiging gebeur slegs in `boot.py` |
+| [CircuitPython USB customization](https://learn.adafruit.com/customizing-usb-devices-in-circuitpython?view=all) | Bootvolgorde, `boot_out.txt`, endpointbegroting en recovery | ESP32-S2 het 'n beperkte endpointbegroting; HIL bly verpligtend |
 | [CircuitPython `audiobusio.I2SOut`](https://docs.circuitpython.org/en/stable/shared-bindings/audiobusio/) | I2S-penkontrak en sample-uitvoer | Primêre amptelike API; beskikbaarheid is bordbou-afhanklik |
 | [Adafruit MAX98357 overview](https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp/overview) | Mono-I2S-versterker, sample rates, mono-meng en geen MCLK | Amptelike produkhandleiding; werklike bord/HIL bly verpligtend |
 | [Adafruit MAX98357 pinouts](https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp/pinouts) | BCLK/LRC/DIN, bridge-tied luidsprekeruitgang, krag en gain/mode | Primêre veiligheids- en bedradingbron |
@@ -28,6 +30,8 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 | [Raspberry Pi OS documentation](https://www.raspberrypi.com/documentation/computers/os.html) | Skeiding van Linux/Python-teikens van mikrobeheerderfirmware | Pi Zero/3 kry ’n adapter, nie dieselfde firmwareclaim nie |
 | [Fishman TriplePlay Support](https://fishman.com/tripleplay-support/) | USB-MIDI-kitaar, polyfonie en individuele string bends | Amptelike produkondersteuning; TriplePlay is 'n HIL-verwysing, nie 'n kodekonstante nie |
 | [Fishman TriplePlay Utility User Guide](https://a11.fishman.com/wp-content/uploads/2024/12/TriplePlayUtility-UserGuide.pdf) | Trigger/Auto/Smooth/Step bend- en slide-semantiek | Amptelike handleiding; synth bend range moet konfigureerbaar en ooreenstemmend wees |
+| [DOREMiDi UMH-10](https://www.doremidi.cn/h-pd-2.html) | Voorbeeld van klas-kompatibele USB-MIDI-host na 5-pen DIN | Verwysingstoestel; presiese model/controller-kombinasie vereis eie HIL |
+| [RaspiMIDIHub](https://raspimidihub.com/) | Raspberry Pi USB-MIDI ontdekking en roetering sonder DAW | Eksterne projek; integrasie word as transport-HIL getoets, nie as firmware-afhanklikheid nie |
 
 ## Plaaslike en projekbronne
 

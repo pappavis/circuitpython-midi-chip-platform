@@ -2,18 +2,18 @@
 
 <!--
 Bestand: quickstart_installation_v0.1.0.md
-Versienommer: 0.2.0
+Versienommer: 0.3.0
 Doel: Beginnerstappe vir installasie, diagnose en ontwikkeling sonder IDE-afhanklikheid.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: AUDIO-PRIORITY-AMENDMENT-001
-Actienr: MCP-ACT-AUDIO-AMEND-DOC-002
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
+User-Story: MCP-US-003 Minimal Safe Boot And USB Profile
+Actienr: MCP-ACT-003-DOC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
 -->
 
 ## Wat hierdie weergawe doen
 
-Hierdie weergawe is 'n host-skelet wat die argitektuur en toetse op 'n gewone rekenaar uitvoer. Dit skryf nog niks na 'n CircuitPython-bord nie en maak nog geen klank nie. Die diagnose hieronder bevestig dat Python, die pakket en die veilige klasgebaseerde fondasie korrek werk.
+Hierdie weergawe bevat die host-skelet plus 'n minimale MCP-US-003 CircuitPython USB-MIDI-bootprofiel. Dit maak nog geen klank en ontvang nog geen note nie. Hosttoetse bewys die klasse; die afsonderlike Device Connection Proof bewys dat die goedgekeurde firmware op die bord loop.
 
 ## Wat jy nodig het
 
@@ -74,13 +74,29 @@ python -m pytest
 Die diagnose behoort onder meer te wys:
 
 ```text
-circuitpython-midi-chip-platform v0.1.1 | story=AUDIO-PRIORITY-AMENDMENT-001 | release-date=2026-07-14
+circuitpython-midi-chip-platform v0.2.0 | story=MCP-US-003 | release-date=2026-07-14
 circuitpython-midi-chip-platform: host skeleton ready
 hardware access: disabled
 runtime state: class instances only
 ```
 
-Die toetsuitvoer behoort met `passed` te eindig. Jy hoef nie 'n ESP32 of MIDI-toestel vir hierdie story te koppel nie.
+Die toetsuitvoer behoort met `passed` te eindig. Hosttoetse alleen bewys nie die fisiese bord nie.
+
+## MCP-US-003 toestelfirmware
+
+Die repository hou deploybare lêers in `device/`. Werk steeds in die repository en nooit direk op CIRCUITPY as jou enigste bronkopie nie.
+
+Die goedgekeurde HIL-proses:
+
+1. Ontdek CIRCUITPY en die USB-seriële poort.
+2. Maak Thonny/Serial Monitor toe sodat net een client die poort besit.
+3. Neem 'n private herstelkopie buite die repository.
+4. Kopieer `device/boot.py` en `device/code.py` na die CIRCUITPY-wortel.
+5. Kopieer slegs die vereiste package-lêers na `CIRCUITPY/lib/midi_chip_platform/`.
+6. Wag totdat writes klaar is en voer 'n harde reset/power cycle uit sodat `boot.py` weer loop.
+7. Kontroleer `boot_out.txt`, USB-MIDI-enumerasie en die runtimebanner.
+
+Die presiese bevele word deur die story se HIL-runbook gegee nadat die mount en poort ontdek is. Moenie 'n voorbeeldpad blind op 'n ander rekenaar gebruik nie.
 
 ## VS Code
 
@@ -153,6 +169,16 @@ Kontroleer dat CircuitPython gemonteer is, probeer 'n data-geskikte USB-kabel en
 
 Ollama is nie nodig vir installasie, toetse, firmware of uitvoering nie. Dit mag later slegs vir 'n goedgekeurde klein ontwikkeltaak gebruik word. Voor gebruik moet die model met `ollama list` bevestig en met 'n klein tydbegrensde proef getoets word. Die verstek bly `default`; indien die Mac stadig word, stop die plaaslike model en gebruik die verstek-Codex/LLM-pad.
 
+## Device Connection Proof
+
+Lees [Device Connection Proof](device_connection_proof_v0.1.0.md). Dit onderskei:
+
+- verbinding met 'n CircuitPython-bord;
+- deploy van die bedoelde commit/hashes;
+- toesteluitvoering van die verwagte weergawe en story.
+
+Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
+
 ## Volgende logiese story
 
-Na menslike aanvaarding van MCP-US-002 is die geordende volgende story **MCP-US-003: Minimal Safe Boot And USB Profile**. Dit sal 'n afsonderlike plan en goedkeuring vereis voordat enige toestel-I/O begin.
+MCP-US-003 is die aktiewe story. Ná sy menslike USB/boot-aanvaarding volg **MCP-US-004: Board Capability Discovery**. Die volledige MCP-US-051 HIL-runner bly afhanklik van die latere PWM-/klankmeetpad.
