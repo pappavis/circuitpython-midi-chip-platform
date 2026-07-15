@@ -1,11 +1,11 @@
 # Bestand: test_hil.py
-# Versienommer: 0.2.0
+# Versienommer: 0.3.0
 # Doel: Spesifiseer geredigeerde connection-, deploy-, boot- en execution-HIL-bewys.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-004 Board Capability Discovery
-# Actienr: MCP-ACT-004-RED-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
+# User-Story: MCP-US-005 Configuration And Secret Boundary
+# Actienr: MCP-ACT-005-RED-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
 
 from io import StringIO
 
@@ -20,7 +20,7 @@ class TestHilDeploymentManifest:
     def test_default_manifest_contains_minimal_device_release(self) -> None:
         manifest = HilDeploymentManifest.default()
 
-        assert len(manifest.entries) == 7
+        assert len(manifest.entries) == 8
         assert ("device/boot.py", "boot.py") in manifest.entries
         assert (
             "src/midi_chip_platform/device_runtime.py",
@@ -29,6 +29,10 @@ class TestHilDeploymentManifest:
         assert (
             "src/midi_chip_platform/platform_capabilities.py",
             "lib/midi_chip_platform/platform_capabilities.py",
+        ) in manifest.entries
+        assert (
+            "src/midi_chip_platform/configuration.py",
+            "lib/midi_chip_platform/configuration.py",
         ) in manifest.entries
 
 
@@ -55,15 +59,15 @@ class TestHardwareInLoopVerifier:
             device_path.write_bytes(source_relative.encode("ascii"))
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.4.0 | story=MCP-US-004 | "
-            "release-date=2026-07-14\n"
+            "circuitpython-midi-chip-platform v0.5.0 | story=MCP-US-005 | "
+            "release-date=2026-07-15\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.4.0 | story=MCP-US-004 | "
-            "release-date=2026-07-14\nDEVICE_EXECUTION_STATUS=READY"
+            "circuitpython-midi-chip-platform v0.5.0 | story=MCP-US-005 | "
+            "release-date=2026-07-15\nDEVICE_EXECUTION_STATUS=READY"
         )
         verifier = HardwareInLoopVerifier(
             source_root=source_root,

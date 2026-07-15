@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.6.0
+Versienommer: 0.7.0
 Doel: Volledige geordende backlog vir MVP en latere inkremente.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-004 Board Capability Discovery
-Actienr: MCP-ACT-004-BACKLOG-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
+User-Story: MCP-US-005 Configuration And Secret Boundary
+Actienr: MCP-ACT-005-BACKLOG-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
 -->
 
 ## Statuslegende
@@ -31,7 +31,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | MCP-US-002 | Clean Repository And Project Skeleton | Done | US-001 | Klasgebaseerde poorte, host-toetse en headers bestaan; geen toestel-I/O nie |
 | MCP-US-003 | Minimal Safe Boot And USB Profile | Done | US-002 | USB-MIDI begin vóór runtime; bord-VID/PID bly verstek; CIRCUITPY/REPL herstel en drieledige device-proof slaag |
 | MCP-US-004 | Board Capability Discovery | Done | US-002 | Profiel, IO3/5/7, modules, geheue en I2S-backend is fisies gerapporteer; power-cycle recovery en volledige manifest-HIL slaag |
-| MCP-US-005 | Configuration And Secret Boundary | MVP | US-003 | Publieke verstekke en private `settings.toml` werk; geheime-lektoets is groen |
+| MCP-US-005 | Configuration And Secret Boundary | In Review | US-003 | Hostlektoetse en prioriteit is groen; fisiese deploy wag op herstel van leesalleen CIRCUITPY-media |
 
 ## MCP-EPIC-002 MIDI And Clock
 

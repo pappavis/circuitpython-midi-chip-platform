@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr: USB-MIDI, BLE-MIDI en DIN/UART word na een d
 
 ## Projekstatus
 
-Die projek is in **Sprint 1: platformfondasie**. MCP-US-004 se klasgebaseerde capability discovery is op die fisiese LOLIN S2 Mini aanvaar: bordprofiel, geheue, I2S-penne en modules is gerapporteer en die volledige connection/deployment/boot/execution-HIL het geslaag. `audiobusio`, `synthio`, `usb_midi` en `wifi` is beskikbaar; `audiopwmio` is nie in die huidige firmwarebou beskikbaar nie. Daar is nog geen synth core en geen geaktiveerde klankuitvoer nie. Die volgende hoorbare ontwikkelsny gebruik een MAX98357 in mono-I2S-modus.
+Die projek is in **Sprint 1: platformfondasie**. MCP-US-005 se klasgebaseerde konfigurasiegrens is op die host gereed: publieke verstekke, private `settings.toml` en runtime-overrides het 'n toetsbare prioriteit, terwyl diagnostiek nooit geheime waardes wys nie. Die fisiese deploy wag op 'n menslike herstel van die tans leesalleen `CIRCUITPY`-media. Daar is nog geen synth core en geen geaktiveerde klank- of Wi-Fi-diens nie.
 
 ## Begin hier
 
@@ -50,6 +50,8 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [MCP-US-002 review en toetsbewys](docs/mcp_us_002_project_skeleton_review_v0.1.0.md)
 - [MCP-US-003 safe-boot review en HIL-bewys](docs/mcp_us_003_safe_boot_review_v0.1.0.md)
 - [MCP-US-004 bordvermoëns-review en bedrading](docs/mcp_us_004_board_capability_review_v0.1.0.md)
+- [MCP-US-005 konfigurasie- en geheimegrens-review](docs/mcp_us_005_configuration_secret_boundary_review_v0.1.0.md)
+- [Sprint 1 lessons learned - checkpoint 001](docs/lessons_learned_sprint_1_checkpoint_001_v0.1.0.md)
 - [MCP-US-051 HIL-runner review](docs/mcp_us_051_hil_runner_review_v0.1.0.md)
 - [Audio-prioriteit en MIDI-kitaar amendment](docs/audio_priority_amendment_v0.1.0.md)
 - [MIDI-transport en multi-core amendment](docs/midi_transport_multicore_amendment_v0.1.0.md)

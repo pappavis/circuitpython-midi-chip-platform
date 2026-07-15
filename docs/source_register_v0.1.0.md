@@ -2,13 +2,13 @@
 
 <!--
 Bestand: source_register_v0.1.0.md
-Versienommer: 0.6.0
+Versienommer: 0.7.0
 Doel: Registreer primêre tegniese en plaaslike bronne met gebruiksgrense.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-004 Board Capability Discovery
-Actienr: MCP-ACT-004-SRC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
+User-Story: MCP-US-005 Configuration And Secret Boundary
+Actienr: MCP-ACT-005-SRC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
 -->
 
 ## Primêre tegniese bronne
@@ -35,6 +35,9 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
 | [CircuitPython `wifi`](https://docs.circuitpython.org/en/stable/shared-bindings/wifi/) | Station/AP-modus, connect timeout, IP-adresse, AP-auth en DHCP | Primêre amptelike API; capability- en bord-HIL bly verpligtend |
 | [HTTP server starting methods](https://docs.circuitpython.org/projects/httpserver/en/latest/starting_methods.html) | Handmatige station- en AP-bedieneropstart | Primêre biblioteekvoorbeeld; produksiekode gebruik dependency injection en debug af |
 | [CircuitPython `settings.toml`](https://learn.adafruit.com/networking-in-circuitpython/network-settings) | Moderne private netwerkconfig | Geen geheime in Git nie |
+| [CircuitPython environment variables](https://docs.circuitpython.org/en/latest/docs/environment.html) | `settings.toml` in die CIRCUITPY-wortel en `os.getenv()`-toegang | Primêre amptelike docs; skeiding is nie enkripsie nie en waardes word per toegang geparseer |
+| [CircuitPython storage workflow](https://docs.circuitpython.org/en/10.1.1/docs/workflows.html) | Verstek host-writable/CircuitPython-read-only massa-opberging | Primêre amptelike docs; afwykende leesalleen-hostmedia vereis beheerde herstel |
+| [CircuitPython `storage`](https://docs.circuitpython.org/en/10.0.3/shared-bindings/storage/) | Remount-, USB-drive- en vernietigende erase-grense | Primêre amptelike API; geen erase/remount sonder eksplisiete herstelbesluit nie |
 | [Raspberry Pi OS documentation](https://www.raspberrypi.com/documentation/computers/os.html) | Skeiding van Linux/Python-teikens van mikrobeheerderfirmware | Pi Zero/3 kry ’n adapter, nie dieselfde firmwareclaim nie |
 | [Fishman TriplePlay Support](https://fishman.com/tripleplay-support/) | USB-MIDI-kitaar, polyfonie en individuele string bends | Amptelike produkondersteuning; TriplePlay is 'n HIL-verwysing, nie 'n kodekonstante nie |
 | [Fishman TriplePlay Utility User Guide](https://a11.fishman.com/wp-content/uploads/2024/12/TriplePlayUtility-UserGuide.pdf) | Trigger/Auto/Smooth/Step bend- en slide-semantiek | Amptelike handleiding; synth bend range moet konfigureerbaar en ooreenstemmend wees |

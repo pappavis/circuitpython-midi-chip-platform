@@ -2,13 +2,13 @@
 
 <!--
 Bestand: risk_register_v0.1.0.md
-Versienommer: 0.6.0
+Versienommer: 0.7.0
 Doel: Tegniese, produk-, veiligheids- en afleweringsrisiko’s vir die MVP.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-004 Board Capability Discovery
-Actienr: MCP-ACT-004-RISK-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
+User-Story: MCP-US-005 Configuration And Secret Boundary
+Actienr: MCP-ACT-005-RISK-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
 -->
 
 | ID | Risiko | Waarskynlikheid | Impak | Eienaar | Beheer/mitigering | Status |
@@ -41,6 +41,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-004
 | R-026 | Fallback access point is oop, voorspelbaar of lek credentials/kliëntidentiteit | Medium | Kritiek | Security/Web | Beveiligde AP as verstek; credentials uit private config of veilige provisioning; geen geheime, MAC’s of unieke ID’s in logs/repo nie | Oop |
 | R-027 | Onbegrensde join/reconnect, HTTP polling of debuglogging veroorsaak dropout, RAM-druk of flashslytasie | Hoog | Hoog | Embedded/Web/QA | Timeout en backoff; koöperatiewe poll; een kliënt; debug af in produksie; gebeurtenis-/koersbegrensde serial logging en geen normale flashlog nie | Oop |
 | R-028 | Programmatiese harde reset laat USB-toestel soms sonder CIRCUITPY/CDC-herenumerasie | Medium | Hoog | Embedded/QA | Fisiese power-cycle het volume/REPL herstel; recovery-runbook en finale manifest-HIL is bewys | Beheer aktief |
+| R-029 | CIRCUITPY-media word geldig maar leesalleen aan die host aangebied | Medium | Hoog | Embedded/Release | Stop deploy; verifieer FAT nie-destruktief; fisiese power-cycle en skryfbaarheidstoets; geen formattering of concurrent-write-omseiling nie | Oop - US-005 HIL-hek |
 
 ## Hoogste onmiddellike aksies
 

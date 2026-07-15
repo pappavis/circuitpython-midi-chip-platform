@@ -1,0 +1,12 @@
+# Copy this file to CIRCUITPY/settings.toml and replace only the placeholders you need.
+# Never commit the resulting settings.toml file.
+
+WIFI_SSID = "replace-with-your-network-name"
+WIFI_PASSWORD = "replace-with-your-network-password"
+WEB_AP_PASSWORD = "replace-with-a-strong-access-point-password"
+
+# Optional public overrides. Runtime/CLI overrides will take precedence later.
+AUDIO_BACKEND = "i2s-max98357a-mono"
+I2S_BIT_CLOCK = "IO5"
+I2S_WORD_SELECT = "IO3"
+I2S_DATA = "IO7"

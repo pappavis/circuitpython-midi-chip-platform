@@ -2,18 +2,18 @@
 
 <!--
 Bestand: quickstart_installation_v0.1.0.md
-Versienommer: 0.4.0
+Versienommer: 0.5.0
 Doel: Beginnerstappe vir installasie, diagnose en ontwikkeling sonder IDE-afhanklikheid.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-051 Hardware-In-The-Loop Test Runner
-Actienr: MCP-ACT-051-DOC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051
+User-Story: MCP-US-005 Configuration And Secret Boundary
+Actienr: MCP-ACT-005-DOC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
 -->
 
 ## Wat hierdie weergawe doen
 
-Hierdie weergawe bevat die host-skelet, die minimale MCP-US-003 CircuitPython USB-MIDI-bootprofiel en MCP-US-051 se eerste HIL-runner. Dit maak nog geen klank en ontvang nog geen note nie. Hosttoetse bewys die klasse; `hil-verify` bewys verbinding, deploy, boot en uitvoering op die bord.
+Hierdie weergawe bevat die host-skelet, USB-MIDI-bootprofiel, capability discovery en MCP-US-005 se veilige konfigurasiegrens. Dit maak nog geen klank en ontvang nog geen note nie. Hosttoetse bewys die klasse; `hil-verify` bewys verbinding, deploy, boot en uitvoering op die bord.
 
 ## Wat jy nodig het
 
@@ -74,13 +74,24 @@ python -m pytest
 Die diagnose behoort onder meer te wys:
 
 ```text
-circuitpython-midi-chip-platform v0.3.0 | story=MCP-US-051 | release-date=2026-07-14
+circuitpython-midi-chip-platform v0.5.0 | story=MCP-US-005 | release-date=2026-07-15
 circuitpython-midi-chip-platform: host skeleton ready
 hardware access: disabled
 runtime state: class instances only
 ```
 
 Die toetsuitvoer behoort met `passed` te eindig. Hosttoetse alleen bewys nie die fisiese bord nie.
+
+## Private CircuitPython-instellings
+
+CircuitPython lees omgewingswaardes uit `settings.toml` in die wortel van `CIRCUITPY`. Die repository se `device/settings.toml.example` bevat slegs plekhouers.
+
+1. Maak 'n kopie met die naam `settings.toml` in die `CIRCUITPY`-wortel.
+2. Vervang slegs die plekhouers wat jy benodig.
+3. Moenie jou voltooide `settings.toml` na Git kopieer of commit nie.
+4. Die synth rapporteer slegs of 'n private waarde `SET` of `UNSET` is.
+
+Prioriteit: toekomstige runtime-/commandline-overrides wen eerste, daarna `settings.toml`, daarna publieke verstekke. `settings.toml` skei geheime van bronkode maar enkripteer dit nie.
 
 ## MCP-US-003 toestelfirmware
 
@@ -198,6 +209,10 @@ Voer **Python: Select Interpreter** weer uit en kies `.venv`. Open daarna 'n nuw
 
 Kontroleer dat CircuitPython gemonteer is, probeer 'n data-geskikte USB-kabel en kies die poort opnieuw. Geen UF2-flash of skyfuitvee is deel van hierdie story nie.
 
+**`CIRCUITPY` is leesalleen**
+
+Maak Thonny en serial monitors toe, ontkoppel USB, wag vyf sekondes en koppel weer sonder BOOT. Toets daarna met 'n nuwe onskadelike tekslêer. Indien dit steeds leesalleen is, stop: moenie formatteer, `storage.erase_filesystem()` gebruik of concurrent-write-beskerming afskakel nie. Deel die mount- en `boot_out.txt`-resultaat vir 'n beheerde herstelplan.
+
 ## Opsionele plaaslike Ollama
 
 Ollama is nie nodig vir installasie, toetse, firmware of uitvoering nie. Dit mag later slegs vir 'n goedgekeurde klein ontwikkeltaak gebruik word. Voor gebruik moet die model met `ollama list` bevestig en met 'n klein tydbegrensde proef getoets word. Die verstek bly `default`; indien die Mac stadig word, stop die plaaslike model en gebruik die verstek-Codex/LLM-pad.
@@ -214,4 +229,4 @@ Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
 
 ## Volgende logiese story
 
-MCP-US-003 is Done. MCP-US-051 se connection/deploy/boot/execution-runner is groen; die volledige klankmeetdeel wag op US-015/016. Die volgende normale produkstory in backlogvolgorde is **MCP-US-004: Board Capability Discovery**.
+MCP-US-004 is Done. MCP-US-005 is host-groen en wag op sy menslike toestel-deploytoets. Die vooraf goedgekeurde volgende host-story is **MCP-US-006: Portable NoteEvent And ControlEvent Model**.
