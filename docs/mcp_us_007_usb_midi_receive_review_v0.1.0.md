@@ -2,7 +2,7 @@
 
 <!--
 Bestand: mcp_us_007_usb_midi_receive_review_v0.1.0.md
-Versienommer: 0.3.0
+Versienommer: 0.3.1
 Doel: Dokumenteer die USB-MIDI ontvangsadapter, fisiese deploy en menslike Note On/Off-hek.
 Sprint: Sprint 2
 Epic: MCP-EPIC-002 MIDI And Clock
@@ -37,6 +37,20 @@ Die dependency-geslote manifest is nie-destruktief na die gekoppelde Wemos S2 ge
 - dependency-import en execution via serial REPL.
 
 Geen private serial-identifiseerder, volume-inhoud of `settings.toml`-waarde is gepubliseer nie.
+
+## Impediment MCP-US-007-IMPEDIMENT-002
+
+Die eerste menslike her-toets het voor die receive-loop gestop met 'n CircuitPython `ValueError` oor ongeldige heelgetalsintaksis. Die oorsaak was `MIDI_DIAGNOSTIC_POLL_INTERVAL_SECONDS = 0.01`: die toestel se environment-parser het die on-gekwoteerde breukwaarde as 'n heelgetal probeer interpreteer.
+
+Die herstel:
+
+- voeg 'n RED-regressietoets by wat 'n CircuitPython-versoenbare stringwaarde afdwing;
+- verander die voorbeeld en tydelike toestelkonfigurasie na `"0.01"`;
+- laat `ConfigurationLoader` die string na die interne float omskakel;
+- raak geen private of verkeerd benoemde bestaande settingslêer aan nie;
+- herlaai die Wemos met 'n tien-minuut, begrensde diagnostiekvenster.
+
+Ná die herstel slaag **87 hosttoetse** en Ruff. Die herbruikbare les word by die volgende lessons-learned-kontrolepunt ingesluit vir toekomstige subtractive-, D1-, drum-machine- en FM-synthprojekte: toets ingebedde konfigurasieparsers op die werklike firmware, nie net met desktop-TOML nie.
 
 ## Status
 

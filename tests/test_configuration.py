@@ -4,7 +4,7 @@
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-001 Platform Foundation
 # User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-RED-003
+# Actienr: MCP-ACT-007-IMP-002-RED-001
 # ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
 
 from midi_chip_platform.configuration import (
@@ -12,6 +12,7 @@ from midi_chip_platform.configuration import (
     ConfigurationLoader,
     EnvironmentSettingsSource,
 )
+from pathlib import Path
 
 
 class TestConfigurationDefaults:
@@ -29,6 +30,13 @@ class TestConfigurationDefaults:
         assert snapshot.get("midi.diagnostic.enabled") is False
         assert snapshot.get("midi.diagnostic.max_events") == 8
         assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
+
+    def test_device_settings_example_quotes_fractional_values_for_circuitpython(self) -> None:
+        settings_example = (
+            Path(__file__).parents[1] / "device" / "settings.toml.example"
+        ).read_text(encoding="utf-8")
+
+        assert 'MIDI_DIAGNOSTIC_POLL_INTERVAL_SECONDS = "0.01"' in settings_example
 
 
 class TestConfigurationSecretBoundary:
