@@ -2,13 +2,13 @@
 
 <!--
 Bestand: quickstart_installation_v0.1.0.md
-Versienommer: 0.8.0
+Versienommer: 0.9.0
 Doel: Beginnerstappe vir installasie, diagnose en ontwikkeling sonder IDE-afhanklikheid.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
-Actienr: MCP-ACT-051-IMP-001-DOC-003
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
+User-Story: MCP-US-007 USB MIDI Receive Loop Acceptance
+Actienr: MCP-ACT-007-ACCEPT-DOC-003
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE
 -->
 
 ## Wat hierdie weergawe doen
@@ -74,7 +74,7 @@ python -m pytest
 Die diagnose behoort onder meer te wys:
 
 ```text
-circuitpython-midi-chip-platform v0.11.1 | story=MCP-US-051-IMP-001 | release-date=2026-07-15
+circuitpython-midi-chip-platform v0.12.2 | story=MCP-US-007 | release-date=2026-07-15
 circuitpython-midi-chip-platform: host skeleton ready
 hardware access: disabled
 runtime state: class instances only
@@ -273,4 +273,4 @@ Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
 
 ## Huidige pausepunt
 
-MCP-US-008 en MCP-US-009 is host-Done. MCP-US-007/051 se dependency-closed deploy, harde boot en import-proof is fisies groen; USB-MIDI Note On/Off en die latere klankprobe bly oop. MCP-US-062 se positiewe BLE-HIL wag op 'n werklike BLE-geskikte tweede bord. MCP-US-010 se hoorbare aanvaarding wag op MCP-US-016 se MAX98357-I2S-pad en MCP-US-063 se D1-kern.
+MCP-US-007, MCP-US-008 en MCP-US-009 is Done. MCP-US-007 se dependency-closed deploy, harde boot, imports en werklike USB-MIDI Note On/Off is fisies groen; MCP-US-051 se latere klankprobe bly oop. MCP-US-062 se positiewe BLE-HIL wag op 'n werklike BLE-geskikte tweede bord. MCP-US-010 se hoorbare aanvaarding wag op MCP-US-016 se MAX98357-I2S-pad en MCP-US-063 se D1-kern.

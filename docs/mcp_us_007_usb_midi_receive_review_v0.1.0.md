@@ -2,13 +2,13 @@
 
 <!--
 Bestand: mcp_us_007_usb_midi_receive_review_v0.1.0.md
-Versienommer: 0.5.0
-Doel: Dokumenteer die USB-MIDI ontvangsadapter, fisiese deploy en menslike Note On/Off-hek.
+Versienommer: 0.6.0
+Doel: Dokumenteer die USB-MIDI ontvangsadapter, impedimentherstel en aanvaarde fisiese Note On/Off-bewys.
 Sprint: Sprint 2
 Epic: MCP-EPIC-002 MIDI And Clock
 User-Story: MCP-US-007 USB MIDI Receive Loop
 Actienr: MCP-ACT-007-DOC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-HIL
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE
 -->
 
 ## Gelewer
@@ -23,7 +23,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-HIL
 
 ## RED/GREEN-bewys
 
-Die oorspronklike kontraktoets het tydens collection gefaal omdat `midi_chip_platform.midi_usb` nog nie bestaan het nie. Die fisiese diagnostiekkontrak het daarna RED gefaal omdat `UsbMidiReceiveDiagnostic` ontbreek het. Ná implementering slaag **86 hosttoetse**, Ruff en die dependency-closure-kontrole.
+Die oorspronklike kontraktoets het tydens collection gefaal omdat `midi_chip_platform.midi_usb` nog nie bestaan het nie. Die fisiese diagnostiekkontrak het daarna RED gefaal omdat `UsbMidiReceiveDiagnostic` ontbreek het. Ná die impedimentherstel slaag **89 hosttoetse**, Ruff en die dependency-closure-kontrole.
 
 ## Fisiese deploybewys
 
@@ -72,21 +72,34 @@ Nadat Thonny gesluit en serial-eienaarskap skoon bewys is, het die deployer stee
 
 Die plaaslike implementasie-checkout was agter die remote en het daarom nie `device_runtime.py` bevat nie. Die aktiewe checkout, die implementasie-remote en die gedeployde toestel het die lêer wel bevat. 'n Afsonderlike governance-remote is geskep en die repository-identiteits- en sinkronisasiekontrak is in `repository_identity_and_sync_v0.1.0.md` vasgelê. Geen lêers word handmatig tussen checkouts gekopieer nie.
 
+## Finale fisiese aanvaarding
+
+'n Deterministiese CoreMIDI-stimulus het die gekoppelde CircuitPython USB-MIDI-bestemming bereik. Daarna het die Product Owner vanuit Logic Pro een noot gespeel en die Wemos S2 het gerapporteer:
+
+```text
+USB_MIDI_EVENT=note_on;channel=1;note=72;velocity=66
+USB_MIDI_EVENT=note_on;channel=1;note=72;velocity=66
+USB_MIDI_EVENT=note_off;channel=1;note=72;velocity=64
+USB_MIDI_DIAGNOSTIC_STATUS=PASS;events=3;note_on=2;note_off=1;matched_notes=1
+```
+
+Die dubbele Note On word as waargenome Logic/roeteringsgedrag gelog, maar blokkeer nie MCP-US-007 se transportkriterium nie: 'n werklike ooreenstemmende Note On/Off-paar is op die toestel ontvang. Deduplikasie word slegs in sy toepaslike latere semantiek-/routingwerk aangepak.
+
 ## Status
 
-**In Review.** Hostgedrag, deploy, harde boot en clean-import-bewys is fisies groen. USB-MIDI Note On/Off op die Wemos S2 bly die menslike aanvaardingshek. Geen MIDI-boodskapontvangs word uit hashes of imports alleen afgelei nie.
+**Done en deur die Product Owner aanvaar op 2026-07-15.** Hostgedrag, dependency-geslote deploy, boot, clean imports en fisiese USB-MIDI stimulus is groen. Die tydelike diagnostiek is daarna weer afgeskakel; normale runtime bly die verstek.
 
 ## Menslike aanvaardingstoets
 
 1. Maak `settings.toml` op die **CIRCUITPY-toestel** in Thonny oop. Deel of commit nooit die bestaande inhoud nie.
-2. Voeg `MIDI_DIAGNOSTIC_ENABLED = true` by, of verander slegs daardie bestaande waarde na `true`.
+2. Voeg `MIDI_DIAGNOSTIC_ENABLED = "true"` by, of verander slegs daardie bestaande waarde na die gequote string `"true"`.
 3. Voeg indien ontbrekend `MIDI_DIAGNOSTIC_MAX_EVENTS = 8` en `MIDI_DIAGNOSTIC_TIMEOUT_SECONDS = 60` by.
 4. Stoor en druk `Ctrl+D` in die Thonny REPL. Die log moet `USB_MIDI_DIAGNOSTIC_STATUS=READY` toon.
 5. Maak in Logic Pro 'n **External MIDI**-track. Kies die tans gekoppelde CircuitPython/Wemos USB-MIDI-bestemming; kies MIDI-kanaal `All` of `1`.
 6. Speel en los binne 60 sekondes een noot op enige gekoppelde MIDI-klawerbord of -kitaar.
 7. Verwag een `USB_MIDI_EVENT=note_on` en een `USB_MIDI_EVENT=note_off`, elk met kanaal, noot en velocity, gevolg deur `USB_MIDI_DIAGNOSTIC_STATUS=PASS` en `matched_notes=1`.
-8. Stel daarna `MIDI_DIAGNOSTIC_ENABLED = false`, stoor en druk weer `Ctrl+D` om normale boot te herstel.
+8. Stel daarna `MIDI_DIAGNOSTIC_ENABLED = "false"`, stoor en druk weer `Ctrl+D` om normale boot te herstel.
 
 Gebruik nooit Thonny en 'n tweede serial monitor gelyktydig nie. Logic se MIDI-roetering mag wel parallel met Thonny se REPL loop.
 
-Hierdie story maak nog nie klank nie.
+Hierdie story maak nog nie klank nie. Die volgende hoorbare vertikale sny bly MCP-US-014 en MCP-US-016; USB-produknaam-polish is as MCP-US-068 georden.

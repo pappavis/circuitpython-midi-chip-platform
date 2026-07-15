@@ -2,13 +2,13 @@
 
 <!--
 Bestand: mvp_scope_v0.1.0.md
-Versienommer: 0.5.0
+Versienommer: 0.6.0
 Doel: Definieer die eerste toetsbare CircuitPython MIDI Chip Platform MVP.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: WIFI-RUNTIME-AMENDMENT-001
-Actienr: MCP-ACT-WIFI-AMEND-DOC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / WIFI-RUNTIME-AMENDMENT-001
+User-Story: MCP-US-068 Stable USB MIDI Instance Identity
+Actienr: MCP-ACT-068-SCOPE-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE
 -->
 
 ## Produkdefinisie
@@ -36,12 +36,14 @@ Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 11. Die pedaal ontvang MIDI sonder DAW via 'n klas-kompatibele eksterne USB-host/Raspberry Pi-roete na 'n geabstraheerde DIN/UART-invoer.
 12. Minstens twee verskillende geregistreerde kerninstansies kan laat in die MVP parallel loop met meetbare en veilige oorladinggedrag.
 13. BLE-MIDI werk deur dieselfde eventmodel op ’n tweede BLE-geskikte CircuitPython-bord; die ESP32-S2 faal veilig en hou USB-MIDI beskikbaar.
+14. Twee gelyktydig gekoppelde synths is in 'n DAW onderskeibaar deur 'n herkenbare produknaam en stabiele vier-karakter instance-ID sonder rou UID/MAC-lekkasie.
 
 ## Binne MVP
 
 - Een primêre verwysingsbord: LOLIN/Wemos ESP32-S2 Mini met CircuitPython 10.x, plus een BLE-geskikte tweede bord vir capability- en BLE-aanvaarding.
 - Die draagbare D1-basiskern is die eerste musikale kern; SN76489-lite volg tweede. Daarna volg 6581 SID, OPL2 en OPL3 in dié volgorde.
 - USB-MIDI-invoer en MIDI-kanale 1-16.
+- 'n Lae-prioriteit, release-verpligte USB-produknaam in die vorm `EasyLab4Kids-midi-chip-platform XXXX`, waar `XXXX` 'n stabiele nie-geheime instance-ID is en nie as 'n volledige UUID voorgestel word nie.
 - BLE-MIDI as capability-gated transport op ’n ondersteunde bord; die S2 het geen native BLE-pad nie.
 - Note On, Note Off, velocity, pitch bend, CC1, All Notes Off en MIDI Clock/Start/Stop/Continue.
 - Konfigureerbare pitch-bend range en multi-kanaal bend/slide-semantiek vir MIDI-kitaarkontroleerders.
@@ -71,6 +73,7 @@ Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
 ## MVP-sukseskriteria
 
 - ’n Skoon installasie vertoon ’n USB-MIDI-toestel op macOS en Windows.
+- Twee toestelle met dieselfde firmware verskyn met stabiele, onderskeibare instance-name in die DAW; geen rou UID/MAC verskyn in logs of Git nie.
 - ’n BLE-geskikte tweede bord adverteer en ontvang Note On/Off, CC en pitch bend; die S2 se negatiewe capability-toets destabiliseer nie USB nie.
 - Drie gelyktydige note is hoorbaar sonder vasloop of hangende note.
 - 'n Vroeë mono MAX98357-toetssein is hoorbaar voordat web-, DSP- of multi-core-werk begin.

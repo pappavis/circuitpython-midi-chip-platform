@@ -2,23 +2,23 @@
 
 <!--
 Bestand: backlog_sanity_check_v0.1.0.md
-Versienommer: 0.7.0
+Versienommer: 0.8.0
 Doel: Bewys backlog-volledigheid en verminder hallusinasie-/scope-drift-risiko.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
-Actienr: MCP-ACT-051-IMP-001-SANITY-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
+User-Story: MCP-US-007, MCP-US-064 tot MCP-US-068
+Actienr: MCP-ACT-FWK-001-SANITY-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE
 -->
 
 ## Resultaat
 
-Status: **PASS ná dependency-closed deployment-amendment**.
+Status: **PASS ná MCP-US-007-HIL-aanvaarding en Framework Engineering-amendment**.
 
 | Kontrole | Resultaat |
 |---|---|
-| Epic-ID's | 8 unieke epics, MCP-EPIC-001 tot MCP-EPIC-008 |
-| Story-ID's | 63 unieke stories, aaneenlopend MCP-US-001 tot MCP-US-063 |
+| Epic-ID's | 9 unieke epics, MCP-EPIC-001 tot MCP-EPIC-009 |
+| Story-ID's | 68 unieke stories, aaneenlopend MCP-US-001 tot MCP-US-068 |
 | Duplikate story-ID's | Geen |
 | Verlore nommers | Geen |
 | Storytitel | Elke story het 'n titel |
@@ -59,12 +59,16 @@ Status: **PASS ná dependency-closed deployment-amendment**.
 | Toekomstige oudio-invoer | MCP-US-049 (Parking lot) |
 | Host-, drieledige device-proof, HIL- en kruisbordtoetse | MCP-US-050 tot US-053 |
 | Beginnerdiagnose en MVP-release | MCP-US-056, US-057 |
+| Stabiele, onderskeibare USB-MIDI instance-name | MCP-US-068 |
+| Framework-, solution- en enterprise-argitektuur | MCP-US-064, US-065 |
+| Kwaliteit-, toets- en reviewgovernance | MCP-US-066 |
+| Agentkonteks en kennisstruktuur | MCP-US-067 |
 
 ## Amendment-kontrole
 
 - MCP-US-002 is ná menslike installasie-, diagnose- en toetsbewys `Done`.
 - MCP-US-003 is ná fisiese connection/deploy/execution/USB-MIDI-bewys `Done`.
-- MCP-US-051 en MCP-US-007 bly `In Review`: dependency-closure, device libraries, boot en clean import/execution is fisies groen; USB Note On/Off en klankmeting bly aparte hekke.
+- MCP-US-007 is `Done`: v0.12.2 het op die Wemos S2 werklike Note On/Off ontvang en `matched_notes=1` gerapporteer. MCP-US-051 bly `In Review` tot sy latere klankadapterhek.
 - Die eerste hoorbare volgorde is US-003, US-004, US-014 en US-016; PWM US-015 bly fallback.
 - US-058 skei platform-onafhanklike guitar-MIDI bend/slide-semantiek van US-059 se fisiese Fishman/generiese HIL-aanvaarding.
 - Fishman, MAX98357 en penname is verwysings-/profieldata, nie universele kodekonstantes nie.
@@ -75,6 +79,8 @@ Status: **PASS ná dependency-closed deployment-amendment**.
 - US-023 besit die begrensde station-join en beveiligde AP-fallback; US-024 besit mobile-first UI en spaarsame logging; US-027 besit credentials, sessielimiete en recovery.
 - Geen nuwe story-ID is geskep nie omdat hierdie gedrag binne EPIC-004 se bestaande Wi-Fi-, web- en sekuriteitsgrense val.
 - Geen nuwe story-ID was vir die deployherstel nodig nie; dit sluit MCP-US-051 se HIL-kontrak en MCP-US-007 se fisiese uitvoerbaarheidshek.
+- MCP-US-064 tot US-067 formaliseer Framework Engineering sonder om firmware-WIP of produkvolgorde te verander.
+- MCP-US-068 is 'n lae-prioriteit MVP-Must release-polish story: die vier-karakter suffix is 'n stabiele instance-ID, nie 'n aanspraak op 'n volledige UUID nie.
 
 ## Governance-gap wat nou gesluit is
 

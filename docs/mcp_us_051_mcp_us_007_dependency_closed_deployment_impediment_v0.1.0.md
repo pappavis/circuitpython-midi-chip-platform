@@ -2,7 +2,7 @@
 
 <!--
 Bestand: mcp_us_051_mcp_us_007_dependency_closed_deployment_impediment_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Dokumenteer die ouditbevinding, herstel, toetsbewys en fisiese aanvaardingshek.
 Sprint: Sprint 2
 Epic: MCP-EPIC-002 MIDI And Clock; MCP-EPIC-008 Portability, Quality And Release
@@ -80,4 +80,4 @@ Die foto toon 'n MAX98357-klas mono-I2S-versterker. Die bestaande verwysingsbedr
 
 ## Status
 
-**In Review.** Dependency-closed deploy, boot en serial import/execution is fisies groen. MCP-US-007 se USB-MIDI Note On/Off-stimulus en MCP-US-051 se latere klankprobe bly oop.
+**Dependency impediment Done.** Dependency-closed deploy, boot en serial import/execution is fisies groen. MCP-US-007 se USB-MIDI Note On/Off-stimulus het daarna op v0.12.2 geslaag en die story is aanvaar. MCP-US-051 se latere klankprobe bly binne die audio-afhanklikheid oop.

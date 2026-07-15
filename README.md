@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr: USB-MIDI, BLE-MIDI en DIN/UART word na een d
 
 ## Projekstatus
 
-Die projek is by **Sprint 2: MIDI en clock**, runtime **v0.12.2**. Draagbare events, USB-MIDI receive-loop, BLE-capability gating, kanaalroetering, note-off en pitch bend/CC1 is host-groen. Die Wemos S2 het die dependency-geslote HIL en die opt-in, begrensde USB-MIDI-diagnostiek-deploy geslaag. 'n Menslike Note On/Off-stimulus is die laaste MCP-US-007-hek; daar is nog geen synth core of geaktiveerde klank-, BLE- of Wi-Fi-diens nie.
+Die projek is by **Sprint 2: MIDI en clock**, runtime **v0.12.2**. MCP-US-007 is fisies aanvaar: Logic/CoreMIDI het USB-MIDI gestuur en die Wemos S2 het Note On, Note Off en 'n ooreenstemmende nootpaar as PASS gerapporteer. Draagbare events, BLE-capability gating, kanaalroetering, note-off en pitch bend/CC1 is host-groen. Daar is nog geen synth core of geaktiveerde klank-, BLE- of Wi-Fi-diens nie; die volgende produkvertikale sny bly die AudioOutput-poort en hoorbare MAX98357 mono-I2S-diagnose.
 
 ## Begin hier
 
@@ -36,6 +36,12 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 ## Lees eerste
 
 - [MVP-omvang](docs/mvp_scope_v0.1.0.md)
+- [Framework Engineering: beheerde visie-, argitektuur- en kwaliteitsingang](docs/framework_engineering/README.md)
+- [Enterprise Vision](docs/framework_engineering/enterprise_vision_v0.1.0.md)
+- [Framework And Solution Architecture](docs/framework_engineering/architecture_v0.1.0.md)
+- [Enterprise Meta Model](docs/framework_engineering/enterprise_meta_model_v0.1.0.md)
+- [Quality Manual](docs/framework_engineering/quality_manual_v0.1.0.md)
+- [Test Strategy](docs/framework_engineering/test_strategy_v0.1.0.md)
 - [Volledige user-story-katalogus](docs/user_stories_v0.1.0.md)
 - [Toestel- en broninventaris](docs/mcp_us_001_device_source_baseline_inventory_v0.1.0.md)
 - [Hergebruiksmatriks](docs/reuse_matrix_v0.1.0.md)
@@ -61,6 +67,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [Sprint 1 lessons learned - checkpoint 001](docs/lessons_learned_sprint_1_checkpoint_001_v0.1.0.md)
 - [Sprint 2 lessons learned - checkpoint 001](docs/lessons_learned_sprint_2_checkpoint_001_v0.1.0.md)
 - [Sprint 2 lessons learned - dependency-closed deployment](docs/lessons_learned_sprint_2_checkpoint_002_v0.1.0.md)
+- [Sprint 2 lessons learned - USB-MIDI HIL en repository/REPL](docs/lessons_learned_sprint_2_checkpoint_003_v0.1.0.md)
 - [MCP-US-051 HIL-runner review](docs/mcp_us_051_hil_runner_review_v0.1.0.md)
 - [MCP-US-051/007 dependency-closed deployment-impediment](docs/mcp_us_051_mcp_us_007_dependency_closed_deployment_impediment_v0.1.0.md)
 - [Audio-prioriteit en MIDI-kitaar amendment](docs/audio_priority_amendment_v0.1.0.md)
@@ -93,6 +100,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - `python-d1-synth` is produksiekode en word uitsluitlik as 'n leesalleen-verwysing gebruik.
 - Ollama is opsioneel vir goedgekeurde klein ontwikkeltake; dit is nooit nodig om die synth te bou of uit te voer nie.
 - Startup toon altyd projekweergawe, aktiewe story/amendment en release-datum.
+- 'n Lae-prioriteit MVP-Must story sal voor release elke USB-toestel 'n herkenbare `EasyLab4Kids-midi-chip-platform XXXX`-styl naam gee, waar `XXXX` 'n stabiele, nie-geheime instance-ID is.
 
 ## Lisensie
 

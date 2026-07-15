@@ -2,18 +2,20 @@
 
 <!--
 Bestand: agile_delivery_release_plan_v0.1.0.md
-Versienommer: 0.3.0
+Versienommer: 0.4.0
 Doel: Definieer die werklike Agile uitvoerings-, beheer- en releaseproses.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-003 Minimal Safe Boot And USB Profile
-Actienr: MCP-ACT-003-REL-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-003
+User-Story: MCP-US-064 tot MCP-US-067 Framework Engineering
+Actienr: MCP-ACT-FWK-001-REL-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / FRAMEWORK-ENGINEERING-001
 -->
 
 ## Doel
 
 Hierdie projek word bestuur as 'n werklike klein produkspan. Dokumentasie is nie dekorasie nie: dit bepaal volgorde, besluitregte, bewys en release-status. Die backlog in `user_stories_v0.1.0.md` en die Excel Kanban vorm saam die delivery-baseline.
+
+Die Framework Engineering-bootloader in `docs/framework_engineering/README.md` verbind visie, framework-/solution-argitektuur, meta-model, kwaliteit en agentkonteks. Dit verander nie die WIP-limiet of produkvolgorde nie en kan nooit toets- of HIL-bewys vervang nie.
 
 ## Backloglae
 
@@ -48,6 +50,8 @@ Hierdie projek word bestuur as 'n werklike klein produkspan. Dokumentasie is nie
 6. **HIL/review:** QA bewys eers verbinding, deploy en toesteluitvoering; PO voer daarna die gepaste MIDI-/klank-/Logic-/ossilloskooptoets uit.
 7. **Closure:** docs, Kanban, rolbydraes, commit en push word voltooi.
 8. **Next proposal:** net die volgende logiese story word voorgestel.
+
+Voor refinement laai die span die minimale konteks volgens die Context Loader Specification. Voor closure klassifiseer die Review Engine oop bevindinge en pas die Quality Manual plus Test Strategy toe.
 
 ## Virtuele span-seremonies
 

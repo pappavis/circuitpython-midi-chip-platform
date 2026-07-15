@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.15.0
+Versienommer: 0.16.0
 Doel: Volledige geordende backlog vir MVP en latere inkremente.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-007, MCP-US-051
-Actienr: MCP-ACT-051-IMP-001-BACKLOG-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
+User-Story: MCP-US-007, MCP-US-064 tot MCP-US-068
+Actienr: MCP-ACT-FWK-001-BACKLOG-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE
 -->
 
 ## Statuslegende
@@ -38,7 +38,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-006 | Portable NoteEvent And ControlEvent Model | Done | US-002 | Product Owner het die draagbare Note/CC/bend/clock-model binne die volledige 68-hosttoetsstel aanvaar |
-| MCP-US-007 | USB MIDI Receive Loop | In Review (device armed) | US-003, US-006 | v0.12.0 se begrensde opt-in diagnostiek, dependency-closed deploy/import en Wemos HIL is groen; menslike ooreenstemmende Note On/Off-stimulus bly oop |
+| MCP-US-007 | USB MIDI Receive Loop | Done | US-003, US-006 | v0.12.2 ontvang fisies USB-MIDI vanaf Logic/CoreMIDI; die toestel rapporteer twee Note On, een Note Off en een ooreenstemmende nootpaar as PASS |
 | MCP-US-062 | BLE MIDI Transport And Capability Gate | Impediment (S2 negative accepted) | US-006, US-007, US-052 | S2 se veilige negatiewe gate is aanvaar; positiewe BLE-HIL wag op 'n werklike BLE-bord |
 | MCP-US-008 | MIDI Channel Router | Done | US-007 | Kanaal 1-16 roeteer na konfigureerbare kerninstansies; clock en onbekende kanale bly veilig ongebonde |
 | MCP-US-009 | Velocity And Note-Off Semantics | Done | US-007 | Velocity nul, Note Off, CC120 en CC123 sluit aktiewe note per kanaal deterministies |
@@ -122,9 +122,21 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | MCP-US-054 | Windows USB MIDI Acceptance | MVP | US-003, US-007 | Toestel verskyn en ontvang note op ’n skoon Windows-rekenaar |
 | MCP-US-055 | macOS Logic Pro Acceptance | MVP | US-003, US-007 | Logic kies die synth as External MIDI destination en stuur note/clock; fisiese pedaaluitvoer bly die klankpad |
 | MCP-US-056 | Install Recovery And Diagnostics | MVP | US-005, US-051 | Beginner-runbook dek geen MIDI, geen klank, safe mode en herstel |
+| MCP-US-068 | Stable USB MIDI Instance Identity | MVP-late (Must) | US-003, US-004, US-055 | Elke toestel exposeer 'n herkenbare produknaam plus stabiele vier-karakter instance-ID; twee toestelle is onderskeibaar sonder UID/MAC-lekkasie |
 | MCP-US-059 | MIDI Guitar Hardware Acceptance | MVP | US-018, US-058 | 'n Generiese MIDI-kitaar en Fishman-verwysing speel note, akkoorde, bends en slides; geen toestelnaam is 'n kodekonstante nie |
 | MCP-US-060 | Standalone External MIDI Host Acceptance | MVP | US-013, US-017 | Controller na Raspberry Pi/eksterne USB-host na DIN/UART lewer note, bend en clock sonder DAW |
 | MCP-US-057 | MVP Release Candidate And Demo | MVP | Alle MVP-stories | Tag, release notes, bekende beperkings en demo is gereed |
+
+## MCP-EPIC-009 Framework Engineering
+
+Hierdie epic beheer hoe mense en agente projekkennis laai, besluite neem en bewys lewer. Dit is governance, nie 'n tweede firmware-runtime nie.
+
+| ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
+|---|---|---|---|---|
+| MCP-US-064 | Enterprise Vision And Architecture Baseline | Done | US-001, US-002 | Enterprise-visie, framework-, solution- en deployment-argitektuur vorm een gekruisverwysde baseline |
+| MCP-US-065 | Enterprise Meta Model, Glossary And Artefact Taxonomy | Done | US-064 | Rolle, stories, komponente, toetse, risiko's en besluite het benoemde verhoudings en eienaars |
+| MCP-US-066 | Quality Manual, Test Strategy And Review Engine | Done | US-064, US-065 | Definition of Done verwys na herhaalbare quality-, test- en reviewhekke sonder dokumentasie-as-bewys |
+| MCP-US-067 | Prompt Compiler, Context Loader And Knowledge Base Structure | Done | US-065, US-066 | Agente laai minimale bronkonteks, behou instruksieprioriteit en lewer naspeurbare story-pakkette; geen runtime-LLM-afhanklikheid nie |
 
 ## Definition of Ready
 

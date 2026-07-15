@@ -2,7 +2,7 @@
 
 <!--
 Bestand: AGENTS.md
-Versienommer: 0.4.0
+Versienommer: 0.5.0
 Doel: Afdwingbare werkreels vir mense, Codex en ander ontwikkelagente.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
@@ -70,6 +70,7 @@ Elke story bevat 'n sigbare bydraerekord van:
 - Product Owner;
 - Scrum Master;
 - Business Analyst;
+- Chief Enterprise Architect;
 - Solution Architect;
 - relevante Embedded/MIDI/DSP/Web-spesialis;
 - QA/HIL;
@@ -79,6 +80,15 @@ Elke story bevat 'n sigbare bydraerekord van:
 'Not impacted' is toelaatbaar, maar moet met een sin gemotiveer word. Dit verhoed denkbeeldige spanaktiwiteit en maak werklike besluitneming naspeurbaar.
 
 Copilot kan as eksterne argitektuurreviewer inset lewer. Dié inset is adviserend: die Solution Architect en QA toets dit teen hierdie repository, amptelike bronne en Product Owner-besluite voordat enige voorstel kode of backlog word.
+
+## Framework Engineering-konteks
+
+1. `docs/framework_engineering/README.md` is die beheerde konteksingang vir visie, argitektuur, kwaliteit en kennis.
+2. Agente laai slegs die aktiewe story, relevante argitektuur/ADR, betrokke bron en toetse; hulle behandel ou chat- of reviewteks nie outomaties as huidige feite nie.
+3. Die glossary en enterprise meta model bepaal projekterme en naspeurbaarheidsverhoudings; die user-story-katalogus bly die bron van produkvolgorde en status.
+4. Die quality manual, test strategy en review engine word voor Done toegepas. Dokumentasie alleen kan nooit host-, HIL- of menslike bewys vervang nie.
+5. Prompt compiler-, context loader- en knowledge-base-spesifikasies beheer ontwikkelwerk; hulle is nie firmware-, synth-runtime- of LLM-afhanklikhede nie.
+6. Framework Engineering mag nie WIP-limiete, afhanklikhede, Product Owner-goedkeuring, hardewareveiligheid of die leesalleen D1-grens omseil nie.
 
 ## Kwaliteits- en releasehekke
 

@@ -2,13 +2,13 @@
 
 <!--
 Bestand: risk_register_v0.1.0.md
-Versienommer: 0.7.0
+Versienommer: 0.8.0
 Doel: Tegniese, produk-, veiligheids- en afleweringsrisiko’s vir die MVP.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-005 Configuration And Secret Boundary
-Actienr: MCP-ACT-005-RISK-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
+User-Story: MCP-US-068 Stable USB MIDI Instance Identity
+Actienr: MCP-ACT-068-RISK-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE
 -->
 
 | ID | Risiko | Waarskynlikheid | Impak | Eienaar | Beheer/mitigering | Status |
@@ -42,6 +42,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
 | R-027 | Onbegrensde join/reconnect, HTTP polling of debuglogging veroorsaak dropout, RAM-druk of flashslytasie | Hoog | Hoog | Embedded/Web/QA | Timeout en backoff; koöperatiewe poll; een kliënt; debug af in produksie; gebeurtenis-/koersbegrensde serial logging en geen normale flashlog nie | Oop |
 | R-028 | Programmatiese harde reset laat USB-toestel soms sonder CIRCUITPY/CDC-herenumerasie | Medium | Hoog | Embedded/QA | Fisiese power-cycle het volume/REPL herstel; recovery-runbook en finale manifest-HIL is bewys | Beheer aktief |
 | R-029 | CIRCUITPY-media word geldig maar leesalleen aan die host aangebied | Medium | Hoog | Embedded/Release | Stop deploy; verifieer FAT nie-destruktief; fisiese power-cycle en skryfbaarheidstoets; geen formattering of concurrent-write-omseiling nie | Beheers - skryfbare HIL op 2026-07-15 |
+| R-030 | USB-produkname bots of verander tussen boots | Medium | Hoog | Embedded/Release | Stabiele nie-geheime vier-karakter instance-ID, gedokumenteerde collision fallback en twee-toestel DAW-aanvaarding in MCP-US-068 | Backlog - MCP-US-068 |
 
 ## Hoogste onmiddellike aksies
 
@@ -50,3 +51,4 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
 3. Bewys 'n veilige, hoorbare MAX98357 mono-I2S-pad en hou PWM as meetbare fallback voordat webbeheer bygevoeg word.
 4. Publiseer geen toestelrugsteun, unieke USB-ID of plaaslike netwerkdetail nie.
 5. Behandel ’n sigbare `ESP_*`-SSID as onbevestig totdat ’n beheerde power-cycle of device-log die fisiese bord korreleer.
+6. Ontwerp USB-instance-identiteit uit 'n stabiele toestelbron sonder om die rou UID/MAC te log of te publiseer; bewys twee toestelle voor MVP-release.
