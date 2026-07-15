@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr: USB-MIDI, BLE-MIDI en DIN/UART word na een d
 
 ## Projekstatus
 
-Die projek is by **Sprint 2: MIDI en clock**, runtime **v0.11.1**. Draagbare events, USB-MIDI receive-loop, BLE-capability gating, kanaalroetering, note-off en pitch bend/CC1 is host-groen. Die Wemos S2 het die dependency-geslote HIL geslaag: autoreload-safe 16-lêer deploy, `adafruit_midi`, harde boot, clean imports en execution. USB Note On/Off bly die volgende menslike stimulus; daar is nog geen synth core of geaktiveerde klank-, BLE- of Wi-Fi-diens nie.
+Die projek is by **Sprint 2: MIDI en clock**, runtime **v0.12.0**. Draagbare events, USB-MIDI receive-loop, BLE-capability gating, kanaalroetering, note-off en pitch bend/CC1 is host-groen. Die Wemos S2 het die dependency-geslote HIL en die opt-in, begrensde USB-MIDI-diagnostiek-deploy geslaag. 'n Menslike Note On/Off-stimulus is die laaste MCP-US-007-hek; daar is nog geen synth core of geaktiveerde klank-, BLE- of Wi-Fi-diens nie.
 
 ## Begin hier
 

@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.1.0
-# Doel: Laai publieke verstekke en private CircuitPython-settings met veilige prioriteit en redaksie.
+# Versienommer: 0.12.0
+# Doel: Laai publieke verstekke, private settings en veilige opt-in MIDI-diagnostiek.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-005 Configuration And Secret Boundary
-# Actienr: MCP-ACT-005-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
+# User-Story: MCP-US-007 USB MIDI Receive Loop
+# Actienr: MCP-ACT-007-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -20,6 +20,11 @@ class ConfigurationDefaults:
             "audio.i2s.data": "IO7",
             "audio.startup_test": False,
             "clock.bpm": 120,
+            "midi.input.port_index": 0,
+            "midi.diagnostic.enabled": False,
+            "midi.diagnostic.max_events": 8,
+            "midi.diagnostic.timeout_seconds": 60,
+            "midi.diagnostic.poll_interval_seconds": 0.01,
             "wifi.mode": "auto",
         }
 
@@ -40,6 +45,11 @@ class EnvironmentSettingsSource:
             "audio.i2s.data": "I2S_DATA",
             "audio.startup_test": "AUDIO_STARTUP_TEST",
             "clock.bpm": "CLOCK_BPM",
+            "midi.input.port_index": "MIDI_INPUT_PORT_INDEX",
+            "midi.diagnostic.enabled": "MIDI_DIAGNOSTIC_ENABLED",
+            "midi.diagnostic.max_events": "MIDI_DIAGNOSTIC_MAX_EVENTS",
+            "midi.diagnostic.timeout_seconds": "MIDI_DIAGNOSTIC_TIMEOUT_SECONDS",
+            "midi.diagnostic.poll_interval_seconds": "MIDI_DIAGNOSTIC_POLL_INTERVAL_SECONDS",
             "wifi.mode": "WIFI_MODE",
             "wifi.ssid": "WIFI_SSID",
             "wifi.password": "WIFI_PASSWORD",
@@ -139,6 +149,8 @@ class ConfigurationLoader:
             raise ValueError("boolean setting must use true or false")
         if isinstance(default_value, int) and not isinstance(default_value, bool):
             return int(value)
+        if isinstance(default_value, float):
+            return float(value)
         return value
 
 

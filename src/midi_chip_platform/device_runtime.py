@@ -1,11 +1,11 @@
 # Bestand: device_runtime.py
-# Versienommer: 0.11.1
-# Doel: Lewer toestel-, dependency-, capability- en konfigurasiebewys sonder diensstart.
+# Versienommer: 0.12.0
+# Doel: Lewer toestelbewys en aktiveer begrensde USB-MIDI-diagnostiek slegs via konfigurasie.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
-# Actienr: MCP-ACT-051-IMP-001-GREEN-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
+# User-Story: MCP-US-007 USB MIDI Receive Loop
+# Actienr: MCP-ACT-007-GREEN-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
 
 from midi_chip_platform.release import ReleaseMetadata
 
@@ -31,6 +31,7 @@ class DeviceRuntimeApplication:
         capability_discovery=None,
         configuration_loader=None,
         import_smoke_check=None,
+        midi_diagnostic_factory=None,
         output=None,
     ):
         if not isinstance(release_metadata, ReleaseMetadata):
@@ -39,9 +40,11 @@ class DeviceRuntimeApplication:
         self._capability_discovery = capability_discovery
         self._configuration_loader = configuration_loader
         self._import_smoke_check = import_smoke_check
+        self._midi_diagnostic_factory = midi_diagnostic_factory
         self._output = output if output is not None else print
 
     def run(self):
+        configuration = None
         self._output(self._release_metadata.banner())
         if self._capability_discovery is not None:
             snapshot = self._capability_discovery.discover()
@@ -55,4 +58,8 @@ class DeviceRuntimeApplication:
             self._import_smoke_check.run()
             self._output("DEVICE_IMPORT_STATUS=PASS")
         self._output("DEVICE_EXECUTION_STATUS=READY")
+        if self._midi_diagnostic_factory is not None and configuration is not None:
+            diagnostic = self._midi_diagnostic_factory.create_if_enabled(configuration)
+            if diagnostic is not None:
+                return bool(diagnostic.run())
         return True

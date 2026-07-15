@@ -1,11 +1,11 @@
 # Bestand: midi_usb.py
-# Versienommer: 0.2.0
-# Doel: Vertaal, normaliseer en ontvang USB-MIDI sonder toestelkonstantes of import-newe-effekte.
+# Versienommer: 0.12.0
+# Doel: Vertaal USB-MIDI en lewer begrensde fisiese Note On/Off-aanvaardingsdiagnostiek.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
-# User-Story: MCP-US-009 Velocity And Note-Off Semantics
-# Actienr: MCP-ACT-009-GREEN-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-009
+# User-Story: MCP-US-007 USB MIDI Receive Loop
+# Actienr: MCP-ACT-007-GREEN-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
 
 from midi_chip_platform.events import ClockEvent, ControlEvent, NoteEvent
 from midi_chip_platform.ports import MidiInputPort
@@ -207,3 +207,123 @@ class MidiReceiveLoop:
             self._event_consumer(processed_event)
         self._received_count += 1
         return True
+
+
+class UsbMidiReceiveDiagnostic:
+    def __init__(
+        self,
+        midi_input,
+        output=None,
+        monotonic=None,
+        sleeper=None,
+        max_events=8,
+        timeout_seconds=60.0,
+        poll_interval_seconds=0.01,
+    ):
+        if not isinstance(midi_input, MidiInputPort):
+            raise TypeError("midi_input must implement MidiInputPort")
+        if not callable(output if output is not None else print):
+            raise TypeError("output must be callable")
+        if not callable(monotonic):
+            raise TypeError("monotonic must be callable")
+        if not callable(sleeper):
+            raise TypeError("sleeper must be callable")
+        if int(max_events) < 2:
+            raise ValueError("max_events must be at least 2")
+        if float(timeout_seconds) <= 0:
+            raise ValueError("timeout_seconds must be greater than zero")
+        if float(poll_interval_seconds) <= 0:
+            raise ValueError("poll_interval_seconds must be greater than zero")
+        self._midi_input = midi_input
+        self._output = output if output is not None else print
+        self._monotonic = monotonic
+        self._sleeper = sleeper
+        self._max_events = int(max_events)
+        self._timeout_seconds = float(timeout_seconds)
+        self._poll_interval_seconds = float(poll_interval_seconds)
+
+    def run(self):
+        event_count = 0
+        note_on_count = 0
+        note_off_count = 0
+        matched_note_count = 0
+        active_notes = set()
+        started_at = self._monotonic()
+        self._output(
+            "USB_MIDI_DIAGNOSTIC_STATUS=READY;"
+            f"max_events={self._max_events};timeout_seconds={self._timeout_seconds:g}"
+        )
+        try:
+            self._midi_input.open()
+            while event_count < self._max_events:
+                if self._monotonic() - started_at >= self._timeout_seconds:
+                    break
+                event = self._midi_input.receive()
+                if not isinstance(event, NoteEvent):
+                    self._sleeper(self._poll_interval_seconds)
+                    continue
+                message_type = self._normalized_message_type(event)
+                key = (event.channel, event.note)
+                event_count += 1
+                if message_type == "note_on":
+                    note_on_count += 1
+                    active_notes.add(key)
+                else:
+                    note_off_count += 1
+                    if key in active_notes:
+                        active_notes.remove(key)
+                        matched_note_count += 1
+                self._output(
+                    f"USB_MIDI_EVENT={message_type};channel={event.channel};"
+                    f"note={event.note};velocity={event.velocity}"
+                )
+                if matched_note_count > 0:
+                    break
+        except Exception:
+            self._output("USB_MIDI_DIAGNOSTIC_STATUS=FAIL;reason=input-error")
+            return False
+        finally:
+            self._midi_input.close()
+        summary = (
+            f"events={event_count};note_on={note_on_count};"
+            f"note_off={note_off_count};matched_notes={matched_note_count}"
+        )
+        if matched_note_count > 0:
+            self._output(f"USB_MIDI_DIAGNOSTIC_STATUS=PASS;{summary}")
+            return True
+        self._output(
+            "USB_MIDI_DIAGNOSTIC_STATUS=FAIL;reason=incomplete-note-pair;"
+            f"{summary}"
+        )
+        return False
+
+    @staticmethod
+    def _normalized_message_type(event):
+        if event.message_type == "note_on" and event.velocity == 0:
+            return "note_off"
+        return event.message_type
+
+
+class CircuitPythonUsbMidiDiagnosticFactory:
+    def __init__(self, importer=None, output=None):
+        self._importer = importer if importer is not None else __import__
+        self._output = output if output is not None else print
+
+    def create_if_enabled(self, configuration):
+        if not configuration.get("midi.diagnostic.enabled", False):
+            return None
+        time_module = self._importer("time")
+        midi_input = CircuitPythonUsbMidiFactory(self._importer).create_input(
+            port_index=configuration.get("midi.input.port_index", 0)
+        )
+        return UsbMidiReceiveDiagnostic(
+            midi_input=midi_input,
+            output=self._output,
+            monotonic=time_module.monotonic,
+            sleeper=time_module.sleep,
+            max_events=configuration.get("midi.diagnostic.max_events", 8),
+            timeout_seconds=configuration.get("midi.diagnostic.timeout_seconds", 60),
+            poll_interval_seconds=configuration.get(
+                "midi.diagnostic.poll_interval_seconds", 0.01
+            ),
+        )

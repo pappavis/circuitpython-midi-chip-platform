@@ -1,14 +1,15 @@
 # Bestand: code.py
-# Versienommer: 0.11.1
-# Doel: Rapporteer dependency-closed toestelvermoens en konfigurasie sonder diensstart.
+# Versienommer: 0.12.0
+# Doel: Rapporteer toestelgereedheid en bied veilige opt-in USB-MIDI Note On/Off-diagnostiek.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
-# Actienr: MCP-ACT-051-IMP-001-GREEN-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
+# User-Story: MCP-US-007 USB MIDI Receive Loop
+# Actienr: MCP-ACT-007-GREEN-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
 
 from midi_chip_platform.configuration import CircuitPythonConfigurationFactory
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
+from midi_chip_platform.midi_usb import CircuitPythonUsbMidiDiagnosticFactory
 from midi_chip_platform.platform_capabilities import CircuitPythonCapabilityFactory
 from midi_chip_platform.release import ReleaseMetadata
 
@@ -40,5 +41,9 @@ if __name__ == "__main__":
                 "midi_chip_platform.ports",
                 "midi_chip_platform.routing",
             ),
+        ),
+        midi_diagnostic_factory=CircuitPythonUsbMidiDiagnosticFactory(
+            importer=__import__,
+            output=print,
         ),
     ).run()

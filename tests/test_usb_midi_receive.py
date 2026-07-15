@@ -1,13 +1,20 @@
 # Bestand: test_usb_midi_receive.py
-# Versienommer: 0.1.0
-# Doel: Bewys rou USB-MIDI-vertaling en 'n begrensde ontvangslus sonder hardeware.
+# Versienommer: 0.12.0
+# Doel: Bewys USB-MIDI-vertaling en begrensde Note On/Off-HIL-diagnostiek sonder hardeware.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
 # User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-RED-001
+# Actienr: MCP-ACT-007-RED-002
 # ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
 
-from midi_chip_platform.midi_usb import MidiMessageTranslator, MidiMessageTypes, UsbMidiInputPort
+from midi_chip_platform.events import NoteEvent
+from midi_chip_platform.midi_usb import (
+    MidiMessageTranslator,
+    MidiMessageTypes,
+    UsbMidiInputPort,
+    UsbMidiReceiveDiagnostic,
+)
+from midi_chip_platform.testing import MemoryMidiInput
 
 
 class TestUsbMidiReceive:
@@ -118,3 +125,87 @@ class TestUsbMidiReceive:
             assert str(error) == "USB MIDI input is closed"
         else:
             raise AssertionError("closed USB MIDI input must reject receive")
+
+
+class TestUsbMidiReceiveDiagnostic:
+    class ManualTime:
+        def __init__(self):
+            self._seconds = 0.0
+
+        def monotonic(self):
+            return self._seconds
+
+        def sleep(self, seconds):
+            self._seconds += float(seconds)
+
+    def test_matching_note_on_and_note_off_produce_pass_and_close_port(self) -> None:
+        midi_input = MemoryMidiInput(
+            (
+                NoteEvent.note_on(channel=4, note=60, velocity=99),
+                NoteEvent.note_off(channel=4, note=60, velocity=31),
+            )
+        )
+        manual_time = self.ManualTime()
+        output = []
+        diagnostic = UsbMidiReceiveDiagnostic(
+            midi_input=midi_input,
+            output=output.append,
+            monotonic=manual_time.monotonic,
+            sleeper=manual_time.sleep,
+            max_events=4,
+            timeout_seconds=1.0,
+            poll_interval_seconds=0.01,
+        )
+
+        result = diagnostic.run()
+
+        assert result is True
+        assert midi_input.is_open is False
+        assert "USB_MIDI_EVENT=note_on;channel=4;note=60;velocity=99" in output
+        assert "USB_MIDI_EVENT=note_off;channel=4;note=60;velocity=31" in output
+        assert output[-1] == (
+            "USB_MIDI_DIAGNOSTIC_STATUS=PASS;events=2;note_on=1;"
+            "note_off=1;matched_notes=1"
+        )
+
+    def test_timeout_without_complete_note_pair_fails_and_closes_port(self) -> None:
+        midi_input = MemoryMidiInput((NoteEvent.note_on(channel=1, note=64, velocity=80),))
+        manual_time = self.ManualTime()
+        output = []
+        diagnostic = UsbMidiReceiveDiagnostic(
+            midi_input=midi_input,
+            output=output.append,
+            monotonic=manual_time.monotonic,
+            sleeper=manual_time.sleep,
+            max_events=4,
+            timeout_seconds=0.03,
+            poll_interval_seconds=0.01,
+        )
+
+        result = diagnostic.run()
+
+        assert result is False
+        assert midi_input.is_open is False
+        assert output[-1] == (
+            "USB_MIDI_DIAGNOSTIC_STATUS=FAIL;reason=incomplete-note-pair;"
+            "events=1;note_on=1;note_off=0;matched_notes=0"
+        )
+
+    def test_note_on_with_zero_velocity_is_normalized_to_note_off(self) -> None:
+        midi_input = MemoryMidiInput(
+            (
+                NoteEvent.note_on(channel=2, note=67, velocity=100),
+                NoteEvent.note_on(channel=2, note=67, velocity=0),
+            )
+        )
+        manual_time = self.ManualTime()
+        output = []
+        diagnostic = UsbMidiReceiveDiagnostic(
+            midi_input=midi_input,
+            output=output.append,
+            monotonic=manual_time.monotonic,
+            sleeper=manual_time.sleep,
+        )
+
+        assert diagnostic.run() is True
+        assert "USB_MIDI_EVENT=note_off;channel=2;note=67;velocity=0" in output

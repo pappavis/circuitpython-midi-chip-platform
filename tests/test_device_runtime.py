@@ -1,11 +1,11 @@
 # Bestand: test_device_runtime.py
-# Versienommer: 0.11.1
-# Doel: Spesifiseer toestel-uitvoer, capability- en dependency-importbewys sonder diensaktivering.
+# Versienommer: 0.12.0
+# Doel: Spesifiseer toestel-uitvoer, dependency-bewys en opt-in USB-MIDI-diagnostiek.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
-# Actienr: MCP-ACT-051-IMP-001-RED-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
+# User-Story: MCP-US-007 USB MIDI Receive Loop
+# Actienr: MCP-ACT-007-RED-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
 
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
 from midi_chip_platform.release import ReleaseMetadata
@@ -32,6 +32,12 @@ class TestDeviceRuntimeApplication:
             return TestDeviceRuntimeApplication.FakeSnapshot()
 
     class FakeConfigurationSnapshot:
+        def __init__(self, values=None):
+            self._values = dict(values or {})
+
+        def get(self, key, default=None):
+            return self._values.get(key, default)
+
         def report_lines(self):
             return (
                 "CONFIGURATION_STATUS=PASS",
@@ -39,8 +45,30 @@ class TestDeviceRuntimeApplication:
             )
 
     class FakeConfigurationLoader:
+        def __init__(self, values=None):
+            self._values = dict(values or {})
+
         def load(self):
-            return TestDeviceRuntimeApplication.FakeConfigurationSnapshot()
+            return TestDeviceRuntimeApplication.FakeConfigurationSnapshot(self._values)
+
+    class FakeDiagnostic:
+        def __init__(self):
+            self.run_count = 0
+
+        def run(self):
+            self.run_count += 1
+            return True
+
+    class FakeDiagnosticFactory:
+        def __init__(self, diagnostic):
+            self._diagnostic = diagnostic
+            self.configuration = None
+
+        def create_if_enabled(self, configuration):
+            self.configuration = configuration
+            if not configuration.get("midi.diagnostic.enabled", False):
+                return None
+            return self._diagnostic
 
     def test_runtime_reports_execution_proof(self) -> None:
         output = []
@@ -140,3 +168,27 @@ class TestDeviceRuntimeApplication:
             "CONFIG_PRIVATE_WIFI_SSID=SET",
             "DEVICE_EXECUTION_STATUS=READY",
         ]
+
+    def test_runtime_runs_midi_diagnostic_only_when_configuration_enables_it(self) -> None:
+        output = []
+        diagnostic = self.FakeDiagnostic()
+        factory = self.FakeDiagnosticFactory(diagnostic)
+        application = DeviceRuntimeApplication(
+            release_metadata=ReleaseMetadata(
+                version="0.12.0",
+                user_story="MCP-US-007",
+                release_date="2026-07-15",
+            ),
+            configuration_loader=self.FakeConfigurationLoader(
+                {"midi.diagnostic.enabled": True}
+            ),
+            midi_diagnostic_factory=factory,
+            output=output.append,
+        )
+
+        result = application.run()
+
+        assert result is True
+        assert diagnostic.run_count == 1
+        assert factory.configuration.get("midi.diagnostic.enabled") is True
+        assert output[-1] == "DEVICE_EXECUTION_STATUS=READY"

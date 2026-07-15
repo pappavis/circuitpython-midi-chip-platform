@@ -10,3 +10,11 @@ AUDIO_BACKEND = "i2s-max98357a-mono"
 I2S_BIT_CLOCK = "IO5"
 I2S_WORD_SELECT = "IO3"
 I2S_DATA = "IO7"
+
+# Optional, bounded USB-MIDI Note On/Off acceptance diagnostic.
+# Leave disabled for normal startup. Enable temporarily, then restart the board.
+MIDI_DIAGNOSTIC_ENABLED = false
+MIDI_DIAGNOSTIC_MAX_EVENTS = 8
+MIDI_DIAGNOSTIC_TIMEOUT_SECONDS = 60
+MIDI_DIAGNOSTIC_POLL_INTERVAL_SECONDS = 0.01
+MIDI_INPUT_PORT_INDEX = 0

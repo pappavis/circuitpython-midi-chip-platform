@@ -38,7 +38,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-006 | Portable NoteEvent And ControlEvent Model | Done | US-002 | Product Owner het die draagbare Note/CC/bend/clock-model binne die volledige 68-hosttoetsstel aanvaar |
-| MCP-US-007 | USB MIDI Receive Loop | In Review (host accepted) | US-003, US-006 | Dependency-closed device deploy/import is fisies groen; werklike USB-MIDI Note On/Off-HIL bly oop |
+| MCP-US-007 | USB MIDI Receive Loop | In Review (device armed) | US-003, US-006 | v0.12.0 se begrensde opt-in diagnostiek, dependency-closed deploy/import en Wemos HIL is groen; menslike ooreenstemmende Note On/Off-stimulus bly oop |
 | MCP-US-062 | BLE MIDI Transport And Capability Gate | Impediment (S2 negative accepted) | US-006, US-007, US-052 | S2 se veilige negatiewe gate is aanvaar; positiewe BLE-HIL wag op 'n werklike BLE-bord |
 | MCP-US-008 | MIDI Channel Router | Done | US-007 | Kanaal 1-16 roeteer na konfigureerbare kerninstansies; clock en onbekende kanale bly veilig ongebonde |
 | MCP-US-009 | Velocity And Note-Off Semantics | Done | US-007 | Velocity nul, Note Off, CC120 en CC123 sluit aktiewe note per kanaal deterministies |

@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.1.0
-# Doel: Spesifiseer publieke verstekke, private settings en veilige override-prioriteit.
+# Versienommer: 0.12.0
+# Doel: Spesifiseer publieke verstekke, private settings en opt-in MIDI-diagnostiek.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-005 Configuration And Secret Boundary
-# Actienr: MCP-ACT-005-RED-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
+# User-Story: MCP-US-007 USB MIDI Receive Loop
+# Actienr: MCP-ACT-007-RED-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -26,6 +26,9 @@ class TestConfigurationDefaults:
         assert snapshot.get("audio.i2s.word_select") == "IO3"
         assert snapshot.get("audio.i2s.data") == "IO7"
         assert snapshot.get("clock.bpm") == 120
+        assert snapshot.get("midi.diagnostic.enabled") is False
+        assert snapshot.get("midi.diagnostic.max_events") == 8
+        assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
 
 
 class TestConfigurationSecretBoundary:
@@ -80,7 +83,12 @@ class TestConfigurationSecretBoundary:
         assert snapshot.source_for("audio.backend") == "override"
 
     def test_string_settings_preserve_default_integer_and_boolean_types(self) -> None:
-        values = {"CLOCK_BPM": "96", "AUDIO_STARTUP_TEST": "true"}
+        values = {
+            "CLOCK_BPM": "96",
+            "AUDIO_STARTUP_TEST": "true",
+            "MIDI_DIAGNOSTIC_ENABLED": "true",
+            "MIDI_DIAGNOSTIC_MAX_EVENTS": "12",
+        }
         snapshot = ConfigurationLoader(
             defaults=ConfigurationDefaults(),
             settings_source=EnvironmentSettingsSource(values.get),
@@ -88,6 +96,8 @@ class TestConfigurationSecretBoundary:
 
         assert snapshot.get("clock.bpm") == 96
         assert snapshot.get("audio.startup_test") is True
+        assert snapshot.get("midi.diagnostic.enabled") is True
+        assert snapshot.get("midi.diagnostic.max_events") == 12
 
     def test_public_items_exclude_private_values(self) -> None:
         snapshot = ConfigurationLoader(
