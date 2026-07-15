@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.9.0
+# Versienommer: 0.10.0
 # Doel: Toets host-diagnose, HIL-CLI en gedeelde release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-062 BLE MIDI Transport And Capability Gate
-# Actienr: MCP-ACT-062-RED-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-062
+# User-Story: MCP-US-008 MIDI Channel Router
+# Actienr: MCP-ACT-008-RED-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-008
 
 from io import StringIO
 from pathlib import Path
@@ -46,8 +46,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.8.0 | "
-            "story=MCP-US-062 | release-date=2026-07-15\n"
+            "circuitpython-midi-chip-platform v0.9.0 | "
+            "story=MCP-US-008 | release-date=2026-07-15\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:

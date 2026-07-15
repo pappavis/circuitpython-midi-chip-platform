@@ -1,18 +1,19 @@
 # Bestand: application.py
-# Versienommer: 0.1.0
-# Doel: Koordineer geinjekteerde platformpoorte sonder import-newe-effekte.
-# Sprint: Sprint 1
-# Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-002 Clean Repository And Project Skeleton
-# Actienr: MCP-ACT-002-GREEN-005
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-002
+# Versienommer: 0.2.0
+# Doel: Koordineer poorte en konfigureerbare MIDI-kanaalroetering sonder import-newe-effekte.
+# Sprint: Sprint 2
+# Epic: MCP-EPIC-002 MIDI And Clock
+# User-Story: MCP-US-008 MIDI Channel Router
+# Actienr: MCP-ACT-008-GREEN-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-008
 
 from midi_chip_platform.core import CoreRegistry
 from midi_chip_platform.ports import AudioOutputPort, ClockPort, ConfigurationPort, MidiInputPort
+from midi_chip_platform.routing import MidiChannelRouter
 
 
 class PlatformApplication:
-    def __init__(self, midi_input, audio_output, clock, configuration, registry):
+    def __init__(self, midi_input, audio_output, clock, configuration, registry, router=None):
         self._require_type("midi_input", midi_input, MidiInputPort)
         self._require_type("audio_output", audio_output, AudioOutputPort)
         self._require_type("clock", clock, ClockPort)
@@ -23,6 +24,8 @@ class PlatformApplication:
         self._clock = clock
         self._configuration = configuration
         self._registry = registry
+        self._router = router if router is not None else MidiChannelRouter(registry)
+        self._require_type("router", self._router, MidiChannelRouter)
         self._is_started = False
 
     @property
@@ -45,7 +48,7 @@ class PlatformApplication:
         self._clock.tick()
         if event is None:
             return False
-        core = self._registry.resolve(event.channel)
+        core = self._router.route(event)
         if core is None:
             return False
         core.handle_event(event)
