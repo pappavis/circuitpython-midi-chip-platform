@@ -2,7 +2,7 @@
 
 <!--
 Bestand: mcp_us_005_configuration_secret_boundary_review_v0.1.0.md
-Versienommer: 0.3.0
+Versienommer: 0.3.1
 Doel: Dokumenteer die private settings-grens, leewaarde-herstel en finale HIL-hek.
 Sprint: Sprint 1
 Epic: MCP-EPIC-001 Platform Foundation
@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
 
 ## Status
 
-**IN REVIEW / MENSLIKE KONFIGURASIEHEK.** Geheime-redaksie en host-regressie is groen. Die 2026-07-16 herstel normaliseer leë en whitespace-only waardes na afwesig voordat tipe-omskakeling of bronregistrasie plaasvind. Fisiese `UNSET -> SET -> UNSET`-herbewys bly die sluitingshek.
+**IN REVIEW / MENSLIKE KONFIGURASIEHEK.** Geheime-redaksie en host-regressie is groen. v0.12.3 is fisies gedeploy en connection, manifest, libraries, boot en execution slaag. Die toestel rapporteer drie private, werklik nie-leë waardes veilig as `SET`; die `UNSET`-tak bly die enigste oop sluitingshek.
 
 ## Konfigurasieprioriteit
 
@@ -42,6 +42,7 @@ Die huidige publieke klankprofiel is mono MAX98357A met IO5 BCLK, IO3 WS/LRC en 
 - Toestelherbewys: CIRCUITPY/CDC, manifest, libraries, boot, config-import en execution het geslaag; private waardes is nie gepubliseer nie.
 - RED 2026-07-16: twee nuwe regressietoetse het gewys dat leë en whitespace-private waardes foutief in die snapshot beland.
 - GREEN 2026-07-16: die settings source normaliseer daardie waardes na `None`; 33 geteikende config/CLI/HIL-toetse en die volle stel van 91 hosttoetse slaag op v0.12.3.
+- DEVICE 2026-07-16: v0.12.3 se geredigeerde HIL-verslag toon connection, manifest-closure, deployment, libraries, boot en execution as PASS. 'n Waardevrye vormkontrole het bevestig dat al drie private reëls werklik nie-leë waardes bevat; die runtime se drie `SET`-statusse is dus korrek. Geen waarde, SSID, wagwoord, UID of MAC word as aanvaardingsbewys gepubliseer nie.
 
 ## Menslike aanvaardingshek
 
