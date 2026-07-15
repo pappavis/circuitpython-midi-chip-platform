@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr: USB-MIDI, BLE-MIDI en DIN/UART word na een d
 
 ## Projekstatus
 
-Die projek is by **Sprint 2: MIDI en clock**, runtime **v0.12.0**. Draagbare events, USB-MIDI receive-loop, BLE-capability gating, kanaalroetering, note-off en pitch bend/CC1 is host-groen. Die Wemos S2 het die dependency-geslote HIL en die opt-in, begrensde USB-MIDI-diagnostiek-deploy geslaag. 'n Menslike Note On/Off-stimulus is die laaste MCP-US-007-hek; daar is nog geen synth core of geaktiveerde klank-, BLE- of Wi-Fi-diens nie.
+Die projek is by **Sprint 2: MIDI en clock**, runtime **v0.12.1**. Draagbare events, USB-MIDI receive-loop, BLE-capability gating, kanaalroetering, note-off en pitch bend/CC1 is host-groen. Die Wemos S2 het die dependency-geslote HIL en die opt-in, begrensde USB-MIDI-diagnostiek-deploy geslaag. 'n Menslike Note On/Off-stimulus is die laaste MCP-US-007-hek; daar is nog geen synth core of geaktiveerde klank-, BLE- of Wi-Fi-diens nie.
 
 ## Begin hier
 
@@ -68,6 +68,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [BLE-MIDI en synth-core-prioriteit](docs/ble_midi_core_priority_amendment_v0.1.0.md)
 - [Wi-Fi station-, access-point- en mobiele webfallback](docs/wifi_runtime_fallback_amendment_v0.1.0.md)
 - [Device Connection Proof](docs/device_connection_proof_v0.1.0.md)
+- [Repository-identiteit en sinkronisasiekontrak](docs/repository_identity_and_sync_v0.1.0.md)
 
 ## Belangrike veiligheidsreëls
 

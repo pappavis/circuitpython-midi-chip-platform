@@ -1,14 +1,15 @@
 # Bestand: test_usb_midi_receive.py
-# Versienommer: 0.12.0
+# Versienommer: 0.12.1
 # Doel: Bewys USB-MIDI-vertaling en begrensde Note On/Off-HIL-diagnostiek sonder hardeware.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
 # User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-RED-002
+# Actienr: MCP-ACT-007-IMP-004-RED-001
 # ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
 
 from midi_chip_platform.events import NoteEvent
 from midi_chip_platform.midi_usb import (
+    CircuitPythonUsbMidiFactory,
     MidiMessageTranslator,
     MidiMessageTypes,
     UsbMidiInputPort,
@@ -64,6 +65,23 @@ class TestUsbMidiReceive:
         def create(self, port_index):
             self.requested_port_index = port_index
             return self._raw_midi
+
+    class ModuleStub:
+        def __init__(self, **attributes):
+            for name, value in attributes.items():
+                setattr(self, name, value)
+
+    class PositionalOnlyImporter:
+        def __init__(self, modules):
+            self._modules = dict(modules)
+            self.calls = []
+
+        def __call__(self, *arguments):
+            self.calls.append(arguments)
+            module_name = arguments[0]
+            if module_name not in self._modules:
+                raise ImportError(module_name)
+            return self._modules[module_name]
 
     def _translator(self):
         return MidiMessageTranslator(
@@ -125,6 +143,26 @@ class TestUsbMidiReceive:
             assert str(error) == "USB MIDI input is closed"
         else:
             raise AssertionError("closed USB MIDI input must reject receive")
+
+    def test_circuitpython_factory_uses_positional_import_arguments(self) -> None:
+        midi_class = type("MidiClass", (), {})
+        importer = self.PositionalOnlyImporter(
+            {
+                "adafruit_midi": self.ModuleStub(MIDI=midi_class),
+                "usb_midi": self.ModuleStub(ports=(object(),)),
+                "adafruit_midi.note_on": self.ModuleStub(NoteOn=self.NoteOn),
+                "adafruit_midi.note_off": self.ModuleStub(NoteOff=self.NoteOff),
+                "adafruit_midi.control_change": self.ModuleStub(
+                    ControlChange=self.ControlChange
+                ),
+                "adafruit_midi.pitch_bend": self.ModuleStub(PitchBend=self.PitchBend),
+            }
+        )
+
+        midi_input = CircuitPythonUsbMidiFactory(importer).create_input()
+
+        assert isinstance(midi_input, UsbMidiInputPort)
+        assert any(len(call) == 4 for call in importer.calls)
 
 
 class TestUsbMidiReceiveDiagnostic:

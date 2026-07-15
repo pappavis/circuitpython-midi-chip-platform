@@ -2,7 +2,7 @@
 
 <!--
 Bestand: mcp_us_007_usb_midi_receive_review_v0.1.0.md
-Versienommer: 0.3.2
+Versienommer: 0.4.0
 Doel: Dokumenteer die USB-MIDI ontvangsadapter, fisiese deploy en menslike Note On/Off-hek.
 Sprint: Sprint 2
 Epic: MCP-EPIC-002 MIDI And Clock
@@ -53,6 +53,18 @@ Die herstel:
 - herlaai die Wemos met 'n tien-minuut, begrensde diagnostiekvenster.
 
 Ná die herstel slaag **87 hosttoetse** en Ruff. Die herbruikbare les word by die volgende lessons-learned-kontrolepunt ingesluit vir toekomstige subtractive-, D1-, drum-machine- en FM-synthprojekte: toets ingebedde konfigurasieparsers op die werklike firmware, nie net met desktop-TOML of die jongste dokumentasie nie.
+
+## Impediment MCP-US-007-IMPEDIMENT-004
+
+Die fisiese runtime het daarna in `CircuitPythonUsbMidiFactory.create_input()` gestop omdat CircuitPython se ingeboude `__import__` op die verwysingstoestel geen keyword-argumente aanvaar nie. Desktop Python aanvaar `fromlist=...`, waardeur die bestaande hostsuite 'n vals groen sein gegee het.
+
+Die herstel vervang slegs die twee dinamiese importaanroepe met die standaard posisionele `globals`, `locals` en `fromlist`-argumente. 'n Nuwe positional-only fake importer reproduseer eers RED en bewys daarna GREEN. Die volledige suite bevat nou **88 groen hosttoetse** en Ruff is groen.
+
+Die daaropvolgende toestel-deploy is veilig geweier terwyl die lang diagnostieklus en daarna Thonny die USB-serialpoort besit het. Die runbook-vereiste is daarom: stel diagnostiek af, sluit alle REPL/serial-monitors, deploy en verifieer, aktiveer diagnostiek weer en open presies een monitor. Die deployer se weiering word as 'n geslaagde veiligheidshek behandel, nie as rede om atomiese deploy te omseil nie.
+
+## Repository-identiteitsimpediment
+
+Die plaaslike implementasie-checkout was agter die remote en het daarom nie `device_runtime.py` bevat nie. Die aktiewe checkout, die implementasie-remote en die gedeployde toestel het die lêer wel bevat. 'n Afsonderlike governance-remote is geskep en die repository-identiteits- en sinkronisasiekontrak is in `repository_identity_and_sync_v0.1.0.md` vasgelê. Geen lêers word handmatig tussen checkouts gekopieer nie.
 
 ## Status
 

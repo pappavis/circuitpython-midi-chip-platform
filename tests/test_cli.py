@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.12.0
+# Versienommer: 0.12.1
 # Doel: Toets host-diagnose, dependency-closed HIL-CLI en release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-GREEN-006
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
+# Actienr: MCP-ACT-007-IMP-004-GREEN-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-004
 
 from io import StringIO
 from pathlib import Path
@@ -69,7 +69,7 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.12.0 | "
+            "circuitpython-midi-chip-platform v0.12.1 | "
             "story=MCP-US-007 | release-date=2026-07-15\n"
         )
 

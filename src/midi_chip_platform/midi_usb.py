@@ -1,11 +1,11 @@
 # Bestand: midi_usb.py
-# Versienommer: 0.12.0
+# Versienommer: 0.12.1
 # Doel: Vertaal USB-MIDI en lewer begrensde fisiese Note On/Off-aanvaardingsdiagnostiek.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
 # User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-GREEN-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
+# Actienr: MCP-ACT-007-IMP-004-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-004
 
 from midi_chip_platform.events import ClockEvent, ControlEvent, NoteEvent
 from midi_chip_platform.ports import MidiInputPort
@@ -148,7 +148,7 @@ class CircuitPythonUsbMidiFactory:
         self._importer = importer if importer is not None else __import__
 
     def create_input(self, port_index=0):
-        adafruit_midi = self._importer("adafruit_midi", fromlist=("MIDI",))
+        adafruit_midi = self._importer("adafruit_midi", None, None, ("MIDI",))
         usb_midi = self._importer("usb_midi")
         message_types = MidiMessageTypes(
             note_on_type=self._message_type("adafruit_midi.note_on", "NoteOn"),
@@ -173,7 +173,7 @@ class CircuitPythonUsbMidiFactory:
         )
 
     def _message_type(self, module_name, class_name):
-        module = self._importer(module_name, fromlist=(class_name,))
+        module = self._importer(module_name, None, None, (class_name,))
         return getattr(module, class_name)
 
     def _optional_message_type(self, module_name, class_name):

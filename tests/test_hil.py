@@ -1,11 +1,11 @@
 # Bestand: test_hil.py
-# Versienommer: 0.12.0
+# Versienommer: 0.12.1
 # Doel: Spesifiseer dependency-closed deploy-, execution- en USB-MIDI-HIL-bewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-GREEN-007
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
+# Actienr: MCP-ACT-007-IMP-004-GREEN-005
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-004
 
 from io import StringIO
 from pathlib import Path
@@ -273,14 +273,14 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.12.0 | story=MCP-US-007 | "
+            "circuitpython-midi-chip-platform v0.12.1 | story=MCP-US-007 | "
             "release-date=2026-07-15\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.12.0 | story=MCP-US-007 | "
+            "circuitpython-midi-chip-platform v0.12.1 | story=MCP-US-007 | "
             "release-date=2026-07-15\nDEVICE_IMPORT_STATUS=PASS\n"
             "DEVICE_EXECUTION_STATUS=READY"
         )
@@ -338,7 +338,7 @@ class TestHardwareInLoopVerifier:
         (device_root / "boot.py").write_bytes(b"approved")
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
-            "circuitpython-midi-chip-platform v0.12.0 | story=MCP-US-007 | "
+            "circuitpython-midi-chip-platform v0.12.1 | story=MCP-US-007 | "
             "release-date=2026-07-15\nBOOT_STATUS=PASS",
             encoding="utf-8",
         )
@@ -348,7 +348,7 @@ class TestHardwareInLoopVerifier:
             serial_port="redacted",
             manifest=manifest,
             serial_probe=self.FakeSerialProbe(
-                "circuitpython-midi-chip-platform v0.12.0 | story=MCP-US-007 | "
+                "circuitpython-midi-chip-platform v0.12.1 | story=MCP-US-007 | "
                 "release-date=2026-07-15\nDEVICE_EXECUTION_STATUS=READY"
             ),
             output=StringIO(),
