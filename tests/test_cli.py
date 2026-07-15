@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.6.0
+# Versienommer: 0.7.0
 # Doel: Toets host-diagnose, HIL-CLI en gedeelde release-naspeurbaarheid.
-# Sprint: Sprint 1
+# Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-005 Configuration And Secret Boundary
-# Actienr: MCP-ACT-005-RED-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
+# User-Story: MCP-US-006 Portable NoteEvent And ControlEvent Model
+# Actienr: MCP-ACT-006-RED-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-006
 
 from io import StringIO
 from pathlib import Path
@@ -46,8 +46,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.5.0 | "
-            "story=MCP-US-005 | release-date=2026-07-15\n"
+            "circuitpython-midi-chip-platform v0.6.0 | "
+            "story=MCP-US-006 | release-date=2026-07-15\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:
@@ -60,6 +60,19 @@ class TestCommandLineApplication:
         assert "circuitpython-midi-chip-platform" in output.getvalue()
         assert "host skeleton ready" in output.getvalue()
         assert "hardware access: disabled" in output.getvalue()
+
+    def test_event_model_diagnose_reports_all_portable_event_families(self) -> None:
+        output = StringIO()
+        application = CommandLineApplication(output=output)
+
+        exit_code = application.run(("events-diagnose",))
+
+        assert exit_code == 0
+        assert "EVENT_MODEL_STATUS=PASS" in output.getvalue()
+        assert "NOTE_EVENT=note_on:channel=1:note=60:velocity=100" in output.getvalue()
+        assert "CONTROL_EVENT=control_change:channel=1:control=1:value=64" in output.getvalue()
+        assert "PITCH_BEND_EVENT=pitch_bend:channel=1:value=8192" in output.getvalue()
+        assert "CLOCK_EVENT=timing_clock:channel=none" in output.getvalue()
 
     def test_hil_verify_delegates_paths_without_echoing_them(self) -> None:
         output = StringIO()

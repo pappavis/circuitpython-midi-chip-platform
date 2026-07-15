@@ -2,18 +2,18 @@
 
 <!--
 Bestand: quickstart_installation_v0.1.0.md
-Versienommer: 0.5.0
+Versienommer: 0.6.0
 Doel: Beginnerstappe vir installasie, diagnose en ontwikkeling sonder IDE-afhanklikheid.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-005 Configuration And Secret Boundary
-Actienr: MCP-ACT-005-DOC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
+User-Story: MCP-US-006 Portable NoteEvent And ControlEvent Model
+Actienr: MCP-ACT-006-DOC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-006
 -->
 
 ## Wat hierdie weergawe doen
 
-Hierdie weergawe bevat die host-skelet, USB-MIDI-bootprofiel, capability discovery en MCP-US-005 se veilige konfigurasiegrens. Dit maak nog geen klank en ontvang nog geen note nie. Hosttoetse bewys die klasse; `hil-verify` bewys verbinding, deploy, boot en uitvoering op die bord.
+Hierdie weergawe bevat die host-skelet, USB-MIDI-bootprofiel, capability discovery, veilige konfigurasiegrens en MCP-US-006 se draagbare eventmodel. Dit maak nog geen klank en ontvang nog geen fisiese note nie. Hosttoetse bewys die klasse; `hil-verify` bewys verbinding, deploy, boot en uitvoering op die bord.
 
 ## Wat jy nodig het
 
@@ -74,13 +74,24 @@ python -m pytest
 Die diagnose behoort onder meer te wys:
 
 ```text
-circuitpython-midi-chip-platform v0.5.0 | story=MCP-US-005 | release-date=2026-07-15
+circuitpython-midi-chip-platform v0.6.0 | story=MCP-US-006 | release-date=2026-07-15
 circuitpython-midi-chip-platform: host skeleton ready
 hardware access: disabled
 runtime state: class instances only
 ```
 
 Die toetsuitvoer behoort met `passed` te eindig. Hosttoetse alleen bewys nie die fisiese bord nie.
+
+## Toets die draagbare MIDI-eventmodel
+
+Hierdie toets benodig geen MIDI-keyboard, DAW of CircuitPython-bord nie:
+
+```bash
+python -m midi_chip_platform events-diagnose
+python -m pytest -q tests/test_domain_events.py
+```
+
+Verwag `EVENT_MODEL_STATUS=PASS`, gevolg deur een note-, control-, pitch-bend- en clockreël. Die pytest-opdrag moet met `passed` eindig. Dit bewys die interne model, nie fisiese USB-MIDI-ontvangs nie.
 
 ## Private CircuitPython-instellings
 
@@ -229,4 +240,4 @@ Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
 
 ## Volgende logiese story
 
-MCP-US-004 is Done. MCP-US-005 is host-groen en wag op sy menslike toestel-deploytoets. Die vooraf goedgekeurde volgende host-story is **MCP-US-006: Portable NoteEvent And ControlEvent Model**.
+MCP-US-005 is host-groen en wag op sy menslike toestel-deploytoets. MCP-US-006 is host-groen en wag op Product Owner-aanvaarding. Die volgende logiese story ná dié twee hekke is **MCP-US-007: USB MIDI Receive Loop**; implementering vereis 'n nuwe plan-goedkeuring.

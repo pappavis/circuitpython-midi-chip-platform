@@ -2,13 +2,13 @@
 
 <!--
 Bestand: source_register_v0.1.0.md
-Versienommer: 0.7.0
+Versienommer: 0.8.0
 Doel: Registreer primêre tegniese en plaaslike bronne met gebruiksgrense.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-005 Configuration And Secret Boundary
-Actienr: MCP-ACT-005-SRC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
+User-Story: MCP-US-006 Portable NoteEvent And ControlEvent Model
+Actienr: MCP-ACT-006-SRC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-006
 -->
 
 ## Primêre tegniese bronne
@@ -26,6 +26,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005
 | [CircuitPython `synthio`](https://docs.circuitpython.org/en/latest/shared-bindings/synthio/) | Eksperimentele synth, panning, envelope en bend-spike | Primêre API, maar eksplisiet eksperimenteel; nie ons enigste kernbasis nie |
 | [Adafruit MIDI Library](https://docs.circuitpython.org/projects/midi/en/latest/) | Note On/Off, CC, pitch bend, clock, start/stop/continue | Amptelike biblioteek; bundelweergawe moet vasgepen word |
 | [Adafruit MIDI API](https://docs.circuitpython.org/projects/midi/en/latest/api.html) | 14-bit bend, 7-bit CC en 24 PPQN timing clock | Primêre boodskapsemantiek |
+| [MIDI Association MIDI 1.0 message summary](https://midi.org/summary-of-midi-1-0-messages) | Kanaalboodskappe, 14-bit bend en Timing Clock-status | Primêre standaarde-organisasie; gedetailleerde betaalde spesifikasie bly buite die MVP-bronpakket |
 | [CircuitPython `_bleio`](https://docs.circuitpython.org/en/latest/shared-bindings/_bleio/) | Native BLE capability discovery en eksplisiete ESP32-S2-uitsondering | Primêre amptelike API; gebruik hoërvlak `adafruit_ble` waar beskikbaar |
 | [Adafruit BLE MIDI](https://docs.circuitpython.org/projects/ble_midi/en/latest/) | BLE MIDI service en biblioteekafhanklikhede | Amptelike biblioteek; positiewe HIL vereis ’n BLE-geskikte bord |
 | [Adafruit BLE MIDI API](https://docs.circuitpython.org/projects/ble_midi/en/stable/api.html) | `MIDIService` as PortIn/PortOut-agtige transport met MIDI timestamps | Ondersteun die gemeenskaplike MidiInputPort-ontwerp; nie ’n S2-vermoënsbewys nie |
