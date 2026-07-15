@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.8.0
+# Versienommer: 0.9.0
 # Doel: Toets host-diagnose, HIL-CLI en gedeelde release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-RED-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
+# User-Story: MCP-US-062 BLE MIDI Transport And Capability Gate
+# Actienr: MCP-ACT-062-RED-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-062
 
 from io import StringIO
 from pathlib import Path
@@ -46,8 +46,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.7.0 | "
-            "story=MCP-US-007 | release-date=2026-07-15\n"
+            "circuitpython-midi-chip-platform v0.8.0 | "
+            "story=MCP-US-062 | release-date=2026-07-15\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:
@@ -73,6 +73,16 @@ class TestCommandLineApplication:
         assert "CONTROL_EVENT=control_change:channel=1:control=1:value=64" in output.getvalue()
         assert "PITCH_BEND_EVENT=pitch_bend:channel=1:value=8192" in output.getvalue()
         assert "CLOCK_EVENT=timing_clock:channel=none" in output.getvalue()
+
+    def test_ble_diagnose_reports_s2_as_unsupported_without_starting_radio(self) -> None:
+        output = StringIO()
+        application = CommandLineApplication(output=output)
+
+        exit_code = application.run(("ble-diagnose", "--board-id", "lolin_s2_mini"))
+
+        assert exit_code == 1
+        assert "BLE_MIDI_STATUS=UNSUPPORTED" in output.getvalue()
+        assert "reason=board_has_no_native_ble" in output.getvalue()
 
     def test_hil_verify_delegates_paths_without_echoing_them(self) -> None:
         output = StringIO()

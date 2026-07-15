@@ -1,11 +1,11 @@
 # Bestand: hil.py
-# Versienommer: 0.5.0
+# Versienommer: 0.6.0
 # Doel: Verifieer geredigeerde CircuitPython connection-, deploy-, boot- en execution-bewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-GREEN-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
+# User-Story: MCP-US-062 BLE MIDI Transport And Capability Gate
+# Actienr: MCP-ACT-062-GREEN-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-062
 
 import hashlib
 from pathlib import Path
@@ -51,6 +51,10 @@ class HilDeploymentManifest:
                 (
                     "src/midi_chip_platform/midi_usb.py",
                     "lib/midi_chip_platform/midi_usb.py",
+                ),
+                (
+                    "src/midi_chip_platform/ble_midi.py",
+                    "lib/midi_chip_platform/ble_midi.py",
                 ),
             )
         )

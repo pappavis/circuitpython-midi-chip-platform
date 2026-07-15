@@ -1,15 +1,16 @@
 # Bestand: cli.py
-# Versienommer: 0.4.0
-# Doel: Bied IDE-onafhanklike host-, eventmodel- en geredigeerde HIL-diagnose.
+# Versienommer: 0.5.0
+# Doel: Bied IDE-onafhanklike host-, MIDI-, BLE-capability- en HIL-diagnose.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
-# User-Story: MCP-US-006 Portable NoteEvent And ControlEvent Model
-# Actienr: MCP-ACT-006-GREEN-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-006
+# User-Story: MCP-US-062 BLE MIDI Transport And Capability Gate
+# Actienr: MCP-ACT-062-GREEN-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-062
 
 import argparse
 import sys
 
+from midi_chip_platform.ble_midi import BleMidiCapabilityGate, ImportModuleProbe
 from midi_chip_platform.events import ClockEvent, ControlEvent, NoteEvent
 from midi_chip_platform.hil import HardwareInLoopVerifierFactory
 from midi_chip_platform.release import ReleaseMetadata
@@ -33,6 +34,8 @@ class CommandLineApplication:
             return self._diagnose()
         if parsed.command == "events-diagnose":
             return self._diagnose_events()
+        if parsed.command == "ble-diagnose":
+            return self._diagnose_ble(parsed)
         if parsed.command == "hil-verify":
             return self._hil_verify(parsed)
         parser.print_help(file=self._output)
@@ -50,6 +53,11 @@ class CommandLineApplication:
             "events-diagnose",
             help="verify portable note, control, pitch-bend and clock events",
         )
+        ble_parser = subparsers.add_parser(
+            "ble-diagnose",
+            help="report BLE-MIDI support without starting radio services",
+        )
+        ble_parser.add_argument("--board-id", required=True)
         hil_parser = subparsers.add_parser(
             "hil-verify",
             help="verify redacted CircuitPython connection, deployment and execution proof",
@@ -99,3 +107,11 @@ class CommandLineApplication:
             output=self._output,
         )
         return 0 if verifier.run() else 1
+
+    def _diagnose_ble(self, parsed):
+        capability = BleMidiCapabilityGate().evaluate(
+            board_id=parsed.board_id,
+            module_probe=ImportModuleProbe(),
+        )
+        self._output.write(f"{capability.report_line()}\n")
+        return 0 if capability.is_supported else 1
