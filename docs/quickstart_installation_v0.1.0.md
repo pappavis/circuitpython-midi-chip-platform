@@ -2,13 +2,13 @@
 
 <!--
 Bestand: quickstart_installation_v0.1.0.md
-Versienommer: 0.10.0
+Versienommer: 0.11.0
 Doel: Beginnerstappe vir installasie, diagnose en ontwikkeling sonder IDE-afhanklikheid.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-005 Configuration And Secret Boundary
-Actienr: MCP-ACT-005-IMP-001-DOC-002
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
+User-Story: MCP-US-005 en MVP-SCOPE-REDUCTION-001
+Actienr: MCP-ACT-MVP-SCOPE-001-DOC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
 -->
 
 ## Wat hierdie weergawe doen
@@ -282,4 +282,4 @@ Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
 
 ## Huidige pausepunt
 
-MCP-US-007, MCP-US-008 en MCP-US-009 is Done. MCP-US-007 se dependency-closed deploy, harde boot, imports en werklike USB-MIDI Note On/Off is fisies groen; MCP-US-051 se latere klankprobe bly oop. MCP-US-062 se positiewe BLE-HIL wag op 'n werklike BLE-geskikte tweede bord. MCP-US-010 se hoorbare aanvaarding wag op MCP-US-016 se MAX98357-I2S-pad en MCP-US-063 se D1-kern.
+MCP-US-007, MCP-US-008 en MCP-US-009 is Done. MCP-US-007 se dependency-closed deploy, harde boot, imports en werklike USB-MIDI Note On/Off is fisies groen. MCP-US-005 wag op die finale menslike UNSET-herbewys. Daarna volg US-014, die onafhanklike US-016 G-C-D/MAX98357-diagnose, US-063 D1 en US-055 Logic-aanvaarding. `device/i2s_test.py` is beplan maar bestaan nog nie; moenie 'n ongedokumenteerde lêer na CIRCUITPY kopieer voordat US-016 begin en sy toetsinstruksies gepubliseer is nie.

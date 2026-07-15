@@ -2,13 +2,13 @@
 
 <!--
 Bestand: agile_delivery_release_plan_v0.1.0.md
-Versienommer: 0.4.0
+Versienommer: 0.5.0
 Doel: Definieer die werklike Agile uitvoerings-, beheer- en releaseproses.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-064 tot MCP-US-067 Framework Engineering
-Actienr: MCP-ACT-FWK-001-REL-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / FRAMEWORK-ENGINEERING-001
+User-Story: MVP-SCOPE-REDUCTION-001
+Actienr: MCP-ACT-MVP-SCOPE-001-REL-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
 -->
 
 ## Doel
@@ -28,6 +28,9 @@ Die Framework Engineering-bootloader in `docs/framework_engineering/README.md` v
 | Impediment | Aktiewe story kan nie kriteria haal nie | Oorsaak, bewys en herstelplan gelog |
 | In Review | Outomaties groen; mens/hardewarebewys wag | Geen nuwe funksionele story begin nie |
 | Done | DoD, docs, Kanban, commit en aanvaarding voltooi | Release-status bly eerlik |
+| MVP-Enabler | Deel van die bevrore acceptance set, maar nie self die eindgebruikerdemo nie | Moet Done wees voor MVP |
+| MVP-Must | Direkte USB-MIDI/I2S/D1/Logic-produkbewys | PO/HIL-aanvaarding verpligtend |
+| Post-MVP | Waardevol ná die D1/Logic release | Kan nie die MVP stilweg blokkeer nie |
 | Later/Parking Lot | Waardevol maar buite huidige volgorde/scope | Geen stil implementering nie |
 
 ## Volgorde en WIP
@@ -37,7 +40,9 @@ Die Framework Engineering-bootloader in `docs/framework_engineering/README.md` v
 - Dokumentasie-/impedimentwerk binne dieselfde story tel nie as 'n tweede story nie.
 - 'n Nuwe idee word geklassifiseer en georden; dit onderbreek nie die aktiewe story nie.
 - Die Scrum Master en Architect moet enige versoek stop wat 'n ongetoetste kernpad, werkende klankpad of importgrens kan breek.
-- Die eerste hoorbare vertikale sny volg `MCP-US-003 -> MCP-US-004 -> MCP-US-014 -> MCP-US-016`; MAX98357 mono-I2S is primêr en PWM is fallback.
+- Die bevrore pad volg `MCP-US-005 -> MCP-US-014 -> MCP-US-016 -> MCP-US-063 -> MCP-US-055 -> MCP-US-057`.
+- US-016 se standalone I2S-toets kom voor D1 en deel geen synth-runtimekode nie; MAX98357 mono-I2S is die fisiese verstek.
+- SN76489, web, BLE, stereo, PWM, DSP, MIDI-kitaar en multi-core is post-MVP en kan nie hierdie volgorde onderbreek nie.
 - Sonder verdere kwalifikasie beteken `synth` hierdie CircuitPython-projek; `python-d1-synth` word slegs as 'n eksplisiet benoemde leesalleen-verwysing gebruik.
 
 ## Storyritme
@@ -85,8 +90,8 @@ Die bestaande D1 lessons-learned-dokument mag gelees word vir bevestigde patrone
 |---|---|---|
 | Concept | Ontwerp of spike | Geen gebruikersclaim |
 | Demo | Beperkte gelukkige pad | Herhaalbare demo en bekende beperkings |
-| MVP Candidate | Alle Must-stories geimplementeer | Host/HIL groen, installasie en diagnose |
-| MVP Accepted | PO aanvaar produkdoel | Review, retro, bekende risiko's en release notes |
+| MVP Candidate | Die bevrore Acceptance Set is geimplementeer | Standalone I2S-preflight plus host/HIL groen |
+| MVP Accepted | PO hoor en aanvaar Logic USB-MIDI na D1 op die verwysingsbord | Review, retro, bekende risiko's en release notes |
 | Validated | Tweede omgewing/bord slaag | Kruisplatform- en herstelbewys |
 | Production Candidate | Verspreidings- en veiligheidshekke slaag | Lisensie, USB-ID, hardwareveiligheid, rollback |
 
@@ -101,6 +106,8 @@ Die bestaande D1 lessons-learned-dokument mag gelees word vir bevestigde patrone
 7. Git-tag wys na presies die geverifieerde commit; rollback-instruksie bestaan.
 8. Elke startup toon projekweergawe, aktiewe story/amendment en release-datum; dit stem met package- en release-metadata ooreen.
 9. Fisiese claims bevat Device Connection Proof met ontdekte transport, broncommit/manifest en 'n runtimebanner vanaf die toestel. UID, MAC, SSID en geheime word geredigeer.
+10. MVP-status word slegs teen die eksplisiete Acceptance Set beoordeel; historiese prioriteitslabels verbreed nie scope nie.
+11. Die standalone I2S-diagnose het geen synth-import, globale runtime-status of gelyktydige I2S-eienaarskap nie.
 
 ## Device Connection Proof
 
@@ -108,7 +115,7 @@ Die bestaande D1 lessons-learned-dokument mag gelees word vir bevestigde patrone
 2. **Deployment:** vergelyk die broncommit en SHA-256-hashes van die bedoelde firmwarelêers met die gedeployde kopie.
 3. **Execution:** vang die toestel se eie weergawe-, story- en statusbanner ná reset/reload vas.
 
-'n Seriële bewys mag `code.py` onderbreek. Die operateur meld dit vooraf, kontroleer dat geen ander serial client die poort besit nie en behou 'n private herstelkopie. MCP-US-051 se connection/deploy/boot/execution-runner is groen; volledige klankmeting bly afhanklik van US-015/016.
+'n Seriële bewys mag `code.py` onderbreek. Die operateur meld dit vooraf, kontroleer dat geen ander serial client die poort besit nie en behou 'n private herstelkopie. MCP-US-051 se connection/deploy/boot/execution-runner is groen; die klankadapter sluit met US-016 se onafhanklike MAX98357-HIL.
 
 ## Anti-hallusinasie-maatreels
 

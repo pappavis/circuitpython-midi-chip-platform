@@ -2,13 +2,13 @@
 
 <!--
 Bestand: test_strategy_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Definieer die toetsvlakke, omgewings, hardewarematriks en aanvaardingsbewys.
 Sprint: Sprint 2
 Epic: MCP-EPIC-009 Framework Engineering
-User-Story: MCP-US-066 Quality Manual, Test Strategy And Review Engine
-Actienr: MCP-ACT-066-TEST-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / FRAMEWORK-ENGINEERING-001
+User-Story: MVP-SCOPE-REDUCTION-001 en MCP-US-016
+Actienr: MCP-ACT-MVP-SCOPE-001-TEST-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
 -->
 
 ## Toetspiramide
@@ -21,17 +21,18 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / FRAMEWORK-ENGINEERING-001
 | Integrasie | Host | Manifest, CLI, config en simulators | Dependency closure |
 | Device smoke | S2 via HIL | Boot, imports, heap, capabilities | READY markers |
 | Transport HIL | S2 + DAW/controller | Werklike USB/BLE/DIN-boodskappe | Note On/Off paar |
-| Audio HIL | S2 + backend + meetmiddel | Hoorbaarheid, kanaal, latency, dropout | MAX98357 tone/note |
-| End-to-end | Musikantopstelling | Gebruikersvloei en herstel | Controller -> pedal -> speaker |
+| Standalone audio HIL | S2 + I2S backend + meetmiddel | G-C-D, penne, profiel, cleanup sonder synth | `device/i2s_test.py` -> MAX98357 |
+| D1 audio HIL | S2 + D1 + backend | Waveform, Note On/Off, latency, dropout | Logic -> D1 -> MAX98357 |
+| End-to-end | Logic Pro-opstelling | MVP-gebruikersvloei en herstel | Logic -> reference board -> speaker |
 
 ## Omgewingsmatriks
 
 - **Primêr host:** macOS op KodeklopperM4.
 - **Sekondêr host:** Windows Spelen01 en Linux/Raspberry Pi vir geordende stories.
 - **Verwysingstoestel:** LOLIN/Wemos ESP32-S2 Mini, CircuitPython 10.x.
-- **Tweede MCU:** werklik BLE-geskikte CircuitPython-bord vir positiewe BLE-HIL.
-- **Audio:** een MAX98357 mono eerste; PWM as meetbare fallback; stereo later.
-- **MIDI-stimuli:** deterministiese host-sender, Logic Pro, generiese keyboard en later MIDI-kitaar.
+- **Tweede MCU:** post-MVP werklik BLE-geskikte CircuitPython-bord.
+- **Audio:** een MAX98357 mono as MVP-verstek; ander PCM-I2S-profiele verdien afsonderlike HIL; PWM en stereo is post-MVP.
+- **MIDI-stimuli:** deterministiese host-sender en Logic Pro vir MVP; generiese keyboard en MIDI-kitaar later.
 
 Geen toestelnaam, serial-pad of audio interface word 'n universele toetskonstante nie. Die operateur kies of discovery vind dit.
 
@@ -51,7 +52,7 @@ Persoonlike UID, MAC, SSID, wagwoord en volledige serial-pad word geredigeer. 'n
 
 ## Audio-aanvaarding
 
-Voor luidsprekertoets word MAX98357 se BTL-uitgang en voeding bevestig. Die eerste test gebruik veilige amplitude. Meet: sample rate, bufferduur, beginlatency, dropout, heap en cleanup. Hoorbaar is nodig vir die demo; ossilloskoop/telemetrie maak die resultaat vergelykbaar.
+Voor luidsprekertoets word MAX98357 se BTL-uitgang en voeding bevestig. US-016 speel eers G3-C4-D4 square waves via 'n synth-onafhanklike, klasgebaseerde toepassing. AST bewys geen globals/modulefunksies en 'n importtoets bewys geen synth-package-afhanklikheid. Meet sample rate, frekwensie, duur, amplitude, heap en cleanup. Daarna bewys US-063/055 D1 Note On/Off deur dieselfde benoemde profielkontrak en die produksie-AudioOutput-pad.
 
 ## Nie-funksionele toetsing
 
@@ -63,4 +64,4 @@ Voor luidsprekertoets word MAX98357 se BTL-uitgang en voeding bevestig. Die eers
 
 ## Exit-kriteria
 
-'n Story verlaat In Review wanneer alle eksplisiete menslike/HIL-kriteria aanvaar is. 'n Release verlaat Candidate wanneer alle Must-stories Done is, oop risiko's aanvaar is, installasie/herstel herhaal is en die tag na die geverifieerde commit wys.
+'n Story verlaat In Review wanneer alle eksplisiete menslike/HIL-kriteria aanvaar is. 'n Release verlaat Candidate wanneer die 16-story MVP Acceptance Set Done is, die Product Owner Logic-na-hoorbare-D1 aanvaar, oop risiko's aanvaar is en die tag na die geverifieerde commit wys.

@@ -2,13 +2,13 @@
 
 <!--
 Bestand: architecture_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Beskryf framework-, solution-, runtime- en deployment-argitektuur met afdwingbare grense.
 Sprint: Sprint 2
 Epic: MCP-EPIC-009 Framework Engineering
-User-Story: MCP-US-064 Enterprise Vision And Architecture Baseline
-Actienr: MCP-ACT-064-ARCH-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / FRAMEWORK-ENGINEERING-001
+User-Story: MVP-SCOPE-REDUCTION-001 en MCP-US-016
+Actienr: MCP-ACT-MVP-SCOPE-001-ARCH-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
 -->
 
 ## Argitektuurlense
@@ -24,7 +24,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / FRAMEWORK-ENGINEERING-001
 
 ```mermaid
 flowchart LR
-  A["MIDI-bronne: DAW, klawerbord, kitaar, host"] --> B["Transport adapters: USB, BLE, DIN/UART"]
+  A["MIDI-bronne: Logic/DAW; later klawerbord, kitaar, host"] --> B["USB-MIDI; later BLE en DIN/UART"]
   B --> C["Draagbare Note/Control/Clock events"]
   C --> D["Kanaalrouter en performance state"]
   D --> E["D1 / SN76489 / SID / OPL core instances"]
@@ -33,7 +33,11 @@ flowchart LR
   H["Config en plaaslike webbeheer"] --> D
   I["Capability profiles"] --> B
   I --> F
+  J["Standalone I2S Test Application"] --> K["audiobusio.I2SOut"]
+  K --> L["MAX98357 default / later PCM-I2S profiles"]
 ```
+
+Die standalone I2S-diagnoselaan is doelbewus nie aan `Application`, `SynthCore`, MIDI of die core registry gekoppel nie. Dit is 'n onafhanklike fisiese debug-instrument, nie 'n tweede synth-runtime nie.
 
 ## Verpligte poorte
 
@@ -50,6 +54,8 @@ flowchart LR
 
 `Application` besit die composition root. Dit konstrueer klasse en spuit afhanklikhede in. Elke veranderlike toestand, insluitend aktiewe note, routerbindings, buffers, netwerkstatus en diagnostiektellers, behoort aan 'n instansie. Modules definieer klasse maar begin geen diens tydens import nie. `boot.py` doen slegs vroeë USB/platform-opstelling; `code.py` skep die application binne 'n main guard.
 
+`device/i2s_test.py` het sy eie klein composition root en instansie-eienaarskap. Dit mag CircuitPython se audio-/boardmodules invoer, maar geen projek-synthpakket nie. Dit en die normale runtime kry nooit gelyktydig eienaarskap van I2S nie.
+
 ## Deployment-topologie
 
 | Omgewing | Rol | Mag bewys |
@@ -59,6 +65,7 @@ flowchart LR
 | Serial/REPL | Boot-, uitvoering-, heap- en statusbewys | Werklike toestelgedrag, geredigeer |
 | Logic/DAW/CoreMIDI | USB-MIDI-stimulus | Host-na-toestel transport |
 | MAX98357/luidspreker/ossilloskoop | Hoorbare en meetbare klank | Fisiese audio-uitvoer |
+| Standalone `device/i2s_test.py` | G-C-D square-wave preflight | I2S, penne, voeding en versterker onafhanklik van D1 |
 | Latere Wi-Fi station/AP | Plaaslike beheer | Netwerk-UI, nie bootkritieke synthlogika nie |
 
 ## Cross-cutting kwaliteit
@@ -71,7 +78,7 @@ flowchart LR
 
 ## Evolusievolgorde
 
-Platform en MIDI-kontrakte kom eerste; `AudioOutput` en MAX98357 maak die eerste hoorbare vertikale sny; die D1-core kom voor SN76489; webbeheer volg 'n kooperatiewe scheduler; multi-core en DSP volg eers nadat CPU/RAM/latency gemeet is. USB-instance-identiteit is release-polish en mag nie die hoorbare pad vooruitloop nie.
+Die bindende MVP-volgorde is `US-005 -> US-014 -> US-016 -> US-063 -> US-055 -> US-057`. US-016 bewys I2S onafhanklik; US-063 voeg D1 by; US-055 bewys die volle Logic-na-klankvloei. SN76489 en alle ander kerne, webbeheer, BLE, multi-core, DSP en USB-instance-polish volg ná die MVP.
 
 ## Argitektuurfitness
 

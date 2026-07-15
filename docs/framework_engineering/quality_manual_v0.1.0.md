@@ -2,13 +2,13 @@
 
 <!--
 Bestand: quality_manual_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Definieer kwaliteitseienaarskap, verpligte hekke en objektiewe vrystellingsbewys.
 Sprint: Sprint 2
 Epic: MCP-EPIC-009 Framework Engineering
-User-Story: MCP-US-066 Quality Manual, Test Strategy And Review Engine
-Actienr: MCP-ACT-066-QUAL-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / FRAMEWORK-ENGINEERING-001
+User-Story: MVP-SCOPE-REDUCTION-001
+Actienr: MCP-ACT-MVP-SCOPE-001-QUAL-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
 -->
 
 ## Kwaliteitsbeleid
@@ -28,7 +28,7 @@ Kwaliteit beteken dat die produk se beweerde gedrag herhaalbaar, herstelbaar, ve
 | HIL | Connection, deployment, execution, stimulus | Fisiese claim sonder toestelbewys |
 | Human acceptance | PO se hoorbare/Logic/meet-instrument resultaat | Kriterium vereis menslike waarneming en dit ontbreek |
 | Traceability | Header, story review, backlog, Kanban, commit | Statusse/weergawe/ChatID verskil |
-| Release | Risiko, docs, rollback, tag | Oop Must-story of onbevestigde claim |
+| Release | Bevrore MVP Acceptance Set, risiko, docs, rollback, tag | Oop acceptance-set story of onbevestigde Logic/D1/klankclaim |
 
 ## Defek- en impedimentbeleid
 
@@ -41,6 +41,7 @@ Kwaliteit beteken dat die produk se beweerde gedrag herhaalbaar, herstelbaar, ve
 - CircuitPython-versoenbaarheid word teen die geteikende firmwarekontrak getoets.
 - Begrensde loops, buffers en logs; cleanup in sukses, timeout, fout en Ctrl-C/soft reload.
 - Generiese device discovery; spesifieke verwysingstoestelle bly toetsdata/profiele.
+- Die standalone I2S-diagnose en produksie-AudioOutput deel profielbetekenis, nie runtime-imports of gelyktydige I2S-eienaarskap nie.
 
 ## Dokumentkwaliteit
 
@@ -52,4 +53,4 @@ Die span volg: groen toetsgetal, oop impediments, story cycle time, regressies, 
 
 ## Afwykings
 
-Slegs 'n goedgekeurde ADR plus PO-besluit kan 'n verpligte hek tydelik afwyk. Die afwyking het 'n vervaldatum/story, eienaar, risiko en rollback. “Dit werk op my bord” is nie 'n afwyking nie.
+Slegs 'n goedgekeurde ADR plus PO-besluit kan 'n verpligte hek tydelik afwyk. Die afwyking het 'n vervaldatum/story, eienaar, risiko en rollback. “Dit werk op my bord” is nie 'n afwyking nie. 'n Post-MVP-story word nie 'n releaseblokker sonder 'n eksplisiete scope-amendment nie.

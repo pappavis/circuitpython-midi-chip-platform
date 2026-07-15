@@ -2,98 +2,96 @@
 
 <!--
 Bestand: mvp_scope_v0.1.0.md
-Versienommer: 0.6.0
-Doel: Definieer die eerste toetsbare CircuitPython MIDI Chip Platform MVP.
-Sprint: Sprint 0
-Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-068 Stable USB MIDI Instance Identity
-Actienr: MCP-ACT-068-SCOPE-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE
+Versienommer: 0.7.0
+Doel: Definieer die verkleinde eerste toetsbare CircuitPython MIDI Chip Platform MVP.
+Sprint: Sprint 2
+Epic: MCP-EPIC-001, MCP-EPIC-002, MCP-EPIC-003 en MCP-EPIC-008
+User-Story: MVP-SCOPE-REDUCTION-001
+Actienr: MCP-ACT-MVP-SCOPE-001-SCOPE-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
 -->
 
-## Produkdefinisie
+## Langtermyn-produkdefinisie
 
-’n MIDI-beheerde, multi-kern retro-sintetiseerdermodule in pedaalvorm, met USB-MIDI, stereo-klankuitvoer, plaaslike webbeheer en uitbreibare skyfie-emulasie.
+'n MIDI-beheerde, multi-kern retro-sintetiseerdermodule in pedaalvorm, met USB-MIDI, stereo-klankuitvoer, plaaslike webbeheer en uitbreibare chip-emulasie. Hierdie visie bly staan; dit is nie alles deel van die eerste MVP nie.
 
-## Primêre gebruiker
+## Primêre MVP-gebruiker
 
-’n Kitaar- of sintetiseerderentoesias wat die module in ’n musiekopstelling wil gebruik, MIDI kan roeteer maar nie noodwendig Python of ingebedde ontwikkeling ken nie.
+'n Logic Pro-gebruiker wat die LOLIN/Wemos ESP32-S2 Mini as External MIDI destination kan kies en die D1-basiskern deur 'n gekoppelde I2S-klankmodule wil hoor.
 
-## MVP-doel
+## MVP-produkhek
 
-Die MVP bewys een volledige vertikale vloei op die LOLIN/Wemos ESP32-S2 Mini:
+Die MVP is geslaag wanneer een herhaalbare vertikale vloei op die verwysingsbord bewys is:
 
-1. Die toestel begin betroubaar en bied ’n herkenbare USB-MIDI-poort aan.
-2. MIDI Note On/Off beheer eers ’n draagbare D1-basiskern en daarna ’n SN76489-agtige driestem-kern.
-3. Pitch bend, CC1-modulasie en MIDI-klok word ontvang en diagnosties bewys.
-4. Die eerste hoorbare vertikale sny werk mono via een MAX98357 I2S-versterker; PWM bly 'n diagnostiese fallback.
-5. Elke stem kan links, regs of stereo gerouteer word.
-6. ’n Opsionele G-C-D-opstartreeks laat ’n gebruiker die klankpad hoor.
-7. ’n Mobile-first plaaslike webblad kan die aktiewe kern en veilige kernparameters wys en verander via ’n gejoinde netwerk of die synth se beveiligde fallback access point.
-8. Die oplossing kan vanaf ’n skoon toestel geïnstalleer, gediagnoseer en herstel word.
-9. ’n Laat-MVP, geheuebegrensde delay/echo en eenvoudige reverb-spike kan omseil en beheer word sonder om MIDI te destabiliseer.
-10. 'n Generiese USB-MIDI-kitaarkontroleerder kan note, akkoorde, per-kanaal bends en slides stuur; Fishman TriplePlay dien as verwysings-HIL-toestel, nie as hardgekodeerde afhanklikheid nie.
-11. Die pedaal ontvang MIDI sonder DAW via 'n klas-kompatibele eksterne USB-host/Raspberry Pi-roete na 'n geabstraheerde DIN/UART-invoer.
-12. Minstens twee verskillende geregistreerde kerninstansies kan laat in die MVP parallel loop met meetbare en veilige oorladinggedrag.
-13. BLE-MIDI werk deur dieselfde eventmodel op ’n tweede BLE-geskikte CircuitPython-bord; die ESP32-S2 faal veilig en hou USB-MIDI beskikbaar.
-14. Twee gelyktydig gekoppelde synths is in 'n DAW onderskeibaar deur 'n herkenbare produknaam en stabiele vier-karakter instance-ID sonder rou UID/MAC-lekkasie.
+1. Die bord begin veilig en ontvang USB-MIDI Note On/Off uit Logic Pro.
+2. 'n Onafhanklike `device/i2s_test.py` speel G-C-D as square waves sonder enige import uit die synth-runtime.
+3. MAX98357 mono-I2S op BCLK IO5, WS/LRC IO3 en DATA IO7 is die verstek en fisies hoorbaar gevalideer.
+4. Die draagbare D1-basiskern speel sine, saw en square via die geverifieerde AudioOutput-pad.
+5. Logic Pro kan die D1-kern as 'n bruikbare External MIDI synth speel en hoor.
+6. Hosttoetse, HIL-bewys, herstelstappe, dokumentasie en release metadata is op datum.
+
+## Bevrore MVP Acceptance Set
+
+Slegs hierdie stories beheer MVP-aanvaarding:
+
+`MCP-US-001`, `MCP-US-002`, `MCP-US-003`, `MCP-US-004`, `MCP-US-005`, `MCP-US-006`, `MCP-US-007`, `MCP-US-008`, `MCP-US-009`, `MCP-US-014`, `MCP-US-016`, `MCP-US-050`, `MCP-US-051`, `MCP-US-055`, `MCP-US-057` en `MCP-US-063`.
+
+`MVP-Enabler`-stories bou die veilige kontrakte. `MVP-Must`-stories lewer die eindgebruiker se direkte hoorbare bewys. Reeds voltooide werk buite hierdie lys bly waardevol, maar verbreed nie die releasehek nie.
+
+## Standalone I2S-diagnose
+
+MCP-US-016 besit die gevraagde eenvoudige toets en word nie gedupliseer nie.
+
+- Die lêer is `device/i2s_test.py` en het geen afhanklikheid op `midi_chip_platform`, D1 of enige ander synth core nie.
+- Alle veranderlike status behoort aan klasse; daar is geen globale veranderlikes, `global`-statements of modulevlak helperfunksies nie.
+- Die toepassing genereer veilige square waves vir G3, C4 en D4, speel hulle opeenvolgend en stel I2S daarna vry.
+- MAX98357 is die verstekprofiel. Penne, sample rate, amplitude, nootduur en 'n standaard PCM-I2S-adapterprofiel word deur constructor/config ingespuit.
+- Ander standaard I2S-modules soos PCM5102 kan dieselfde profielgrens gebruik, maar word eers as fisies ondersteun aangedui nadat hulle eie HIL slaag.
+- Die diagnose loop nie gelyktydig met die normale synth-runtime nie; albei besit dieselfde fisiese I2S-hulpbron eksklusief.
+
+MCP-US-020 bly 'n aparte post-MVP-story vir 'n geïntegreerde, opsionele G-C-D-opstartmelodie deur die D1-runtime.
 
 ## Binne MVP
 
-- Een primêre verwysingsbord: LOLIN/Wemos ESP32-S2 Mini met CircuitPython 10.x, plus een BLE-geskikte tweede bord vir capability- en BLE-aanvaarding.
-- Die draagbare D1-basiskern is die eerste musikale kern; SN76489-lite volg tweede. Daarna volg 6581 SID, OPL2 en OPL3 in dié volgorde.
-- USB-MIDI-invoer en MIDI-kanale 1-16.
-- 'n Lae-prioriteit, release-verpligte USB-produknaam in die vorm `EasyLab4Kids-midi-chip-platform XXXX`, waar `XXXX` 'n stabiele nie-geheime instance-ID is en nie as 'n volledige UUID voorgestel word nie.
-- BLE-MIDI as capability-gated transport op ’n ondersteunde bord; die S2 het geen native BLE-pad nie.
-- Note On, Note Off, velocity, pitch bend, CC1, All Notes Off en MIDI Clock/Start/Stop/Continue.
-- Konfigureerbare pitch-bend range en multi-kanaal bend/slide-semantiek vir MIDI-kitaarkontroleerders.
-- USB-MIDI device mode vir Logic/ander hosts plus 'n DIN/UART-transport vir 'n eksterne USB-MIDI-host soos 'n Raspberry Pi- of DOREMiDi-klas toestel.
-- Interne klok teen standaard 120 BPM met eksterne MIDI-klok-oorskakeling.
-- Een MAX98357 as die primêre vroeë mono-I2S-uitvoer, gevolg deur 'n hoorbare diagnostiese toetssein.
-- PWM as altyd-beskikbare debug-/ossilloskoop-fallback wanneer I2S nie op 'n bord beskikbaar is nie.
-- Later-MVP stereo via twee MAX98357-modules of 'n geprofileerde stereo-I2S-backend soos PCM5102; geen komponent word as universeel aanvaar nie.
-- Klasgebaseerde poorte vir MIDI, kern, klok, klank en konfigurasie.
-- Klein webbeheerblad op ’n vertroude plaaslike netwerk, een kliënt as ontwerpteiken.
-- Begrensde station join met sigbare IP; beveiligde access-point fallback met sigbare AP-IP wanneer geen netwerk beskikbaar is nie.
-- Mobile-first station/AP-webbediening met spaarsame, vlak- en koersbegrensde logging; geen per-poll-/per-note-flashlogging nie.
-- Laat-MVP DSP: ’n klein delay/echo en eenvoudige reverb-spike met harde geheue- en latensiegrense.
-- Host-eenheidstoetse plus eksplisiete hardeware-in-die-lus-toetse.
+- Een verwysingsbord: LOLIN/Wemos ESP32-S2 Mini met CircuitPython 10.x.
+- Veilige boot, capability discovery en private configuration boundary.
+- USB-MIDI device mode en Note On/Off/velocity-semantiek wat in Logic bewys is.
+- AudioOutput-poort, Null backend en die onafhanklike I2S-diagnose.
+- D1 sine-, saw- en square-wave basiskern.
+- MAX98357 mono-I2S as fisies gevalideerde verstek.
+- Host-eenheid-/kontraktoetse, HIL-runner, herstelrunbook en eerlike release metadata.
 
-## Buite die eerste MVP
+## Ná MVP
 
-- Oudio-invoer, pedalboard-through en verwerking van eksterne kitaarklank.
-- Volledige SID-lêer-afspeel of internetstroming.
-- Volledige GM MIDI-lêer-afspeel.
-- Cycle-accurate OPL2/OPL3- of 6581-SID-klankakkuraatheid; dié adapters bly opvolgwerk ná die multi-core-kontrakbewys.
-- ’n Volwaardige sekwenser, arpeggiator of akkoordkomponis.
-- Finale DIN-MIDI-elektronika en ’n finale PCB/omhulsel.
-- Ondersteuning wat beweer dat alle CircuitPython-borde identies werk.
-- Raspberry Pi Zero/2/3 as dieselfde firmwarebeeld; Linux/Blinka is ’n afsonderlike adapterteiken.
+- SN76489-lite as tweede kern; daarna 6581 SID, OPL2 en OPL3.
+- Pitch bend, CC1-modulasie, Fishman TriplePlay bends/slides en MIDI clock.
+- BLE-MIDI, DIN/UART, eksterne USB-host en DAW-vrye gebruik.
+- Stereo, per-stem routing, PCM5102/tweede MAX98357-HIL en PWM-fallback.
+- Wi-Fi station/AP fallback, webinterface, webklawerbord en sekwenser.
+- Patchbestuur, MIDI-lêers, arpeggiator en akkoordprogressies.
+- Multi-core runtime, resource guard, DSP, display, fisiese chips, pedaalhardeware en PCB.
+- Windows-, tweede-bord- en unieke multi-device USB-identiteitsaanvaarding.
 
 ## MVP-sukseskriteria
 
-- ’n Skoon installasie vertoon ’n USB-MIDI-toestel op macOS en Windows.
-- Twee toestelle met dieselfde firmware verskyn met stabiele, onderskeibare instance-name in die DAW; geen rou UID/MAC verskyn in logs of Git nie.
-- ’n BLE-geskikte tweede bord adverteer en ontvang Note On/Off, CC en pitch bend; die S2 se negatiewe capability-toets destabiliseer nie USB nie.
-- Drie gelyktydige note is hoorbaar sonder vasloop of hangende note.
-- 'n Vroeë mono MAX98357-toetssein is hoorbaar voordat web-, DSP- of multi-core-werk begin.
-- 'n MIDI-kitaar kan 'n enkele noot, akkoord en slide/bend speel met 'n bend range wat met die kontroleerder ooreenstem.
-- Links, regs en stereo word met ’n ossilloskoop en luistertoets bevestig.
-- MIDI-klok kan 120 BPM intern loop en ’n eksterne klok se tempo rapporteer.
-- Die opstarttoets kan in konfigurasie aan/af geskakel word.
-- Webparameterverandering onderbreek nie ’n aangehoue noot onaanvaarbaar nie.
-- Station-IP word ná sukses gerapporteer; ’n geforseerde join-mislukking bereik AP-fallback binne die timeout en ’n telefoon kan die mobiele statusblad via die AP-IP open.
-- Polling en normale MIDI-aktiwiteit veroorsaak geen logvloed of geheime-/kliëntidentifiseerderlek nie.
-- DSP-bypass en ten minste een hoorbare delay/reverb-proef loop binne die ooreengekome geheue- en latensiebegroting.
-- Alle host-toetse is groen en die hardeware-aanvaardingstappe is gedokumenteer.
-- 'n Controller kan sonder Logic via 'n eksterne USB-host/DIN-roete hoorbare MIDI aan die pedaal lewer.
-- Twee kerninstansies kan parallel loop of die runtime weier 'n onveilige tweede kern deterministies met 'n duidelike resource-diagnose.
-- Geen geheime of toestelspesifieke konstantes is in die openbare repository nie.
+- `device/i2s_test.py` speel G-C-D hoorbaar deur die MAX98357 en kan herhaalbaar herstart word.
+- Die standalone toets het geen synth-package-imports en slaag die class/no-globals AST-kontrak.
+- Logic Pro stuur ten minste een ooreenstemmende Note On/Off-paar na die verwysingsbord.
+- D1 sine, saw en square is hoorbaar; Note Off stop die stem sonder hangende noot.
+- Die klanktoets en D1-pad gebruik dieselfde gedokumenteerde pen-/profielwaardes sonder runtime-koppeling.
+- Alle MVP Acceptance Set-stories is Done en die PO aanvaar die hoorbare Logic-demo.
+- Geen geheime, rou toestelidentifiseerders of plaaslike hardeware-name is in die openbare repository nie.
+
+## Geordende pad
+
+`MCP-US-005 -> MCP-US-014 -> MCP-US-016 -> MCP-US-063 -> MCP-US-055 -> MCP-US-057`
+
+Die aktiewe MCP-US-005 UNSET-HIL word eers afgesluit. Geen D1- of I2S-implementering spring hierdie WIP-hek oor nie.
 
 ## Besluithekke
 
-1. **Klankhek:** MAX98357 mono-I2S is die primêre vroeë pad; indien bordvermoë of stabiliteit faal, bewys PWM die debugpad en die impediment word gemeet.
-2. **Webhek:** station join, AP-fallback, mobiele webbeheer en logging mag nie MIDI/klanktydsberekening merkbaar benadeel of geheime publiseer nie.
-3. **Kernhek:** SN76489 begin eers nadat die draagbare D1-basiskern groen en hoorbaar is; SID en OPL volg eers ná die registry- en resource-kontrakte.
-4. **Bordhek:** ’n nuwe bord kry eers ’n vermoënsprofiel en hardeware-toets; geen stil aannames nie.
-5. **BLE-hek:** ESP32-S2 is ’n verpligte veilige negatiewe toets; positiewe BLE-MIDI-aanvaarding gebeur slegs op ’n bord waarop `_bleio` werklik beskikbaar is.
+1. **Configuration-hek:** MCP-US-005 se SET/UNSET-bewys sluit voor nuwe funksionele werk.
+2. **Diagnose-hek:** die onafhanklike G-C-D-toets moet hoorbaar wees voordat D1 begin.
+3. **D1-hek:** SN76489 en elke volgende kern begin eers ná die aanvaarbare D1/Logic MVP.
+4. **Profiel-hek:** 'n nuwe I2S-module kry eers 'n profiel en fisiese HIL voordat dokumentasie dit as gevalideer beskryf.
+5. **Scope-hek:** web, BLE, stereo, DSP, multi-core en ander uitbreidings kan nie stilweg die bevrore MVP verbreed nie.

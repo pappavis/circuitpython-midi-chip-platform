@@ -2,13 +2,13 @@
 
 <!--
 Bestand: AGENTS.md
-Versienommer: 0.6.0
+Versienommer: 0.7.0
 Doel: Afdwingbare werkreels vir mense, Codex en ander ontwikkelagente.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-005 Configuration And Secret Boundary
-Actienr: MCP-ACT-005-IMP-001-GOV-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
+User-Story: MVP-SCOPE-REDUCTION-001
+Actienr: MCP-ACT-MVP-SCOPE-001-GOV-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
 -->
 
 ## Harde argitektuurreels
@@ -54,6 +54,10 @@ Toetse self word ook in toetsklasse georganiseer. 'n Uitsondering op hierdie ree
 5. 'n Defek teen die aktiewe aanvaardingskriteria word 'n impediment binne dieselfde story.
 6. Geen GUI-, web-, nuwe kern-, DSP-, PCB- of packaging-werk word vroeer ingetrek omdat dit interessant lyk nie.
 7. Codex waarsku die Product Owner wanneer 'n versoek die logiese volgorde, argitektuur of werkende synth kan breek.
+8. Die bevrore MVP Acceptance Set in `docs/mvp_scope_v0.1.0.md` is die enigste release-scope; post-MVP werk kan dit nie stilweg verbreed nie.
+9. Die bindende oorblywende pad is `US-005 -> US-014 -> US-016 -> US-063 -> US-055 -> US-057`.
+10. US-016 se `device/i2s_test.py` is klasgebaseerd, het geen synth-package-import of globale status nie en besit I2S eksklusief terwyl dit loop.
+11. SN76489 en elke volgende kern begin eers nadat die D1/Logic MVP aanvaar is.
 
 ## Produksie-repositorygrens
 

@@ -4,11 +4,11 @@
 
 ![CircuitPython MIDI Chip Platform-argitektuur in 1985-retrostyl](assets/images/circuitpython-midi-chip-platform-architecture-v0.1.0.png)
 
-Die seinpad bly doelbewus modulêr: USB-MIDI, BLE-MIDI en DIN/UART word na een draagbare eventmodel genormaliseer; die router kies ’n kerninstansie; die klankpoort kies MAX98357-I2S, PWM-diagnose of ’n latere stereo-backend. Die kernpad is **D1-basiskern → SN76489 → 6581 SID → OPL2 → OPL3**.
+Die seinpad bly doelbewus modulêr. Die eerste klein MVP bewys slegs **Logic USB-MIDI → D1-basiskern → MAX98357-I2S**. Daarna brei dieselfde kontrakte uit na **SN76489 → 6581 SID → OPL2 → OPL3**, ander transports en ander klankbackends.
 
 ## Projekstatus
 
-Die projek is by **Sprint 2: MIDI en clock**, runtime **v0.12.3**. MCP-US-007 is fisies aanvaar: Logic/CoreMIDI het USB-MIDI gestuur en die Wemos S2 het Note On, Note Off en 'n ooreenstemmende nootpaar as PASS gerapporteer. MCP-US-005 se leë-private-setting-herstel is host-groen en wag op die finale Wemos-herbewys. Daar is nog geen synth core of geaktiveerde klank-, BLE- of Wi-Fi-diens nie; die volgende produkvertikale sny bly die AudioOutput-poort en hoorbare MAX98357 mono-I2S-diagnose.
+Die projek is by **Sprint 2**, runtime **v0.12.3**. MCP-US-007 is fisies aanvaar: Logic/CoreMIDI het USB-MIDI gestuur en die Wemos S2 het Note On, Note Off en 'n ooreenstemmende nootpaar as PASS gerapporteer. MCP-US-005 se leë-private-setting-herstel is host-groen en wag op die finale Wemos-herbewys. Daarna volg AudioOutput, 'n onafhanklike G-C-D I2S-toets, die D1-kern en die hoorbare Logic-aanvaarding.
 
 ## Begin hier
 
@@ -23,11 +23,11 @@ python -m pytest
 
 ## MVP in een sin
 
-Bewys op ’n LOLIN/Wemos ESP32-S2 Mini dat ’n gebruiker via klawerbord of MIDI-kitaar note, akkoorde, bends en slides kan stuur, eers ’n draagbare D1-basiskern en daarna ’n SN76489-agtige driestem-kern kan speel, mono MAX98357-klank en later stereo-uitvoer kan gebruik, en kernparameters op ’n eenvoudige plaaslike webblad kan verander. BLE-MIDI word op ’n tweede BLE-geskikte CircuitPython-bord aanvaar omdat die ESP32-S2 self nie native BLE ondersteun nie.
+Bewys op 'n LOLIN/Wemos ESP32-S2 Mini dat Logic Pro USB-MIDI Note On/Off kan stuur en dat 'n draagbare D1-basiskern hoorbaar deur die MAX98357-I2S-uitvoer speel.
 
-## Webtoegang
+## Ná die eerste MVP
 
-Die synth sal in MCP-US-023 tydens startup sy hostname, netwerkmodus en toepaslike IP rapporteer. Hy probeer eers 'n privaat gekonfigureerde Wi-Fi-netwerk; by afwesigheid of begrensde mislukking begin hy 'n beveiligde eie access point. Die mobiele webblad werk in albei modusse, beperk die MVP tot een aktiewe kliënt en skryf geen logreël vir elke poll of UI-verversing nie. Wi-Fi begin nooit in `boot.py` nie.
+SN76489, SID, OPL, BLE-MIDI, DIN/UART, MIDI-kitaar-slides, stereo, multi-core, DSP en plaaslike webbeheer bly geordende post-MVP stories. Wi-Fi sal nooit in `boot.py` begin nie.
 
 ## Hoekom ’n skoon repository?
 
@@ -93,16 +93,17 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - Klein stories met rooi/groen-toetse en eksplisiete hardeware-aanvaarding.
 - Bordvermoëns word ontdek; bordname, MIDI-toestelle en penne word nie as universele konstantes aanvaar nie.
 - MIDI, kernlogika, klankuitvoer en webbeheer word deur duidelike poorte geskei.
+- `device/i2s_test.py` sal as US-016 die MAX98357-pad onafhanklik met G-C-D square waves toets; dit voer geen synthpakket in nie en deel geen globale status nie.
 - Die klankenjin bly vervangbaar: draagbare D1-basiskern eerste, SN76489 tweede, 6581 SID derde en OPL2/OPL3 daarna.
 - Ná MVP kan dieselfde kernkontrak 'n emuleerde of fisiese chipbackend kies; emulasie bly altyd verstek en veilige fallback.
-- BLE-MIDI is ’n MVP-vereiste, maar word capability-gated: die ESP32-S2 rapporteer dit veilig as nie-ondersteun; ’n BLE-geskikte tweede bord lewer die fisiese aanvaardingsbewys.
+- BLE-MIDI is post-MVP en capability-gated: die ESP32-S2 rapporteer dit veilig as nie-ondersteun; 'n BLE-geskikte tweede bord lewer later die fisiese aanvaardingsbewys.
 - Wi-Fi-runtime gebruik ’n eksplisiete toestandmasjien: station join, begrensde mislukking, beveiligde AP-fallback en sigbare IP; logging is spaarsaam en koersbegrens.
 - Die span volg backlogvolgorde; side quests word georden en nie stilweg geimplementeer nie.
 - Lessons learned word na elke drie of vier voltooide stories en by epic-/releasegrense opgedateer.
 - `python-d1-synth` is produksiekode en word uitsluitlik as 'n leesalleen-verwysing gebruik.
 - Ollama is opsioneel vir goedgekeurde klein ontwikkeltake; dit is nooit nodig om die synth te bou of uit te voer nie.
 - Startup toon altyd projekweergawe, aktiewe story/amendment en release-datum.
-- 'n Lae-prioriteit MVP-Must story sal voor release elke USB-toestel 'n herkenbare `EasyLab4Kids-midi-chip-platform XXXX`-styl naam gee, waar `XXXX` 'n stabiele, nie-geheime instance-ID is.
+- 'n Post-MVP release-polish story sal elke USB-toestel 'n herkenbare `EasyLab4Kids-midi-chip-platform XXXX`-styl naam gee, waar `XXXX` 'n stabiele, nie-geheime instance-ID is.
 
 ## Lisensie
 

@@ -2,13 +2,13 @@
 
 <!--
 Bestand: audio_priority_amendment_v0.1.0.md
-Versienommer: 0.1.0
-Doel: Formaliseer MAX98357-eerste klank, PWM-fallback, MIDI-kitaar-slides en release-naspeurbaarheid.
-Sprint: Sprint 0
+Versienommer: 0.2.0
+Doel: Formaliseer die synth-onafhanklike I2S-preflight, MAX98357-verstek en verkleinde hoorbare MVP.
+Sprint: Sprint 2
 Epic: MCP-EPIC-001, MCP-EPIC-002 en MCP-EPIC-003
-User-Story: AUDIO-PRIORITY-AMENDMENT-001
-Actienr: MCP-ACT-AUDIO-AMEND-REV-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
+User-Story: AUDIO-PRIORITY-AMENDMENT-001 en MVP-SCOPE-REDUCTION-001
+Actienr: MCP-ACT-MVP-SCOPE-001-AUDIO-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
 -->
 
 ## Product Owner-besluit
@@ -19,18 +19,25 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / AUDIO-PRIORITY-AMENDMENT-001
 4. Stereo volg later via twee MAX98357-modules of 'n geprofileerde stereo-I2S-backend soos PCM5102.
 5. Generiese MIDI-kitaarondersteuning sluit akkoorde, per-kanaal bends en slides in. Fishman TriplePlay is 'n verwysings-HIL-toestel en nooit 'n hardgekodeerde toestelnaam nie.
 6. Elke startup toon die projekweergawe, aktiewe story/amendment en release-datum.
+7. Voor D1 bestaan 'n onafhanklike `device/i2s_test.py` wat G-C-D as square waves speel en geen synthkode invoer nie.
+8. MAX98357 is die gevalideerde verstek; ander PCM-I2S-adapters gebruik 'n profielgrens en verdien afsonderlike HIL.
 
 ## Geordende hoorbare pad
 
-`MCP-US-003 -> MCP-US-004 -> MCP-US-014 -> MCP-US-016 -> MCP-US-015`
+`MCP-US-003 -> MCP-US-004 -> MCP-US-005 -> MCP-US-014 -> MCP-US-016 -> MCP-US-063 -> MCP-US-055 -> MCP-US-057`
 
 - US-003 lewer veilige boot en USB-identiteit.
 - US-004 bewys werklike bord-, module- en penvermoëns.
 - US-014 hou die klankbackend vervangbaar.
-- US-016 lewer die eerste veilige, hoorbare MAX98357 mono-toetssein.
-- US-015 bewys PWM wanneer I2S nie beskikbaar of stabiel is nie.
+- US-005 sluit die private configuration boundary.
+- US-016 lewer die eerste veilige, hoorbare, synth-onafhanklike G-C-D square-wave-toetssein.
+- US-063 lewer D1 sine/saw/square deur die produksie-`AudioOutput`-pad.
+- US-055 bewys die volledige Logic USB-MIDI na hoorbare D1-vloei.
+- US-057 sluit die klein MVP. US-015/PWM en stereo volg post-MVP of as eksplisiete contingency.
 
-## Guitar-MIDI-verfyning
+US-020 is nie 'n duplikaat van US-016 nie: dit is 'n latere geïntegreerde opstartmelodie binne die D1-runtime.
+
+## Post-MVP Guitar-MIDI-verfyning
 
 - **MCP-US-058** bou platform-onafhanklike multi-kanaal bend- en slide-semantiek met konfigureerbare bend range.
 - **MCP-US-059** bewys fisiese note, akkoorde, bends en slides met 'n generiese MIDI-kitaar en Fishman TriplePlay as een verwysing.

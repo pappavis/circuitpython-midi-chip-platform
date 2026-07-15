@@ -2,13 +2,13 @@
 
 <!--
 Bestand: risk_register_v0.1.0.md
-Versienommer: 0.9.0
+Versienommer: 0.10.0
 Doel: Tegniese, produk-, veiligheids- en afleweringsrisiko’s vir die MVP.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-069 tot MCP-US-074 Physical Chip And Display Expansion
-Actienr: MCP-ACT-PHYSICAL-001-RISK-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE-START
+User-Story: MVP-SCOPE-REDUCTION-001 en MCP-US-016
+Actienr: MCP-ACT-MVP-SCOPE-001-RISK-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
 -->
 
 | ID | Risiko | Waarskynlikheid | Impak | Eienaar | Beheer/mitigering | Status |
@@ -21,7 +21,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE-START
 | R-006 | Webserver gebruik te veel RAM/sokke | Hoog | Hoog | Web/QA | Een kliënt; klein statiese bates; pollingbegroting; geheuemeting | Oop |
 | R-007 | “Alle CircuitPython-borde” word verkeerd as identies aangebied | Hoog | Hoog | Architect/Docs | Profielkontrak; ondersteuningsmatriks; geen onbevestigde eis nie | Beheer aktief |
 | R-008 | Raspberry Pi Linux en mikrobeheerderfirmware word vermeng | Medium | Medium | Architect | Afsonderlike Blinka/host-adapter en toetsbaan | Beheer aktief |
-| R-009 | Meer kerne oorskry CPU/RAM en beïnvloed klank | Hoog | Hoog | DSP/Architect | Vroeë enkelkernpad; laat-MVP twee-kern-bewys met heap/latensie/dropout-metriek en deterministiese weiering | Oop - risiko aanvaar |
+| R-009 | Meer kerne oorskry CPU/RAM en beïnvloed klank | Hoog | Hoog | DSP/Architect | Sluit eers enkelkern-D1 MVP; meet elke post-MVP multi-core-uitbreiding en weier onveilige kapasiteit deterministies | Post-MVP - risiko aanvaar |
 | R-010 | SID/OPL-emulasie skep lisensie- of akkuraatheidsaansprake | Medium | Hoog | PO/Release | Bronlisensie-register; akkuraatheidsvlakke; geen “cycle accurate” sonder bewys | Oop |
 | R-011 | MIDI clock (24 PPQN) oorlaai ontvangslus | Medium | Hoog | MIDI | Prioriteitsry, geen onnodige logging, klok-jittertoetse | Oop |
 | R-012 | Dedupe-logika verwyder geldige note of clock | Medium | Hoog | MIDI/QA | Boodskapspesifieke dedupe; nooit blind op clock toepas nie | Oop |
@@ -35,7 +35,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE-START
 | R-020 | Twee USB-device-endpoints word sonder 'n USB-host verbind en geen MIDI vloei nie | Hoog | Hoog | MIDI/Docs | Dokumenteer host/device-rolle; gebruik rekenaar, Raspberry Pi of eksterne USB-host; DIN/UART HIL | Oop |
 | R-021 | Device-proof publiseer UID, MAC, SSID of ander plaaslike data | Medium | Kritiek | QA/Release | Redigeer uitvoer; publiseer slegs poorttipe, bord-ID, firmwareweergawe, commit/hash en status | Beheer aktief |
 | R-022 | Eksterne USB-host ondersteun nie die betrokke controller of bend/clock-boodskap nie | Medium | Hoog | MIDI/QA | Klas-kompatibiliteitsmatriks; generiese plus Fishman HIL; geen handelsnaamwaarborg sonder toets nie | Oop |
-| R-023 | BLE-MIDI is Must, maar die primêre ESP32-S2 het geen native BLE-ondersteuning nie | Hoog | Hoog | Architect/Embedded | Capability gate; hou USB stabiel; kies ’n BLE-geskikte tweede bord in US-052 en lewer positiewe HIL in US-062 | Beheer aktief |
+| R-023 | Die primêre ESP32-S2 het geen native BLE-ondersteuning nie | Hoog | Medium | Architect/Embedded | BLE is post-MVP; capability gate hou USB stabiel; kies later 'n BLE-geskikte tweede bord in US-052/062 | Beheer aktief |
 | R-024 | Herhaalde macOS host-MIDI-scan abort in `python-rtmidi`/CoreMIDI | Hoog | Medium | QA/Tooling | Moenie dieselfde in-proses scan herhaal nie; isoleer toekomstige host-scan in ’n subprocess; firmware-HIL steun op USB descriptors en device logs | Oop - hostimpediment |
 | R-025 | MIDI-HIL hang of faal deur ’n poortkonflik met Thonny of ’n serial monitor | Medium | Hoog | QA/HIL | Preflight poorte; presies een REPL-kliënt; timeout, cleanup en herstelpad | Oop |
 | R-026 | Fallback access point is oop, voorspelbaar of lek credentials/kliëntidentiteit | Medium | Kritiek | Security/Web | Beveiligde AP as verstek; credentials uit private config of veilige provisioning; geen geheime, MAC’s of unieke ID’s in logs/repo nie | Oop |
@@ -45,12 +45,13 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE-START
 | R-030 | USB-produkname bots of verander tussen boots | Medium | Hoog | Embedded/Release | Stabiele nie-geheime vier-karakter instance-ID, gedokumenteerde collision fallback en twee-toestel DAW-aanvaarding in MCP-US-068 | Backlog - MCP-US-068 |
 | R-031 | Verkeerde voeding, vlakke, klok of bussekwensie beskadig 'n skaars fisiese retrochip | Medium | Kritiek | DSP/Chip/Hardware | Datasheet- en meethek voor bedrading; current-limited bench supply; level shifting; geen universele expander-aanname | Later - MCP-US-070 tot US-073 |
 | R-032 | Fisiese backend word vals opgespoor, hang die runtime of speel saam met emulasie | Medium | Hoog | Architect/Embedded/QA | Capability probe, timeout, fault injection, veilige oorskakelgrens en emulasie as verstek/fallback | Later - MCP-US-074 |
+| R-033 | Die onafhanklike I2S-toets dryf weg van produksie se AudioOutput-profiel | Medium | Hoog | Architect/QA/HIL | Behou dieselfde profielveldname; AST/import- en frekwensietoetse; gepaarde MAX98357-HIL; geen gedeelde synth-runtime-import nie | Beheer in MCP-US-016 |
 
 ## Hoogste onmiddellike aksies
 
 1. **Roteer die blootgestelde Wi-Fi-wagwoord.** Dit kan nie deur kode alleen herstel word nie.
 2. Hou MCP-US-003 se `boot.py` minimaal en herstelbaar.
-3. Bewys 'n veilige, hoorbare MAX98357 mono-I2S-pad en hou PWM as meetbare fallback voordat webbeheer bygevoeg word.
+3. Sluit US-005, bou US-014 en bewys daarna die onafhanklike US-016 G-C-D/MAX98357-pad voor D1.
 4. Publiseer geen toestelrugsteun, unieke USB-ID of plaaslike netwerkdetail nie.
 5. Behandel ’n sigbare `ESP_*`-SSID as onbevestig totdat ’n beheerde power-cycle of device-log die fisiese bord korreleer.
-6. Ontwerp USB-instance-identiteit uit 'n stabiele toestelbron sonder om die rou UID/MAC te log of te publiseer; bewys twee toestelle voor MVP-release.
+6. Hou SN76489, web, BLE, stereo, PWM, DSP, multi-core en USB-instance-polish post-MVP totdat Logic na hoorbare D1 aanvaar is.
