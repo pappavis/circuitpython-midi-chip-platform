@@ -1,11 +1,11 @@
 # Bestand: d1_runtime.py
-# Versienommer: 0.17.0
+# Versienommer: 0.17.1
 # Doel: Verbind USB-MIDI, D1-kern en veilige I2S-uitvoer vir die Logic MVP.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-GREEN-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+# Actienr: MCP-ACT-055-IMP-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-001
 
 from midi_chip_platform.audio import AudioSafetyProfile, AudioStreamFormat, SafeAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
@@ -25,6 +25,7 @@ class D1UsbMidiI2sRuntime:
         sleeper=None,
         max_blocks=0,
         idle_sleep_seconds=0.001,
+        minimum_note_seconds=0.12,
     ):
         if not isinstance(midi_input, MidiInputPort):
             raise TypeError("midi_input must implement MidiInputPort")
@@ -39,8 +40,10 @@ class D1UsbMidiI2sRuntime:
         self._sleeper = sleeper
         self._max_blocks = int(max_blocks)
         self._idle_sleep_seconds = float(idle_sleep_seconds)
+        self._minimum_note_seconds = float(minimum_note_seconds)
         self._block_count = 0
         self._note_event_count = 0
+        self._audible_note_count = 0
 
     @property
     def block_count(self):
@@ -50,12 +53,16 @@ class D1UsbMidiI2sRuntime:
     def note_event_count(self):
         return self._note_event_count
 
+    @property
+    def audible_note_count(self):
+        return self._audible_note_count
+
     def run(self):
         self._output(
             "D1_RUNTIME_STATUS=START;"
             f"core={self._core.name};sample_rate={self._audio_output.audio_format.sample_rate};"
             f"frames_per_block={self._audio_output.audio_format.frames_per_block};"
-            f"max_blocks={self._max_blocks}"
+            f"max_blocks={self._max_blocks};minimum_note_seconds={self._minimum_note_seconds}"
         )
         try:
             self._midi_input.open()
@@ -71,29 +78,34 @@ class D1UsbMidiI2sRuntime:
                         f"D1_MIDI_EVENT={event.message_type};channel={event.channel};"
                         f"note={event.note};velocity={event.velocity}"
                     )
-                block = self._core.render_audio_block()
-                self._audio_output.write_block(block)
-                self._block_count += 1
+                    if event.is_note_on and event.velocity > 0:
+                        self._write_minimum_audible_note(event)
+                        if self._max_blocks > 0 and self._block_count >= self._max_blocks:
+                            continue
+                        continue
+                self._write_single_runtime_block()
                 if event is None and self._sleeper is not None:
                     self._sleeper.sleep(self._idle_sleep_seconds)
         except KeyboardInterrupt:
             self._output(
                 "D1_RUNTIME_STATUS=INTERRUPTED;"
-                f"blocks={self._block_count};note_events={self._note_event_count}"
+                f"blocks={self._block_count};note_events={self._note_event_count};"
+                f"audible_notes={self._audible_note_count}"
             )
             return True
         except Exception as error:
             self._output(
                 "D1_RUNTIME_STATUS=FAIL;"
                 f"reason={error.__class__.__name__};blocks={self._block_count};"
-                f"note_events={self._note_event_count}"
+                f"note_events={self._note_event_count};audible_notes={self._audible_note_count}"
             )
             return False
         finally:
             self._shutdown()
         self._output(
             "D1_RUNTIME_STATUS=PASS;"
-            f"blocks={self._block_count};note_events={self._note_event_count}"
+            f"blocks={self._block_count};note_events={self._note_event_count};"
+            f"audible_notes={self._audible_note_count}"
         )
         return True
 
@@ -117,6 +129,50 @@ class D1UsbMidiI2sRuntime:
             self._midi_input.close()
         except Exception:
             pass
+
+    def _write_single_runtime_block(self):
+        block = self._core.render_audio_block()
+        self._audio_output.write_block(block)
+        self._block_count += 1
+
+    def _write_minimum_audible_note(self, event):
+        requested_blocks = self._minimum_audible_block_count()
+        if self._max_blocks > 0:
+            remaining_blocks = self._max_blocks - self._block_count
+            requested_blocks = max(0, min(requested_blocks, remaining_blocks))
+        if requested_blocks <= 0:
+            return
+        for _ in range(requested_blocks):
+            self._write_single_runtime_block()
+        self._audible_note_count += 1
+        self._output(
+            "D1_AUDIO_EVENT=audible_note;"
+            f"note={event.note};blocks={requested_blocks};"
+            f"seconds={self._seconds_for_blocks(requested_blocks):.3f}"
+        )
+
+    def _minimum_audible_block_count(self):
+        if self._minimum_note_seconds <= 0.0:
+            return 1
+        audio_format = self._audio_output.audio_format
+        requested_frames = int(
+            self._minimum_note_seconds * audio_format.sample_rate
+        )
+        if requested_frames <= 0:
+            return 1
+        return max(
+            1,
+            (requested_frames + audio_format.frames_per_block - 1)
+            // audio_format.frames_per_block,
+        )
+
+    def _seconds_for_blocks(self, block_count):
+        audio_format = self._audio_output.audio_format
+        return (
+            int(block_count)
+            * audio_format.frames_per_block
+            / audio_format.sample_rate
+        )
 
 
 class D1UsbMidiI2sRuntimeFactory:
@@ -172,4 +228,5 @@ class D1UsbMidiI2sRuntimeFactory:
             sleeper=time_module,
             max_blocks=configuration.get("synth.d1.max_blocks", 0),
             idle_sleep_seconds=configuration.get("synth.d1.idle_sleep_seconds", 0.001),
+            minimum_note_seconds=configuration.get("synth.d1.minimum_note_seconds", 0.12),
         )

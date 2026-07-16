@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.17.0
+# Versienommer: 0.17.1
 # Doel: Laai publieke D1-runtime, veilige-audioverstekke en private settings.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-GREEN-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+# Actienr: MCP-ACT-055-IMP-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-001
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -34,6 +34,7 @@ class ConfigurationDefaults:
             "synth.d1.amplitude": 0.2,
             "synth.d1.max_blocks": 0,
             "synth.d1.idle_sleep_seconds": 0.001,
+            "synth.d1.minimum_note_seconds": 0.12,
             "midi.input.port_index": 0,
             "midi.diagnostic.enabled": False,
             "midi.diagnostic.max_events": 8,
@@ -73,6 +74,7 @@ class EnvironmentSettingsSource:
             "synth.d1.amplitude": "D1_AMPLITUDE",
             "synth.d1.max_blocks": "D1_MAX_BLOCKS",
             "synth.d1.idle_sleep_seconds": "D1_IDLE_SLEEP_SECONDS",
+            "synth.d1.minimum_note_seconds": "D1_MINIMUM_NOTE_SECONDS",
             "midi.input.port_index": "MIDI_INPUT_PORT_INDEX",
             "midi.diagnostic.enabled": "MIDI_DIAGNOSTIC_ENABLED",
             "midi.diagnostic.max_events": "MIDI_DIAGNOSTIC_MAX_EVENTS",

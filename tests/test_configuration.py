@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.17.0
+# Versienommer: 0.17.1
 # Doel: Spesifiseer publieke D1-runtime, veilige audio en private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-RED-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+# Actienr: MCP-ACT-055-IMP-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-001
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -41,6 +41,7 @@ class TestConfigurationDefaults:
         assert snapshot.get("synth.d1.amplitude") == 0.2
         assert snapshot.get("synth.d1.max_blocks") == 0
         assert snapshot.get("synth.d1.idle_sleep_seconds") == 0.001
+        assert snapshot.get("synth.d1.minimum_note_seconds") == 0.12
         assert snapshot.get("midi.diagnostic.enabled") is False
         assert snapshot.get("midi.diagnostic.max_events") == 8
         assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
@@ -58,6 +59,7 @@ class TestConfigurationDefaults:
         assert 'D1_RUNTIME_ENABLED = "true"' in settings_example
         assert 'D1_AMPLITUDE = "0.2"' in settings_example
         assert 'D1_IDLE_SLEEP_SECONDS = "0.001"' in settings_example
+        assert 'D1_MINIMUM_NOTE_SECONDS = "0.12"' in settings_example
 
 
 class TestConfigurationSecretBoundary:
