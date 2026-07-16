@@ -12,7 +12,7 @@ Die projek is by **Sprint 2**, runtime **v0.13.0**. MCP-US-014 se blokgebaseerde
 
 ## Begin hier
 
-### Instalaltiegids
+### 1. Gebruikers: installatiegids
 Die [snelbegin- en installasiegids](docs/quickstart_installation_v0.1.0.md) neem 'n beginner stap vir stap deur Git, Python, 'n virtuele omgewing, installasie, diagnose en toetse op macOS, Windows en Raspberry Pi. VS Code en Thonny is opsionele hulpmiddels; die projek is nie van enige IDE afhanklik nie.
 
 Nadat die installasie voltooi is:
@@ -22,8 +22,8 @@ python -m midi_chip_platform diagnose
 python -m pytest
 ```
 
-### Architectuur en build-instructies
-Lees die [(https://github.com/pappavis/circuitpython-midi-chip-platform/blob/main/docs/framework_engineering/README.md)] vir architectuur, teams en user stories.
+### 2. Ontwikkelaars: Bootloader
+Lees die [architectuur, teams en user stories](https://github.com/pappavis/circuitpython-midi-chip-platform/blob/main/docs/framework_engineering/README.md) "Bootloader".
 
 
 ## MVP in een sin
