@@ -1,11 +1,11 @@
 # Bestand: test_d1_usb_midi_runtime.py
-# Versienommer: 0.17.6
+# Versienommer: 0.17.7
 # Doel: Spesifiseer die USB-MIDI na D1 na I2S fast-boot toonpad vir Logic-aanvaarding.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-BOOT-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-001
+# Actienr: MCP-ACT-055-P0-REALTIME-FIX-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-002
 
 from midi_chip_platform.audio import AudioStreamFormat, MemoryAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
@@ -87,7 +87,8 @@ class TestD1UsbMidiI2sRuntime:
         assert output[0].startswith("D1_RUNTIME_STATUS=START")
         assert "D1_MIDI_INPUT_STATUS=OPEN" in output
         assert "D1_RUNTIME_READY;ready_ms=0" in output
-        assert "D1_MIDI_EVENT=note_on;channel=1;note=60;velocity=100" in output
+        assert "D1_MIDI_EVENT=note_on;channel=1;note=60;velocity=100" not in output
+        assert any(line.startswith("D1_REALTIME_MIDI_NOTE=note_on") for line in output)
         assert output[-1].startswith("D1_RUNTIME_STATUS=PASS")
 
     def test_runtime_does_not_write_i2s_silence_while_waiting_for_midi(self) -> None:
@@ -137,6 +138,7 @@ class TestD1UsbMidiI2sRuntime:
             sleeper=self.NoSleep(),
             max_blocks=13,
             minimum_note_seconds=0.05,
+            event_logging="verbose",
         )
 
         result = runtime.run()
@@ -172,7 +174,7 @@ class TestD1UsbMidiI2sRuntime:
             output=output.append,
             sleeper=self.NoSleep(),
             max_blocks=50,
-            minimum_note_seconds=0.35,
+            minimum_note_seconds=0.05,
             audition_tone_amplitude=8192,
         )
 
@@ -193,7 +195,47 @@ class TestD1UsbMidiI2sRuntime:
         assert any(
             line.startswith(
                 "D1_AUDIO_EVENT=audible_note;mode=latched_tone;note=69;"
-                "blocks=35;minimum_seconds=0.350"
+                "blocks=5;minimum_seconds=0.050"
+            )
+            for line in output
+        ) is False
+
+    def test_verbose_event_logging_keeps_diagnostic_midi_and_audio_lines(self) -> None:
+        audio_format = AudioStreamFormat(
+            sample_rate=16000,
+            frames_per_block=160,
+        )
+        midi_input = MemoryMidiInput(
+            (
+                NoteEvent.note_on(channel=1, note=69, velocity=100),
+                NoteEvent.note_off(channel=1, note=69, velocity=64),
+            )
+        )
+        audio_output = self.ToneMemoryAudioOutput(audio_format)
+        core = D1SynthCore(
+            D1Patch(waveform="square", audio_format=audio_format, amplitude=0.5)
+        )
+        output = []
+        runtime = D1UsbMidiI2sRuntime(
+            midi_input=midi_input,
+            audio_output=audio_output,
+            core=core,
+            output=output.append,
+            sleeper=self.NoSleep(),
+            max_blocks=50,
+            minimum_note_seconds=0.05,
+            audition_tone_amplitude=8192,
+            event_logging="verbose",
+        )
+
+        result = runtime.run()
+
+        assert result is True
+        assert "D1_MIDI_EVENT=note_on;channel=1;note=69;velocity=100" in output
+        assert any(
+            line.startswith(
+                "D1_AUDIO_EVENT=audible_note;mode=latched_tone;note=69;"
+                "blocks=5;minimum_seconds=0.050"
             )
             for line in output
         )
@@ -223,6 +265,7 @@ class TestD1UsbMidiI2sRuntime:
             max_blocks=13,
             minimum_note_seconds=0.05,
             minimum_note_velocity=64,
+            event_logging="verbose",
         )
 
         result = runtime.run()

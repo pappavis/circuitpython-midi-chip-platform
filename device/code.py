@@ -1,11 +1,11 @@
 # Bestand: code.py
-# Versienommer: 0.17.6
-# Doel: Start die Logic USB-MIDI fast-boot D1 na I2S runtime op die toestel.
+# Versienommer: 0.17.7
+# Doel: Start die Logic USB-MIDI D1 performance-runtime op die toestel.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-BOOT-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-001
+# Actienr: MCP-ACT-055-P0-REALTIME-FIX-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-002
 
 from midi_chip_platform.configuration import CircuitPythonConfigurationFactory
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication

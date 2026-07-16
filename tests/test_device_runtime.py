@@ -1,11 +1,11 @@
 # Bestand: test_device_runtime.py
-# Versienommer: 0.17.6
+# Versienommer: 0.17.7
 # Doel: Spesifiseer toestel-uitvoer, dependency-bewys, diagnostiek en D1 fast-boot runtime-start.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-BOOT-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-001
+# Actienr: MCP-ACT-055-P0-REALTIME-FIX-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-002
 
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
 from midi_chip_platform.release import ReleaseMetadata
@@ -272,7 +272,7 @@ class TestDeviceRuntimeApplication:
         discovery = self.FakeDiscovery()
         application = DeviceRuntimeApplication(
             release_metadata=ReleaseMetadata(
-                version="0.17.6",
+                version="0.17.7",
                 user_story="MCP-US-055",
                 release_date="2026-07-16",
             ),
@@ -299,7 +299,7 @@ class TestDeviceRuntimeApplication:
         assert discovery.run_count == 0
         assert importer.module_names == []
         assert output == [
-            "circuitpython-midi-chip-platform v0.17.6 | "
+            "circuitpython-midi-chip-platform v0.17.7 | "
             "story=MCP-US-055 | release-date=2026-07-16",
             "DEVICE_FAST_BOOT_STATUS=ENABLED",
         ]

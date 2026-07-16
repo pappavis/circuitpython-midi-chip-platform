@@ -1,11 +1,11 @@
 # Bestand: d1_runtime.py
-# Versienommer: 0.17.6
-# Doel: Verbind USB-MIDI vinnig met D1 en 'n hoorbare I2S-toonpad vir die Logic MVP.
+# Versienommer: 0.17.7
+# Doel: Verbind USB-MIDI vinnig met D1 en 'n lae-latensie I2S-performance toonpad.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-BOOT-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-001
+# Actienr: MCP-ACT-055-P0-REALTIME-FIX-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-002
 
 from midi_chip_platform.audio import AudioSafetyProfile, AudioStreamFormat, SafeAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
@@ -25,10 +25,11 @@ class D1UsbMidiI2sRuntime:
         sleeper=None,
         max_blocks=0,
         idle_sleep_seconds=0.001,
-        minimum_note_seconds=0.35,
+        minimum_note_seconds=0.05,
         minimum_note_velocity=64,
         stream_active_blocks=False,
         audition_tone_amplitude=8192,
+        event_logging="summary",
     ):
         if not isinstance(midi_input, MidiInputPort):
             raise TypeError("midi_input must implement MidiInputPort")
@@ -47,6 +48,9 @@ class D1UsbMidiI2sRuntime:
         self._minimum_note_velocity = int(minimum_note_velocity)
         self._stream_active_blocks = bool(stream_active_blocks)
         self._audition_tone_amplitude = int(audition_tone_amplitude)
+        self._event_logging = str(event_logging).lower()
+        if self._event_logging not in ("none", "summary", "verbose"):
+            raise ValueError("event_logging must be none, summary or verbose")
         self._block_count = 0
         self._note_event_count = 0
         self._audible_note_count = 0
@@ -82,6 +86,7 @@ class D1UsbMidiI2sRuntime:
             f"minimum_note_velocity={self._minimum_note_velocity};"
             f"stream_active_blocks={str(self._stream_active_blocks).lower()};"
             f"audition_tone_amplitude={self._audition_tone_amplitude};"
+            f"event_logging={self._event_logging};"
             f"master_gain={self._master_gain_label()}"
         )
         try:
@@ -103,7 +108,7 @@ class D1UsbMidiI2sRuntime:
                     playable_event = self._playable_event(event)
                     self._core.handle_event(playable_event)
                     self._note_event_count += 1
-                    self._output(
+                    self._log_verbose(
                         f"D1_MIDI_EVENT={event.message_type};channel={event.channel};"
                         f"note={event.note};velocity={event.velocity}"
                     )
@@ -113,7 +118,7 @@ class D1UsbMidiI2sRuntime:
                             event,
                             playable_event,
                         )
-                        self._output(
+                        self._log_summary(
                             "D1_REALTIME_MIDI_NOTE=note_on;"
                             f"channel={event.channel};note={event.note};"
                             f"velocity={event.velocity};frequency_hz="
@@ -199,7 +204,7 @@ class D1UsbMidiI2sRuntime:
             self._pending_tone_stop_at = None
             self._block_count += requested_blocks
             self._audible_note_count += 1
-            self._output(
+            self._log_verbose(
                 "D1_AUDIO_EVENT=audible_note;"
                 f"mode=latched_tone;note={event.note};blocks={requested_blocks};"
                 f"minimum_seconds={self._seconds_for_blocks(requested_blocks):.3f};"
@@ -262,7 +267,7 @@ class D1UsbMidiI2sRuntime:
             for _ in range(requested_blocks):
                 self._write_single_runtime_block()
         self._audible_note_count += 1
-        self._output(
+        self._log_verbose(
             "D1_AUDIO_EVENT=audible_note;"
             f"note={event.note};blocks={requested_blocks};"
             f"seconds={self._seconds_for_blocks(requested_blocks):.3f};"
@@ -310,6 +315,14 @@ class D1UsbMidiI2sRuntime:
         if value is None:
             return "unknown"
         return f"{float(value):.3f}"
+
+    def _log_summary(self, message):
+        if self._event_logging in ("summary", "verbose"):
+            self._output(message)
+
+    def _log_verbose(self, message):
+        if self._event_logging == "verbose":
+            self._output(message)
 
 
 class D1UsbMidiI2sRuntimeFactory:
@@ -368,8 +381,9 @@ class D1UsbMidiI2sRuntimeFactory:
             sleeper=time_module,
             max_blocks=configuration.get("synth.d1.max_blocks", 0),
             idle_sleep_seconds=configuration.get("synth.d1.idle_sleep_seconds", 0.001),
-            minimum_note_seconds=configuration.get("synth.d1.minimum_note_seconds", 0.35),
+            minimum_note_seconds=configuration.get("synth.d1.minimum_note_seconds", 0.05),
             minimum_note_velocity=configuration.get("synth.d1.minimum_note_velocity", 64),
             stream_active_blocks=configuration.get("synth.d1.stream_active_blocks", False),
             audition_tone_amplitude=configuration.get("synth.d1.audition_tone_amplitude", 8192),
+            event_logging=configuration.get("synth.d1.event_logging", "summary"),
         )
