@@ -299,9 +299,10 @@ python -m midi_chip_platform hil-deploy \
 5. Verwag:
 
 ```text
-circuitpython-midi-chip-platform v0.17.1 | story=MCP-US-055 | release-date=2026-07-16
+circuitpython-midi-chip-platform v0.17.2 | story=MCP-US-055 | release-date=2026-07-16
 DEVICE_EXECUTION_STATUS=READY
 D1_RUNTIME_STATUS=START;core=d1;sample_rate=16000;frames_per_block=128;max_blocks=0;minimum_note_seconds=0.12
+D1_MIDI_INPUT_STATUS=OPEN
 ```
 
 6. Open Logic Pro.
@@ -324,7 +325,7 @@ Stop met `Ctrl-C`. `D1_RUNTIME_STATUS=INTERRUPTED` is normaal wanneer jy self st
 
 ## Huidige pausepunt
 
-MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is Done. US-075 is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer die gesertifiseerde hardware-cleanup. US-055 is In Review: hosttoetse is groen en die Product Owner moet nou Logic/USB-MIDI-na-hoorbare-D1/I2S op die bord toets. Die v0.17.1 hertest moet `D1_AUDIO_EVENT=audible_note` wys vir elke hoorbare MIDI-note.
+MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is Done. US-075 is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer die gesertifiseerde hardware-cleanup. US-055 is In Review: hosttoetse is groen en die Product Owner moet nou Logic/USB-MIDI-na-hoorbare-D1/I2S op die bord toets. Die v0.17.2 hertest moet `D1_MIDI_INPUT_STATUS=OPEN` by startup wys en `D1_AUDIO_EVENT=audible_note` vir elke hoorbare MIDI-note.
 
 ## MAX98357A veilige toetslas
 

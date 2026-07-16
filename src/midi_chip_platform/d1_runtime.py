@@ -1,11 +1,11 @@
 # Bestand: d1_runtime.py
-# Versienommer: 0.17.1
+# Versienommer: 0.17.2
 # Doel: Verbind USB-MIDI, D1-kern en veilige I2S-uitvoer vir die Logic MVP.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-IMP-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-001
+# Actienr: MCP-ACT-055-IMP-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-002
 
 from midi_chip_platform.audio import AudioSafetyProfile, AudioStreamFormat, SafeAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
@@ -44,6 +44,7 @@ class D1UsbMidiI2sRuntime:
         self._block_count = 0
         self._note_event_count = 0
         self._audible_note_count = 0
+        self._idle_poll_count = 0
 
     @property
     def block_count(self):
@@ -57,6 +58,10 @@ class D1UsbMidiI2sRuntime:
     def audible_note_count(self):
         return self._audible_note_count
 
+    @property
+    def idle_poll_count(self):
+        return self._idle_poll_count
+
     def run(self):
         self._output(
             "D1_RUNTIME_STATUS=START;"
@@ -69,6 +74,7 @@ class D1UsbMidiI2sRuntime:
             self._audio_output.open()
             self._core.start()
             self._audio_output.unmute()
+            self._output("D1_MIDI_INPUT_STATUS=OPEN")
             while self._should_continue():
                 event = self._midi_input.receive()
                 if isinstance(event, NoteEvent):
@@ -83,8 +89,10 @@ class D1UsbMidiI2sRuntime:
                         if self._max_blocks > 0 and self._block_count >= self._max_blocks:
                             continue
                         continue
-                self._write_single_runtime_block()
+                if self._core.active_note is not None:
+                    self._write_single_runtime_block()
                 if event is None and self._sleeper is not None:
+                    self._idle_poll_count += 1
                     self._sleeper.sleep(self._idle_sleep_seconds)
         except KeyboardInterrupt:
             self._output(
@@ -110,7 +118,9 @@ class D1UsbMidiI2sRuntime:
         return True
 
     def _should_continue(self):
-        return self._max_blocks <= 0 or self._block_count < self._max_blocks
+        if self._max_blocks <= 0:
+            return True
+        return self._block_count + self._idle_poll_count < self._max_blocks
 
     def _shutdown(self):
         try:

@@ -1,11 +1,11 @@
 # Bestand: test_d1_usb_midi_runtime.py
-# Versienommer: 0.17.1
+# Versienommer: 0.17.2
 # Doel: Spesifiseer die USB-MIDI na D1 na I2S runtime-lus vir Logic-aanvaarding.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-IMP-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-001
+# Actienr: MCP-ACT-055-IMP-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-002
 
 from midi_chip_platform.audio import AudioStreamFormat, MemoryAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
@@ -53,13 +53,36 @@ class TestD1UsbMidiI2sRuntime:
         assert result is True
         assert midi_input.is_open is False
         assert audio_output.is_open is False
-        assert len(audio_output.blocks) == 4
+        assert len(audio_output.blocks) == 2
         assert any(audio_output.blocks[0].samples)
         assert any(audio_output.blocks[1].samples)
-        assert set(audio_output.blocks[2].samples) == {0}
         assert output[0].startswith("D1_RUNTIME_STATUS=START")
+        assert "D1_MIDI_INPUT_STATUS=OPEN" in output
         assert "D1_MIDI_EVENT=note_on;channel=1;note=60;velocity=100" in output
         assert output[-1].startswith("D1_RUNTIME_STATUS=PASS")
+
+    def test_runtime_does_not_write_i2s_silence_while_waiting_for_midi(self) -> None:
+        audio_format = AudioStreamFormat(sample_rate=16000, frames_per_block=32)
+        midi_input = MemoryMidiInput((None, None, None, None))
+        audio_output = MemoryAudioOutput(audio_format)
+        core = D1SynthCore(
+            D1Patch(waveform="square", audio_format=audio_format, amplitude=0.2)
+        )
+        runtime = D1UsbMidiI2sRuntime(
+            midi_input=midi_input,
+            audio_output=audio_output,
+            core=core,
+            output=[].append,
+            sleeper=self.NoSleep(),
+            max_blocks=4,
+        )
+
+        result = runtime.run()
+
+        assert result is True
+        assert len(audio_output.blocks) == 0
+        assert runtime.block_count == 0
+        assert runtime.idle_poll_count == 4
 
     def test_note_on_writes_minimum_audible_blocks_before_early_note_off(self) -> None:
         audio_format = AudioStreamFormat(
@@ -90,9 +113,10 @@ class TestD1UsbMidiI2sRuntime:
         result = runtime.run()
 
         assert result is True
-        assert len(audio_output.blocks) == 13
+        assert len(audio_output.blocks) == 5
         assert runtime.audible_note_count == 1
-        assert runtime.block_count == 13
+        assert runtime.block_count == 5
+        assert runtime.idle_poll_count == 8
         assert any(audio_output.blocks[0].samples)
         assert any(line.startswith("D1_AUDIO_EVENT=audible_note;note=60;blocks=5") for line in output)
 
