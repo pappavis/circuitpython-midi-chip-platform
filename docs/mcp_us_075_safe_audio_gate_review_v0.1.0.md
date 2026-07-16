@@ -63,6 +63,26 @@ AUDIO_SAFETY_STATUS=PASS
 4. Deploy v0.16.0 en voer `i2s_test.py` uit.
 5. Aanvaar slegs indien G3-C4-D4 sag maar duidelik hoorbaar is, serial `amplitude=2048`, `startup_mute_seconds=0.25`, `output_load=speaker-4-8-ohm` en finale `PASS` toon.
 
+## Impediment MCP-US-075-HIL-IMPEDIMENT-001
+
+Die eerste hoorbare hertoets het `v0.14.0 | story=MCP-US-016` en amplitude `4096` gerapporteer. Dit was 'n geldige US-016-regressiebewys, maar nie US-075-aanvaarding nie: die bord se `i2s_test.py` was ouer as die goedgekeurde repositoryweergawe.
+
+Nadat Thonny gesluit is, het die beheerde herstelpad die dependency-geslote v0.16.0-manifes ontplooi, die bord hard gereset en weer geverifieer. Die finale runnerbewys was:
+
+```text
+circuitpython-midi-chip-platform v0.16.0 | story=MCP-US-075 | release-date=2026-07-16
+DEVICE CONNECTION PROOF
+connection: PASS - USB CDC + CIRCUITPY
+manifest-closure: PASS - all internal imports are deployed
+deployment: PASS - approved manifest SHA-256 pairs
+device-libraries: PASS - required CircuitPython libraries present
+boot: PASS - current release and USB-MIDI boot marker
+execution: PASS - current release and dependency-import markers via serial REPL
+private-identifiers: REDACTED
+```
+
+Die impediment is tegnies opgelos. Storyaanvaarding bly oop totdat die menslike hoorbare hertoets ook die v0.16.0 US-075-markers toon.
+
 ## Burn-in
 
 `N/A` vir die hostprofiel. Hierdie story vereis een kort veilige speaker-HIL. Die 30-minute en 8-uur geïntegreerde USB-MIDI/D1/audio/heap-burn-in bly onderskeidelik MCP-US-051, US-055 en US-057.

@@ -31,6 +31,7 @@ Die platform het drie opeenvolgende hekke geslaag: 'n begrensde AudioOutput-kont
 | Geen fisiese volumebeheer nie | MAX98357A verstek-GAIN is 9 dB; digitale amplitude was die enigste begrensing | US-075 besluit software master gain, laer GAIN-pinprofiel en veilige startup mute |
 | 'n Gewone potmeter lyk na 'n maklike oplossing | BTL `+/-` is nie 'n grondverwysde analoogpad nie | Geen enkelpotmeter in die luidsprekeruitset; kies digitale beheer of 'n geskikte DAC/headphone-amp-argitektuur |
 | Programmatiese hard reset het USB tydelik laat verdwyn | Her-enumerasie/herstelgedrag is nie volledig deterministies nie | Fisiese power-cycle bly in die recovery-runbook; finale HIL meet resetherstel |
+| Hoorbare G-C-D het geslaag maar die banner was nog US-016 v0.14.0 | Die toestelartefak was ouer as die aktiewe US-075-repositoryweergawe | Klassifiseer klank volgens runtimebanner; deploy, hard reset en voer die volledige HIL-runner uit voor storyaanvaarding |
 | Host-D1 PASS is nog nie hoorbare D1 nie | Produksie-I2S-adapter/composition root is nog nie gebou nie | US-055 bly die eerste geldige Logic-na-hoorbare-D1 claim |
 | Fisiese ontwerpwerk was te generies in US-047/048 | Breadboard-, meet- en KiCad-samewerking was nie eksplisiet nie | Versterk US-047/048 met volume, veilige uitsette, testpunte, BOM, ERC/DRC en bring-up |
 
@@ -45,10 +46,13 @@ Die platform het drie opeenvolgende hekke geslaag: 'n begrensde AudioOutput-kont
 | Bou en meet 'n reproduceerbare breadboard-uitset met veilige scope-punte | Hardware/QA | US-075/047 | Backlog |
 | Ontwerp later die KiCad-skema/PCB saam met die ervare Product Owner | Hardware/PCB/PO | US-048 | Backlog |
 | Begin US-055 eers nadat die veilige toetslas/volumeprofiel aanvaar is | Scrum/QA | US-075 -> US-055 | Beheer aktief |
+| Vereis verwagte weergawe en story in elke menslike HIL-uitvoer | QA/Release | Alle HIL-stories | Beheer aktief |
 
 ## Hergebruikreël
 
 Vir elke nuwe synth of drum-machine moet die eerste hoorbare HIL nie net penne en klank bewys nie, maar ook die **las**, impedansie, gain, maksimum amplitude, mute/herstel, veilige meetpunt en menslike luisterafstand benoem. 'n Hoorbare uitset is nie outomaties 'n veilige headphone-, line- of pedal-uitset nie.
+
+Verder word 'n hoorbare resultaat nooit aan die aktiewe story toegeskryf sonder 'n ooreenstemmende runtimeweergawe en story-ID nie. 'n Ouer banner bewys slegs regressie van daardie ouer artefak; repository-, deployment-, boot- en execution-bewys moet eers almal groen wees.
 
 ## Virtuele spanreview
 
