@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.17.7
+# Versienommer: 0.17.8
 # Doel: Spesifiseer publieke fast-boot D1-runtime, veilige audio en private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-FIX-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-002
+# Actienr: MCP-ACT-055-P0-REALTIME-FIX-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-003
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -47,7 +47,9 @@ class TestConfigurationDefaults:
         assert snapshot.get("synth.d1.audition_master_gain") == 0.25
         assert snapshot.get("synth.d1.stream_active_blocks") is False
         assert snapshot.get("synth.d1.audition_tone_amplitude") == 8192
-        assert snapshot.get("synth.d1.event_logging") == "summary"
+        assert snapshot.get("synth.d1.event_logging") == "none"
+        assert snapshot.get("synth.d1.timing_marker_enabled") is True
+        assert snapshot.get("synth.d1.timing_marker_pin") == "IO9"
         assert snapshot.get("midi.diagnostic.enabled") is False
         assert snapshot.get("midi.diagnostic.max_events") == 8
         assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
@@ -72,7 +74,9 @@ class TestConfigurationDefaults:
         assert 'D1_AUDITION_MASTER_GAIN = "0.25"' in settings_example
         assert 'D1_STREAM_ACTIVE_BLOCKS = "false"' in settings_example
         assert "D1_AUDITION_TONE_AMPLITUDE = 8192" in settings_example
-        assert 'D1_EVENT_LOGGING = "summary"' in settings_example
+        assert 'D1_EVENT_LOGGING = "none"' in settings_example
+        assert 'D1_TIMING_MARKER_ENABLED = "true"' in settings_example
+        assert 'D1_TIMING_MARKER_PIN = "IO9"' in settings_example
 
 
 class TestConfigurationSecretBoundary:

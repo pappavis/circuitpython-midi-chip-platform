@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 
 ## Status
 
-**IN REVIEW / HIL RETEST READY.** Die host-implementering is groen en dependency-closed. `v0.17.7` verbind nou die bestaande USB-MIDI input, die draagbare D1-basiskern, die veilige `SafeAudioOutput` en 'n CircuitPython I2S backend. Die P0-impedimentfix vervang die fragiele 128-frame start/stop streamingpad vir Logic-aanvaarding met 'n latched tone-pad: `NoteOn` bereken die D1-frekwensie, begin 'n loopende RawSample-tone soos die werkende `i2s_test.py`, hou die MIDI-pollinglus lewendig, en `NoteOff` stop die toon. Die D1 audition default is `square` vir duidelike scope- en hoorbaarheidstoetsing. Finale closure wag op menslike HIL: Logic Pro stuur MIDI na die Wemos S2 en die Product Owner hoor D1-klank via die MAX98357A-opstelling.
+**IN REVIEW / HIL RETEST READY.** Die host-implementering is groen en dependency-closed. `v0.17.8` verbind nou die bestaande USB-MIDI input, die draagbare D1-basiskern, die veilige `SafeAudioOutput` en 'n CircuitPython I2S backend. Die P0-impedimentfix vervang die fragiele 128-frame start/stop streamingpad vir Logic-aanvaarding met 'n latched tone-pad: `NoteOn` bereken die D1-frekwensie, begin 'n loopende RawSample-tone soos die werkende `i2s_test.py`, hou die MIDI-pollinglus lewendig, en `NoteOff` stop die toon. Die D1 audition default is `square` vir duidelike scope- en hoorbaarheidstoetsing. Finale closure wag op menslike HIL: Logic Pro stuur MIDI na die Wemos S2 en die Product Owner hoor D1-klank via die MAX98357A-opstelling.
 
 ## Implementering
 
@@ -30,8 +30,8 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 |---|---|
 | RED | Nuwe tests het met `ModuleNotFoundError` gefaal vir `midi_chip_platform.i2s_audio` en `midi_chip_platform.d1_runtime` |
 | GREEN | `CircuitPythonI2sAudioOutput` pinne, signed-to-unsigned conversie, stop/deinit, latched tone start/stop en D1 Note On/Off runtime slaag |
-| REGRESSION | 135 pytest-toetse slaag; architecture-toetse bevestig geen globals, geen modulefunksies en geen module-level hardeware-imports |
-| HIL | Wag op Product Owner: Logic External MIDI na `S2 Mini` of bordnaam, speel Note On/Off, hoor D1 en sien `D1_MIDI_INPUT_STATUS=OPEN` plus `D1_REALTIME_MIDI_NOTE` met `note_latency_ms` |
+| REGRESSION | 136 pytest-toetse slaag; architecture-toetse bevestig geen globals, geen modulefunksies en geen module-level hardeware-imports |
+| HIL | Wag op Product Owner: Logic External MIDI na `S2 Mini` of bordnaam, speel Note On/Off, hoor D1 en meet opsioneel `IO9` timing-marker teenoor I2S/audio |
 
 ## Menslike HIL-aanvaarding
 
@@ -41,9 +41,9 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 4. Verwag aan die begin:
 
 ```text
-circuitpython-midi-chip-platform v0.17.7 | story=MCP-US-055 | release-date=2026-07-16
+circuitpython-midi-chip-platform v0.17.8 | story=MCP-US-055 | release-date=2026-07-16
 DEVICE_FAST_BOOT_STATUS=ENABLED
-D1_RUNTIME_STATUS=START;core=d1;sample_rate=16000;frames_per_block=128;max_blocks=0;minimum_note_seconds=0.05;minimum_note_velocity=64;stream_active_blocks=false;audition_tone_amplitude=8192;event_logging=summary;master_gain=0.250
+D1_RUNTIME_STATUS=START;core=d1;sample_rate=16000;frames_per_block=128;max_blocks=0;minimum_note_seconds=0.05;minimum_note_velocity=64;stream_active_blocks=false;audition_tone_amplitude=8192;event_logging=none;timing_marker=IO9;master_gain=0.250
 D1_MIDI_INPUT_STATUS=OPEN
 D1_RUNTIME_READY;ready_ms=...
 ```
@@ -53,13 +53,9 @@ D1_RUNTIME_READY;ready_ms=...
 7. Kies die Wemos/S2 MIDI destination, tans waarskynlik `S2 Mini`. MIDI Channel mag `All` of `1` wees.
 8. Speel eers ná `D1_RUNTIME_READY` 'n kort noot of 'n MIDI-region met C4/E4/G4.
 9. Verwag hoorbare D1-klank deur die bestaande MAX98357A-prototipe-opstelling.
-10. Verwag vir note:
+10. In default performance mode is daar doelbewus geen per-note serial output nie. Verwag hoorbare note en, indien jy die Rigol gebruik, 'n kort `IO9` pulse rondom die firmware/audio-startpad.
 
-```text
-D1_REALTIME_MIDI_NOTE=note_on;channel=1;note=...;velocity=...;frequency_hz=...;event_ms=...;tone_start_ms=...;note_latency_ms=...
-```
-
-In `D1_EVENT_LOGGING = "verbose"` diagnose mode verskyn daar ook `D1_MIDI_EVENT` en `D1_AUDIO_EVENT` reëls. In performance mode bly hulle doelbewus stil om serial-backpressure te beperk.
+As jy serial-note-telemetrie nodig het, stel tydelik `D1_EVENT_LOGGING = "summary"` in `settings.toml` en herstart. Dan verskyn `D1_REALTIME_MIDI_NOTE=...note_latency_ms=...`. In `verbose` diagnose mode verskyn daar ook `D1_MIDI_EVENT` en `D1_AUDIO_EVENT` reëls. Skakel daarna terug na `none` vir performance.
 
 11. Stop die runtime met `Ctrl-C`. `D1_RUNTIME_STATUS=INTERRUPTED` is aanvaarbaar vir 'n handmatige stop.
 
@@ -67,11 +63,10 @@ In `D1_EVENT_LOGGING = "verbose"` diagnose mode verskyn daar ook `D1_MIDI_EVENT`
 
 | Uitkoms | Betekenis |
 |---|---|
-| Hoorbare klank plus `D1_MIDI_INPUT_STATUS` en `D1_REALTIME_MIDI_NOTE` | US-055 kan aanvaar word |
-| `D1_REALTIME_MIDI_NOTE` maar geen klank | I2S/audio/debugpad ondersoek; herhaal eers standalone `i2s_test.py` |
-| Geen `D1_REALTIME_MIDI_NOTE` na note-on | D1 runtime minimum-note pad ondersoek |
-| `D1_MIDI_INPUT_STATUS=OPEN` maar geen `D1_REALTIME_MIDI_NOTE` | Logic/CoreMIDI routing, verkeerde destination of USB endpoint ondersoek |
-| Geen `D1_REALTIME_MIDI_NOTE` | Logic/CoreMIDI routing of USB-MIDI-poort ondersoek; herhaal MCP-US-007 diagnostic |
+| Hoorbare klank uit Logic en geen serial flood | US-055 kan aanvaar word |
+| `IO9` pulse maar geen klank | I2S/audio/debugpad ondersoek; herhaal eers standalone `i2s_test.py` |
+| Geen `IO9` pulse by note-on | Logic/CoreMIDI routing of USB-MIDI-poort ondersoek; herhaal MCP-US-007 diagnostic of skakel `summary` logging tydelik aan |
+| `summary` wys `D1_REALTIME_MIDI_NOTE` maar geen klank | D1 runtime of I2S audio-startpad ondersoek |
 | Traceback in `i2s_audio.py` | I2S pins/backend of `audiocore.RawSample` conversie ondersoek |
 
 ## Beperkings
@@ -94,7 +89,7 @@ In `D1_EVENT_LOGGING = "verbose"` diagnose mode verskyn daar ook `D1_MIDI_EVENT`
 | MIDI Engineer | Hergebruik die bestaande USB-MIDI translator en note semantics. |
 | DSP/Chip Engineer | Hergebruik D1 PCM-blokke en veilige output-gain. |
 | QA/HIL Engineer | Lewer RED/GREEN, 135 regressietoetse en menslike HIL-instructies. |
-| Release/Documentation | Berei `v0.17.7` performance-hertoets as In Review voor en hou US-057 vir finale release/burn-in. |
+| Release/Documentation | Berei `v0.17.8` performance-hertoets as In Review voor en hou US-057 vir finale release/burn-in. |
 | External Architecture Reviewer (Copilot) | Die vertical-slice aanbeveling USB-MIDI -> D1 -> audio is nou geimplementeer. |
 | Devil's Advocate | Waarsku dat hostgroen nog nie hoorbare Logic-aanvaarding is nie. |
 

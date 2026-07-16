@@ -1,11 +1,11 @@
 # Bestand: device_runtime.py
-# Versienommer: 0.17.7
+# Versienommer: 0.17.8
 # Doel: Lewer toestelbewys en aktiveer D1 fast boot of diagnostiek via konfigurasie.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-FIX-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-002
+# Actienr: MCP-ACT-055-P0-REALTIME-FIX-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-003
 
 from midi_chip_platform.release import ReleaseMetadata
 

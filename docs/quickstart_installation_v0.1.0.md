@@ -299,9 +299,9 @@ python -m midi_chip_platform hil-deploy \
 5. Verwag:
 
 ```text
-circuitpython-midi-chip-platform v0.17.7 | story=MCP-US-055 | release-date=2026-07-16
+circuitpython-midi-chip-platform v0.17.8 | story=MCP-US-055 | release-date=2026-07-16
 DEVICE_FAST_BOOT_STATUS=ENABLED
-D1_RUNTIME_STATUS=START;core=d1;sample_rate=16000;frames_per_block=128;max_blocks=0;minimum_note_seconds=0.05;minimum_note_velocity=64;stream_active_blocks=false;audition_tone_amplitude=8192;event_logging=summary;master_gain=0.250
+D1_RUNTIME_STATUS=START;core=d1;sample_rate=16000;frames_per_block=128;max_blocks=0;minimum_note_seconds=0.05;minimum_note_velocity=64;stream_active_blocks=false;audition_tone_amplitude=8192;event_logging=none;timing_marker=IO9;master_gain=0.250
 D1_MIDI_INPUT_STATUS=OPEN
 D1_RUNTIME_READY;ready_ms=...
 ```
@@ -314,19 +314,15 @@ D1_RUNTIME_READY;ready_ms=...
 
 PASS:
 
-```text
-D1_REALTIME_MIDI_NOTE=note_on;channel=1;note=...;velocity=...;frequency_hz=...;event_ms=...;tone_start_ms=...;note_latency_ms=...
-```
+Jy hoor D1-klank deur die MAX98357A-prototipe-opstelling. In default performance mode verskyn daar geen per-note serial output nie.
 
-en jy hoor D1-klank deur die MAX98357A-prototipe-opstelling.
-
-`D1_MIDI_EVENT` en `D1_AUDIO_EVENT` verskyn net wanneer `D1_EVENT_LOGGING = "verbose"` in `settings.toml` staan. Die gewone performance mode gebruik `summary` om serial logging lig te hou.
+Opsioneel: meet `IO9` met die Rigol. Elke note-on gee 'n kort marker-pulse rondom die firmware/audio-startpad. `D1_REALTIME_MIDI_NOTE` verskyn net wanneer jy tydelik `D1_EVENT_LOGGING = "summary"` stel. `D1_MIDI_EVENT` en `D1_AUDIO_EVENT` verskyn net met `verbose`.
 
 Stop met `Ctrl-C`. `D1_RUNTIME_STATUS=INTERRUPTED` is normaal wanneer jy self stop.
 
 ## Huidige pausepunt
 
-MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is Done. US-075 is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer die gesertifiseerde hardware-cleanup. US-055 is In Review: hosttoetse is groen en die Product Owner moet nou Logic/USB-MIDI-na-hoorbare-D1/I2S op die bord toets. Die v0.17.7 hertest moet `master_gain=0.250`, `minimum_note_velocity=64`, `D1_MIDI_INPUT_STATUS=OPEN` en `D1_REALTIME_MIDI_NOTE` wys vir hoorbare MIDI-note; die I2S-adapter gebruik 'n korter latched RawSample-tone met ligter serial logging.
+MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is Done. US-075 is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer die gesertifiseerde hardware-cleanup. US-055 is In Review: hosttoetse is groen en die Product Owner moet nou Logic/USB-MIDI-na-hoorbare-D1/I2S op die bord toets. Die v0.17.8 hertest moet `master_gain=0.250`, `minimum_note_velocity=64`, `D1_MIDI_INPUT_STATUS=OPEN`, `event_logging=none` en `timing_marker=IO9` wys; die I2S-adapter gebruik 'n korter latched RawSample-tone sonder per-note serial backpressure.
 
 ## MAX98357A veilige toetslas
 

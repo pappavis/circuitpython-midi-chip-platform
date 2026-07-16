@@ -33,7 +33,9 @@ D1_MINIMUM_NOTE_VELOCITY = 64
 D1_AUDITION_MASTER_GAIN = "0.25"
 D1_STREAM_ACTIVE_BLOCKS = "false"
 D1_AUDITION_TONE_AMPLITUDE = 8192
-D1_EVENT_LOGGING = "summary"
+D1_EVENT_LOGGING = "none"
+D1_TIMING_MARKER_ENABLED = "true"
+D1_TIMING_MARKER_PIN = "IO9"
 
 # Optional, bounded USB-MIDI Note On/Off acceptance diagnostic.
 # Leave disabled for normal startup. Enable temporarily, then restart the board.

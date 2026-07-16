@@ -1,11 +1,11 @@
 # Bestand: d1_runtime.py
-# Versienommer: 0.17.7
-# Doel: Verbind USB-MIDI vinnig met D1 en 'n lae-latensie I2S-performance toonpad.
+# Versienommer: 0.17.8
+# Doel: Verbind USB-MIDI vinnig met D1 met stil logging en 'n GPIO latency-marker.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-FIX-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-002
+# Actienr: MCP-ACT-055-P0-REALTIME-FIX-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-003
 
 from midi_chip_platform.audio import AudioSafetyProfile, AudioStreamFormat, SafeAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
@@ -13,6 +13,70 @@ from midi_chip_platform.events import NoteEvent
 from midi_chip_platform.i2s_audio import CircuitPythonI2sAudioOutput
 from midi_chip_platform.midi_usb import CircuitPythonUsbMidiFactory
 from midi_chip_platform.ports import AudioOutputPort, ConfigurationPort, MidiInputPort
+
+
+class NullTimingMarker:
+    def __init__(self):
+        self._is_open = False
+        self._begin_count = 0
+        self._end_count = 0
+
+    @property
+    def begin_count(self):
+        return self._begin_count
+
+    @property
+    def end_count(self):
+        return self._end_count
+
+    def open(self):
+        self._is_open = True
+
+    def begin_note_on(self):
+        self._begin_count += 1
+
+    def end_note_on(self):
+        self._end_count += 1
+
+    def close(self):
+        self._is_open = False
+
+
+class CircuitPythonGpioTimingMarker:
+    def __init__(self, importer=None, pin_name="IO9"):
+        self._importer = importer if importer is not None else __import__
+        self._pin_name = str(pin_name)
+        self._pin = None
+
+    @property
+    def pin_name(self):
+        return self._pin_name
+
+    def open(self):
+        if self._pin is not None:
+            return
+        board_module = self._importer("board")
+        digitalio_module = self._importer("digitalio")
+        self._pin = digitalio_module.DigitalInOut(
+            getattr(board_module, self._pin_name)
+        )
+        self._pin.direction = digitalio_module.Direction.OUTPUT
+        self._pin.value = False
+
+    def begin_note_on(self):
+        if self._pin is not None:
+            self._pin.value = True
+
+    def end_note_on(self):
+        if self._pin is not None:
+            self._pin.value = False
+
+    def close(self):
+        if self._pin is None:
+            return
+        self._pin.value = False
+        self._pin.deinit()
+        self._pin = None
 
 
 class D1UsbMidiI2sRuntime:
@@ -29,7 +93,8 @@ class D1UsbMidiI2sRuntime:
         minimum_note_velocity=64,
         stream_active_blocks=False,
         audition_tone_amplitude=8192,
-        event_logging="summary",
+        event_logging="none",
+        timing_marker=None,
     ):
         if not isinstance(midi_input, MidiInputPort):
             raise TypeError("midi_input must implement MidiInputPort")
@@ -51,6 +116,9 @@ class D1UsbMidiI2sRuntime:
         self._event_logging = str(event_logging).lower()
         if self._event_logging not in ("none", "summary", "verbose"):
             raise ValueError("event_logging must be none, summary or verbose")
+        self._timing_marker = (
+            timing_marker if timing_marker is not None else NullTimingMarker()
+        )
         self._block_count = 0
         self._note_event_count = 0
         self._audible_note_count = 0
@@ -87,10 +155,12 @@ class D1UsbMidiI2sRuntime:
             f"stream_active_blocks={str(self._stream_active_blocks).lower()};"
             f"audition_tone_amplitude={self._audition_tone_amplitude};"
             f"event_logging={self._event_logging};"
+            f"timing_marker={self._timing_marker_label()};"
             f"master_gain={self._master_gain_label()}"
         )
         try:
             self._runtime_started_at = self._current_time()
+            self._timing_marker.open()
             self._midi_input.open()
             self._audio_output.open()
             self._core.start()
@@ -186,6 +256,10 @@ class D1UsbMidiI2sRuntime:
             self._midi_input.close()
         except Exception:
             pass
+        try:
+            self._timing_marker.close()
+        except Exception:
+            pass
 
     def _start_minimum_audible_tone(self, event, playable_event):
         requested_blocks = self._minimum_audible_block_count()
@@ -195,10 +269,14 @@ class D1UsbMidiI2sRuntime:
         if requested_blocks <= 0:
             return
         if hasattr(self._audio_output, "start_tone"):
-            self._audio_output.start_tone(
-                frequency_hz=self._core.active_frequency_hz,
-                amplitude=self._audition_tone_amplitude,
-            )
+            self._timing_marker.begin_note_on()
+            try:
+                self._audio_output.start_tone(
+                    frequency_hz=self._core.active_frequency_hz,
+                    amplitude=self._audition_tone_amplitude,
+                )
+            finally:
+                self._timing_marker.end_note_on()
             self._tone_started = True
             self._tone_started_at = self._current_time()
             self._pending_tone_stop_at = None
@@ -324,6 +402,12 @@ class D1UsbMidiI2sRuntime:
         if self._event_logging == "verbose":
             self._output(message)
 
+    def _timing_marker_label(self):
+        pin_name = getattr(self._timing_marker, "pin_name", None)
+        if pin_name is None:
+            return "off"
+        return str(pin_name)
+
 
 class D1UsbMidiI2sRuntimeFactory:
     def __init__(self, importer=None, output=None):
@@ -385,5 +469,14 @@ class D1UsbMidiI2sRuntimeFactory:
             minimum_note_velocity=configuration.get("synth.d1.minimum_note_velocity", 64),
             stream_active_blocks=configuration.get("synth.d1.stream_active_blocks", False),
             audition_tone_amplitude=configuration.get("synth.d1.audition_tone_amplitude", 8192),
-            event_logging=configuration.get("synth.d1.event_logging", "summary"),
+            event_logging=configuration.get("synth.d1.event_logging", "none"),
+            timing_marker=self._timing_marker_for(configuration),
+        )
+
+    def _timing_marker_for(self, configuration):
+        if not configuration.get("synth.d1.timing_marker_enabled", False):
+            return NullTimingMarker()
+        return CircuitPythonGpioTimingMarker(
+            importer=self._importer,
+            pin_name=configuration.get("synth.d1.timing_marker_pin", "IO9"),
         )

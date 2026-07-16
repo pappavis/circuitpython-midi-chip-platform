@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.17.7
+# Versienommer: 0.17.8
 # Doel: Laai publieke D1-runtime, fast-boot performance-verstekke en private settings.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-FIX-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-002
+# Actienr: MCP-ACT-055-P0-REALTIME-FIX-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-003
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -40,7 +40,9 @@ class ConfigurationDefaults:
             "synth.d1.audition_master_gain": 0.25,
             "synth.d1.stream_active_blocks": False,
             "synth.d1.audition_tone_amplitude": 8192,
-            "synth.d1.event_logging": "summary",
+            "synth.d1.event_logging": "none",
+            "synth.d1.timing_marker_enabled": True,
+            "synth.d1.timing_marker_pin": "IO9",
             "midi.input.port_index": 0,
             "midi.diagnostic.enabled": False,
             "midi.diagnostic.max_events": 8,
@@ -87,6 +89,8 @@ class EnvironmentSettingsSource:
             "synth.d1.stream_active_blocks": "D1_STREAM_ACTIVE_BLOCKS",
             "synth.d1.audition_tone_amplitude": "D1_AUDITION_TONE_AMPLITUDE",
             "synth.d1.event_logging": "D1_EVENT_LOGGING",
+            "synth.d1.timing_marker_enabled": "D1_TIMING_MARKER_ENABLED",
+            "synth.d1.timing_marker_pin": "D1_TIMING_MARKER_PIN",
             "midi.input.port_index": "MIDI_INPUT_PORT_INDEX",
             "midi.diagnostic.enabled": "MIDI_DIAGNOSTIC_ENABLED",
             "midi.diagnostic.max_events": "MIDI_DIAGNOSTIC_MAX_EVENTS",

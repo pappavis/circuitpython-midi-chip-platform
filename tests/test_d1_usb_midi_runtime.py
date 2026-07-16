@@ -1,11 +1,11 @@
 # Bestand: test_d1_usb_midi_runtime.py
-# Versienommer: 0.17.7
+# Versienommer: 0.17.8
 # Doel: Spesifiseer die USB-MIDI na D1 na I2S fast-boot toonpad vir Logic-aanvaarding.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-FIX-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-002
+# Actienr: MCP-ACT-055-P0-REALTIME-FIX-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-003
 
 from midi_chip_platform.audio import AudioStreamFormat, MemoryAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
@@ -49,6 +49,31 @@ class TestD1UsbMidiI2sRuntime:
         def stop_tone(self):
             self._tones.append(("stop",))
 
+    class RecordingTimingMarker:
+        def __init__(self):
+            self._calls = []
+            self._pin_name = "IO9"
+
+        @property
+        def calls(self):
+            return tuple(self._calls)
+
+        @property
+        def pin_name(self):
+            return self._pin_name
+
+        def open(self):
+            self._calls.append("open")
+
+        def begin_note_on(self):
+            self._calls.append("begin")
+
+        def end_note_on(self):
+            self._calls.append("end")
+
+        def close(self):
+            self._calls.append("close")
+
     def test_runtime_turns_note_on_and_note_off_into_audio_blocks(self) -> None:
         audio_format = AudioStreamFormat(sample_rate=16000, frames_per_block=32)
         midi_input = MemoryMidiInput(
@@ -88,7 +113,7 @@ class TestD1UsbMidiI2sRuntime:
         assert "D1_MIDI_INPUT_STATUS=OPEN" in output
         assert "D1_RUNTIME_READY;ready_ms=0" in output
         assert "D1_MIDI_EVENT=note_on;channel=1;note=60;velocity=100" not in output
-        assert any(line.startswith("D1_REALTIME_MIDI_NOTE=note_on") for line in output)
+        assert not any(line.startswith("D1_REALTIME_MIDI_NOTE=note_on") for line in output)
         assert output[-1].startswith("D1_RUNTIME_STATUS=PASS")
 
     def test_runtime_does_not_write_i2s_silence_while_waiting_for_midi(self) -> None:
@@ -167,6 +192,7 @@ class TestD1UsbMidiI2sRuntime:
             D1Patch(waveform="square", audio_format=audio_format, amplitude=0.5)
         )
         output = []
+        marker = self.RecordingTimingMarker()
         runtime = D1UsbMidiI2sRuntime(
             midi_input=midi_input,
             audio_output=audio_output,
@@ -176,6 +202,8 @@ class TestD1UsbMidiI2sRuntime:
             max_blocks=50,
             minimum_note_seconds=0.05,
             audition_tone_amplitude=8192,
+            event_logging="summary",
+            timing_marker=marker,
         )
 
         result = runtime.run()
@@ -184,6 +212,7 @@ class TestD1UsbMidiI2sRuntime:
         assert len(audio_output.blocks) == 0
         assert audio_output.tones[0] == ("start", 440.0, 8192)
         assert audio_output.tones[-1] == ("stop",)
+        assert marker.calls == ("open", "begin", "end", "close")
         assert any(
             line.startswith(
                 "D1_REALTIME_MIDI_NOTE=note_on;channel=1;note=69;velocity=100;"
@@ -282,3 +311,97 @@ class TestD1UsbMidiI2sRuntime:
         factory = D1UsbMidiI2sRuntimeFactory()
 
         assert factory.create_if_enabled(MemoryConfiguration({"synth.d1.enabled": False})) is None
+
+    def test_factory_uses_gpio_timing_marker_configuration(self) -> None:
+        no_sleep_cls = self.NoSleep
+
+        class FakeImporter:
+            def __call__(self, module_name, *args):
+                if module_name == "adafruit_midi":
+                    class FakeMidi:
+                        def __init__(self, midi_in=None, in_channel=None):
+                            self.midi_in = midi_in
+                            self.in_channel = in_channel
+
+                    return type("FakeAdafruitMidi", (), {"MIDI": FakeMidi})
+                if module_name == "adafruit_midi.note_on":
+                    return type("FakeNoteOnModule", (), {"NoteOn": type("NoteOn", (), {})})
+                if module_name == "adafruit_midi.note_off":
+                    return type("FakeNoteOffModule", (), {"NoteOff": type("NoteOff", (), {})})
+                if module_name == "adafruit_midi.control_change":
+                    return type(
+                        "FakeControlChangeModule",
+                        (),
+                        {"ControlChange": type("ControlChange", (), {})},
+                    )
+                if module_name == "adafruit_midi.pitch_bend":
+                    return type(
+                        "FakePitchBendModule",
+                        (),
+                        {"PitchBend": type("PitchBend", (), {})},
+                    )
+                if module_name == "adafruit_midi.timing_clock":
+                    return type(
+                        "FakeTimingClockModule",
+                        (),
+                        {"TimingClock": type("TimingClock", (), {})},
+                    )
+                if module_name == "adafruit_midi.start":
+                    return type("FakeStartModule", (), {"Start": type("Start", (), {})})
+                if module_name == "adafruit_midi.stop":
+                    return type("FakeStopModule", (), {"Stop": type("Stop", (), {})})
+                if module_name == "adafruit_midi.midi_continue":
+                    return type(
+                        "FakeContinueModule",
+                        (),
+                        {"Continue": type("Continue", (), {})},
+                    )
+                if module_name == "usb_midi":
+                    return type("FakeUsbMidi", (), {"ports": (object(),)})
+                if module_name == "board":
+                    return type(
+                        "FakeBoard",
+                        (),
+                        {
+                            "IO3": object(),
+                            "IO5": object(),
+                            "IO7": object(),
+                            "IO9": object(),
+                        },
+                    )
+                if module_name == "digitalio":
+                    class FakePin:
+                        def __init__(self, _pin):
+                            self.direction = None
+                            self.value = None
+
+                        def deinit(self):
+                            return None
+
+                    return type(
+                        "FakeDigitalio",
+                        (),
+                        {
+                            "DigitalInOut": FakePin,
+                            "Direction": type("Direction", (), {"OUTPUT": "output"}),
+                        },
+                    )
+                if module_name == "time":
+                    return no_sleep_cls()
+                raise ImportError(module_name)
+
+        runtime = D1UsbMidiI2sRuntimeFactory(
+            importer=FakeImporter(),
+            output=[].append,
+        ).create_if_enabled(
+            MemoryConfiguration(
+                {
+                    "synth.d1.enabled": True,
+                    "synth.d1.timing_marker_enabled": True,
+                    "synth.d1.timing_marker_pin": "IO9",
+                }
+            )
+        )
+
+        assert runtime is not None
+        assert runtime._timing_marker_label() == "IO9"

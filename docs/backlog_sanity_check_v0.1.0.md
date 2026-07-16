@@ -78,7 +78,7 @@ Status: **PASS vir 76 stories, 10 epics en die veiligheidsgewysigde 17-story MVP
 - MCP-US-016 is `Done`: die Product Owner het op 2026-07-16 G3-C4-D4 hoorbaar deur die MAX98357A bevestig; serial het `PASS`, dependency-geslote deploy en begrensde heap gerapporteer. Die 30-minute burn-in bly as releasebewys onder US-051/US-057 naspeurbaar.
 - MCP-US-063 is `Done`: die Product Owner het v0.15.0 se drie waveforms, A4=440 Hz, velocity en finale `D1_CORE_STATUS=PASS` aanvaar.
 - MCP-US-075 is `Done (PO exception)`: v0.16.0 bewys startup mute, `0.08` gain, `0.25` plafon, 120 groen hosttoetse en hoorbare G-C-D. Die PO aanvaar die tydelike TRS-prototiperisiko; US-076 parkeer gesertifiseerde fisiese uitsetcleanup ná MVP.
-- MCP-US-055 is `In Review`: v0.17.7 verbind Logic/USB-MIDI, D1 en veilige I2S op host met 135 groen toetse; die P0-impedimentfix behou die HIL audition gain en gebruik 'n latched RawSample-tone soos die hoorbare standalone I2S-diagnose. Menslike Logic/HIL hoorbaarheid bly die closure-hek.
+- MCP-US-055 is `In Review`: v0.17.8 verbind Logic/USB-MIDI, D1 en veilige I2S op host met 136 groen toetse; die P0-impedimentfix behou die HIL audition gain en gebruik 'n latched RawSample-tone soos die hoorbare standalone I2S-diagnose. Menslike Logic/HIL hoorbaarheid bly die closure-hek.
 - MCP-US-003 is ná fisiese connection/deploy/execution/USB-MIDI-bewys `Done`.
 - MCP-US-007 is `Done`: v0.12.2 het op die Wemos S2 werklike Note On/Off ontvang en `matched_notes=1` gerapporteer. MCP-US-051 bly `In Review` tot sy latere klankadapterhek.
 - Die MVP Acceptance Set is US-001 tot US-009 (US-010 uitgesluit), US-014, US-016, US-050, US-051, US-055, US-057, US-063 en die veiligheidshek US-075.
