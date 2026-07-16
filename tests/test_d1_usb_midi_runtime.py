@@ -1,11 +1,11 @@
 # Bestand: test_d1_usb_midi_runtime.py
-# Versienommer: 0.17.4
-# Doel: Spesifiseer die USB-MIDI na D1 na I2S runtime-lus vir Logic-aanvaarding.
+# Versienommer: 0.17.5
+# Doel: Spesifiseer die USB-MIDI na D1 na I2S hoorbare toonpad vir Logic-aanvaarding.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-IMP-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-003
+# Actienr: MCP-ACT-055-P0-AUDIBLE-TONE-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-HIL-PASS-RECEIVED
 
 from midi_chip_platform.audio import AudioStreamFormat, MemoryAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
@@ -18,9 +18,36 @@ class TestD1UsbMidiI2sRuntime:
     class NoSleep:
         def __init__(self):
             self.calls = []
+            self._now = 0.0
 
         def sleep(self, seconds):
             self.calls.append(seconds)
+            self._now += float(seconds)
+
+        def monotonic(self):
+            return self._now
+
+    class ToneMemoryAudioOutput(MemoryAudioOutput):
+        def __init__(self, audio_format):
+            super().__init__(audio_format)
+            self._tones = []
+
+        @property
+        def tones(self):
+            return tuple(self._tones)
+
+        def play_tone(self, frequency_hz, duration_seconds, amplitude=8192):
+            self._tones.append(
+                ("play", float(frequency_hz), float(duration_seconds), int(amplitude))
+            )
+
+        def start_tone(self, frequency_hz, amplitude=8192):
+            self._tones.append(
+                ("start", float(frequency_hz), int(amplitude))
+            )
+
+        def stop_tone(self):
+            self._tones.append(("stop",))
 
     def test_runtime_turns_note_on_and_note_off_into_audio_blocks(self) -> None:
         audio_format = AudioStreamFormat(sample_rate=16000, frames_per_block=32)
@@ -46,6 +73,7 @@ class TestD1UsbMidiI2sRuntime:
             max_blocks=4,
             idle_sleep_seconds=0.001,
             minimum_note_seconds=0.0,
+            stream_active_blocks=True,
         )
 
         result = runtime.run()
@@ -119,6 +147,54 @@ class TestD1UsbMidiI2sRuntime:
         assert runtime.idle_poll_count == 8
         assert any(audio_output.blocks[0].samples)
         assert any(line.startswith("D1_AUDIO_EVENT=audible_note;note=60;blocks=5") for line in output)
+
+    def test_note_on_prefers_i2s_tone_path_when_output_supports_it(self) -> None:
+        audio_format = AudioStreamFormat(
+            sample_rate=16000,
+            frames_per_block=160,
+        )
+        midi_input = MemoryMidiInput(
+            (
+                NoteEvent.note_on(channel=1, note=69, velocity=100),
+                NoteEvent.note_off(channel=1, note=69, velocity=64),
+            )
+        )
+        audio_output = self.ToneMemoryAudioOutput(audio_format)
+        core = D1SynthCore(
+            D1Patch(waveform="square", audio_format=audio_format, amplitude=0.5)
+        )
+        output = []
+        runtime = D1UsbMidiI2sRuntime(
+            midi_input=midi_input,
+            audio_output=audio_output,
+            core=core,
+            output=output.append,
+            sleeper=self.NoSleep(),
+            max_blocks=50,
+            minimum_note_seconds=0.35,
+            audition_tone_amplitude=8192,
+        )
+
+        result = runtime.run()
+
+        assert result is True
+        assert len(audio_output.blocks) == 0
+        assert audio_output.tones[0] == ("start", 440.0, 8192)
+        assert audio_output.tones[-1] == ("stop",)
+        assert any(
+            line.startswith(
+                "D1_REALTIME_MIDI_NOTE=note_on;channel=1;note=69;velocity=100;"
+                "frequency_hz=440.000"
+            )
+            for line in output
+        )
+        assert any(
+            line.startswith(
+                "D1_AUDIO_EVENT=audible_note;mode=latched_tone;note=69;"
+                "blocks=35;minimum_seconds=0.350"
+            )
+            for line in output
+        )
 
     def test_low_logic_velocity_is_lifted_for_hil_audibility(self) -> None:
         audio_format = AudioStreamFormat(

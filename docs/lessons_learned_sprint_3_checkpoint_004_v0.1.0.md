@@ -54,6 +54,17 @@ Vir elke nuwe synth of drum-machine moet die eerste hoorbare HIL nie net penne e
 
 Verder word 'n hoorbare resultaat nooit aan die aktiewe story toegeskryf sonder 'n ooreenstemmende runtimeweergawe en story-ID nie. 'n Ouer banner bewys slegs regressie van daardie ouer artefak; repository-, deployment-, boot- en execution-bewys moet eers almal groen wees.
 
+## P0 US-055 Impediment Addendum
+
+Die US-055 hertogte het 'n belangrike argitektuurles vasgele: `D1_MIDI_EVENT` en `D1_AUDIO_EVENT` is nie gelyk aan hoorbare klank nie. Die Product Owner se terugtrekking van die v0.17.4-akkoord was korrek omdat Logic-note nie betroubaar as hoorbare synth-note op die S2 uitgekom het nie.
+
+| Waarneming | Les | Nuwe reël |
+|---|---|---|
+| Die standalone `i2s_test.py` was hoorbaar, maar die geïntegreerde D1-runtime was onbetroubaar | Die bewese HIL-klankpad moet eerste hergebruik word voordat 'n mooier PCM-streamingpad vertrou word | Vir MVP-aanvaarding mag 'n eenvoudige latched RawSample-tone bo fragiele streaming verkies word |
+| 128-frame start/stop streaming het timing en hoorbaarheid gemeng | Per-blok audio-start/stop kan USB-MIDI polling vertraag en luistertoetse mislei | `NoteOn` moet die toon begin en die loop moet bly MIDI pollen; `NoteOff` stop die toon |
+| Debug het soms laat of dubbel verskyn | Serial-output is diagnostiek, nie die primêre real-time scheduler nie | Voeg 'n eksplisiete `D1_REALTIME_MIDI_NOTE`-skeidslyn by: geen reël beteken MIDI-routingprobleem; reël sonder klank beteken audio/I2S-probleem |
+| Hosttests was groen maar HIL was nie aanvaarbaar nie | Hostgroen bewys kontrakte, nie fisiese klank nie | US-055 bly `In Review` totdat die Product Owner Logic/keyboard -> S2 -> MAX98357 hoorbaar bevestig |
+
 ## Virtuele spanreview
 
 | Rol | Bydrae |

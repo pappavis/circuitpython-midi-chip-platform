@@ -1,11 +1,11 @@
 # Bestand: d1_runtime.py
-# Versienommer: 0.17.4
-# Doel: Verbind USB-MIDI, D1-kern en veilige I2S-uitvoer vir die Logic MVP.
+# Versienommer: 0.17.5
+# Doel: Verbind USB-MIDI, D1-kern en 'n bewese hoorbare I2S-toonpad vir die Logic MVP.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-IMP-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-003
+# Actienr: MCP-ACT-055-P0-AUDIBLE-TONE-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-HIL-PASS-RECEIVED
 
 from midi_chip_platform.audio import AudioSafetyProfile, AudioStreamFormat, SafeAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
@@ -25,8 +25,10 @@ class D1UsbMidiI2sRuntime:
         sleeper=None,
         max_blocks=0,
         idle_sleep_seconds=0.001,
-        minimum_note_seconds=0.12,
+        minimum_note_seconds=0.35,
         minimum_note_velocity=64,
+        stream_active_blocks=False,
+        audition_tone_amplitude=8192,
     ):
         if not isinstance(midi_input, MidiInputPort):
             raise TypeError("midi_input must implement MidiInputPort")
@@ -43,10 +45,15 @@ class D1UsbMidiI2sRuntime:
         self._idle_sleep_seconds = float(idle_sleep_seconds)
         self._minimum_note_seconds = float(minimum_note_seconds)
         self._minimum_note_velocity = int(minimum_note_velocity)
+        self._stream_active_blocks = bool(stream_active_blocks)
+        self._audition_tone_amplitude = int(audition_tone_amplitude)
         self._block_count = 0
         self._note_event_count = 0
         self._audible_note_count = 0
         self._idle_poll_count = 0
+        self._tone_started = False
+        self._tone_started_at = 0.0
+        self._pending_tone_stop_at = None
 
     @property
     def block_count(self):
@@ -71,6 +78,8 @@ class D1UsbMidiI2sRuntime:
             f"frames_per_block={self._audio_output.audio_format.frames_per_block};"
             f"max_blocks={self._max_blocks};minimum_note_seconds={self._minimum_note_seconds};"
             f"minimum_note_velocity={self._minimum_note_velocity};"
+            f"stream_active_blocks={str(self._stream_active_blocks).lower()};"
+            f"audition_tone_amplitude={self._audition_tone_amplitude};"
             f"master_gain={self._master_gain_label()}"
         )
         try:
@@ -80,6 +89,7 @@ class D1UsbMidiI2sRuntime:
             self._audio_output.unmute()
             self._output("D1_MIDI_INPUT_STATUS=OPEN")
             while self._should_continue():
+                self._stop_pending_tone_if_due()
                 event = self._midi_input.receive()
                 if isinstance(event, NoteEvent):
                     playable_event = self._playable_event(event)
@@ -90,11 +100,19 @@ class D1UsbMidiI2sRuntime:
                         f"note={event.note};velocity={event.velocity}"
                     )
                     if event.is_note_on and event.velocity > 0:
-                        self._write_minimum_audible_note(event, playable_event)
+                        self._output(
+                            "D1_REALTIME_MIDI_NOTE=note_on;"
+                            f"channel={event.channel};note={event.note};"
+                            f"velocity={event.velocity};frequency_hz="
+                            f"{self._core.active_frequency_hz:.3f}"
+                        )
+                        self._start_minimum_audible_tone(event, playable_event)
                         if self._max_blocks > 0 and self._block_count >= self._max_blocks:
                             continue
                         continue
-                if self._core.active_note is not None:
+                    self._schedule_tone_stop()
+                    continue
+                if self._stream_active_blocks and self._core.active_note is not None:
                     self._write_single_runtime_block()
                 if event is None and self._sleeper is not None:
                     self._idle_poll_count += 1
@@ -129,6 +147,10 @@ class D1UsbMidiI2sRuntime:
 
     def _shutdown(self):
         try:
+            self._stop_tone_now()
+        except Exception:
+            pass
+        try:
             self._audio_output.mute()
         except Exception:
             pass
@@ -145,6 +167,58 @@ class D1UsbMidiI2sRuntime:
         except Exception:
             pass
 
+    def _start_minimum_audible_tone(self, event, playable_event):
+        requested_blocks = self._minimum_audible_block_count()
+        if self._max_blocks > 0:
+            remaining_blocks = self._max_blocks - self._block_count
+            requested_blocks = max(0, min(requested_blocks, remaining_blocks))
+        if requested_blocks <= 0:
+            return
+        if hasattr(self._audio_output, "start_tone"):
+            self._audio_output.start_tone(
+                frequency_hz=self._core.active_frequency_hz,
+                amplitude=self._audition_tone_amplitude,
+            )
+            self._tone_started = True
+            self._tone_started_at = self._current_time()
+            self._pending_tone_stop_at = None
+            self._block_count += requested_blocks
+            self._audible_note_count += 1
+            self._output(
+                "D1_AUDIO_EVENT=audible_note;"
+                f"mode=latched_tone;note={event.note};blocks={requested_blocks};"
+                f"minimum_seconds={self._seconds_for_blocks(requested_blocks):.3f};"
+                f"midi_velocity={event.velocity};play_velocity={playable_event.velocity}"
+            )
+            return
+        self._write_minimum_audible_note(event, playable_event)
+
+    def _schedule_tone_stop(self):
+        if not self._tone_started:
+            return
+        elapsed = self._current_time() - self._tone_started_at
+        if elapsed >= self._minimum_note_seconds:
+            self._stop_tone_now()
+            return
+        self._pending_tone_stop_at = self._tone_started_at + self._minimum_note_seconds
+
+    def _stop_pending_tone_if_due(self):
+        if self._pending_tone_stop_at is None:
+            return
+        if self._current_time() >= self._pending_tone_stop_at:
+            self._stop_tone_now()
+
+    def _stop_tone_now(self):
+        if hasattr(self._audio_output, "stop_tone"):
+            self._audio_output.stop_tone()
+        self._tone_started = False
+        self._pending_tone_stop_at = None
+
+    def _current_time(self):
+        if self._sleeper is not None and hasattr(self._sleeper, "monotonic"):
+            return float(self._sleeper.monotonic())
+        return 0.0
+
     def _write_single_runtime_block(self):
         block = self._core.render_audio_block()
         self._audio_output.write_block(block)
@@ -157,8 +231,16 @@ class D1UsbMidiI2sRuntime:
             requested_blocks = max(0, min(requested_blocks, remaining_blocks))
         if requested_blocks <= 0:
             return
-        for _ in range(requested_blocks):
-            self._write_single_runtime_block()
+        if hasattr(self._audio_output, "play_tone"):
+            self._audio_output.play_tone(
+                frequency_hz=self._core.active_frequency_hz,
+                duration_seconds=self._seconds_for_blocks(requested_blocks),
+                amplitude=self._audition_tone_amplitude,
+            )
+            self._block_count += requested_blocks
+        else:
+            for _ in range(requested_blocks):
+                self._write_single_runtime_block()
         self._audible_note_count += 1
         self._output(
             "D1_AUDIO_EVENT=audible_note;"
@@ -266,6 +348,8 @@ class D1UsbMidiI2sRuntimeFactory:
             sleeper=time_module,
             max_blocks=configuration.get("synth.d1.max_blocks", 0),
             idle_sleep_seconds=configuration.get("synth.d1.idle_sleep_seconds", 0.001),
-            minimum_note_seconds=configuration.get("synth.d1.minimum_note_seconds", 0.12),
+            minimum_note_seconds=configuration.get("synth.d1.minimum_note_seconds", 0.35),
             minimum_note_velocity=configuration.get("synth.d1.minimum_note_velocity", 64),
+            stream_active_blocks=configuration.get("synth.d1.stream_active_blocks", False),
+            audition_tone_amplitude=configuration.get("synth.d1.audition_tone_amplitude", 8192),
         )

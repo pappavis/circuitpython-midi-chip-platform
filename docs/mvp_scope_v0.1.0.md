@@ -88,7 +88,7 @@ MCP-US-020 bly 'n aparte post-MVP-story vir 'n geïntegreerde, opsionele G-C-D-o
 
 `MCP-US-016 -> MCP-US-063 -> MCP-US-075 -> MCP-US-055 -> MCP-US-057`
 
-MCP-US-005, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is gesluit. US-075 se v0.16.0 softwarehek en hoorbare HIL is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer gesertifiseerde uitsetcleanup ná MVP. US-055 is v0.17.4 In Review: USB-MIDI, D1 en veilige I2S is op host groen, lae Logic velocities kry HIL audition gain, en I2S speel D1-blokke nou met dieselfde timed playback-patroon as die hoorbare diagnose. Die story wag op Logic/HIL-hoorbaarheid.
+MCP-US-005, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is gesluit. US-075 se v0.16.0 softwarehek en hoorbare HIL is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer gesertifiseerde uitsetcleanup ná MVP. US-055 is v0.17.5 In Review: USB-MIDI, D1 en veilige I2S is op host groen, lae Logic velocities kry HIL audition gain, en die HIL-pad gebruik nou 'n latched RawSample-tone soos die hoorbare diagnose in plaas van 128-frame streaming. Die story wag op Logic/HIL-hoorbaarheid.
 
 ## Besluithekke
 

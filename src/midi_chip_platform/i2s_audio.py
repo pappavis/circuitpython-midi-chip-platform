@@ -1,11 +1,11 @@
 # Bestand: i2s_audio.py
-# Versienommer: 0.17.4
-# Doel: Lewer 'n CircuitPython I2S AudioOutputPort met diagnose-gelyke timed playback.
+# Versienommer: 0.17.5
+# Doel: Lewer CircuitPython I2S-blokuitvoer en 'n diagnose-gelyke hoorbare toonpad.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-003 Audio And Chip Core
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-IMP-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-004
+# Actienr: MCP-ACT-055-P0-AUDIBLE-TONE-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-HIL-PASS-RECEIVED
 
 from midi_chip_platform.audio import AudioBlock, AudioStreamFormat
 from midi_chip_platform.ports import AudioOutputPort
@@ -84,11 +84,74 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
         self._device.stop()
         self._active_sample = None
 
-    def mute(self):
-        self._is_muted = True
+    def play_tone(self, frequency_hz, duration_seconds, amplitude=2048):
+        if not self.is_open:
+            raise RuntimeError("I2S audio output is closed")
+        if self._is_muted:
+            self._time_module.sleep(max(float(duration_seconds), self._poll_sleep_seconds))
+            return
+        selected_frequency = float(frequency_hz)
+        selected_duration = float(duration_seconds)
+        selected_amplitude = int(amplitude)
+        if selected_frequency <= 0.0:
+            raise ValueError("frequency_hz must be positive")
+        if selected_duration <= 0.0:
+            raise ValueError("duration_seconds must be positive")
+        if not 1 <= selected_amplitude <= 32767:
+            raise ValueError("amplitude must be between 1 and 32767")
+        period_length = max(2, int(round(self._audio_format.sample_rate / selected_frequency)))
+        half_period = max(1, period_length // 2)
+        low_value = 32768 - selected_amplitude
+        high_value = 32768 + selected_amplitude
+        values = [
+            high_value if index < half_period else low_value
+            for index in range(period_length)
+        ]
+        buffer = self._array_module.array("H", values)
+        self._active_sample = self._audiocore_module.RawSample(
+            buffer,
+            sample_rate=self._audio_format.sample_rate,
+        )
+        self._device.play(self._active_sample, loop=True)
+        self._time_module.sleep(max(selected_duration, self._poll_sleep_seconds))
+        self._device.stop()
+        self._active_sample = None
+
+    def start_tone(self, frequency_hz, amplitude=2048):
+        if not self.is_open:
+            raise RuntimeError("I2S audio output is closed")
+        if self._is_muted:
+            return
+        selected_frequency = float(frequency_hz)
+        selected_amplitude = int(amplitude)
+        if selected_frequency <= 0.0:
+            raise ValueError("frequency_hz must be positive")
+        if not 1 <= selected_amplitude <= 32767:
+            raise ValueError("amplitude must be between 1 and 32767")
+        self.stop_tone()
+        period_length = max(2, int(round(self._audio_format.sample_rate / selected_frequency)))
+        half_period = max(1, period_length // 2)
+        low_value = 32768 - selected_amplitude
+        high_value = 32768 + selected_amplitude
+        values = [
+            high_value if index < half_period else low_value
+            for index in range(period_length)
+        ]
+        buffer = self._array_module.array("H", values)
+        self._active_sample = self._audiocore_module.RawSample(
+            buffer,
+            sample_rate=self._audio_format.sample_rate,
+        )
+        self._device.play(self._active_sample, loop=True)
+
+    def stop_tone(self):
         if self._device is not None:
             self._device.stop()
         self._active_sample = None
+
+    def mute(self):
+        self._is_muted = True
+        self.stop_tone()
 
     def unmute(self):
         if not self.is_open:

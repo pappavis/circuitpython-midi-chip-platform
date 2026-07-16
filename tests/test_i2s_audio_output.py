@@ -1,11 +1,11 @@
 # Bestand: test_i2s_audio_output.py
-# Versienommer: 0.17.4
-# Doel: Spesifiseer timed CircuitPython I2S playback vir D1 runtime-blokke.
+# Versienommer: 0.17.5
+# Doel: Spesifiseer timed CircuitPython I2S playback en diagnose-gelyke tone.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-003 Audio And Chip Core
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-IMP-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-004
+# Actienr: MCP-ACT-055-P0-AUDIBLE-TONE-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-HIL-PASS-RECEIVED
 
 from midi_chip_platform.audio import AudioBlock, AudioStreamFormat
 from midi_chip_platform.i2s_audio import CircuitPythonI2sAudioOutput
@@ -113,3 +113,70 @@ class TestCircuitPythonI2sAudioOutput:
         assert output._time_module.sleep_calls == [0.001]
         assert audio_bus.device.stop_count >= 1
         assert audio_bus.device.deinit_count == 1
+
+    def test_output_can_play_diagnostic_style_looped_tone(self) -> None:
+        audio_bus = self.FakeAudioBusIo()
+        fake_time = self.FakeTime()
+        audio_format = AudioStreamFormat(sample_rate=16000, frames_per_block=128)
+        output = CircuitPythonI2sAudioOutput(
+            audio_format=audio_format,
+            importer=self.Importer(
+                {
+                    "array": self.FakeArrayModule(),
+                    "audiobusio": audio_bus,
+                    "audiocore": self.FakeAudioCore(),
+                    "board": self.FakeBoard(),
+                    "time": fake_time,
+                }
+            ),
+            bit_clock_pin_name="IO5",
+            word_select_pin_name="IO3",
+            data_pin_name="IO7",
+        )
+
+        output.open()
+        output.unmute()
+        output.play_tone(frequency_hz=440.0, duration_seconds=0.35, amplitude=2048)
+
+        assert len(audio_bus.device.played) == 1
+        sample, loop = audio_bus.device.played[0]
+        assert loop is True
+        assert sample.sample_rate == 16000
+        assert len(sample.buffer) == 36
+        assert min(sample.buffer) == 32768 - 2048
+        assert max(sample.buffer) == 32768 + 2048
+        assert fake_time.sleep_calls == [0.35]
+        assert output._active_sample is None
+
+    def test_output_can_latch_and_stop_tone_without_sleeping(self) -> None:
+        audio_bus = self.FakeAudioBusIo()
+        fake_time = self.FakeTime()
+        audio_format = AudioStreamFormat(sample_rate=16000, frames_per_block=128)
+        output = CircuitPythonI2sAudioOutput(
+            audio_format=audio_format,
+            importer=self.Importer(
+                {
+                    "array": self.FakeArrayModule(),
+                    "audiobusio": audio_bus,
+                    "audiocore": self.FakeAudioCore(),
+                    "board": self.FakeBoard(),
+                    "time": fake_time,
+                }
+            ),
+            bit_clock_pin_name="IO5",
+            word_select_pin_name="IO3",
+            data_pin_name="IO7",
+        )
+
+        output.open()
+        output.unmute()
+        output.start_tone(frequency_hz=440.0, amplitude=2048)
+
+        assert len(audio_bus.device.played) == 1
+        assert fake_time.sleep_calls == []
+        assert output._active_sample is not None
+
+        output.stop_tone()
+
+        assert output._active_sample is None
+        assert audio_bus.device.stop_count >= 2

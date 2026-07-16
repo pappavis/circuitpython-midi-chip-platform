@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.17.4
-# Doel: Spesifiseer publieke D1-runtime, veilige audio en private settings.
+# Versienommer: 0.17.5
+# Doel: Spesifiseer publieke latched D1-runtime, veilige audio en private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-IMP-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-004
+# Actienr: MCP-ACT-055-P0-AUDIBLE-TONE-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-HIL-PASS-RECEIVED
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -41,9 +41,11 @@ class TestConfigurationDefaults:
         assert snapshot.get("synth.d1.amplitude") == 0.5
         assert snapshot.get("synth.d1.max_blocks") == 0
         assert snapshot.get("synth.d1.idle_sleep_seconds") == 0.001
-        assert snapshot.get("synth.d1.minimum_note_seconds") == 0.12
+        assert snapshot.get("synth.d1.minimum_note_seconds") == 0.35
         assert snapshot.get("synth.d1.minimum_note_velocity") == 64
         assert snapshot.get("synth.d1.audition_master_gain") == 0.25
+        assert snapshot.get("synth.d1.stream_active_blocks") is False
+        assert snapshot.get("synth.d1.audition_tone_amplitude") == 8192
         assert snapshot.get("midi.diagnostic.enabled") is False
         assert snapshot.get("midi.diagnostic.max_events") == 8
         assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
@@ -62,9 +64,11 @@ class TestConfigurationDefaults:
         assert 'D1_WAVEFORM = "square"' in settings_example
         assert 'D1_AMPLITUDE = "0.5"' in settings_example
         assert 'D1_IDLE_SLEEP_SECONDS = "0.001"' in settings_example
-        assert 'D1_MINIMUM_NOTE_SECONDS = "0.12"' in settings_example
+        assert 'D1_MINIMUM_NOTE_SECONDS = "0.35"' in settings_example
         assert "D1_MINIMUM_NOTE_VELOCITY = 64" in settings_example
         assert 'D1_AUDITION_MASTER_GAIN = "0.25"' in settings_example
+        assert 'D1_STREAM_ACTIVE_BLOCKS = "false"' in settings_example
+        assert "D1_AUDITION_TONE_AMPLITUDE = 8192" in settings_example
 
 
 class TestConfigurationSecretBoundary:

@@ -1,11 +1,11 @@
 # Bestand: audio.py
-# Versienommer: 0.16.0
-# Doel: Definieer begrensde PCM-blokke, startup mute en veilige master gain.
+# Versienommer: 0.17.5
+# Doel: Definieer begrensde PCM-blokke, startup mute, veilige master gain en optionele toonuitvoer.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-007 DSP And Pedal Hardware
-# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
-# Actienr: MCP-ACT-075-GREEN-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
+# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
+# Actienr: MCP-ACT-055-P0-AUDIBLE-TONE-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-HIL-PASS-RECEIVED
 
 from midi_chip_platform.ports import AudioOutputPort
 
@@ -322,6 +322,37 @@ class SafeAudioOutput(AudioOutputPort):
         self.mute()
         self._delegate.close()
         self._is_open = False
+
+    def play_tone(self, frequency_hz, duration_seconds, amplitude=8192):
+        if not self._is_open:
+            raise RuntimeError("audio output is closed")
+        if not hasattr(self._delegate, "play_tone"):
+            raise RuntimeError("audio delegate does not support play_tone")
+        selected_amplitude = max(1, min(32767, int(round(int(amplitude) * self._master_gain))))
+        if self._is_muted:
+            selected_amplitude = 1
+        self._delegate.play_tone(
+            frequency_hz=float(frequency_hz),
+            duration_seconds=float(duration_seconds),
+            amplitude=selected_amplitude,
+        )
+
+    def start_tone(self, frequency_hz, amplitude=8192):
+        if not self._is_open:
+            raise RuntimeError("audio output is closed")
+        if not hasattr(self._delegate, "start_tone"):
+            raise RuntimeError("audio delegate does not support start_tone")
+        if self._is_muted:
+            return
+        selected_amplitude = max(1, min(32767, int(round(int(amplitude) * self._master_gain))))
+        self._delegate.start_tone(
+            frequency_hz=float(frequency_hz),
+            amplitude=selected_amplitude,
+        )
+
+    def stop_tone(self):
+        if hasattr(self._delegate, "stop_tone"):
+            self._delegate.stop_tone()
 
     def _scale(self, block):
         samples = []
