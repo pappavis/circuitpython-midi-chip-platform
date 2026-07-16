@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 
 ## Status
 
-**IN REVIEW / HIL RETEST READY.** Die host-implementering is groen en dependency-closed. `v0.17.8` verbind nou die bestaande USB-MIDI input, die draagbare D1-basiskern, die veilige `SafeAudioOutput` en 'n CircuitPython I2S backend. Die P0-impedimentfix vervang die fragiele 128-frame start/stop streamingpad vir Logic-aanvaarding met 'n latched tone-pad: `NoteOn` bereken die D1-frekwensie, begin 'n loopende RawSample-tone soos die werkende `i2s_test.py`, hou die MIDI-pollinglus lewendig, en `NoteOff` stop die toon. Die D1 audition default is `square` vir duidelike scope- en hoorbaarheidstoetsing. Finale closure wag op menslike HIL: Logic Pro stuur MIDI na die Wemos S2 en die Product Owner hoor D1-klank via die MAX98357A-opstelling.
+**P0 IMPEDIMENT / ARCHITECTURE REBASELINE REQUIRED.** Die host-implementering is groen en dependency-closed, maar `v0.17.8` het nie die menslike Logic realtime-HIL gesluit nie. Sewe HIL-pogings het gewys dat `i2s_test.py` hoorbaar is en USB-MIDI afsonderlik werk, maar die geintegreerde pad `Logic -> USB-MIDI -> D1 runtime -> I2S` is nie betroubaar menslik realtime hoorbaar nie. Die projek stop daarom met klein US-055-patches en skuif na `MCP-US-077 Realtime MIDI Audio Baseline Spike`, gedokumenteer in `docs/incidents/us_055_realtime_architecture_rebaseline_v0.1.0.md`.
 
 ## Implementering
 

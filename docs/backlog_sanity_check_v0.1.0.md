@@ -2,28 +2,28 @@
 
 <!--
 Bestand: backlog_sanity_check_v0.1.0.md
-Versienommer: 0.14.0
-Doel: Bewys backlog-volledigheid en verminder hallusinasie-/scope-drift-risiko.
+Versienommer: 0.15.0
+Doel: Bewys backlog-volledigheid en merk US-077 as P0 herstelstory vir die US-055 realtime-blokker.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: MCP-US-055, MCP-US-075 en MCP-US-076
-Actienr: MCP-ACT-055-IN-REVIEW-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+User-Story: MCP-US-055 en MCP-US-077
+Actienr: MCP-ACT-055-REBASELINE-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-IMPEDIMENT
 -->
 
 ## Resultaat
 
-Status: **PASS vir 76 stories, 10 epics en die veiligheidsgewysigde 17-story MVP Acceptance Set**.
+Status: **PASS vir 77 stories, 10 epics en die veiligheidsgewysigde 18-story MVP Acceptance Set**.
 
 | Kontrole | Resultaat |
 |---|---|
 | Epic-ID's | 10 unieke epics, MCP-EPIC-001 tot MCP-EPIC-010 |
-| Story-ID's | 74 unieke stories, aaneenlopend MCP-US-001 tot MCP-US-074 |
+| Story-ID's | 77 unieke stories, MCP-US-001 tot MCP-US-077 met US-075/US-076/US-077 as latere stabiliserings-ID's |
 | Duplikate story-ID's | Geen |
 | Verlore nommers | Geen |
 | Storytitel | Elke story het 'n titel |
 | Fase/prioriteitsbedoeling | Elke story is MVP-Must, MVP-Enabler, Post-MVP, Done, In Review, Stretch, Later of Parking lot |
-| Bevrore MVP Acceptance Set | 16 unieke stories; geen web-, BLE-, volgende-core-, stereo-, DSP- of multi-core-story is 'n releaseblokker nie |
+| Bevrore MVP Acceptance Set | 18 unieke stories; geen web-, BLE-, volgende-core-, stereo-, DSP- of multi-core-story is 'n releaseblokker nie |
 | Afhanklikheid | Elke story het 'n afhanklikheidsveld of eksplisiete `-` |
 | Aanvaardingsbewys | Elke story het 'n kern-aanvaardingsbewys |
 | Leesbare backlog | `docs/user_stories_v0.1.0.md` |
@@ -35,6 +35,7 @@ Status: **PASS vir 76 stories, 10 epics en die veiligheidsgewysigde 17-story MVP
 | Produkvereiste | Gedek deur |
 |---|---|
 | MVP USB-MIDI van Logic na verwysingsbord | MCP-US-003, US-007, US-055 |
+| US-055 realtime deblokkering deur kleinste primitive | MCP-US-077 |
 | BLE-MIDI met veilige S2 capability gate | MCP-US-052, US-062 |
 | Standalone eksterne USB-host na DIN/UART | MCP-US-013, US-060 |
 | Note On/Off, velocity, pitch bend, modulation | MCP-US-006, US-009, US-010 |
@@ -78,11 +79,12 @@ Status: **PASS vir 76 stories, 10 epics en die veiligheidsgewysigde 17-story MVP
 - MCP-US-016 is `Done`: die Product Owner het op 2026-07-16 G3-C4-D4 hoorbaar deur die MAX98357A bevestig; serial het `PASS`, dependency-geslote deploy en begrensde heap gerapporteer. Die 30-minute burn-in bly as releasebewys onder US-051/US-057 naspeurbaar.
 - MCP-US-063 is `Done`: die Product Owner het v0.15.0 se drie waveforms, A4=440 Hz, velocity en finale `D1_CORE_STATUS=PASS` aanvaar.
 - MCP-US-075 is `Done (PO exception)`: v0.16.0 bewys startup mute, `0.08` gain, `0.25` plafon, 120 groen hosttoetse en hoorbare G-C-D. Die PO aanvaar die tydelike TRS-prototiperisiko; US-076 parkeer gesertifiseerde fisiese uitsetcleanup ná MVP.
-- MCP-US-055 is `In Review`: v0.17.8 verbind Logic/USB-MIDI, D1 en veilige I2S op host met 136 groen toetse; die P0-impedimentfix behou die HIL audition gain en gebruik 'n latched RawSample-tone soos die hoorbare standalone I2S-diagnose. Menslike Logic/HIL hoorbaarheid bly die closure-hek.
+- MCP-US-055 is `P0 Impediment`: v0.17.8 verbind Logic/USB-MIDI, D1 en veilige I2S op host met 136 groen toetse, maar sewe menslike HIL-pogings het nie betroubare realtime Logic-klank bewys nie. US-077 is bygevoeg as terug-na-basics herstelstory.
+- MCP-US-077 is `Next`: dit is 'n MVP-enabler en geen feature-uitbreiding nie. Dit bewys eers die kleinste realtime USB-MIDI NoteOn na bekende I2S-toon primitive voordat D1 weer in die pad geplaas word.
 - MCP-US-003 is ná fisiese connection/deploy/execution/USB-MIDI-bewys `Done`.
 - MCP-US-007 is `Done`: v0.12.2 het op die Wemos S2 werklike Note On/Off ontvang en `matched_notes=1` gerapporteer. MCP-US-051 bly `In Review` tot sy latere klankadapterhek.
 - Die MVP Acceptance Set is US-001 tot US-009 (US-010 uitgesluit), US-014, US-016, US-050, US-051, US-055, US-057, US-063 en die veiligheidshek US-075.
-- Die bindende oorblywende volgorde is `US-055 -> US-057`; US-016, US-063 en US-075 is gesluit.
+- Die bindende oorblywende volgorde is `US-077 -> US-055 -> US-057`; US-016, US-063 en US-075 is gesluit.
 - US-016 besit die nuwe onafhanklike `device/i2s_test.py`; US-020 bly die latere geïntegreerde startupmelodie en is nie 'n duplikaat nie.
 - MAX98357 is die gevalideerde verstek. Ander PCM-I2S-profiele is uitbreibaar, maar nie fisies ondersteun verklaar sonder hulle eie HIL nie.
 - US-058 skei platform-onafhanklike guitar-MIDI bend/slide-semantiek van US-059 se fisiese Fishman/generiese HIL-aanvaarding.

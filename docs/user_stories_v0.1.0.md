@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.28.0
-Doel: Volledige geordende backlog met 'n bevrore, verkleinde MVP Acceptance Set.
+Versienommer: 0.29.0
+Doel: Volledige geordende backlog met 'n P0 realtime-baseline herstelstory vir US-055.
 Sprint: Sprint 2
 Epic: Alle epics
-User-Story: MCP-US-055, MCP-US-075 en MCP-US-076
-Actienr: MCP-ACT-055-IN-REVIEW-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+User-Story: MCP-US-055 en MCP-US-077
+Actienr: MCP-ACT-055-REBASELINE-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-IMPEDIMENT
 -->
 
 ## Statuslegende
@@ -27,7 +27,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 
 ## Bevrore MVP Acceptance Set
 
-Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, `US-008`, `US-009`, `US-014`, `US-016`, `US-050`, `US-051`, `US-055`, `US-057`, `US-063` en `US-075` beheer MVP-aanvaarding. Die produkbewys is USB-MIDI uit Logic Pro na 'n hoorbare D1-basiskern op die verwysingsbord met begrensde digitale volume. US-075 se fisiese prototipe-las is deur 'n eksplisiete PO-uitondering aanvaar; US-076 is verpligtend voor 'n produksieveiligheidsclaim. Alle ander stories is reeds voltooide ekstra werk, governance of post-MVP voortsetting.
+Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, `US-008`, `US-009`, `US-014`, `US-016`, `US-050`, `US-051`, `US-055`, `US-057`, `US-063`, `US-075` en die P0-herstelstory `US-077` beheer MVP-aanvaarding. Die produkbewys is USB-MIDI uit Logic Pro na 'n hoorbare D1-basiskern op die verwysingsbord met begrensde digitale volume. US-077 is geen scope-uitbreiding nie; dit is die terug-na-basics realtime-baseline wat US-055 moet deblokkeer. US-075 se fisiese prototipe-las is deur 'n eksplisiete PO-uitondering aanvaar; US-076 is verpligtend voor 'n produksieveiligheidsclaim. Alle ander stories is reeds voltooide ekstra werk, governance of post-MVP voortsetting.
 
 ## MCP-EPIC-001 Platform Foundation
 
@@ -128,7 +128,8 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | MCP-US-052 | Cross-Board Capability Profiles | Post-MVP | US-004 | 'n tweede BLE-geskikte CircuitPython-mikrobeheerder werk via 'n profiel sonder S2-regressie |
 | MCP-US-053 | Raspberry Pi Linux Blinka Adapter | Later | US-014, US-050 | Pi Zero/2/3 gebruik Linux/Blinka sonder om firmwareportabiliteit te beweer |
 | MCP-US-054 | Windows USB MIDI Acceptance | Post-MVP | US-003, US-007 | Toestel verskyn en ontvang note op 'n skoon Windows-rekenaar |
-| MCP-US-055 | macOS Logic Pro Audible D1 Acceptance | MVP-Must (In Review) | US-003, US-007, US-009, US-014, US-016, US-063, US-075 | v0.17.8 verbind USB-MIDI, D1 en veilige I2S; 136 hosttoetse slaag. Die HIL-pad gebruik nou 'n latched RawSample-tone met square audition default in plaas van fragiele 128-frame streaming. Closure wag op Product Owner HIL: Logic kies die bord as External MIDI destination en die gebruiker hoor D1 |
+| MCP-US-055 | macOS Logic Pro Audible D1 Acceptance | MVP-Must (P0 Impediment) | US-003, US-007, US-009, US-014, US-016, US-063, US-075, US-077 | v0.17.8 verbind USB-MIDI, D1 en veilige I2S op host, maar sewe menslike HIL-pogings het nie betroubare realtime Logic-klank bewys nie. Closure wag op US-077 en daarna 'n Product Owner HIL-pass |
+| MCP-US-077 | Realtime MIDI Audio Baseline Spike | MVP-Enabler (Next) | US-007, US-016, US-075 | Ultra-klein USB-MIDI NoteOn na bekende I2S-toon sonder D1-core, config loader of safety wrapper bewys of die S2/MAX98357 primitive realtime hoorbaar is voordat US-055 verder refactor |
 | MCP-US-056 | Install Recovery And Diagnostics | Post-MVP | US-005, US-051 | Beginner-runbook dek geen MIDI, geen klank, safe mode en herstel |
 | MCP-US-068 | Stable USB MIDI Instance Identity | Post-MVP | US-003, US-004, US-055 | Elke toestel exposeer 'n herkenbare produknaam plus stabiele vier-karakter instance-ID; twee toestelle is onderskeibaar sonder UID/MAC-lekkasie |
 | MCP-US-059 | MIDI Guitar Hardware Acceptance | Post-MVP | US-018, US-058 | 'n Generiese MIDI-kitaar en Fishman-verwysing speel note, akkoorde, bends en slides; geen toestelnaam is 'n kodekonstante nie |
