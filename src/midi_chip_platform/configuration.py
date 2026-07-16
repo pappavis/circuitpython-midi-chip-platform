@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.12.3
-# Doel: Laai publieke verstekke en normaliseer leë private settings veilig.
-# Sprint: Sprint 1
-# Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-005 Configuration And Secret Boundary
-# Actienr: MCP-ACT-005-IMP-001-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
+# Versienommer: 0.16.0
+# Doel: Laai publieke veilige-audioverstekke en normaliseer private settings.
+# Sprint: Sprint 3
+# Epic: MCP-EPIC-007 DSP And Pedal Hardware
+# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+# Actienr: MCP-ACT-075-GREEN-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -18,6 +18,13 @@ class ConfigurationDefaults:
             "audio.i2s.bit_clock": "IO5",
             "audio.i2s.word_select": "IO3",
             "audio.i2s.data": "IO7",
+            "audio.master_gain": 0.08,
+            "audio.maximum_master_gain": 0.25,
+            "audio.startup_muted": True,
+            "audio.amplifier_gain_db": 9.0,
+            "audio.gain_pin_profile": "floating-9db",
+            "audio.shutdown_mode": "software-mute",
+            "audio.output_load": "speaker-4-8-ohm",
             "audio.startup_test": False,
             "clock.bpm": 120,
             "midi.input.port_index": 0,
@@ -43,6 +50,13 @@ class EnvironmentSettingsSource:
             "audio.i2s.bit_clock": "I2S_BIT_CLOCK",
             "audio.i2s.word_select": "I2S_WORD_SELECT",
             "audio.i2s.data": "I2S_DATA",
+            "audio.master_gain": "AUDIO_MASTER_GAIN",
+            "audio.maximum_master_gain": "AUDIO_MAXIMUM_MASTER_GAIN",
+            "audio.startup_muted": "AUDIO_STARTUP_MUTED",
+            "audio.amplifier_gain_db": "AUDIO_AMPLIFIER_GAIN_DB",
+            "audio.gain_pin_profile": "AUDIO_GAIN_PIN_PROFILE",
+            "audio.shutdown_mode": "AUDIO_SHUTDOWN_MODE",
+            "audio.output_load": "AUDIO_OUTPUT_LOAD",
             "audio.startup_test": "AUDIO_STARTUP_TEST",
             "clock.bpm": "CLOCK_BPM",
             "midi.input.port_index": "MIDI_INPUT_PORT_INDEX",

@@ -2,13 +2,13 @@
 
 <!--
 Bestand: architecture_v0.1.0.md
-Versienommer: 0.2.0
+Versienommer: 0.3.0
 Doel: Beskryf framework-, solution-, runtime- en deployment-argitektuur met afdwingbare grense.
 Sprint: Sprint 2
 Epic: MCP-EPIC-009 Framework Engineering
-User-Story: MVP-SCOPE-REDUCTION-001 en MCP-US-016
-Actienr: MCP-ACT-MVP-SCOPE-001-ARCH-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
+User-Story: MVP-SCOPE-REDUCTION-001, MCP-US-016 en MCP-US-075
+Actienr: MCP-ACT-075-ARCH-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 -->
 
 ## Argitektuurlense
@@ -29,7 +29,8 @@ flowchart LR
   C --> D["Kanaalrouter en performance state"]
   D --> E["D1 / SN76489 / SID / OPL core instances"]
   E --> F["Voice mixer en AudioOutput port"]
-  F --> G["MAX98357 mono / PWM diagnose / stereo I2S"]
+  F --> M["SafeAudioOutput: startup mute en master gain"]
+  M --> G["MAX98357 mono / PWM diagnose / stereo I2S"]
   H["Config en plaaslike webbeheer"] --> D
   I["Capability profiles"] --> B
   I --> F
@@ -46,7 +47,8 @@ Die standalone I2S-diagnoselaan is doelbewus nie aan `Application`, `SynthCore`,
 | `MidiInputPort` | Lewer genormaliseerde events | Synth core, audio device |
 | Router | Kies kanaal/core instance | USB/BLE implementasiedetail |
 | `SynthCore` | Verwerk events en lewer voices/samples | Fisiese I2S-penne |
-| `AudioOutput` | Neem begrensde interleaved signed-16 mono/stereo PCM-blokke aan | MIDI-toestelnaam en fisiese I2S-penne |
+| `AudioOutput` | Neem begrensde interleaved signed-16 mono/stereo PCM-blokke aan; mute/unmute lifecycle | MIDI-toestelnaam en fisiese I2S-penne |
+| `SafeAudioOutput` | Dekoreer enige backend met startup mute en begrensde master gain | Synth-core, USB-MIDI en 'n vals headphone-/line-out-aanspraak |
 | Configuration | Lewer openbare en private waardes via instances | Hardgekodeerde secrets |
 | Capability profile | Rapporteer module-, pen- en bordvermoë | Produkbesluit op grond van bordnaam alleen |
 

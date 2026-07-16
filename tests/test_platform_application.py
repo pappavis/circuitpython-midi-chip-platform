@@ -1,11 +1,11 @@
 # Bestand: test_platform_application.py
-# Versienommer: 0.15.0
-# Doel: Toets dependency injection en die deurlopende blokgebaseerde platform-lifecycle.
+# Versienommer: 0.16.0
+# Doel: Toets dependency injection, deurlopende blokaudio en veilige mute-lifecycle.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-003 Audio And Chip Core
-# User-Story: MCP-US-063 Portable D1 Baseline Synth Core
-# Actienr: MCP-ACT-063-RED-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-063-START
+# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+# Actienr: MCP-ACT-075-RED-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 from midi_chip_platform.audio import AudioStreamFormat
 from midi_chip_platform.application import PlatformApplication
@@ -36,6 +36,7 @@ class TestPlatformApplication:
         )
 
         application.start()
+        assert audio_output.is_muted is False
         processed = application.step()
         application.stop()
 
@@ -46,6 +47,7 @@ class TestPlatformApplication:
         assert clock.tick_count == 1
         assert midi_input.is_open is False
         assert audio_output.is_open is False
+        assert audio_output.is_muted is True
 
     def test_application_can_be_constructed_without_starting_dependencies(self) -> None:
         midi_input = MemoryMidiInput()

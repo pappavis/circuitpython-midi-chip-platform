@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.12.3
-# Doel: Spesifiseer publieke verstekke, private settings en leewaarde-normalisering.
+# Versienommer: 0.16.0
+# Doel: Spesifiseer publieke verstekke, veilige audio en private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-005 Configuration And Secret Boundary
-# Actienr: MCP-ACT-005-IMP-001-RED-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
+# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+# Actienr: MCP-ACT-075-RED-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -26,6 +26,13 @@ class TestConfigurationDefaults:
         assert snapshot.get("audio.i2s.bit_clock") == "IO5"
         assert snapshot.get("audio.i2s.word_select") == "IO3"
         assert snapshot.get("audio.i2s.data") == "IO7"
+        assert snapshot.get("audio.master_gain") == 0.08
+        assert snapshot.get("audio.maximum_master_gain") == 0.25
+        assert snapshot.get("audio.startup_muted") is True
+        assert snapshot.get("audio.amplifier_gain_db") == 9.0
+        assert snapshot.get("audio.gain_pin_profile") == "floating-9db"
+        assert snapshot.get("audio.shutdown_mode") == "software-mute"
+        assert snapshot.get("audio.output_load") == "speaker-4-8-ohm"
         assert snapshot.get("clock.bpm") == 120
         assert snapshot.get("midi.diagnostic.enabled") is False
         assert snapshot.get("midi.diagnostic.max_events") == 8
@@ -38,6 +45,9 @@ class TestConfigurationDefaults:
 
         assert 'MIDI_DIAGNOSTIC_ENABLED = "false"' in settings_example
         assert 'MIDI_DIAGNOSTIC_POLL_INTERVAL_SECONDS = "0.01"' in settings_example
+        assert 'AUDIO_MASTER_GAIN = "0.08"' in settings_example
+        assert 'AUDIO_MAXIMUM_MASTER_GAIN = "0.25"' in settings_example
+        assert 'AUDIO_STARTUP_MUTED = "true"' in settings_example
 
 
 class TestConfigurationSecretBoundary:

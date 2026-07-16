@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.15.0
-# Doel: Toets host-diagnose en US-005 release-naspeurbaarheid.
+# Versienommer: 0.16.0
+# Doel: Toets hostdiagnose, veilige audio en release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-005 Configuration And Secret Boundary
-# Actienr: MCP-ACT-005-IMP-001-TEST-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
+# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+# Actienr: MCP-ACT-075-RED-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 from io import StringIO
 from pathlib import Path
@@ -69,8 +69,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.15.0 | "
-            "story=MCP-US-063 | release-date=2026-07-16\n"
+            "circuitpython-midi-chip-platform v0.16.0 | "
+            "story=MCP-US-075 | release-date=2026-07-16\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:
@@ -124,6 +124,28 @@ class TestCommandLineApplication:
         assert "D1_WAVEFORM=saw;frames=64" in result
         assert "D1_WAVEFORM=square;frames=64" in result
         assert "D1_CORE_STATUS=PASS;note=69;frequency_hz=440.000000" in result
+
+    def test_audio_safety_diagnose_proves_startup_mute_and_bounded_gain(self) -> None:
+        output = StringIO()
+        application = CommandLineApplication(output=output)
+
+        exit_code = application.run(
+            (
+                "audio-safety-diagnose",
+                "--master-gain",
+                "0.08",
+                "--input-peak",
+                "12000",
+            )
+        )
+
+        result = output.getvalue()
+        assert exit_code == 0
+        assert "AUDIO_OUTPUT_LOAD=speaker-4-8-ohm" in result
+        assert "AUDIO_STARTUP_MUTED=true" in result
+        assert "AUDIO_SAFETY_MUTED_PEAK=0" in result
+        assert "AUDIO_SAFETY_UNMUTED_PEAK=960" in result
+        assert "AUDIO_SAFETY_STATUS=PASS" in result
 
     def test_ble_diagnose_reports_s2_as_unsupported_without_starting_radio(
         self,

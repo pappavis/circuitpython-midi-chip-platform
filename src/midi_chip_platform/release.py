@@ -1,18 +1,18 @@
 # Bestand: release.py
-# Versienommer: 0.15.0
-# Doel: Besit release-naspeurbaarheid vir die draagbare D1-basiskern.
-# Sprint: Sprint 2
-# Epic: MCP-EPIC-003 Audio And Chip Core
-# User-Story: MCP-US-063 Portable D1 Baseline Synth Core
-# Actienr: MCP-ACT-063-GREEN-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-063-START
+# Versienommer: 0.16.0
+# Doel: Besit release-naspeurbaarheid vir die veilige audio-uitsethek.
+# Sprint: Sprint 3
+# Epic: MCP-EPIC-007 DSP And Pedal Hardware
+# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+# Actienr: MCP-ACT-075-GREEN-005
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.15.0",
-        user_story="MCP-US-063",
+        version="0.16.0",
+        user_story="MCP-US-075",
         release_date="2026-07-16",
     ):
         self._version = str(version)

@@ -1,11 +1,11 @@
 # Bestand: code.py
-# Versienommer: 0.12.3
-# Doel: Rapporteer toestelgereedheid met die herstelde private konfigurasiegrens.
-# Sprint: Sprint 2
-# Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-005 Configuration And Secret Boundary
-# Actienr: MCP-ACT-005-IMP-001-DEVICE-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
+# Versienommer: 0.16.0
+# Doel: Rapporteer toestelgereedheid en smoke-toets veilige D1-audio-afhanklikhede.
+# Sprint: Sprint 3
+# Epic: MCP-EPIC-007 DSP And Pedal Hardware
+# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+# Actienr: MCP-ACT-075-GREEN-008
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 from midi_chip_platform.configuration import CircuitPythonConfigurationFactory
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
@@ -32,8 +32,11 @@ if __name__ == "__main__":
                 "adafruit_midi.stop",
                 "adafruit_midi.timing_clock",
                 "midi_chip_platform.ble_midi",
+                "midi_chip_platform.application",
+                "midi_chip_platform.audio",
                 "midi_chip_platform.configuration",
                 "midi_chip_platform.core",
+                "midi_chip_platform.d1_core",
                 "midi_chip_platform.events",
                 "midi_chip_platform.midi_performance",
                 "midi_chip_platform.midi_semantics",

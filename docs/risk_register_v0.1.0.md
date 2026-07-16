@@ -2,13 +2,13 @@
 
 <!--
 Bestand: risk_register_v0.1.0.md
-Versienommer: 0.12.0
+Versienommer: 0.13.0
 Doel: Tegniese, produk-, veiligheids- en afleweringsrisiko’s vir die MVP.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-016
-Actienr: MCP-ACT-QA-BURN-IN-001-RISK-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
+User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-075
+Actienr: MCP-ACT-075-RISK-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 -->
 
 | ID | Risiko | Waarskynlikheid | Impak | Eienaar | Beheer/mitigering | Status |
@@ -25,7 +25,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
 | R-010 | SID/OPL-emulasie skep lisensie- of akkuraatheidsaansprake | Medium | Hoog | PO/Release | Bronlisensie-register; akkuraatheidsvlakke; geen “cycle accurate” sonder bewys | Oop |
 | R-011 | MIDI clock (24 PPQN) oorlaai ontvangslus | Medium | Hoog | MIDI | Prioriteitsry, geen onnodige logging, klok-jittertoetse | Oop |
 | R-012 | Dedupe-logika verwyder geldige note of clock | Medium | Hoog | MIDI/QA | Boodskapspesifieke dedupe; nooit blind op clock toepas nie | Oop |
-| R-013 | MAX98357 bridge-tied uitset word geaard, as line-out gebruik of dryf 'n full-volume koptelefoon naby die gebruiker | Hoog | Kritiek | Hardware/PO | Ontkoppel direkte TRS-las; 4-8 ohm speaker; geen grond/line-input/pot op BTL-uitset; software gain, startup mute en GAIN/SD-profiel in US-075 | Impediment - MCP-US-075 |
+| R-013 | MAX98357 bridge-tied uitset word geaard, as line-out gebruik of dryf 'n full-volume koptelefoon naby die gebruiker | Hoog | Kritiek | Hardware/PO | v0.16.0 software gain/startup mute is groen; ontkoppel direkte TRS-las; 4-8 ohm speaker; geen grond/line-input/pot op BTL-uitset | In Review - speaker-HIL oop |
 | R-014 | DSP delay/reverb oorskry geheue en latensie | Hoog | Hoog | DSP | Harde bufferbegroting; bypass; no-go aanvaarbaar vir reverb-spike | Oop |
 | R-015 | Outomatiese toestelkopie beskadig werkende prototipe | Laag | Kritiek | Release/QA | Rugsteun, manifest, dry-run, staging en eksplisiete deploy-story | Beheer aktief |
 | R-016 | Side quests breek logiese storyvolgorde | Hoog | Medium | Scrum Master | Now/Next/Later/Parking Lot; uitvoerplan-goedkeuring per story | Beheer aktief |

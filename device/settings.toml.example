@@ -10,6 +10,13 @@ AUDIO_BACKEND = "i2s-max98357a-mono"
 I2S_BIT_CLOCK = "IO5"
 I2S_WORD_SELECT = "IO3"
 I2S_DATA = "IO7"
+AUDIO_MASTER_GAIN = "0.08"
+AUDIO_MAXIMUM_MASTER_GAIN = "0.25"
+AUDIO_STARTUP_MUTED = "true"
+AUDIO_AMPLIFIER_GAIN_DB = "9.0"
+AUDIO_GAIN_PIN_PROFILE = "floating-9db"
+AUDIO_SHUTDOWN_MODE = "software-mute"
+AUDIO_OUTPUT_LOAD = "speaker-4-8-ohm"
 
 # Optional, bounded USB-MIDI Note On/Off acceptance diagnostic.
 # Leave disabled for normal startup. Enable temporarily, then restart the board.

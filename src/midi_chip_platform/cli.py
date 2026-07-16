@@ -1,16 +1,22 @@
 # Bestand: cli.py
-# Versienommer: 0.15.0
-# Doel: Bied IDE-onafhanklike D1-, platform- en HIL-diagnostiek.
+# Versienommer: 0.16.0
+# Doel: Bied IDE-onafhanklike veilige audio-, D1-, platform- en HIL-diagnostiek.
 # Sprint: Sprint 3
-# Epic: MCP-EPIC-003 Audio And Chip Core
-# User-Story: MCP-US-063 Portable D1 Baseline Synth Core
-# Actienr: MCP-ACT-063-GREEN-005
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-063-START
+# Epic: MCP-EPIC-007 DSP And Pedal Hardware
+# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+# Actienr: MCP-ACT-075-GREEN-006
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 import argparse
 import sys
 
-from midi_chip_platform.audio import AudioStreamFormat
+from midi_chip_platform.audio import (
+    AudioBlock,
+    AudioSafetyProfile,
+    AudioStreamFormat,
+    MemoryAudioOutput,
+    SafeAudioOutput,
+)
 from midi_chip_platform.ble_midi import BleMidiCapabilityGate, ImportModuleProbe
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
 from midi_chip_platform.events import ClockEvent, ControlEvent, NoteEvent
@@ -64,6 +70,8 @@ class CommandLineApplication:
             return self._diagnose_performance(parsed)
         if parsed.command == "d1-diagnose":
             return self._diagnose_d1(parsed)
+        if parsed.command == "audio-safety-diagnose":
+            return self._diagnose_audio_safety(parsed)
         if parsed.command == "hil-verify":
             return self._hil_verify(parsed)
         if parsed.command == "hil-deploy":
@@ -106,6 +114,13 @@ class CommandLineApplication:
         d1_parser.add_argument("--velocity", type=int, default=100)
         d1_parser.add_argument("--sample-rate", type=int, default=16000)
         d1_parser.add_argument("--frames-per-block", type=int, default=128)
+        safety_parser = subparsers.add_parser(
+            "audio-safety-diagnose",
+            help="prove startup mute and bounded PCM master gain without hardware",
+        )
+        safety_parser.add_argument("--master-gain", type=float, default=0.08)
+        safety_parser.add_argument("--maximum-master-gain", type=float, default=0.25)
+        safety_parser.add_argument("--input-peak", type=int, default=12000)
         hil_parser = subparsers.add_parser(
             "hil-verify",
             help="verify redacted CircuitPython connection, deployment and execution proof",
@@ -233,4 +248,38 @@ class CommandLineApplication:
             f"velocity={parsed.velocity};sample_rate={audio_format.sample_rate};"
             f"waveforms=sine,saw,square\n"
         )
+        return 0
+
+    def _diagnose_audio_safety(self, parsed):
+        input_peak = int(parsed.input_peak)
+        if not 1 <= input_peak <= 32767:
+            raise ValueError("input_peak must be between 1 and 32767")
+        audio_format = AudioStreamFormat(
+            sample_rate=16000,
+            channel_count=1,
+            sample_width_bits=16,
+            frames_per_block=4,
+        )
+        profile = AudioSafetyProfile(
+            master_gain=parsed.master_gain,
+            maximum_master_gain=parsed.maximum_master_gain,
+        )
+        memory_output = MemoryAudioOutput(audio_format)
+        safe_output = SafeAudioOutput(memory_output, profile)
+        block = AudioBlock(
+            audio_format,
+            (input_peak, -input_peak, input_peak // 2, -(input_peak // 2)),
+        )
+        safe_output.open()
+        safe_output.write_block(block)
+        safe_output.unmute()
+        safe_output.write_block(block)
+        safe_output.close()
+        muted_peak = max(abs(sample) for sample in memory_output.blocks[0].samples)
+        unmuted_peak = max(abs(sample) for sample in memory_output.blocks[1].samples)
+        for line in profile.report_lines():
+            self._output.write(f"{line}\n")
+        self._output.write(f"AUDIO_SAFETY_MUTED_PEAK={muted_peak}\n")
+        self._output.write(f"AUDIO_SAFETY_UNMUTED_PEAK={unmuted_peak}\n")
+        self._output.write("AUDIO_SAFETY_STATUS=PASS\n")
         return 0

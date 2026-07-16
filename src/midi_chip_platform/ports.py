@@ -1,11 +1,11 @@
 # Bestand: ports.py
-# Versienommer: 0.13.0
-# Doel: Definieer vervangbare MIDI-, blokaudio-, klok- en konfigurasiepoorte.
+# Versienommer: 0.16.0
+# Doel: Definieer vervangbare MIDI-, veilige blokaudio-, klok- en konfigurasiepoorte.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-003 Audio And Chip Core
-# User-Story: MCP-US-014 AudioOutput Port And Null Backend
-# Actienr: MCP-ACT-014-GREEN-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-014-START
+# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+# Actienr: MCP-ACT-075-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 
 class MidiInputPort:
@@ -29,6 +29,12 @@ class AudioOutputPort:
 
     def write_block(self, block):
         raise NotImplementedError("AudioOutputPort.write_block must be implemented")
+
+    def mute(self):
+        raise NotImplementedError("AudioOutputPort.mute must be implemented")
+
+    def unmute(self):
+        raise NotImplementedError("AudioOutputPort.unmute must be implemented")
 
     def close(self):
         raise NotImplementedError("AudioOutputPort.close must be implemented")

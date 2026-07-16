@@ -1,11 +1,11 @@
 # Bestand: i2s_test.py
-# Versienommer: 0.14.0
-# Doel: Speel 'n onafhanklike G3-C4-D4 square-wave I2S hardewarediagnose.
+# Versienommer: 0.16.0
+# Doel: Speel 'n lae-volume, speaker-only G3-C4-D4 I2S-hardewarediagnose.
 # Sprint: Sprint 3
-# Epic: MCP-EPIC-003 Audio And Chip Core
-# User-Story: MCP-US-016 Standalone I2S Audible Diagnostic
-# Actienr: MCP-ACT-016-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-016-START
+# Epic: MCP-EPIC-007 DSP And Pedal Hardware
+# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+# Actienr: MCP-ACT-075-GREEN-007
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 
 class I2sDiagnosticProfile:
@@ -15,7 +15,8 @@ class I2sDiagnosticProfile:
         word_select_pin_name="IO3",
         data_pin_name="IO7",
         sample_rate=16000,
-        amplitude=4096,
+        amplitude=2048,
+        startup_mute_seconds=0.25,
         note_duration_seconds=0.35,
         gap_duration_seconds=0.08,
         notes=None,
@@ -25,6 +26,7 @@ class I2sDiagnosticProfile:
         self._data_pin_name = str(data_pin_name)
         self._sample_rate = int(sample_rate)
         self._amplitude = int(amplitude)
+        self._startup_mute_seconds = float(startup_mute_seconds)
         self._note_duration_seconds = float(note_duration_seconds)
         self._gap_duration_seconds = float(gap_duration_seconds)
         self._notes = tuple(
@@ -55,6 +57,10 @@ class I2sDiagnosticProfile:
         return self._amplitude
 
     @property
+    def startup_mute_seconds(self):
+        return self._startup_mute_seconds
+
+    @property
     def note_duration_seconds(self):
         return self._note_duration_seconds
 
@@ -71,6 +77,8 @@ class I2sDiagnosticProfile:
             raise ValueError("sample_rate must be positive")
         if not 1 <= self._amplitude <= 8191:
             raise ValueError("amplitude must be between 1 and 8191")
+        if self._startup_mute_seconds < 0:
+            raise ValueError("startup_mute_seconds must not be negative")
         if self._note_duration_seconds <= 0:
             raise ValueError("note_duration_seconds must be positive")
         if self._gap_duration_seconds < 0:
@@ -150,6 +158,8 @@ class I2sDiagnosticApplication:
             )
             factory = SquareWaveSampleFactory(modules[0], modules[2])
             time_module = modules[5]
+            audio_output.stop()
+            time_module.sleep(self._profile.startup_mute_seconds)
             for note_name, frequency in self._profile.notes:
                 tone = factory.create(self._profile, frequency)
                 self._output(
@@ -205,8 +215,8 @@ class I2sDiagnosticApplication:
 
     def _write_start(self, heap_before):
         self._output(
-            "circuitpython-midi-chip-platform v0.14.0 | "
-            "story=MCP-US-016 | release-date=2026-07-16"
+            "circuitpython-midi-chip-platform v0.16.0 | "
+            "story=MCP-US-075 | release-date=2026-07-16"
         )
         self._output(
             "I2S_DIAGNOSTIC_STATUS=START;backend=max98357a-mono;"
@@ -218,6 +228,13 @@ class I2sDiagnosticApplication:
             + self._profile.data_pin_name
             + ";sample_rate="
             + str(self._profile.sample_rate)
+            + ";amplitude="
+            + str(self._profile.amplitude)
+            + ";startup_mute_seconds="
+            + str(self._profile.startup_mute_seconds)
+            + ";output_load=speaker-4-8-ohm"
+            + ";gain_pin_profile=floating-9db"
+            + ";shutdown_mode=software-mute"
             + ";heap_before="
             + str(heap_before)
         )

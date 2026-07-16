@@ -2,13 +2,13 @@
 
 <!--
 Bestand: test_strategy_v0.1.0.md
-Versienommer: 0.3.0
+Versienommer: 0.4.0
 Doel: Definieer die toetsvlakke, omgewings, hardewarematriks en aanvaardingsbewys.
 Sprint: Sprint 2
 Epic: MCP-EPIC-009 Framework Engineering
-User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-016
-Actienr: MCP-ACT-QA-BURN-IN-001-TEST-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
+User-Story: QA-BURN-IN-AMENDMENT-001, MCP-US-016 en MCP-US-075
+Actienr: MCP-ACT-075-TEST-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 -->
 
 ## Toetspiramide
@@ -53,7 +53,7 @@ Persoonlike UID, MAC, SSID, wagwoord en volledige serial-pad word geredigeer. 'n
 
 ## Audio-aanvaarding
 
-Voor luidsprekertoets word MAX98357 se BTL-uitgang en voeding bevestig. US-016 speel eers G3-C4-D4 square waves via 'n synth-onafhanklike, klasgebaseerde toepassing. AST bewys geen globals/modulefunksies en 'n importtoets bewys geen synth-package-afhanklikheid. Meet sample rate, frekwensie, duur, amplitude, heap en cleanup. Daarna bewys US-063/055 D1 Note On/Off deur dieselfde benoemde profielkontrak en die produksie-AudioOutput-pad.
+Voor luidsprekertoets word MAX98357 se BTL-uitgang, voeding en 4-8 ohm speakerlas bevestig. US-016 speel G3-C4-D4 via 'n synth-onafhanklike toepassing; US-075 verlaag amplitude, voeg startup mute by en bewys `SafeAudioOutput` se `0.08` gain/`0.25` plafon op die host. Geen direkte koptelefoon-, line-in-, grond- of potmeterverbinding tel as aanvaardingsbewys nie. Daarna bewys US-055 D1 Note On/Off deur dieselfde profielkontrak en produksie-AudioOutput-pad.
 
 ## Nie-funksionele toetsing
 

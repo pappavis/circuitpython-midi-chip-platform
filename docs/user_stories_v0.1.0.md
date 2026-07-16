@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.25.0
+Versienommer: 0.26.0
 Doel: Volledige geordende backlog met 'n bevrore, verkleinde MVP Acceptance Set.
 Sprint: Sprint 2
 Epic: Alle epics
-User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-016 Standalone I2S Audible Diagnostic
-Actienr: MCP-ACT-QA-BURN-IN-001-BACKLOG-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
+User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-075 Safe Development Audio Load And Volume Gate
+Actienr: MCP-ACT-075-BACKLOG-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 -->
 
 ## Statuslegende
@@ -115,7 +115,7 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | MCP-US-046 | Footswitch And Status LED | Later | US-004 | Debounce, bypass en LED-status werk sonder globale status |
 | MCP-US-047 | Pedal Power, Safe Volume And Audio Protection | Later | US-021, US-075 | Krag, speaker/headphone/line-out-grense, gain/attenuasie, mute, filtering, ESD/polariteit en beskerming is op breadboard geskematiseer en met veilige testpunte gemeet |
 | MCP-US-048 | KiCad Reference Pedal PCB | Later | US-047 | Die Hardware Engineer en ervare KiCad Product Owner lewer skema, PCB, footprints, testpunte en BOM; ERC/DRC, bring-up en vervaardigingsuitsette slaag |
-| MCP-US-075 | Safe Development Audio Load And Volume Gate | MVP-Enabler | US-016, US-063 | 'n 4-8 ohm luidsprekerlas, lae software master gain, startup mute en gedokumenteerde MAX98357 GAIN/SD-profiel is veilig hoorbaar; geen direkte koptelefoon, line-in of potmeter oor die BTL-uitset nie; headphone/line-out kry 'n aparte DAC/amp-besluit |
+| MCP-US-075 | Safe Development Audio Load And Volume Gate | MVP-Enabler (In Review) | US-016, US-063 | v0.16.0 se `0.08` gain, `0.25` plafon, startup mute en lae-volume I2S-profiel slaag 120 hosttoetse; Done wag op hoorbare 4-8 ohm speaker-HIL, sonder direkte koptelefoon/line-in/potmeter oor BTL |
 | MCP-US-049 | External Audio Input Architecture | Parking lot | US-047 | ADC/codec, headroom en DSP-roete het ’n goedgekeurde ADR |
 
 ## MCP-EPIC-008 Portability, Quality And Release

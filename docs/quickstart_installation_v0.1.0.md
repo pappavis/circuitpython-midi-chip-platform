@@ -2,13 +2,13 @@
 
 <!--
 Bestand: quickstart_installation_v0.1.0.md
-Versienommer: 0.11.0
+Versienommer: 0.12.0
 Doel: Beginnerstappe vir installasie, diagnose en ontwikkeling sonder IDE-afhanklikheid.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-005 en MVP-SCOPE-REDUCTION-001
-Actienr: MCP-ACT-MVP-SCOPE-001-DOC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
+User-Story: MCP-US-005, MVP-SCOPE-REDUCTION-001 en MCP-US-075
+Actienr: MCP-ACT-075-DOC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 -->
 
 ## Wat hierdie weergawe doen
@@ -282,7 +282,7 @@ Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
 
 ## Huidige pausepunt
 
-MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016 en MCP-US-063 is Done. US-075 beveilig nou die fisiese testlas en volume; US-055 volg daarna vir die werklike Logic/USB-MIDI-na-hoorbare-I2S-pad.
+MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016 en MCP-US-063 is Done. US-075 se v0.16.0 hostkontrak is groen en In Review; 'n veilige speaker-HIL is nou die pausepunt. US-055 volg daarna vir die werklike Logic/USB-MIDI-na-hoorbare-I2S-pad.
 
 ## MAX98357A veilige toetslas
 
@@ -291,3 +291,13 @@ MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016 en MCP-US
 - Verbind geen uitsetterminaal aan grond, Scarlett/line-in, 'n tweede versterker of 'n geaarde scope-klem nie.
 - Plaas geen gewone enkelpotmeter in of oor die bridge-tied speakeruitset nie.
 - US-075 spesifiseer lae digitale master gain, startup mute en die GAIN/SD-penprofiel. 'n Toekomstige koptelefoon- of pedal-line-out gebruik 'n geskikte DAC/headphone-amp-pad.
+
+Toets die sagtewaregrens sonder hardeware:
+
+```bash
+/Volumes/data1/michiele/venv/venv3.12/bin/python \
+  -m midi_chip_platform audio-safety-diagnose \
+  --master-gain 0.08 --input-peak 12000
+```
+
+`AUDIO_SAFETY_MUTED_PEAK=0`, `AUDIO_SAFETY_UNMUTED_PEAK=960` en `AUDIO_SAFETY_STATUS=PASS` bewys die digitale grens. Dit bewys nog nie die fisiese luidspreker nie.

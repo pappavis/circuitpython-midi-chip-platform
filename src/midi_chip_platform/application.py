@@ -1,11 +1,11 @@
 # Bestand: application.py
-# Versienommer: 0.15.0
-# Doel: Koordineer MIDI-roetering en deurlopende blokaudio sonder import-newe-effekte.
+# Versienommer: 0.16.0
+# Doel: Koordineer MIDI-roetering en gedempte, begrensde blokaudio-lifecycle.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-003 Audio And Chip Core
-# User-Story: MCP-US-063 Portable D1 Baseline Synth Core
-# Actienr: MCP-ACT-063-GREEN-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-063-START
+# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+# Actienr: MCP-ACT-075-GREEN-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 from midi_chip_platform.core import CoreRegistry
 from midi_chip_platform.ports import (
@@ -46,6 +46,7 @@ class PlatformApplication:
         self._audio_output.open()
         for core in self._registry.cores():
             core.start()
+        self._audio_output.unmute()
         self._is_started = True
 
     def step(self):
@@ -70,6 +71,7 @@ class PlatformApplication:
     def stop(self):
         if not self._is_started:
             return
+        self._audio_output.mute()
         for core in reversed(self._registry.cores()):
             core.stop()
         self._audio_output.close()

@@ -1,11 +1,11 @@
 # Bestand: test_hil.py
-# Versienommer: 0.15.0
-# Doel: Spesifiseer deploy-, execution- en US-005 releasebewys.
+# Versienommer: 0.16.0
+# Doel: Spesifiseer deploy-, execution- en veilige-audio releasebewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-005 Configuration And Secret Boundary
-# Actienr: MCP-ACT-005-IMP-001-HIL-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
+# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+# Actienr: MCP-ACT-075-RED-006
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 from io import StringIO
 from pathlib import Path
@@ -331,14 +331,14 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.15.0 | story=MCP-US-063 | "
+            "circuitpython-midi-chip-platform v0.16.0 | story=MCP-US-075 | "
             "release-date=2026-07-16\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.15.0 | story=MCP-US-063 | "
+            "circuitpython-midi-chip-platform v0.16.0 | story=MCP-US-075 | "
             "release-date=2026-07-16\nDEVICE_IMPORT_STATUS=PASS\n"
             "DEVICE_EXECUTION_STATUS=READY"
         )
@@ -396,7 +396,7 @@ class TestHardwareInLoopVerifier:
         (device_root / "boot.py").write_bytes(b"approved")
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
-            "circuitpython-midi-chip-platform v0.15.0 | story=MCP-US-063 | "
+            "circuitpython-midi-chip-platform v0.16.0 | story=MCP-US-075 | "
             "release-date=2026-07-16\nBOOT_STATUS=PASS",
             encoding="utf-8",
         )
@@ -406,7 +406,7 @@ class TestHardwareInLoopVerifier:
             serial_port="redacted",
             manifest=manifest,
             serial_probe=self.FakeSerialProbe(
-                "circuitpython-midi-chip-platform v0.15.0 | story=MCP-US-063 | "
+                "circuitpython-midi-chip-platform v0.16.0 | story=MCP-US-075 | "
                 "release-date=2026-07-16\nDEVICE_EXECUTION_STATUS=READY"
             ),
             output=StringIO(),

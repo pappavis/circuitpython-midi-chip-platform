@@ -1,11 +1,11 @@
 # Bestand: test_i2s_diagnostic.py
-# Versienommer: 0.14.0
-# Doel: Spesifiseer die onafhanklike G-C-D I2S/MAX98357 diagnostiek.
+# Versienommer: 0.16.0
+# Doel: Spesifiseer die lae-volume, speaker-only G-C-D I2S-diagnostiek.
 # Sprint: Sprint 3
-# Epic: MCP-EPIC-003 Audio And Chip Core
-# User-Story: MCP-US-016 Standalone I2S Audible Diagnostic
-# Actienr: MCP-ACT-016-RED-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-016-START
+# Epic: MCP-EPIC-007 DSP And Pedal Hardware
+# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+# Actienr: MCP-ACT-075-RED-005
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 import ast
 import importlib.util
@@ -125,6 +125,8 @@ class TestStandaloneI2sDiagnosticBehavior:
         assert profile.bit_clock_pin_name == "IO5"
         assert profile.word_select_pin_name == "IO3"
         assert profile.data_pin_name == "IO7"
+        assert profile.amplitude == 2048
+        assert profile.startup_mute_seconds == 0.25
         assert profile.notes == (("G3", 196.0), ("C4", 261.63), ("D4", 293.66))
 
     def test_square_wave_uses_safe_unsigned_sixteen_bit_levels(self) -> None:
@@ -167,4 +169,6 @@ class TestStandaloneI2sDiagnosticBehavior:
         assert all(loop is True for _, loop in audio_bus.output.played)
         assert audio_bus.output.stop_count >= 3
         assert audio_bus.output.deinit_count == 1
+        assert time_module.sleeps[0] == 0.25
+        assert any("output_load=speaker-4-8-ohm" in line for line in output.lines)
         assert any("I2S_DIAGNOSTIC_STATUS=PASS" in line for line in output.lines)

@@ -2,13 +2,13 @@
 
 <!--
 Bestand: agile_delivery_release_plan_v0.1.0.md
-Versienommer: 0.6.0
+Versienommer: 0.7.0
 Doel: Definieer die werklike Agile uitvoerings-, beheer- en releaseproses.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: QA-BURN-IN-AMENDMENT-001
-Actienr: MCP-ACT-QA-BURN-IN-001-REL-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
+User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-075
+Actienr: MCP-ACT-075-REL-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 -->
 
 ## Doel
@@ -40,7 +40,7 @@ Die Framework Engineering-bootloader in `docs/framework_engineering/README.md` v
 - Dokumentasie-/impedimentwerk binne dieselfde story tel nie as 'n tweede story nie.
 - 'n Nuwe idee word geklassifiseer en georden; dit onderbreek nie die aktiewe story nie.
 - Die Scrum Master en Architect moet enige versoek stop wat 'n ongetoetste kernpad, werkende klankpad of importgrens kan breek.
-- Die veiligheidsgewysigde oorblywende pad volg `MCP-US-075 -> MCP-US-055 -> MCP-US-057`; MCP-US-005, US-014, US-016 en US-063 is gesluit.
+- Die veiligheidsgewysigde oorblywende pad volg `MCP-US-075 -> MCP-US-055 -> MCP-US-057`; US-075 se hostkode is groen en In Review, met veilige speaker-HIL as enigste oop hek.
 - US-016 se standalone I2S-toets kom voor D1 en deel geen synth-runtimekode nie; MAX98357 mono-I2S is die fisiese verstek.
 - SN76489, web, BLE, stereo, PWM, DSP, MIDI-kitaar en multi-core is post-MVP en kan nie hierdie volgorde onderbreek nie.
 - Sonder verdere kwalifikasie beteken `synth` hierdie CircuitPython-projek; `python-d1-synth` word slegs as 'n eksplisiet benoemde leesalleen-verwysing gebruik.
