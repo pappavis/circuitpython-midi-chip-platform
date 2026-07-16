@@ -1,11 +1,11 @@
 # Bestand: d1_runtime.py
-# Versienommer: 0.17.2
+# Versienommer: 0.17.3
 # Doel: Verbind USB-MIDI, D1-kern en veilige I2S-uitvoer vir die Logic MVP.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-IMP-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-002
+# Actienr: MCP-ACT-055-IMP-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-003
 
 from midi_chip_platform.audio import AudioSafetyProfile, AudioStreamFormat, SafeAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
@@ -26,6 +26,7 @@ class D1UsbMidiI2sRuntime:
         max_blocks=0,
         idle_sleep_seconds=0.001,
         minimum_note_seconds=0.12,
+        minimum_note_velocity=64,
     ):
         if not isinstance(midi_input, MidiInputPort):
             raise TypeError("midi_input must implement MidiInputPort")
@@ -41,6 +42,7 @@ class D1UsbMidiI2sRuntime:
         self._max_blocks = int(max_blocks)
         self._idle_sleep_seconds = float(idle_sleep_seconds)
         self._minimum_note_seconds = float(minimum_note_seconds)
+        self._minimum_note_velocity = int(minimum_note_velocity)
         self._block_count = 0
         self._note_event_count = 0
         self._audible_note_count = 0
@@ -67,7 +69,9 @@ class D1UsbMidiI2sRuntime:
             "D1_RUNTIME_STATUS=START;"
             f"core={self._core.name};sample_rate={self._audio_output.audio_format.sample_rate};"
             f"frames_per_block={self._audio_output.audio_format.frames_per_block};"
-            f"max_blocks={self._max_blocks};minimum_note_seconds={self._minimum_note_seconds}"
+            f"max_blocks={self._max_blocks};minimum_note_seconds={self._minimum_note_seconds};"
+            f"minimum_note_velocity={self._minimum_note_velocity};"
+            f"master_gain={self._master_gain_label()}"
         )
         try:
             self._midi_input.open()
@@ -78,14 +82,15 @@ class D1UsbMidiI2sRuntime:
             while self._should_continue():
                 event = self._midi_input.receive()
                 if isinstance(event, NoteEvent):
-                    self._core.handle_event(event)
+                    playable_event = self._playable_event(event)
+                    self._core.handle_event(playable_event)
                     self._note_event_count += 1
                     self._output(
                         f"D1_MIDI_EVENT={event.message_type};channel={event.channel};"
                         f"note={event.note};velocity={event.velocity}"
                     )
                     if event.is_note_on and event.velocity > 0:
-                        self._write_minimum_audible_note(event)
+                        self._write_minimum_audible_note(event, playable_event)
                         if self._max_blocks > 0 and self._block_count >= self._max_blocks:
                             continue
                         continue
@@ -145,7 +150,7 @@ class D1UsbMidiI2sRuntime:
         self._audio_output.write_block(block)
         self._block_count += 1
 
-    def _write_minimum_audible_note(self, event):
+    def _write_minimum_audible_note(self, event, playable_event):
         requested_blocks = self._minimum_audible_block_count()
         if self._max_blocks > 0:
             remaining_blocks = self._max_blocks - self._block_count
@@ -158,7 +163,8 @@ class D1UsbMidiI2sRuntime:
         self._output(
             "D1_AUDIO_EVENT=audible_note;"
             f"note={event.note};blocks={requested_blocks};"
-            f"seconds={self._seconds_for_blocks(requested_blocks):.3f}"
+            f"seconds={self._seconds_for_blocks(requested_blocks):.3f};"
+            f"midi_velocity={event.velocity};play_velocity={playable_event.velocity}"
         )
 
     def _minimum_audible_block_count(self):
@@ -183,6 +189,25 @@ class D1UsbMidiI2sRuntime:
             * audio_format.frames_per_block
             / audio_format.sample_rate
         )
+
+    def _playable_event(self, event):
+        if (
+            event.is_note_on
+            and event.velocity > 0
+            and event.velocity < self._minimum_note_velocity
+        ):
+            return NoteEvent.note_on(
+                event.channel,
+                event.note,
+                self._minimum_note_velocity,
+            )
+        return event
+
+    def _master_gain_label(self):
+        value = getattr(self._audio_output, "master_gain", None)
+        if value is None:
+            return "unknown"
+        return f"{float(value):.3f}"
 
 
 class D1UsbMidiI2sRuntimeFactory:
@@ -211,7 +236,10 @@ class D1UsbMidiI2sRuntimeFactory:
         safe_output = SafeAudioOutput(
             i2s_output,
             AudioSafetyProfile(
-                master_gain=configuration.get("audio.master_gain", 0.08),
+                master_gain=configuration.get(
+                    "synth.d1.audition_master_gain",
+                    configuration.get("audio.master_gain", 0.08),
+                ),
                 maximum_master_gain=configuration.get("audio.maximum_master_gain", 0.25),
                 startup_muted=configuration.get("audio.startup_muted", True),
                 amplifier_gain_db=configuration.get("audio.amplifier_gain_db", 9.0),
@@ -224,7 +252,7 @@ class D1UsbMidiI2sRuntimeFactory:
             D1Patch(
                 waveform=configuration.get("synth.d1.waveform", "sine"),
                 audio_format=audio_format,
-                amplitude=configuration.get("synth.d1.amplitude", 0.2),
+                amplitude=configuration.get("synth.d1.amplitude", 0.5),
             )
         )
         time_module = self._importer("time")
@@ -239,4 +267,5 @@ class D1UsbMidiI2sRuntimeFactory:
             max_blocks=configuration.get("synth.d1.max_blocks", 0),
             idle_sleep_seconds=configuration.get("synth.d1.idle_sleep_seconds", 0.001),
             minimum_note_seconds=configuration.get("synth.d1.minimum_note_seconds", 0.12),
+            minimum_note_velocity=configuration.get("synth.d1.minimum_note_velocity", 64),
         )

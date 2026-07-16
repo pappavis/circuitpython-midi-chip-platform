@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.17.1
+# Versienommer: 0.17.3
 # Doel: Laai publieke D1-runtime, veilige-audioverstekke en private settings.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-IMP-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-001
+# Actienr: MCP-ACT-055-IMP-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-003
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -31,10 +31,12 @@ class ConfigurationDefaults:
             "synth.d1.waveform": "sine",
             "synth.d1.sample_rate": 16000,
             "synth.d1.frames_per_block": 128,
-            "synth.d1.amplitude": 0.2,
+            "synth.d1.amplitude": 0.5,
             "synth.d1.max_blocks": 0,
             "synth.d1.idle_sleep_seconds": 0.001,
             "synth.d1.minimum_note_seconds": 0.12,
+            "synth.d1.minimum_note_velocity": 64,
+            "synth.d1.audition_master_gain": 0.25,
             "midi.input.port_index": 0,
             "midi.diagnostic.enabled": False,
             "midi.diagnostic.max_events": 8,
@@ -75,6 +77,8 @@ class EnvironmentSettingsSource:
             "synth.d1.max_blocks": "D1_MAX_BLOCKS",
             "synth.d1.idle_sleep_seconds": "D1_IDLE_SLEEP_SECONDS",
             "synth.d1.minimum_note_seconds": "D1_MINIMUM_NOTE_SECONDS",
+            "synth.d1.minimum_note_velocity": "D1_MINIMUM_NOTE_VELOCITY",
+            "synth.d1.audition_master_gain": "D1_AUDITION_MASTER_GAIN",
             "midi.input.port_index": "MIDI_INPUT_PORT_INDEX",
             "midi.diagnostic.enabled": "MIDI_DIAGNOSTIC_ENABLED",
             "midi.diagnostic.max_events": "MIDI_DIAGNOSTIC_MAX_EVENTS",

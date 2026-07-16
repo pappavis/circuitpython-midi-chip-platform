@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 
 ## Status
 
-**IN REVIEW / HIL READY.** Die host-implementering is groen en dependency-closed. `v0.17.2` verbind nou die bestaande USB-MIDI input, die draagbare D1-basiskern, die veilige `SafeAudioOutput` en 'n CircuitPython I2S backend. Die v0.17.2 impediment-fix stop die deurgaande idle-silence stream na I2S, voeg `D1_MIDI_INPUT_STATUS=OPEN` by, en behou `D1_AUDIO_EVENT=audible_note` sodat kort Logic MIDI-events as hoorbare D1-blokke na I2S geskryf word. Finale closure wag op menslike HIL: Logic Pro stuur MIDI na die Wemos S2 en die Product Owner hoor D1-klank via die MAX98357A-opstelling.
+**IN REVIEW / HIL READY.** Die host-implementering is groen en dependency-closed. `v0.17.3` verbind nou die bestaande USB-MIDI input, die draagbare D1-basiskern, die veilige `SafeAudioOutput` en 'n CircuitPython I2S backend. Die v0.17.3 impediment-fix behou die v0.17.2 idle-silence fix en voeg D1-spesifieke HIL audition gain, `minimum_note_velocity=64` en `play_velocity` logging by sodat Logic-note velocities soos 32-46 hoorbaar getoets kan word. Finale closure wag op menslike HIL: Logic Pro stuur MIDI na die Wemos S2 en die Product Owner hoor D1-klank via die MAX98357A-opstelling.
 
 ## Implementering
 
@@ -30,7 +30,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 |---|---|
 | RED | Nuwe tests het met `ModuleNotFoundError` gefaal vir `midi_chip_platform.i2s_audio` en `midi_chip_platform.d1_runtime` |
 | GREEN | `CircuitPythonI2sAudioOutput` pinne, signed-to-unsigned conversie, stop/deinit, D1 Note On/Off runtime-blokke en minimum-audible-note buffering slaag |
-| REGRESSION | 127 pytest-toetse slaag; architecture-toetse bevestig geen globals, geen modulefunksies en geen module-level hardeware-imports |
+| REGRESSION | 128 pytest-toetse slaag; architecture-toetse bevestig geen globals, geen modulefunksies en geen module-level hardeware-imports |
 | HIL | Wag op Product Owner: Logic External MIDI na `S2 Mini` of bordnaam, speel Note On/Off, hoor D1 en sien `D1_MIDI_INPUT_STATUS=OPEN`, `D1_MIDI_EVENT` plus `D1_AUDIO_EVENT=audible_note` |
 
 ## Menslike HIL-aanvaarding
@@ -41,9 +41,9 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 4. Verwag aan die begin:
 
 ```text
-circuitpython-midi-chip-platform v0.17.2 | story=MCP-US-055 | release-date=2026-07-16
+circuitpython-midi-chip-platform v0.17.3 | story=MCP-US-055 | release-date=2026-07-16
 DEVICE_EXECUTION_STATUS=READY
-D1_RUNTIME_STATUS=START;core=d1;sample_rate=16000;frames_per_block=128;max_blocks=0;minimum_note_seconds=0.12
+D1_RUNTIME_STATUS=START;core=d1;sample_rate=16000;frames_per_block=128;max_blocks=0;minimum_note_seconds=0.12;minimum_note_velocity=64;master_gain=0.250
 D1_MIDI_INPUT_STATUS=OPEN
 ```
 
@@ -56,7 +56,7 @@ D1_MIDI_INPUT_STATUS=OPEN
 
 ```text
 D1_MIDI_EVENT=note_on;channel=1;note=...
-D1_AUDIO_EVENT=audible_note;note=...;blocks=...;seconds=...
+D1_AUDIO_EVENT=audible_note;note=...;blocks=...;seconds=...;midi_velocity=...;play_velocity=...
 D1_MIDI_EVENT=note_off;channel=1;note=...
 ```
 
@@ -93,7 +93,7 @@ D1_MIDI_EVENT=note_off;channel=1;note=...
 | MIDI Engineer | Hergebruik die bestaande USB-MIDI translator en note semantics. |
 | DSP/Chip Engineer | Hergebruik D1 PCM-blokke en veilige output-gain. |
 | QA/HIL Engineer | Lewer RED/GREEN, 125 regressietoetse en menslike HIL-instructies. |
-| Release/Documentation | Berei `v0.17.2` as In Review voor en hou US-057 vir finale release/burn-in. |
+| Release/Documentation | Berei `v0.17.3` as In Review voor en hou US-057 vir finale release/burn-in. |
 | External Architecture Reviewer (Copilot) | Die vertical-slice aanbeveling USB-MIDI -> D1 -> audio is nou geimplementeer. |
 | Devil's Advocate | Waarsku dat hostgroen nog nie hoorbare Logic-aanvaarding is nie. |
 

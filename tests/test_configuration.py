@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.17.1
+# Versienommer: 0.17.3
 # Doel: Spesifiseer publieke D1-runtime, veilige audio en private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-IMP-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-001
+# Actienr: MCP-ACT-055-IMP-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-003
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -38,10 +38,12 @@ class TestConfigurationDefaults:
         assert snapshot.get("synth.d1.waveform") == "sine"
         assert snapshot.get("synth.d1.sample_rate") == 16000
         assert snapshot.get("synth.d1.frames_per_block") == 128
-        assert snapshot.get("synth.d1.amplitude") == 0.2
+        assert snapshot.get("synth.d1.amplitude") == 0.5
         assert snapshot.get("synth.d1.max_blocks") == 0
         assert snapshot.get("synth.d1.idle_sleep_seconds") == 0.001
         assert snapshot.get("synth.d1.minimum_note_seconds") == 0.12
+        assert snapshot.get("synth.d1.minimum_note_velocity") == 64
+        assert snapshot.get("synth.d1.audition_master_gain") == 0.25
         assert snapshot.get("midi.diagnostic.enabled") is False
         assert snapshot.get("midi.diagnostic.max_events") == 8
         assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
@@ -57,9 +59,11 @@ class TestConfigurationDefaults:
         assert 'AUDIO_MAXIMUM_MASTER_GAIN = "0.25"' in settings_example
         assert 'AUDIO_STARTUP_MUTED = "true"' in settings_example
         assert 'D1_RUNTIME_ENABLED = "true"' in settings_example
-        assert 'D1_AMPLITUDE = "0.2"' in settings_example
+        assert 'D1_AMPLITUDE = "0.5"' in settings_example
         assert 'D1_IDLE_SLEEP_SECONDS = "0.001"' in settings_example
         assert 'D1_MINIMUM_NOTE_SECONDS = "0.12"' in settings_example
+        assert "D1_MINIMUM_NOTE_VELOCITY = 64" in settings_example
+        assert 'D1_AUDITION_MASTER_GAIN = "0.25"' in settings_example
 
 
 class TestConfigurationSecretBoundary:
