@@ -2,18 +2,18 @@
 
 <!--
 Bestand: backlog_sanity_check_v0.1.0.md
-Versienommer: 0.12.0
+Versienommer: 0.13.0
 Doel: Bewys backlog-volledigheid en verminder hallusinasie-/scope-drift-risiko.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-075
-Actienr: MCP-ACT-075-SANITY-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
+User-Story: MCP-US-075 en MCP-US-076
+Actienr: MCP-ACT-075-PO-EXCEPTION-002
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-PO-EXCEPTION-ACCEPTED
 -->
 
 ## Resultaat
 
-Status: **PASS vir 75 stories, 10 epics en die veiligheidsgewysigde 17-story MVP Acceptance Set**.
+Status: **PASS vir 76 stories, 10 epics en die veiligheidsgewysigde 17-story MVP Acceptance Set**.
 
 | Kontrole | Resultaat |
 |---|---|
@@ -77,11 +77,11 @@ Status: **PASS vir 75 stories, 10 epics en die veiligheidsgewysigde 17-story MVP
 - MCP-US-014 is `Done`: v0.13.0 se begrensde blok-PCM, Null/Memory outputs, application-integrasie en 17-lêer deploymanifest is host-groen sonder 'n fisiese klankclaim.
 - MCP-US-016 is `Done`: die Product Owner het op 2026-07-16 G3-C4-D4 hoorbaar deur die MAX98357A bevestig; serial het `PASS`, 18-lêer deploy en begrensde heap gerapporteer. Die 30-minute burn-in bly as releasebewys onder US-051/US-057 naspeurbaar.
 - MCP-US-063 is `Done`: die Product Owner het v0.15.0 se drie waveforms, A4=440 Hz, velocity en finale `D1_CORE_STATUS=PASS` aanvaar.
-- MCP-US-075 is `In Review`: v0.16.0 bewys startup mute, `0.08` gain, `0.25` plafon en 120 groen hosttoetse; Done wag op 'n veilige 4-8 ohm speaker-HIL voordat US-055 begin.
+- MCP-US-075 is `Done (PO exception)`: v0.16.0 bewys startup mute, `0.08` gain, `0.25` plafon, 120 groen hosttoetse en hoorbare G-C-D. Die PO aanvaar die tydelike TRS-prototiperisiko; US-076 parkeer gesertifiseerde fisiese uitsetcleanup ná MVP.
 - MCP-US-003 is ná fisiese connection/deploy/execution/USB-MIDI-bewys `Done`.
 - MCP-US-007 is `Done`: v0.12.2 het op die Wemos S2 werklike Note On/Off ontvang en `matched_notes=1` gerapporteer. MCP-US-051 bly `In Review` tot sy latere klankadapterhek.
 - Die MVP Acceptance Set is US-001 tot US-009 (US-010 uitgesluit), US-014, US-016, US-050, US-051, US-055, US-057, US-063 en die veiligheidshek US-075.
-- Die bindende oorblywende volgorde is `US-075 -> US-055 -> US-057`; US-016 se hoorbare klankhek en US-063 se draagbare D1-kern is gesluit.
+- Die bindende oorblywende volgorde is `US-055 -> US-057`; US-016, US-063 en US-075 is gesluit.
 - US-016 besit die nuwe onafhanklike `device/i2s_test.py`; US-020 bly die latere geïntegreerde startupmelodie en is nie 'n duplikaat nie.
 - MAX98357 is die gevalideerde verstek. Ander PCM-I2S-profiele is uitbreibaar, maar nie fisies ondersteun verklaar sonder hulle eie HIL nie.
 - US-058 skei platform-onafhanklike guitar-MIDI bend/slide-semantiek van US-059 se fisiese Fishman/generiese HIL-aanvaarding.

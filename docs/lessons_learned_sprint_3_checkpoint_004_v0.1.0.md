@@ -40,12 +40,12 @@ Die platform het drie opeenvolgende hekke geslaag: 'n begrensde AudioOutput-kont
 | Aksie | Eienaar | Story/hek | Status |
 |---|---|---|---|
 | Ontkoppel die koptelefoon voor volgehoue D1-toetse; moenie dit dra terwyl dit direk verbind is nie | Product Owner | Onmiddellik | Mensaksie |
-| Verkry 'n 4-8 ohm bewegende-spoel-luidspreker met geskikte kraggradering | Product Owner/Hardware | US-075 | Backlog |
+| Verkry 'n 4-8 ohm bewegende-spoel-luidspreker met geskikte kraggradering | Product Owner/Hardware | US-076 | Later |
 | Dokumenteer software amplitude ceiling, startup mute, GAIN en SD/MODE-keuses | DSP/Embedded/Hardware | US-075 | Backlog |
-| Besluit afsonderlik oor speaker, headphone en pedal line-out; MAX98357 is nie al drie nie | Solution Architect/Hardware | US-075/047 | Backlog |
-| Bou en meet 'n reproduceerbare breadboard-uitset met veilige scope-punte | Hardware/QA | US-075/047 | Backlog |
+| Besluit afsonderlik oor speaker, headphone en pedal line-out; MAX98357 is nie al drie nie | Solution Architect/Hardware | US-047/076 | Later |
+| Bou en meet 'n reproduceerbare breadboard-uitset met veilige scope-punte | Hardware/QA | US-047/076 | Later |
 | Ontwerp later die KiCad-skema/PCB saam met die ervare Product Owner | Hardware/PCB/PO | US-048 | Backlog |
-| Begin US-055 eers nadat die veilige toetslas/volumeprofiel aanvaar is | Scrum/QA | US-075 -> US-055 | Beheer aktief |
+| Begin US-055 ná PO-aanvaarding van die begrensde prototipeprofiel; maak geen produksieveiligheidsclaim nie | Scrum/QA | US-075 -> US-055 | Voltooi met uitsondering |
 | Vereis verwagte weergawe en story in elke menslike HIL-uitvoer | QA/Release | Alle HIL-stories | Beheer aktief |
 
 ## Hergebruikreël

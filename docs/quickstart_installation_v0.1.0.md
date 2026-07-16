@@ -2,18 +2,18 @@
 
 <!--
 Bestand: quickstart_installation_v0.1.0.md
-Versienommer: 0.12.0
+Versienommer: 0.13.0
 Doel: Beginnerstappe vir installasie, diagnose en ontwikkeling sonder IDE-afhanklikheid.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-005, MVP-SCOPE-REDUCTION-001 en MCP-US-075
-Actienr: MCP-ACT-075-DOC-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
+User-Story: MCP-US-005, MCP-US-075 en MCP-US-076
+Actienr: MCP-ACT-075-PO-EXCEPTION-006
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-PO-EXCEPTION-ACCEPTED
 -->
 
 ## Wat hierdie weergawe doen
 
-Hierdie weergawe bevat die host-skelet, USB-MIDI-bootprofiel, capability discovery, veilige konfigurasiegrens, draagbare events, USB/BLE-vervoergrense, kanaalroetering, note-off-semantiek en per-kanaal pitch bend/CC1-toestand. Dit maak nog geen klank nie. Hosttoetse bewys die klasse; `hil-deploy` kopieer 'n dependency-geslote manifest en `hil-verify` bewys verbinding, libraries, boot, clean imports en uitvoering op die bord.
+Hierdie weergawe bevat die host-skelet, USB-MIDI-bootprofiel, capability discovery, veilige konfigurasiegrens, draagbare events, USB/BLE-vervoergrense, kanaalroetering, note-off-semantiek, per-kanaal pitch bend/CC1-toestand, 'n draagbare D1-basiskern en 'n hoorbare lae-volume I2S-diagnose. Die geïntegreerde Logic-na-D1-pad volg in US-055. Hosttoetse bewys die klasse; `hil-deploy` kopieer 'n dependency-geslote manifest en `hil-verify` bewys verbinding, libraries, boot, clean imports en uitvoering op die bord.
 
 ## Wat jy nodig het
 
@@ -282,7 +282,7 @@ Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
 
 ## Huidige pausepunt
 
-MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016 en MCP-US-063 is Done. US-075 se v0.16.0 hostkontrak is groen en In Review; 'n veilige speaker-HIL is nou die pausepunt. US-055 volg daarna vir die werklike Logic/USB-MIDI-na-hoorbare-I2S-pad.
+MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is Done. US-075 is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer die gesertifiseerde hardware-cleanup. US-055 is nou die aktiewe pad vir werklike Logic/USB-MIDI-na-hoorbare-D1/I2S.
 
 ## MAX98357A veilige toetslas
 

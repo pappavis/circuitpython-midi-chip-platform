@@ -3,7 +3,7 @@
 <!--
 Bestand: mcp_us_075_safe_audio_gate_review_v0.1.0.md
 Versienommer: 0.1.0
-Doel: Dokumenteer die veilige master-gain, startup-mute en speaker-HIL-aanvaardingshek.
+Doel: Dokumenteer die master-gain, startup-mute, hoorbare HIL en Product Owner-prototipe-lasuitondering.
 Sprint: Sprint 3
 Epic: MCP-EPIC-007 DSP And Pedal Hardware
 User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 ## Status
 
-**IN REVIEW.** Die klasgebaseerde veilige-audiokontrak, konfigurasie, lae-volume standalone diagnostiek en hostbewys is groen. Menslike HIL wag op 'n 4-8 ohm luidspreker; die Product Owner se aanvaarding van die direkte koptelefoonrisiko verander nie die projek se veilige toetslas of Definition of Done nie.
+**DONE WITH PRODUCT OWNER EXCEPTION.** Die klasgebaseerde veilige-audiokontrak, konfigurasie, lae-volume standalone diagnostiek, hostbewys en hoorbare v0.16.0 HIL is groen. Die Product Owner het op 2026-07-16 bevestig dat G3-C4-D4 hoorbaar was met die bestaande goedkoop TRS-koptelefoon en het die prototipe-lasrisiko voorlopig aanvaar. Hierdie closure sertifiseer slegs die software gain/startup-mute en hoorbare ontwikkelpad; dit sertifiseer nie die direkte BTL-koptelefoonlas as elektries veilig nie. MCP-US-076 parkeer die korrekte speaker/headphone/pedal-uitset-argitektuur ná MVP.
 
 ## Implementering
 
@@ -81,18 +81,29 @@ execution: PASS - current release and dependency-import markers via serial REPL
 private-identifiers: REDACTED
 ```
 
-Die impediment is tegnies opgelos. Storyaanvaarding bly oop totdat die menslike hoorbare hertoets ook die v0.16.0 US-075-markers toon.
+Die impediment is tegnies opgelos. Die menslike hertoets het daarna die v0.16.0 US-075-markers, G3-C4-D4, stabiele heap en finale `PASS` getoon.
+
+## Product Owner-uitondering en aanvaarding
+
+Die fisiese toets het nog die bestaande goedkoop TRS-koptelefoon gebruik. Die Product Owner aanvaar hierdie prototiperisiko en het gevra dat die strenger elektriese cleanup eers ver ná die MVP plaasvind. Daarom:
+
+- sluit US-075 op grond van die bewese lae-volume softwarehek en hoorbare HIL;
+- bly R-013 oop as 'n aanvaarde prototiperisiko;
+- begin US-055 volgens die bindende D1/Logic-volgorde;
+- vereis MCP-US-076 voor enige produksie-, draagbare, headphone-, line-out- of pedal-releaseclaim.
+
+Die aanvaarde toesteluitvoer bevat `amplitude=2048`, `startup_mute_seconds=0.25`, `gain_pin_profile=floating-9db`, `shutdown_mode=software-mute`, drie note, finale `PASS` en 'n heapverskil van 320 bytes.
 
 ## Burn-in
 
-`N/A` vir die hostprofiel. Hierdie story vereis een kort veilige speaker-HIL. Die 30-minute en 8-uur geïntegreerde USB-MIDI/D1/audio/heap-burn-in bly onderskeidelik MCP-US-051, US-055 en US-057.
+`N/A` vir die hostprofiel. Die kort hoorbare ontwikkel-HIL is met 'n Product Owner-lasuitondering aanvaar. Die 30-minute en 8-uur geïntegreerde USB-MIDI/D1/audio/heap-burn-in bly onderskeidelik MCP-US-051, US-055 en US-057; gesertifiseerde fisiese uitsetcleanup is MCP-US-076.
 
 ## Virtuele spanreview
 
 | Rol | Bydrae |
 |---|---|
-| Product Owner | Het die risiko openbaar gemaak en hostimplementering goedgekeur; speaker-HIL bly oop. |
-| Scrum Master | Hou US-055 geblokkeer totdat hierdie HIL aanvaar is. |
+| Product Owner | Het die hoorbare v0.16.0 HIL en prototipe-lasrisiko eksplisiet aanvaar; produksieveiligheid nie gesertifiseer nie. |
+| Scrum Master | Sluit US-075 met uitsondering, parkeer US-076 ná MVP en open US-055. |
 | Business Analyst | Skei speaker, headphone en pedal-line-out as verskillende produkkontrakte. |
 | Chief Enterprise Architect | Behou die veiligheidslaag as dekorator om vervangbare backends. |
 | Solution Architect | Maak gain en mute backend-onafhanklik; fisiese SD/GAIN bly profieldata. |
@@ -101,7 +112,7 @@ Die impediment is tegnies opgelos. Storyaanvaarding bly oop totdat die menslike 
 | DSP/Chip Engineer | Skaal PCM simmetries binne signed-16 en 'n harde gain-plafon. |
 | Hardware/PCB Engineer | Spesifiseer speaker-only BTL-toets; latere US-047/048 dek breadboard en KiCad. |
 | QA/HIL Engineer | Lewer RED/GREEN/CLI-bewys en blokkeer onveilige menslike HIL. |
-| Release/Documentation | Bump na v0.16.0 en merk die story eerlik In Review. |
+| Release/Documentation | Behou v0.16.0-bewys, dokumenteer die uitsondering en merk die story Done. |
 | External Architecture Reviewer | Primêre vendorveiligheidsgrense bly gesaghebbend. |
 | Devil's Advocate | Risiko-aanvaarding is nie 'n vervanging vir 'n veilige toetslas nie. |
 

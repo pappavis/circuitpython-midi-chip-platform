@@ -80,7 +80,7 @@ Die standalone I2S-diagnoselaan is doelbewus nie aan `Application`, `SynthCore`,
 
 ## Evolusievolgorde
 
-Die bindende oorblywende MVP-volgorde is `US-075 -> US-055 -> US-057`; US-005, US-014, US-016 en US-063 is gesluit. US-075 beveilig die fisiese las/volume; US-055 bewys daarna die volle Logic-na-klankvloei. SN76489 en alle ander kerne, webbeheer, BLE, multi-core, DSP en USB-instance-polish volg ná die MVP.
+Die bindende oorblywende MVP-volgorde is `US-055 -> US-057`; US-005, US-014, US-016, US-063 en US-075 is gesluit. US-075 begrens die digitale prototipevolume met 'n eksplisiete PO-lasuitondering; US-076 parkeer gesertifiseerde speaker/headphone/pedal-uitsette ná MVP. US-055 bewys nou die volle Logic-na-klankvloei. SN76489 en alle ander kerne, webbeheer, BLE, multi-core, DSP en USB-instance-polish volg ná die MVP.
 
 ## Argitektuurfitness
 

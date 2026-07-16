@@ -2,13 +2,13 @@
 
 <!--
 Bestand: mvp_scope_v0.1.0.md
-Versienommer: 0.9.0
+Versienommer: 0.10.0
 Doel: Definieer die verkleinde eerste toetsbare CircuitPython MIDI Chip Platform MVP.
 Sprint: Sprint 2
 Epic: MCP-EPIC-001, MCP-EPIC-002, MCP-EPIC-003 en MCP-EPIC-008
-User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-075
-Actienr: MCP-ACT-075-SCOPE-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
+User-Story: MCP-US-075 en MCP-US-076
+Actienr: MCP-ACT-075-PO-EXCEPTION-005
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-PO-EXCEPTION-ACCEPTED
 -->
 
 ## Langtermyn-produkdefinisie
@@ -88,7 +88,7 @@ MCP-US-020 bly 'n aparte post-MVP-story vir 'n geïntegreerde, opsionele G-C-D-o
 
 `MCP-US-016 -> MCP-US-063 -> MCP-US-075 -> MCP-US-055 -> MCP-US-057`
 
-MCP-US-005, MCP-US-014, MCP-US-016 en MCP-US-063 is gesluit. MCP-US-075 se v0.16.0 hostkontrak is groen en In Review; die veilige speaker-HIL bly die aktiewe hek. US-055 verbind D1 eers daarna aan Logic en produksie-I2S.
+MCP-US-005, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is gesluit. US-075 se v0.16.0 softwarehek en hoorbare HIL is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer gesertifiseerde uitsetcleanup ná MVP. US-055 verbind D1 nou aan Logic en produksie-I2S.
 
 ## Besluithekke
 

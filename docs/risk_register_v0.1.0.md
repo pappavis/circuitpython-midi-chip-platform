@@ -2,13 +2,13 @@
 
 <!--
 Bestand: risk_register_v0.1.0.md
-Versienommer: 0.13.0
+Versienommer: 0.14.0
 Doel: Tegniese, produk-, veiligheids- en afleweringsrisiko’s vir die MVP.
 Sprint: Sprint 0
 Epic: Alle epics
-User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-075
-Actienr: MCP-ACT-075-RISK-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
+User-Story: MCP-US-075 en MCP-US-076
+Actienr: MCP-ACT-075-PO-EXCEPTION-003
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-PO-EXCEPTION-ACCEPTED
 -->
 
 | ID | Risiko | Waarskynlikheid | Impak | Eienaar | Beheer/mitigering | Status |
@@ -25,7 +25,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 | R-010 | SID/OPL-emulasie skep lisensie- of akkuraatheidsaansprake | Medium | Hoog | PO/Release | Bronlisensie-register; akkuraatheidsvlakke; geen “cycle accurate” sonder bewys | Oop |
 | R-011 | MIDI clock (24 PPQN) oorlaai ontvangslus | Medium | Hoog | MIDI | Prioriteitsry, geen onnodige logging, klok-jittertoetse | Oop |
 | R-012 | Dedupe-logika verwyder geldige note of clock | Medium | Hoog | MIDI/QA | Boodskapspesifieke dedupe; nooit blind op clock toepas nie | Oop |
-| R-013 | MAX98357 bridge-tied uitset word geaard, as line-out gebruik of dryf 'n full-volume koptelefoon naby die gebruiker | Hoog | Kritiek | Hardware/PO | v0.16.0 software gain/startup mute is groen; ontkoppel direkte TRS-las; 4-8 ohm speaker; geen grond/line-input/pot op BTL-uitset | In Review - speaker-HIL oop |
+| R-013 | MAX98357 bridge-tied uitset word geaard, as line-out gebruik of dryf 'n koptelefoon naby die gebruiker | Hoog | Kritiek | Hardware/PO | v0.16.0 software gain/startup mute is groen; PO aanvaar tydelike prototiperisiko; geen produksieveiligheidsclaim; US-076 lewer geskeide speaker/headphone/pedal-paaie | Aanvaar vir prototipe - cleanup US-076 |
 | R-014 | DSP delay/reverb oorskry geheue en latensie | Hoog | Hoog | DSP | Harde bufferbegroting; bypass; no-go aanvaarbaar vir reverb-spike | Oop |
 | R-015 | Outomatiese toestelkopie beskadig werkende prototipe | Laag | Kritiek | Release/QA | Rugsteun, manifest, dry-run, staging en eksplisiete deploy-story | Beheer aktief |
 | R-016 | Side quests breek logiese storyvolgorde | Hoog | Medium | Scrum Master | Now/Next/Later/Parking Lot; uitvoerplan-goedkeuring per story | Beheer aktief |
@@ -52,7 +52,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
 
 1. **Roteer die blootgestelde Wi-Fi-wagwoord.** Dit kan nie deur kode alleen herstel word nie.
 2. Hou MCP-US-003 se `boot.py` minimaal en herstelbaar.
-3. Verkry 'n geskikte 4-8 ohm speaker en sluit US-075 voordat volgehoue Logic/D1-klanktoetse begin.
+3. Gebruik v0.16.0 se lae-volume hek vir die prototipe; voltooi US-076 voordat enige produksie-, headphone-, line-out- of pedal-uitsetclaim gemaak word.
 4. Publiseer geen toestelrugsteun, unieke USB-ID of plaaslike netwerkdetail nie.
 5. Behandel ’n sigbare `ESP_*`-SSID as onbevestig totdat ’n beheerde power-cycle of device-log die fisiese bord korreleer.
 6. Hou SN76489, web, BLE, stereo, PWM, DSP, multi-core en USB-instance-polish post-MVP totdat Logic na hoorbare D1 aanvaar is.

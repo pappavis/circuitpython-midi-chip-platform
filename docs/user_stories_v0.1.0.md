@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.26.0
+Versienommer: 0.27.0
 Doel: Volledige geordende backlog met 'n bevrore, verkleinde MVP Acceptance Set.
 Sprint: Sprint 2
 Epic: Alle epics
-User-Story: QA-BURN-IN-AMENDMENT-001 en MCP-US-075 Safe Development Audio Load And Volume Gate
-Actienr: MCP-ACT-075-BACKLOG-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
+User-Story: MCP-US-075 en MCP-US-076
+Actienr: MCP-ACT-075-PO-EXCEPTION-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-PO-EXCEPTION-ACCEPTED
 -->
 
 ## Statuslegende
@@ -27,7 +27,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 
 ## Bevrore MVP Acceptance Set
 
-Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, `US-008`, `US-009`, `US-014`, `US-016`, `US-050`, `US-051`, `US-055`, `US-057`, `US-063` en `US-075` beheer MVP-aanvaarding. Die produkbewys is USB-MIDI uit Logic Pro na 'n hoorbare D1-basiskern op die verwysingsbord met 'n veilige toetslas en begrensde volume. Alle ander stories is reeds voltooide ekstra werk, governance of post-MVP voortsetting.
+Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, `US-008`, `US-009`, `US-014`, `US-016`, `US-050`, `US-051`, `US-055`, `US-057`, `US-063` en `US-075` beheer MVP-aanvaarding. Die produkbewys is USB-MIDI uit Logic Pro na 'n hoorbare D1-basiskern op die verwysingsbord met begrensde digitale volume. US-075 se fisiese prototipe-las is deur 'n eksplisiete PO-uitondering aanvaar; US-076 is verpligtend voor 'n produksieveiligheidsclaim. Alle ander stories is reeds voltooide ekstra werk, governance of post-MVP voortsetting.
 
 ## MCP-EPIC-001 Platform Foundation
 
@@ -115,7 +115,8 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | MCP-US-046 | Footswitch And Status LED | Later | US-004 | Debounce, bypass en LED-status werk sonder globale status |
 | MCP-US-047 | Pedal Power, Safe Volume And Audio Protection | Later | US-021, US-075 | Krag, speaker/headphone/line-out-grense, gain/attenuasie, mute, filtering, ESD/polariteit en beskerming is op breadboard geskematiseer en met veilige testpunte gemeet |
 | MCP-US-048 | KiCad Reference Pedal PCB | Later | US-047 | Die Hardware Engineer en ervare KiCad Product Owner lewer skema, PCB, footprints, testpunte en BOM; ERC/DRC, bring-up en vervaardigingsuitsette slaag |
-| MCP-US-075 | Safe Development Audio Load And Volume Gate | MVP-Enabler (In Review) | US-016, US-063 | v0.16.0 se `0.08` gain, `0.25` plafon, startup mute en lae-volume I2S-profiel slaag 120 hosttoetse; Done wag op hoorbare 4-8 ohm speaker-HIL, sonder direkte koptelefoon/line-in/potmeter oor BTL |
+| MCP-US-075 | Safe Development Audio Load And Volume Gate | Done (PO exception) | US-016, US-063 | v0.16.0 se `0.08` gain, `0.25` plafon, startup mute, 120 hosttoetse en hoorbare G-C-D HIL slaag; die PO aanvaar die tydelike TRS-prototiperisiko sonder produksieveiligheidsclaim |
+| MCP-US-076 | Certified Speaker, Headphone And Pedal Output Cleanup | Later | US-047, US-075 | Afsonderlike speaker-, headphone- en pedal/line-out-paaie het geskikte impedansie, gain, mute, beskerming, meetpunte en HIL; geen direkte BTL-na-TRS produksiepad nie |
 | MCP-US-049 | External Audio Input Architecture | Parking lot | US-047 | ADC/codec, headroom en DSP-roete het ’n goedgekeurde ADR |
 
 ## MCP-EPIC-008 Portability, Quality And Release
