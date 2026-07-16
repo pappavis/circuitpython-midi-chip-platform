@@ -1,11 +1,11 @@
 # Bestand: hil.py
-# Versienommer: 0.17.0
-# Doel: Verifieer dependency-closed deploy met D1-runtime en CircuitPython REPL/autoreload-handdruk.
+# Versienommer: 0.18.0
+# Doel: Verifieer dependency-closed deploy met realtime-baseline, D1-runtime en CircuitPython REPL/autoreload-handdruk.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-GREEN-007
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
+# Actienr: MCP-ACT-077-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
 
 import ast
 import hashlib
@@ -66,6 +66,10 @@ class HilDeploymentManifest:
                 (
                     "src/midi_chip_platform/i2s_audio.py",
                     "lib/midi_chip_platform/i2s_audio.py",
+                ),
+                (
+                    "src/midi_chip_platform/realtime_baseline.py",
+                    "lib/midi_chip_platform/realtime_baseline.py",
                 ),
                 (
                     "src/midi_chip_platform/core.py",
@@ -436,6 +440,7 @@ class SerialExecutionProbe:
                     if (
                         b"DEVICE_EXECUTION_STATUS=READY" in captured
                         or b"D1_RUNTIME_READY" in captured
+                        or b"REALTIME_BASELINE_READY" in captured
                     ):
                         break
                 self._sleeper.sleep(self._read_pause_seconds)
@@ -556,10 +561,18 @@ class HardwareInLoopVerifier:
             and "D1_RUNTIME_READY" in capture
             and self._release_metadata.banner() in capture
         )
-        passed = import_smoke_passed or fast_boot_passed
+        realtime_baseline_passed = (
+            "DEVICE_FAST_BOOT_STATUS=ENABLED" in capture
+            and "REALTIME_BASELINE_MIDI_INPUT_STATUS=OPEN" in capture
+            and "REALTIME_BASELINE_READY" in capture
+            and self._release_metadata.banner() in capture
+        )
+        passed = import_smoke_passed or fast_boot_passed or realtime_baseline_passed
         evidence = "current release and dependency-import markers via serial REPL"
         if fast_boot_passed:
             evidence = "current release and D1 fast-boot runtime markers via serial REPL"
+        if realtime_baseline_passed:
+            evidence = "current release and realtime-baseline markers via serial REPL"
         return HilCheckResult(
             "execution",
             passed,

@@ -2,13 +2,13 @@
 
 <!--
 Bestand: backlog_sanity_check_v0.1.0.md
-Versienommer: 0.15.0
-Doel: Bewys backlog-volledigheid en merk US-077 as P0 herstelstory vir die US-055 realtime-blokker.
+Versienommer: 0.16.0
+Doel: Bewys backlog-volledigheid en merk US-077 as HIL-ready herstelstory vir die US-055 realtime-blokker.
 Sprint: Sprint 0
 Epic: Alle epics
 User-Story: MCP-US-055 en MCP-US-077
-Actienr: MCP-ACT-055-REBASELINE-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-IMPEDIMENT
+Actienr: MCP-ACT-077-GREEN-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
 -->
 
 ## Resultaat
@@ -80,7 +80,7 @@ Status: **PASS vir 77 stories, 10 epics en die veiligheidsgewysigde 18-story MVP
 - MCP-US-063 is `Done`: die Product Owner het v0.15.0 se drie waveforms, A4=440 Hz, velocity en finale `D1_CORE_STATUS=PASS` aanvaar.
 - MCP-US-075 is `Done (PO exception)`: v0.16.0 bewys startup mute, `0.08` gain, `0.25` plafon, 120 groen hosttoetse en hoorbare G-C-D. Die PO aanvaar die tydelike TRS-prototiperisiko; US-076 parkeer gesertifiseerde fisiese uitsetcleanup ná MVP.
 - MCP-US-055 is `P0 Impediment`: v0.17.8 verbind Logic/USB-MIDI, D1 en veilige I2S op host met 136 groen toetse, maar sewe menslike HIL-pogings het nie betroubare realtime Logic-klank bewys nie. US-077 is bygevoeg as terug-na-basics herstelstory.
-- MCP-US-077 is `Next`: dit is 'n MVP-enabler en geen feature-uitbreiding nie. Dit bewys eers die kleinste realtime USB-MIDI NoteOn na bekende I2S-toon primitive voordat D1 weer in die pad geplaas word.
+- MCP-US-077 is `In Review / HIL Ready`: v0.18.0 voeg die kleinste realtime USB-MIDI NoteOn na voorafberekende I2S-toon primitive by; 144 hosttoetse slaag. Menslike Logic/HIL hoorbaarheid bly die closure-hek.
 - MCP-US-003 is ná fisiese connection/deploy/execution/USB-MIDI-bewys `Done`.
 - MCP-US-007 is `Done`: v0.12.2 het op die Wemos S2 werklike Note On/Off ontvang en `matched_notes=1` gerapporteer. MCP-US-051 bly `In Review` tot sy latere klankadapterhek.
 - Die MVP Acceptance Set is US-001 tot US-009 (US-010 uitgesluit), US-014, US-016, US-050, US-051, US-055, US-057, US-063 en die veiligheidshek US-075.

@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.29.0
-Doel: Volledige geordende backlog met 'n P0 realtime-baseline herstelstory vir US-055.
+Versienommer: 0.30.0
+Doel: Volledige geordende backlog met US-077 realtime-baseline in review.
 Sprint: Sprint 2
 Epic: Alle epics
 User-Story: MCP-US-055 en MCP-US-077
-Actienr: MCP-ACT-055-REBASELINE-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-IMPEDIMENT
+Actienr: MCP-ACT-077-GREEN-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
 -->
 
 ## Statuslegende
@@ -129,7 +129,7 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | MCP-US-053 | Raspberry Pi Linux Blinka Adapter | Later | US-014, US-050 | Pi Zero/2/3 gebruik Linux/Blinka sonder om firmwareportabiliteit te beweer |
 | MCP-US-054 | Windows USB MIDI Acceptance | Post-MVP | US-003, US-007 | Toestel verskyn en ontvang note op 'n skoon Windows-rekenaar |
 | MCP-US-055 | macOS Logic Pro Audible D1 Acceptance | MVP-Must (P0 Impediment) | US-003, US-007, US-009, US-014, US-016, US-063, US-075, US-077 | v0.17.8 verbind USB-MIDI, D1 en veilige I2S op host, maar sewe menslike HIL-pogings het nie betroubare realtime Logic-klank bewys nie. Closure wag op US-077 en daarna 'n Product Owner HIL-pass |
-| MCP-US-077 | Realtime MIDI Audio Baseline Spike | MVP-Enabler (Next) | US-007, US-016, US-075 | Ultra-klein USB-MIDI NoteOn na bekende I2S-toon sonder D1-core, config loader of safety wrapper bewys of die S2/MAX98357 primitive realtime hoorbaar is voordat US-055 verder refactor |
+| MCP-US-077 | Realtime MIDI Audio Baseline Spike | MVP-Enabler (In Review / HIL Ready) | US-007, US-016, US-075 | v0.18.0 voeg 'n voorafberekende vaste I2S-tone runtime by wat D1 en SafeAudioOutput oorslaan; 144 hosttoetse slaag. Closure wag op Product Owner HIL: Logic NoteOn moet onmiddellik 'n korte vaste toon hoorbaar maak |
 | MCP-US-056 | Install Recovery And Diagnostics | Post-MVP | US-005, US-051 | Beginner-runbook dek geen MIDI, geen klank, safe mode en herstel |
 | MCP-US-068 | Stable USB MIDI Instance Identity | Post-MVP | US-003, US-004, US-055 | Elke toestel exposeer 'n herkenbare produknaam plus stabiele vier-karakter instance-ID; twee toestelle is onderskeibaar sonder UID/MAC-lekkasie |
 | MCP-US-059 | MIDI Guitar Hardware Acceptance | Post-MVP | US-018, US-058 | 'n Generiese MIDI-kitaar en Fishman-verwysing speel note, akkoorde, bends en slides; geen toestelnaam is 'n kodekonstante nie |

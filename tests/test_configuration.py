@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.17.8
-# Doel: Spesifiseer publieke fast-boot D1-runtime, veilige audio en private settings.
+# Versienommer: 0.18.0
+# Doel: Spesifiseer publieke fast-boot D1-runtime, realtime-baseline, veilige audio en private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-FIX-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-003
+# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
+# Actienr: MCP-ACT-077-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -50,6 +50,15 @@ class TestConfigurationDefaults:
         assert snapshot.get("synth.d1.event_logging") == "none"
         assert snapshot.get("synth.d1.timing_marker_enabled") is True
         assert snapshot.get("synth.d1.timing_marker_pin") == "IO9"
+        assert snapshot.get("realtime_baseline.enabled") is False
+        assert snapshot.get("realtime_baseline.sample_rate") == 16000
+        assert snapshot.get("realtime_baseline.frequency_hz") == 440.0
+        assert snapshot.get("realtime_baseline.amplitude") == 4096
+        assert snapshot.get("realtime_baseline.tone_seconds") == 0.12
+        assert snapshot.get("realtime_baseline.max_note_events") == 0
+        assert snapshot.get("realtime_baseline.timeout_seconds") == 0.0
+        assert snapshot.get("realtime_baseline.idle_sleep_seconds") == 0.0
+        assert snapshot.get("realtime_baseline.event_logging") == "summary"
         assert snapshot.get("midi.diagnostic.enabled") is False
         assert snapshot.get("midi.diagnostic.max_events") == 8
         assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
@@ -77,6 +86,15 @@ class TestConfigurationDefaults:
         assert 'D1_EVENT_LOGGING = "none"' in settings_example
         assert 'D1_TIMING_MARKER_ENABLED = "true"' in settings_example
         assert 'D1_TIMING_MARKER_PIN = "IO9"' in settings_example
+        assert 'REALTIME_BASELINE_ENABLED = "false"' in settings_example
+        assert "REALTIME_BASELINE_SAMPLE_RATE = 16000" in settings_example
+        assert 'REALTIME_BASELINE_FREQUENCY_HZ = "440.0"' in settings_example
+        assert "REALTIME_BASELINE_AMPLITUDE = 4096" in settings_example
+        assert 'REALTIME_BASELINE_TONE_SECONDS = "0.12"' in settings_example
+        assert "REALTIME_BASELINE_MAX_NOTE_EVENTS = 0" in settings_example
+        assert 'REALTIME_BASELINE_TIMEOUT_SECONDS = "0.0"' in settings_example
+        assert 'REALTIME_BASELINE_IDLE_SLEEP_SECONDS = "0.0"' in settings_example
+        assert 'REALTIME_BASELINE_EVENT_LOGGING = "summary"' in settings_example
 
 
 class TestConfigurationSecretBoundary:
@@ -167,6 +185,8 @@ class TestConfigurationSecretBoundary:
             "D1_RUNTIME_ENABLED": "false",
             "D1_SAMPLE_RATE": "22050",
             "D1_AMPLITUDE": "0.1",
+            "REALTIME_BASELINE_ENABLED": "true",
+            "REALTIME_BASELINE_TONE_SECONDS": "0.2",
             "MIDI_DIAGNOSTIC_ENABLED": "true",
             "MIDI_DIAGNOSTIC_MAX_EVENTS": "12",
         }
@@ -180,6 +200,8 @@ class TestConfigurationSecretBoundary:
         assert snapshot.get("synth.d1.enabled") is False
         assert snapshot.get("synth.d1.sample_rate") == 22050
         assert snapshot.get("synth.d1.amplitude") == 0.1
+        assert snapshot.get("realtime_baseline.enabled") is True
+        assert snapshot.get("realtime_baseline.tone_seconds") == 0.2
         assert snapshot.get("midi.diagnostic.enabled") is True
         assert snapshot.get("midi.diagnostic.max_events") == 12
 

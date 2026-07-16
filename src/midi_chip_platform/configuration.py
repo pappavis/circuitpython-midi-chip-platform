@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.17.8
-# Doel: Laai publieke D1-runtime, fast-boot performance-verstekke en private settings.
+# Versienommer: 0.18.0
+# Doel: Laai publieke D1-runtime, realtime-baseline en private settings.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-FIX-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-003
+# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
+# Actienr: MCP-ACT-077-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -43,6 +43,15 @@ class ConfigurationDefaults:
             "synth.d1.event_logging": "none",
             "synth.d1.timing_marker_enabled": True,
             "synth.d1.timing_marker_pin": "IO9",
+            "realtime_baseline.enabled": False,
+            "realtime_baseline.sample_rate": 16000,
+            "realtime_baseline.frequency_hz": 440.0,
+            "realtime_baseline.amplitude": 4096,
+            "realtime_baseline.tone_seconds": 0.12,
+            "realtime_baseline.max_note_events": 0,
+            "realtime_baseline.timeout_seconds": 0.0,
+            "realtime_baseline.idle_sleep_seconds": 0.0,
+            "realtime_baseline.event_logging": "summary",
             "midi.input.port_index": 0,
             "midi.diagnostic.enabled": False,
             "midi.diagnostic.max_events": 8,
@@ -91,6 +100,15 @@ class EnvironmentSettingsSource:
             "synth.d1.event_logging": "D1_EVENT_LOGGING",
             "synth.d1.timing_marker_enabled": "D1_TIMING_MARKER_ENABLED",
             "synth.d1.timing_marker_pin": "D1_TIMING_MARKER_PIN",
+            "realtime_baseline.enabled": "REALTIME_BASELINE_ENABLED",
+            "realtime_baseline.sample_rate": "REALTIME_BASELINE_SAMPLE_RATE",
+            "realtime_baseline.frequency_hz": "REALTIME_BASELINE_FREQUENCY_HZ",
+            "realtime_baseline.amplitude": "REALTIME_BASELINE_AMPLITUDE",
+            "realtime_baseline.tone_seconds": "REALTIME_BASELINE_TONE_SECONDS",
+            "realtime_baseline.max_note_events": "REALTIME_BASELINE_MAX_NOTE_EVENTS",
+            "realtime_baseline.timeout_seconds": "REALTIME_BASELINE_TIMEOUT_SECONDS",
+            "realtime_baseline.idle_sleep_seconds": "REALTIME_BASELINE_IDLE_SLEEP_SECONDS",
+            "realtime_baseline.event_logging": "REALTIME_BASELINE_EVENT_LOGGING",
             "midi.input.port_index": "MIDI_INPUT_PORT_INDEX",
             "midi.diagnostic.enabled": "MIDI_DIAGNOSTIC_ENABLED",
             "midi.diagnostic.max_events": "MIDI_DIAGNOSTIC_MAX_EVENTS",

@@ -1,11 +1,11 @@
 # Bestand: test_device_runtime.py
-# Versienommer: 0.17.8
-# Doel: Spesifiseer toestel-uitvoer, dependency-bewys, diagnostiek en D1 fast-boot runtime-start.
+# Versienommer: 0.18.0
+# Doel: Spesifiseer toestel-uitvoer, dependency-bewys, diagnostiek, realtime-baseline en D1 fast-boot runtime-start.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-FIX-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-003
+# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
+# Actienr: MCP-ACT-077-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
 
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
 from midi_chip_platform.release import ReleaseMetadata
@@ -83,13 +83,14 @@ class TestDeviceRuntimeApplication:
             return True
 
     class FakeRuntimeFactory:
-        def __init__(self, runtime):
+        def __init__(self, runtime, key="synth.d1.enabled"):
             self._runtime = runtime
+            self._key = str(key)
             self.configuration = None
 
         def create_if_enabled(self, configuration):
             self.configuration = configuration
-            if not configuration.get("synth.d1.enabled", False):
+            if not configuration.get(self._key, False):
                 return None
             return self._runtime
 
@@ -264,6 +265,37 @@ class TestDeviceRuntimeApplication:
         assert diagnostic.run_count == 1
         assert runtime.run_count == 0
 
+    def test_realtime_baseline_takes_precedence_over_d1_runtime(self) -> None:
+        output = []
+        baseline = self.FakeRuntime()
+        d1_runtime = self.FakeRuntime()
+        application = DeviceRuntimeApplication(
+            release_metadata=ReleaseMetadata(
+                version="0.18.0",
+                user_story="MCP-US-077",
+                release_date="2026-07-16",
+            ),
+            configuration_loader=self.FakeConfigurationLoader(
+                {
+                    "realtime_baseline.enabled": True,
+                    "synth.d1.enabled": True,
+                    "synth.d1.fast_boot_mode": False,
+                }
+            ),
+            realtime_baseline_factory=self.FakeRuntimeFactory(
+                baseline,
+                key="realtime_baseline.enabled",
+            ),
+            synth_runtime_factory=self.FakeRuntimeFactory(d1_runtime),
+            output=output.append,
+        )
+
+        result = application.run()
+
+        assert result is True
+        assert baseline.run_count == 1
+        assert d1_runtime.run_count == 0
+
     def test_fast_boot_starts_d1_before_capability_and_import_smoke(self) -> None:
         output = []
         runtime = self.FakeRuntime()
@@ -301,5 +333,42 @@ class TestDeviceRuntimeApplication:
         assert output == [
             "circuitpython-midi-chip-platform v0.17.8 | "
             "story=MCP-US-055 | release-date=2026-07-16",
+            "DEVICE_FAST_BOOT_STATUS=ENABLED",
+        ]
+
+    def test_fast_boot_starts_realtime_baseline_before_d1(self) -> None:
+        output = []
+        baseline = self.FakeRuntime()
+        d1_runtime = self.FakeRuntime()
+        application = DeviceRuntimeApplication(
+            release_metadata=ReleaseMetadata(
+                version="0.18.0",
+                user_story="MCP-US-077",
+                release_date="2026-07-16",
+            ),
+            configuration_loader=self.FakeConfigurationLoader(
+                {
+                    "realtime_baseline.enabled": True,
+                    "synth.d1.enabled": True,
+                    "synth.d1.fast_boot_mode": True,
+                    "midi.diagnostic.enabled": False,
+                }
+            ),
+            realtime_baseline_factory=self.FakeRuntimeFactory(
+                baseline,
+                key="realtime_baseline.enabled",
+            ),
+            synth_runtime_factory=self.FakeRuntimeFactory(d1_runtime),
+            output=output.append,
+        )
+
+        result = application.run()
+
+        assert result is True
+        assert baseline.run_count == 1
+        assert d1_runtime.run_count == 0
+        assert output == [
+            "circuitpython-midi-chip-platform v0.18.0 | "
+            "story=MCP-US-077 | release-date=2026-07-16",
             "DEVICE_FAST_BOOT_STATUS=ENABLED",
         ]

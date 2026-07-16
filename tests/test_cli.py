@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.17.8
-# Doel: Toets hostdiagnose, D1-runtime release en release-naspeurbaarheid.
+# Versienommer: 0.18.0
+# Doel: Toets hostdiagnose, realtime-baseline release en release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-RED-005
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
+# Actienr: MCP-ACT-077-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
 
 from io import StringIO
 from pathlib import Path
@@ -69,8 +69,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.17.8 | "
-            "story=MCP-US-055 | release-date=2026-07-16\n"
+            "circuitpython-midi-chip-platform v0.18.0 | "
+            "story=MCP-US-077 | release-date=2026-07-16\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:

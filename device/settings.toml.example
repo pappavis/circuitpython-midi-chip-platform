@@ -37,6 +37,19 @@ D1_EVENT_LOGGING = "none"
 D1_TIMING_MARKER_ENABLED = "true"
 D1_TIMING_MARKER_PIN = "IO9"
 
+# P0 realtime baseline spike. Enable this temporarily when MCP-US-077 is under
+# test. It bypasses the D1 core and SafeAudioOutput and plays one precomputed
+# I2S tone on every USB-MIDI NoteOn.
+REALTIME_BASELINE_ENABLED = "false"
+REALTIME_BASELINE_SAMPLE_RATE = 16000
+REALTIME_BASELINE_FREQUENCY_HZ = "440.0"
+REALTIME_BASELINE_AMPLITUDE = 4096
+REALTIME_BASELINE_TONE_SECONDS = "0.12"
+REALTIME_BASELINE_MAX_NOTE_EVENTS = 0
+REALTIME_BASELINE_TIMEOUT_SECONDS = "0.0"
+REALTIME_BASELINE_IDLE_SLEEP_SECONDS = "0.0"
+REALTIME_BASELINE_EVENT_LOGGING = "summary"
+
 # Optional, bounded USB-MIDI Note On/Off acceptance diagnostic.
 # Leave disabled for normal startup. Enable temporarily, then restart the board.
 # CircuitPython 10.0.x os.getenv settings support strings and integers.

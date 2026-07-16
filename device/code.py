@@ -1,17 +1,18 @@
 # Bestand: code.py
-# Versienommer: 0.17.8
-# Doel: Start die Logic USB-MIDI D1 performance-runtime met GPIO-marker op die toestel.
+# Versienommer: 0.18.0
+# Doel: Start die realtime MIDI-audio baseline of D1 runtime op die toestel.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-REALTIME-FIX-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-003
+# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
+# Actienr: MCP-ACT-077-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
 
 from midi_chip_platform.configuration import CircuitPythonConfigurationFactory
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
 from midi_chip_platform.d1_runtime import D1UsbMidiI2sRuntimeFactory
 from midi_chip_platform.midi_usb import CircuitPythonUsbMidiDiagnosticFactory
 from midi_chip_platform.platform_capabilities import CircuitPythonCapabilityFactory
+from midi_chip_platform.realtime_baseline import RealtimeMidiAudioBaselineFactory
 from midi_chip_platform.release import ReleaseMetadata
 
 
@@ -45,10 +46,15 @@ if __name__ == "__main__":
                 "midi_chip_platform.midi_semantics",
                 "midi_chip_platform.midi_usb",
                 "midi_chip_platform.ports",
+                "midi_chip_platform.realtime_baseline",
                 "midi_chip_platform.routing",
             ),
         ),
         midi_diagnostic_factory=CircuitPythonUsbMidiDiagnosticFactory(
+            importer=__import__,
+            output=print,
+        ),
+        realtime_baseline_factory=RealtimeMidiAudioBaselineFactory(
             importer=__import__,
             output=print,
         ),

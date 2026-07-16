@@ -1,11 +1,11 @@
 # Bestand: test_hil.py
-# Versienommer: 0.17.8
-# Doel: Spesifiseer deploy-, execution- en D1-runtime releasebewys.
+# Versienommer: 0.18.0
+# Doel: Spesifiseer deploy-, execution-, realtime-baseline- en D1-runtime releasebewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-RED-006
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
+# Actienr: MCP-ACT-077-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
 
 from io import StringIO
 from pathlib import Path
@@ -26,7 +26,7 @@ class TestHilDeploymentManifest:
     def test_default_manifest_contains_minimal_device_release(self) -> None:
         manifest = HilDeploymentManifest.default()
 
-        assert len(manifest.entries) == 21
+        assert len(manifest.entries) == 22
         assert ("device/boot.py", "boot.py") in manifest.entries
         assert ("device/i2s_test.py", "i2s_test.py") in manifest.entries
         assert (
@@ -40,6 +40,10 @@ class TestHilDeploymentManifest:
         assert (
             "src/midi_chip_platform/i2s_audio.py",
             "lib/midi_chip_platform/i2s_audio.py",
+        ) in manifest.entries
+        assert (
+            "src/midi_chip_platform/realtime_baseline.py",
+            "lib/midi_chip_platform/realtime_baseline.py",
         ) in manifest.entries
         assert (
             "src/midi_chip_platform/device_runtime.py",
@@ -339,14 +343,14 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.17.8 | story=MCP-US-055 | "
+            "circuitpython-midi-chip-platform v0.18.0 | story=MCP-US-077 | "
             "release-date=2026-07-16\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.17.8 | story=MCP-US-055 | "
+            "circuitpython-midi-chip-platform v0.18.0 | story=MCP-US-077 | "
             "release-date=2026-07-16\nDEVICE_IMPORT_STATUS=PASS\n"
             "DEVICE_EXECUTION_STATUS=READY"
         )
@@ -383,14 +387,14 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.17.8 | story=MCP-US-055 | "
+            "circuitpython-midi-chip-platform v0.18.0 | story=MCP-US-077 | "
             "release-date=2026-07-16\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.17.8 | story=MCP-US-055 | "
+            "circuitpython-midi-chip-platform v0.18.0 | story=MCP-US-077 | "
             "release-date=2026-07-16\n"
             "DEVICE_FAST_BOOT_STATUS=ENABLED\n"
             "D1_MIDI_INPUT_STATUS=OPEN\n"
@@ -408,6 +412,48 @@ class TestHardwareInLoopVerifier:
         assert verifier.run() is True
         assert "execution: PASS" in output.getvalue()
         assert "D1 fast-boot runtime markers" in output.getvalue()
+
+    def test_fast_boot_realtime_baseline_proof_passes_without_import_smoke(
+        self, tmp_path
+    ) -> None:
+        source_root = tmp_path / "source"
+        device_root = tmp_path / "device"
+        manifest = HilDeploymentManifest.default()
+        for source_relative, device_relative in manifest.entries:
+            source_path = source_root / source_relative
+            device_path = device_root / device_relative
+            source_path.parent.mkdir(parents=True, exist_ok=True)
+            device_path.parent.mkdir(parents=True, exist_ok=True)
+            source_path.write_bytes(source_relative.encode("ascii"))
+            device_path.write_bytes(source_relative.encode("ascii"))
+        (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
+        (device_root / "boot_out.txt").write_text(
+            "Board ID:lolin_s2_mini\n"
+            "circuitpython-midi-chip-platform v0.18.0 | story=MCP-US-077 | "
+            "release-date=2026-07-16\n"
+            "BOOT_STATUS=PASS\n",
+            encoding="utf-8",
+        )
+        output = StringIO()
+        serial_probe = self.FakeSerialProbe(
+            "circuitpython-midi-chip-platform v0.18.0 | story=MCP-US-077 | "
+            "release-date=2026-07-16\n"
+            "DEVICE_FAST_BOOT_STATUS=ENABLED\n"
+            "REALTIME_BASELINE_MIDI_INPUT_STATUS=OPEN\n"
+            "REALTIME_BASELINE_READY;ready_ms=8"
+        )
+        verifier = HardwareInLoopVerifier(
+            source_root=source_root,
+            device_root=device_root,
+            serial_port="private-port-id",
+            manifest=manifest,
+            serial_probe=serial_probe,
+            output=output,
+        )
+
+        assert verifier.run() is True
+        assert "execution: PASS" in output.getvalue()
+        assert "realtime-baseline markers" in output.getvalue()
 
     def test_hash_mismatch_fails_deployment_proof(self, tmp_path) -> None:
         source_root = tmp_path / "source"
