@@ -1,5 +1,5 @@
 # Bestand: d1_runtime.py
-# Versienommer: 0.17.3
+# Versienommer: 0.17.4
 # Doel: Verbind USB-MIDI, D1-kern en veilige I2S-uitvoer vir die Logic MVP.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release

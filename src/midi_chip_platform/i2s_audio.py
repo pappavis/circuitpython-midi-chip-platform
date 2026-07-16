@@ -1,11 +1,11 @@
 # Bestand: i2s_audio.py
-# Versienommer: 0.17.0
-# Doel: Lewer 'n CircuitPython I2S AudioOutputPort vir begrensde PCM-blokke.
+# Versienommer: 0.17.4
+# Doel: Lewer 'n CircuitPython I2S AudioOutputPort met diagnose-gelyke timed playback.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-003 Audio And Chip Core
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+# Actienr: MCP-ACT-055-IMP-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-004
 
 from midi_chip_platform.audio import AudioBlock, AudioStreamFormat
 from midi_chip_platform.ports import AudioOutputPort
@@ -34,6 +34,7 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
         self._time_module = None
         self._device = None
         self._is_muted = True
+        self._active_sample = None
 
     @property
     def audio_format(self):
@@ -74,14 +75,20 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
             if self._is_muted
             else block
         )
-        raw_sample = self._raw_sample_for(selected_block)
-        self._device.play(raw_sample, loop=False)
-        self._wait_until_finished()
+        if self._is_muted:
+            self._sleep_for_block(selected_block)
+            return
+        self._active_sample = self._raw_sample_for(selected_block)
+        self._device.play(self._active_sample, loop=True)
+        self._sleep_for_block(selected_block)
+        self._device.stop()
+        self._active_sample = None
 
     def mute(self):
         self._is_muted = True
         if self._device is not None:
             self._device.stop()
+        self._active_sample = None
 
     def unmute(self):
         if not self.is_open:
@@ -105,6 +112,6 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
             sample_rate=self._audio_format.sample_rate,
         )
 
-    def _wait_until_finished(self):
-        while getattr(self._device, "playing", False):
-            self._time_module.sleep(self._poll_sleep_seconds)
+    def _sleep_for_block(self, block):
+        duration_seconds = block.frame_count / self._audio_format.sample_rate
+        self._time_module.sleep(max(duration_seconds, self._poll_sleep_seconds))

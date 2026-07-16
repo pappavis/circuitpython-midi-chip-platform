@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.17.3
+# Versienommer: 0.17.4
 # Doel: Laai publieke D1-runtime, veilige-audioverstekke en private settings.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-IMP-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-003
+# Actienr: MCP-ACT-055-IMP-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-004
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -28,7 +28,7 @@ class ConfigurationDefaults:
             "audio.startup_test": False,
             "clock.bpm": 120,
             "synth.d1.enabled": True,
-            "synth.d1.waveform": "sine",
+            "synth.d1.waveform": "square",
             "synth.d1.sample_rate": 16000,
             "synth.d1.frames_per_block": 128,
             "synth.d1.amplitude": 0.5,

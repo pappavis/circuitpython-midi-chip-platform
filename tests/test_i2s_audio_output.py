@@ -1,11 +1,11 @@
 # Bestand: test_i2s_audio_output.py
-# Versienommer: 0.17.0
-# Doel: Spesifiseer die CircuitPython I2S AudioOutputPort vir D1 runtime-blokke.
+# Versienommer: 0.17.4
+# Doel: Spesifiseer timed CircuitPython I2S playback vir D1 runtime-blokke.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-003 Audio And Chip Core
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-RED-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+# Actienr: MCP-ACT-055-IMP-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-IMPEDIMENT-004
 
 from midi_chip_platform.audio import AudioBlock, AudioStreamFormat
 from midi_chip_platform.i2s_audio import CircuitPythonI2sAudioOutput
@@ -108,6 +108,8 @@ class TestCircuitPythonI2sAudioOutput:
         sample, loop = audio_bus.device.played[0]
         assert sample.buffer == (0, 32767, 32768, 65535)
         assert sample.sample_rate == 16000
-        assert loop is False
+        assert loop is True
+        assert output._active_sample is None
+        assert output._time_module.sleep_calls == [0.001]
         assert audio_bus.device.stop_count >= 1
         assert audio_bus.device.deinit_count == 1

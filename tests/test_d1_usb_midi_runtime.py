@@ -1,5 +1,5 @@
 # Bestand: test_d1_usb_midi_runtime.py
-# Versienommer: 0.17.3
+# Versienommer: 0.17.4
 # Doel: Spesifiseer die USB-MIDI na D1 na I2S runtime-lus vir Logic-aanvaarding.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release

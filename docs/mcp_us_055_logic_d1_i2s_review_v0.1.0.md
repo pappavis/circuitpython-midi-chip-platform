@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 
 ## Status
 
-**IN REVIEW / HIL READY.** Die host-implementering is groen en dependency-closed. `v0.17.3` verbind nou die bestaande USB-MIDI input, die draagbare D1-basiskern, die veilige `SafeAudioOutput` en 'n CircuitPython I2S backend. Die v0.17.3 impediment-fix behou die v0.17.2 idle-silence fix en voeg D1-spesifieke HIL audition gain, `minimum_note_velocity=64` en `play_velocity` logging by sodat Logic-note velocities soos 32-46 hoorbaar getoets kan word. Finale closure wag op menslike HIL: Logic Pro stuur MIDI na die Wemos S2 en die Product Owner hoor D1-klank via die MAX98357A-opstelling.
+**IN REVIEW / HIL READY.** Die host-implementering is groen en dependency-closed. `v0.17.4` verbind nou die bestaande USB-MIDI input, die draagbare D1-basiskern, die veilige `SafeAudioOutput` en 'n CircuitPython I2S backend. Die v0.17.4 impediment-fix behou die HIL audition gain en verander die I2S-adapter na dieselfde timed playback-patroon as die werkende `i2s_test.py`: `loop=True`, slaap vir die blokduur, dan `stop()`. Die D1 audition default is `square` vir duidelike scope- en hoorbaarheidstoetsing. Finale closure wag op menslike HIL: Logic Pro stuur MIDI na die Wemos S2 en die Product Owner hoor D1-klank via die MAX98357A-opstelling.
 
 ## Implementering
 
@@ -41,7 +41,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 4. Verwag aan die begin:
 
 ```text
-circuitpython-midi-chip-platform v0.17.3 | story=MCP-US-055 | release-date=2026-07-16
+circuitpython-midi-chip-platform v0.17.4 | story=MCP-US-055 | release-date=2026-07-16
 DEVICE_EXECUTION_STATUS=READY
 D1_RUNTIME_STATUS=START;core=d1;sample_rate=16000;frames_per_block=128;max_blocks=0;minimum_note_seconds=0.12;minimum_note_velocity=64;master_gain=0.250
 D1_MIDI_INPUT_STATUS=OPEN
@@ -93,7 +93,7 @@ D1_MIDI_EVENT=note_off;channel=1;note=...
 | MIDI Engineer | Hergebruik die bestaande USB-MIDI translator en note semantics. |
 | DSP/Chip Engineer | Hergebruik D1 PCM-blokke en veilige output-gain. |
 | QA/HIL Engineer | Lewer RED/GREEN, 125 regressietoetse en menslike HIL-instructies. |
-| Release/Documentation | Berei `v0.17.3` as In Review voor en hou US-057 vir finale release/burn-in. |
+| Release/Documentation | Berei `v0.17.4` as In Review voor en hou US-057 vir finale release/burn-in. |
 | External Architecture Reviewer (Copilot) | Die vertical-slice aanbeveling USB-MIDI -> D1 -> audio is nou geimplementeer. |
 | Devil's Advocate | Waarsku dat hostgroen nog nie hoorbare Logic-aanvaarding is nie. |
 
