@@ -1,5 +1,5 @@
 # Bestand: test_hil.py
-# Versienommer: 0.14.0
+# Versienommer: 0.15.0
 # Doel: Spesifiseer deploy-, execution- en US-005 releasebewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
@@ -26,9 +26,13 @@ class TestHilDeploymentManifest:
     def test_default_manifest_contains_minimal_device_release(self) -> None:
         manifest = HilDeploymentManifest.default()
 
-        assert len(manifest.entries) == 18
+        assert len(manifest.entries) == 19
         assert ("device/boot.py", "boot.py") in manifest.entries
         assert ("device/i2s_test.py", "i2s_test.py") in manifest.entries
+        assert (
+            "src/midi_chip_platform/d1_core.py",
+            "lib/midi_chip_platform/d1_core.py",
+        ) in manifest.entries
         assert (
             "src/midi_chip_platform/device_runtime.py",
             "lib/midi_chip_platform/device_runtime.py",
@@ -112,9 +116,9 @@ class TestCircuitPythonLibraryManifest:
         source_root = Path(__file__).resolve().parents[1]
         requirement_lines = tuple(
             line.strip()
-            for line in (source_root / "device" / "requirements.txt").read_text(
-                encoding="utf-8"
-            ).splitlines()
+            for line in (source_root / "device" / "requirements.txt")
+            .read_text(encoding="utf-8")
+            .splitlines()
             if line.strip() and not line.lstrip().startswith("#")
         )
 
@@ -156,7 +160,9 @@ class TestHardwareInLoopDeployer:
             self.received_port = serial_port
             return self._session
 
-    def test_deploy_copies_manifest_and_preserves_unrelated_files(self, tmp_path) -> None:
+    def test_deploy_copies_manifest_and_preserves_unrelated_files(
+        self, tmp_path
+    ) -> None:
         source_root = tmp_path / "source"
         device_root = tmp_path / "device"
         manifest = HilDeploymentManifest(
@@ -209,9 +215,13 @@ class TestHardwareInLoopDeployer:
 
         assert deployed is False
         assert not (device_root / "boot.py").exists()
-        assert "HIL_DEPLOY_STATUS=FAIL;reason=missing-source;files=1" in output.getvalue()
+        assert (
+            "HIL_DEPLOY_STATUS=FAIL;reason=missing-source;files=1" in output.getvalue()
+        )
 
-    def test_deploy_refuses_manifest_with_missing_internal_import(self, tmp_path) -> None:
+    def test_deploy_refuses_manifest_with_missing_internal_import(
+        self, tmp_path
+    ) -> None:
         source_root = Path(__file__).resolve().parents[1]
         device_root = tmp_path / "device"
         device_root.mkdir()
@@ -305,7 +315,9 @@ class TestHardwareInLoopVerifier:
             self.received_port = serial_port
             return self._capture
 
-    def test_all_three_proof_levels_pass_without_publishing_paths(self, tmp_path) -> None:
+    def test_all_three_proof_levels_pass_without_publishing_paths(
+        self, tmp_path
+    ) -> None:
         source_root = tmp_path / "source"
         device_root = tmp_path / "device"
         manifest = HilDeploymentManifest.default()
@@ -319,14 +331,14 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.14.0 | story=MCP-US-016 | "
+            "circuitpython-midi-chip-platform v0.15.0 | story=MCP-US-063 | "
             "release-date=2026-07-16\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.14.0 | story=MCP-US-016 | "
+            "circuitpython-midi-chip-platform v0.15.0 | story=MCP-US-063 | "
             "release-date=2026-07-16\nDEVICE_IMPORT_STATUS=PASS\n"
             "DEVICE_EXECUTION_STATUS=READY"
         )
@@ -384,7 +396,7 @@ class TestHardwareInLoopVerifier:
         (device_root / "boot.py").write_bytes(b"approved")
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
-            "circuitpython-midi-chip-platform v0.14.0 | story=MCP-US-016 | "
+            "circuitpython-midi-chip-platform v0.15.0 | story=MCP-US-063 | "
             "release-date=2026-07-16\nBOOT_STATUS=PASS",
             encoding="utf-8",
         )
@@ -394,7 +406,7 @@ class TestHardwareInLoopVerifier:
             serial_port="redacted",
             manifest=manifest,
             serial_probe=self.FakeSerialProbe(
-                "circuitpython-midi-chip-platform v0.14.0 | story=MCP-US-016 | "
+                "circuitpython-midi-chip-platform v0.15.0 | story=MCP-US-063 | "
                 "release-date=2026-07-16\nDEVICE_EXECUTION_STATUS=READY"
             ),
             output=StringIO(),
@@ -497,5 +509,7 @@ class TestSerialHardResetProbe:
         probe.reset("private-port-id")
 
         assert b"\x03\x03\r\n" in connection.writes
-        assert b"import microcontroller; microcontroller.reset()\r\n" in connection.writes
+        assert (
+            b"import microcontroller; microcontroller.reset()\r\n" in connection.writes
+        )
         assert connection.closed is True

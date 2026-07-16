@@ -1,11 +1,11 @@
 # Bestand: testing.py
-# Versienommer: 0.13.0
-# Doel: Verskaf host-fakes vir MIDI-, blokaudio- en kernkontraktoetse.
+# Versienommer: 0.15.0
+# Doel: Verskaf host-fakes vir MIDI-, deurlopende blokaudio- en kernkontraktoetse.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-003 Audio And Chip Core
-# User-Story: MCP-US-014 AudioOutput Port And Null Backend
-# Actienr: MCP-ACT-014-GREEN-005
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-014-START
+# User-Story: MCP-US-063 Portable D1 Baseline Synth Core
+# Actienr: MCP-ACT-063-GREEN-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-063-START
 
 from midi_chip_platform.audio import AudioBlock, AudioStreamFormat
 from midi_chip_platform.audio import MemoryAudioOutput as AudioMemoryOutput
@@ -69,9 +69,12 @@ class MemoryConfiguration(ConfigurationPort):
 class RecordingSynthCore(SynthCore):
     def __init__(self, name, audio_format=None):
         self._name = str(name)
-        self._audio_format = audio_format if audio_format is not None else AudioStreamFormat()
+        self._audio_format = (
+            audio_format if audio_format is not None else AudioStreamFormat()
+        )
         self._events = []
         self._is_started = False
+        self._render_count = 0
 
     @property
     def name(self):
@@ -85,6 +88,10 @@ class RecordingSynthCore(SynthCore):
     def is_started(self):
         return self._is_started
 
+    @property
+    def render_count(self):
+        return self._render_count
+
     def start(self):
         self._is_started = True
 
@@ -94,6 +101,7 @@ class RecordingSynthCore(SynthCore):
         self._events.append(event)
 
     def render_audio_block(self):
+        self._render_count += 1
         return AudioBlock.silence(self._audio_format, frame_count=1)
 
     def stop(self):

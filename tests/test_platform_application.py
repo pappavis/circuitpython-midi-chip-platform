@@ -1,11 +1,11 @@
 # Bestand: test_platform_application.py
-# Versienommer: 0.13.0
-# Doel: Toets dependency injection en die blokgebaseerde platform-lifecycle.
+# Versienommer: 0.15.0
+# Doel: Toets dependency injection en die deurlopende blokgebaseerde platform-lifecycle.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-003 Audio And Chip Core
-# User-Story: MCP-US-014 AudioOutput Port And Null Backend
-# Actienr: MCP-ACT-014-RED-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-014-START
+# User-Story: MCP-US-063 Portable D1 Baseline Synth Core
+# Actienr: MCP-ACT-063-RED-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-063-START
 
 from midi_chip_platform.audio import AudioStreamFormat
 from midi_chip_platform.application import PlatformApplication
@@ -31,7 +31,9 @@ class TestPlatformApplication:
         registry = CoreRegistry()
         core = RecordingSynthCore("d1-test", audio_format)
         registry.register(channel=3, core=core)
-        application = PlatformApplication(midi_input, audio_output, clock, configuration, registry)
+        application = PlatformApplication(
+            midi_input, audio_output, clock, configuration, registry
+        )
 
         application.start()
         processed = application.step()
@@ -59,3 +61,29 @@ class TestPlatformApplication:
         assert application.is_started is False
         assert midi_input.is_open is False
         assert audio_output.is_open is False
+
+    def test_application_keeps_rendering_active_core_without_new_midi_event(
+        self,
+    ) -> None:
+        event = MidiEvent.note_on(channel=1, note=60, velocity=100)
+        midi_input = MemoryMidiInput((event,))
+        audio_format = AudioStreamFormat(frames_per_block=4)
+        audio_output = MemoryAudioOutput(audio_format)
+        registry = CoreRegistry()
+        core = RecordingSynthCore("d1-test", audio_format)
+        registry.register(channel=1, core=core)
+        application = PlatformApplication(
+            midi_input,
+            audio_output,
+            ManualClock(),
+            MemoryConfiguration(),
+            registry,
+        )
+
+        application.start()
+        assert application.step() is True
+        assert application.step() is True
+        application.stop()
+
+        assert len(audio_output.blocks) == 2
+        assert core.render_count == 2

@@ -1,5 +1,5 @@
 # Bestand: test_cli.py
-# Versienommer: 0.14.0
+# Versienommer: 0.15.0
 # Doel: Toets host-diagnose en US-005 release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
@@ -69,8 +69,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.14.0 | "
-            "story=MCP-US-016 | release-date=2026-07-16\n"
+            "circuitpython-midi-chip-platform v0.15.0 | "
+            "story=MCP-US-063 | release-date=2026-07-16\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:
@@ -93,11 +93,41 @@ class TestCommandLineApplication:
         assert exit_code == 0
         assert "EVENT_MODEL_STATUS=PASS" in output.getvalue()
         assert "NOTE_EVENT=note_on:channel=1:note=60:velocity=100" in output.getvalue()
-        assert "CONTROL_EVENT=control_change:channel=1:control=1:value=64" in output.getvalue()
+        assert (
+            "CONTROL_EVENT=control_change:channel=1:control=1:value=64"
+            in output.getvalue()
+        )
         assert "PITCH_BEND_EVENT=pitch_bend:channel=1:value=8192" in output.getvalue()
         assert "CLOCK_EVENT=timing_clock:channel=none" in output.getvalue()
 
-    def test_ble_diagnose_reports_s2_as_unsupported_without_starting_radio(self) -> None:
+    def test_d1_diagnose_reports_three_waveforms_and_note_off_silence(self) -> None:
+        output = StringIO()
+        application = CommandLineApplication(output=output)
+
+        exit_code = application.run(
+            (
+                "d1-diagnose",
+                "--note",
+                "69",
+                "--velocity",
+                "100",
+                "--sample-rate",
+                "16000",
+                "--frames-per-block",
+                "64",
+            )
+        )
+
+        result = output.getvalue()
+        assert exit_code == 0
+        assert "D1_WAVEFORM=sine;frames=64" in result
+        assert "D1_WAVEFORM=saw;frames=64" in result
+        assert "D1_WAVEFORM=square;frames=64" in result
+        assert "D1_CORE_STATUS=PASS;note=69;frequency_hz=440.000000" in result
+
+    def test_ble_diagnose_reports_s2_as_unsupported_without_starting_radio(
+        self,
+    ) -> None:
         output = StringIO()
         application = CommandLineApplication(output=output)
 
@@ -134,7 +164,9 @@ class TestCommandLineApplication:
     def test_hil_verify_delegates_paths_without_echoing_them(self) -> None:
         output = StringIO()
         factory = self.FakeVerifierFactory()
-        application = CommandLineApplication(output=output, hil_verifier_factory=factory)
+        application = CommandLineApplication(
+            output=output, hil_verifier_factory=factory
+        )
 
         exit_code = application.run(
             (
@@ -149,13 +181,19 @@ class TestCommandLineApplication:
         )
 
         assert exit_code == 0
-        assert factory.arguments[:3] == ("source-root", "device-root", "private-port-id")
+        assert factory.arguments[:3] == (
+            "source-root",
+            "device-root",
+            "private-port-id",
+        )
         assert "private-port-id" not in output.getvalue()
 
     def test_hil_deploy_delegates_paths_without_echoing_them(self) -> None:
         output = StringIO()
         factory = self.FakeDeployerFactory()
-        application = CommandLineApplication(output=output, hil_deployer_factory=factory)
+        application = CommandLineApplication(
+            output=output, hil_deployer_factory=factory
+        )
 
         exit_code = application.run(
             (
@@ -183,9 +221,7 @@ class TestCommandLineApplication:
         reset_probe = self.FakeResetProbe()
         application = CommandLineApplication(output=output, hil_reset_probe=reset_probe)
 
-        exit_code = application.run(
-            ("hil-reset", "--serial-port", "private-port-id")
-        )
+        exit_code = application.run(("hil-reset", "--serial-port", "private-port-id"))
 
         assert exit_code == 0
         assert reset_probe.received_port == "private-port-id"

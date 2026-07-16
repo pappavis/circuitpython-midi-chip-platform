@@ -2,7 +2,7 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.23.0
+Versienommer: 0.24.0
 Doel: Volledige geordende backlog met 'n bevrore, verkleinde MVP Acceptance Set.
 Sprint: Sprint 2
 Epic: Alle epics
@@ -61,7 +61,7 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | MCP-US-014 | AudioOutput Port And Null Backend | Done | US-002 | Blokgebaseerde mono/stereo signed-16 PCM-kontrak, Null/Memory-backends, application-integrasie en dependency-closed manifest slaag 99 hosttoetse sonder fisiese klankclaim |
 | MCP-US-016 | Standalone I2S Audible Diagnostic (MAX98357 Default) | Done | US-004, US-014 | Product Owner het op Wemos S2 hoorbare G3-C4-D4 mono-klank bevestig; serial `PASS`, 103 hosttoetse en heap 2056512->2056192 is bewys. Lang burn-in word onder US-051/US-057 voltooi |
 | MCP-US-015 | PWM Diagnostic Fallback | Post-MVP/contingency | US-004, US-014 | Gekose debugpenne lewer 'n meetbare fallback-sein wanneer I2S nie beskikbaar is nie |
-| MCP-US-063 | Portable D1 Baseline Synth Core | MVP-Must | US-006, US-008, US-009, US-014, US-016 | Nuut-geporteerde sine/saw/square D1-gedrag speel Note On/Off via AudioOutput, ruim op en slaag 'n 30-minute D1 smoke; geen desktop-backend of produksierepo-wysiging nie |
+| MCP-US-063 | Portable D1 Baseline Synth Core | MVP-Must (In Review) | US-006, US-008, US-009, US-014, US-016 | v0.15.0 se monofoniese sine/saw/square-kern, velocity, fasekontinuïteit, Note Off-stilte, deurlopende blokrendering en `d1-diagnose` is host-groen; hoorbare Logic/I2S en lang smoke volg onder US-055/US-051 |
 | MCP-US-017 | SN76489-Lite Three-Voice Core | Post-MVP | US-063, US-057 | Drie toonstemme speel onafhanklik met gedokumenteerde akkuraatheid |
 | MCP-US-018 | Voice Allocation And Stealing | Post-MVP | US-017 | Vierde noot volg 'n toetsbare steal-policy sonder vasloop |
 | MCP-US-020 | Optional Integrated G-C-D Startup Test | Post-MVP | US-016, US-063 | Opsionele sestiendenootreeks gebruik die D1/runtime-klankpad; dit is nie die onafhanklike US-016 hardewarediagnose nie |

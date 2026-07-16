@@ -1,19 +1,26 @@
 # Bestand: application.py
-# Versienommer: 0.13.0
-# Doel: Koordineer MIDI-roetering en blokgebaseerde audio sonder import-newe-effekte.
+# Versienommer: 0.15.0
+# Doel: Koordineer MIDI-roetering en deurlopende blokaudio sonder import-newe-effekte.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-003 Audio And Chip Core
-# User-Story: MCP-US-014 AudioOutput Port And Null Backend
-# Actienr: MCP-ACT-014-GREEN-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-014-START
+# User-Story: MCP-US-063 Portable D1 Baseline Synth Core
+# Actienr: MCP-ACT-063-GREEN-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-063-START
 
 from midi_chip_platform.core import CoreRegistry
-from midi_chip_platform.ports import AudioOutputPort, ClockPort, ConfigurationPort, MidiInputPort
+from midi_chip_platform.ports import (
+    AudioOutputPort,
+    ClockPort,
+    ConfigurationPort,
+    MidiInputPort,
+)
 from midi_chip_platform.routing import MidiChannelRouter
 
 
 class PlatformApplication:
-    def __init__(self, midi_input, audio_output, clock, configuration, registry, router=None):
+    def __init__(
+        self, midi_input, audio_output, clock, configuration, registry, router=None
+    ):
         self._require_type("midi_input", midi_input, MidiInputPort)
         self._require_type("audio_output", audio_output, AudioOutputPort)
         self._require_type("clock", clock, ClockPort)
@@ -46,16 +53,19 @@ class PlatformApplication:
             raise RuntimeError("application must be started before step")
         event = self._midi_input.receive()
         self._clock.tick()
-        if event is None:
-            return False
-        core = self._router.route(event)
-        if core is None:
-            return False
-        core.handle_event(event)
-        block = core.render_audio_block()
-        if block is not None:
-            self._audio_output.write_block(block)
-        return True
+        event_processed = False
+        if event is not None:
+            core = self._router.route(event)
+            if core is not None:
+                core.handle_event(event)
+                event_processed = True
+        block_rendered = False
+        for core in self._registry.cores():
+            block = core.render_audio_block()
+            if block is not None:
+                self._audio_output.write_block(block)
+                block_rendered = True
+        return event_processed or block_rendered
 
     def stop(self):
         if not self._is_started:

@@ -88,7 +88,7 @@ MCP-US-020 bly 'n aparte post-MVP-story vir 'n geïntegreerde, opsionele G-C-D-o
 
 `MCP-US-016 -> MCP-US-063 -> MCP-US-055 -> MCP-US-057`
 
-MCP-US-005 en MCP-US-014 is gesluit. MCP-US-016 is die aktiewe volgende story; geen D1-implementering spring die hoorbare I2S-hek oor nie.
+MCP-US-005, MCP-US-014 en MCP-US-016 is gesluit. MCP-US-063 is die aktiewe story en implementeer die draagbare D1-kern ná die geslaagde hoorbare I2S-hek; US-055 verbind dit daarna aan Logic en produksie-I2S.
 
 ## Besluithekke
 

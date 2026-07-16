@@ -22,7 +22,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / SCOPE-AMENDMENT-002
 
 ## Huidige kernstatus
 
-Geen synth core is tans in implementering nie. Die span werk aan platformfondasie en HIL-bewys. MCP-US-063 word die eerste draagbare musikale kern nadat bordvermoëns, die klankpoort, MAX98357-diagnose en die eventmodel gereed is.
+MCP-US-063 is nou die eerste draagbare musikale kern in implementering nadat bordvermoëns, die klankpoort, MAX98357-diagnose en die eventmodel gereed geword het. SN76489 begin eers ná die D1/Logic-MVP.
 
 ## Logiese uitvoervolgorde
 

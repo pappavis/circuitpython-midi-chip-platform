@@ -56,6 +56,10 @@ class HilDeploymentManifest:
                     "lib/midi_chip_platform/audio.py",
                 ),
                 (
+                    "src/midi_chip_platform/d1_core.py",
+                    "lib/midi_chip_platform/d1_core.py",
+                ),
+                (
                     "src/midi_chip_platform/core.py",
                     "lib/midi_chip_platform/core.py",
                 ),

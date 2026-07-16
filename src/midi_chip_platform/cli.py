@@ -1,16 +1,18 @@
 # Bestand: cli.py
-# Versienommer: 0.6.1
-# Doel: Bied IDE-onafhanklike diagnose en dependency-closed HIL-deploy/verifikasie.
-# Sprint: Sprint 2
-# Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-051/MCP-US-007 Dependency-Closed Deployment Impediment
-# Actienr: MCP-ACT-051-IMP-001-GREEN-006
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-051-IMP-001
+# Versienommer: 0.15.0
+# Doel: Bied IDE-onafhanklike D1-, platform- en HIL-diagnostiek.
+# Sprint: Sprint 3
+# Epic: MCP-EPIC-003 Audio And Chip Core
+# User-Story: MCP-US-063 Portable D1 Baseline Synth Core
+# Actienr: MCP-ACT-063-GREEN-005
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-063-START
 
 import argparse
 import sys
 
+from midi_chip_platform.audio import AudioStreamFormat
 from midi_chip_platform.ble_midi import BleMidiCapabilityGate, ImportModuleProbe
+from midi_chip_platform.d1_core import D1Patch, D1SynthCore
 from midi_chip_platform.events import ClockEvent, ControlEvent, NoteEvent
 from midi_chip_platform.hil import (
     HardwareInLoopDeployerFactory,
@@ -31,7 +33,9 @@ class CommandLineApplication:
         hil_reset_probe=None,
     ):
         self._output = output if output is not None else sys.stdout
-        self._release_metadata = release_metadata if release_metadata is not None else ReleaseMetadata()
+        self._release_metadata = (
+            release_metadata if release_metadata is not None else ReleaseMetadata()
+        )
         self._hil_verifier_factory = (
             hil_verifier_factory
             if hil_verifier_factory is not None
@@ -58,6 +62,8 @@ class CommandLineApplication:
             return self._diagnose_ble(parsed)
         if parsed.command == "performance-diagnose":
             return self._diagnose_performance(parsed)
+        if parsed.command == "d1-diagnose":
+            return self._diagnose_d1(parsed)
         if parsed.command == "hil-verify":
             return self._hil_verify(parsed)
         if parsed.command == "hil-deploy":
@@ -92,6 +98,14 @@ class CommandLineApplication:
         performance_parser.add_argument("--pitch-bend", type=int, default=8192)
         performance_parser.add_argument("--modulation", type=int, default=0)
         performance_parser.add_argument("--pitch-bend-range", type=float, default=2.0)
+        d1_parser = subparsers.add_parser(
+            "d1-diagnose",
+            help="render bounded sine, saw and square D1 PCM blocks",
+        )
+        d1_parser.add_argument("--note", type=int, default=69)
+        d1_parser.add_argument("--velocity", type=int, default=100)
+        d1_parser.add_argument("--sample-rate", type=int, default=16000)
+        d1_parser.add_argument("--frames-per-block", type=int, default=128)
         hil_parser = subparsers.add_parser(
             "hil-verify",
             help="verify redacted CircuitPython connection, deployment and execution proof",
@@ -140,9 +154,7 @@ class CommandLineApplication:
             f"{pitch_bend.message_type}:channel={pitch_bend.channel}:"
             f"value={pitch_bend.value}\n"
         )
-        self._output.write(
-            f"CLOCK_EVENT={clock.message_type}:channel=none\n"
-        )
+        self._output.write(f"CLOCK_EVENT={clock.message_type}:channel=none\n")
         return 0
 
     def _hil_verify(self, parsed):
@@ -188,5 +200,37 @@ class CommandLineApplication:
             f"PITCH_BEND_RAW={channel_state.pitch_bend_value};"
             f"PITCH_BEND_SEMITONES={channel_state.pitch_bend_semitones:.6f};"
             f"CC1_NORMALIZED={channel_state.modulation:.6f}\n"
+        )
+        return 0
+
+    def _diagnose_d1(self, parsed):
+        audio_format = AudioStreamFormat(
+            sample_rate=parsed.sample_rate,
+            channel_count=1,
+            sample_width_bits=16,
+            frames_per_block=parsed.frames_per_block,
+        )
+        frequency_hz = None
+        for waveform in ("sine", "saw", "square"):
+            core = D1SynthCore(D1Patch(waveform=waveform, audio_format=audio_format))
+            core.start()
+            core.handle_event(NoteEvent.note_on(1, parsed.note, parsed.velocity))
+            block = core.render_audio_block()
+            frequency_hz = core.active_frequency_hz
+            self._output.write(
+                f"D1_WAVEFORM={waveform};frames={block.frame_count};"
+                f"minimum={min(block.samples)};maximum={max(block.samples)};"
+                f"unique_samples={len(set(block.samples))}\n"
+            )
+            core.handle_event(NoteEvent.note_off(1, parsed.note))
+            silence = core.render_audio_block()
+            if any(silence.samples):
+                self._output.write("D1_CORE_STATUS=FAIL;reason=note-off-not-silent\n")
+                return 1
+            core.stop()
+        self._output.write(
+            f"D1_CORE_STATUS=PASS;note={parsed.note};frequency_hz={frequency_hz:.6f};"
+            f"velocity={parsed.velocity};sample_rate={audio_format.sample_rate};"
+            f"waveforms=sine,saw,square\n"
         )
         return 0
