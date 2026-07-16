@@ -1,18 +1,18 @@
 # Bestand: release.py
-# Versienommer: 0.12.3
-# Doel: Besit host- en toestel-release-naspeurbaarheid vir die US-005 herstel.
+# Versienommer: 0.13.0
+# Doel: Besit release-naspeurbaarheid vir die blokgebaseerde audio-kontrak.
 # Sprint: Sprint 2
-# Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-005 Configuration And Secret Boundary
-# Actienr: MCP-ACT-005-IMP-001-REL-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-RETEST
+# Epic: MCP-EPIC-003 Audio And Chip Core
+# User-Story: MCP-US-014 AudioOutput Port And Null Backend
+# Actienr: MCP-ACT-014-GREEN-006
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-014-START
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.12.3",
-        user_story="MCP-US-005",
+        version="0.13.0",
+        user_story="MCP-US-014",
         release_date="2026-07-16",
     ):
         self._version = str(version)

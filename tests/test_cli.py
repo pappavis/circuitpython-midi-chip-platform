@@ -1,5 +1,5 @@
 # Bestand: test_cli.py
-# Versienommer: 0.12.3
+# Versienommer: 0.13.0
 # Doel: Toets host-diagnose en US-005 release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
@@ -69,8 +69,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.12.3 | "
-            "story=MCP-US-005 | release-date=2026-07-16\n"
+            "circuitpython-midi-chip-platform v0.13.0 | "
+            "story=MCP-US-014 | release-date=2026-07-16\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:

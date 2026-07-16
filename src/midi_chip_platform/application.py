@@ -1,11 +1,11 @@
 # Bestand: application.py
-# Versienommer: 0.2.0
-# Doel: Koordineer poorte en konfigureerbare MIDI-kanaalroetering sonder import-newe-effekte.
+# Versienommer: 0.13.0
+# Doel: Koordineer MIDI-roetering en blokgebaseerde audio sonder import-newe-effekte.
 # Sprint: Sprint 2
-# Epic: MCP-EPIC-002 MIDI And Clock
-# User-Story: MCP-US-008 MIDI Channel Router
-# Actienr: MCP-ACT-008-GREEN-002
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-008
+# Epic: MCP-EPIC-003 Audio And Chip Core
+# User-Story: MCP-US-014 AudioOutput Port And Null Backend
+# Actienr: MCP-ACT-014-GREEN-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-014-START
 
 from midi_chip_platform.core import CoreRegistry
 from midi_chip_platform.ports import AudioOutputPort, ClockPort, ConfigurationPort, MidiInputPort
@@ -52,9 +52,9 @@ class PlatformApplication:
         if core is None:
             return False
         core.handle_event(event)
-        frame = core.render_frame()
-        if frame is not None:
-            self._audio_output.write(frame)
+        block = core.render_audio_block()
+        if block is not None:
+            self._audio_output.write_block(block)
         return True
 
     def stop(self):

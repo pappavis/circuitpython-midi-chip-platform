@@ -51,6 +51,10 @@ class HilDeploymentManifest:
                     "lib/midi_chip_platform/ports.py",
                 ),
                 (
+                    "src/midi_chip_platform/audio.py",
+                    "lib/midi_chip_platform/audio.py",
+                ),
+                (
                     "src/midi_chip_platform/core.py",
                     "lib/midi_chip_platform/core.py",
                 ),

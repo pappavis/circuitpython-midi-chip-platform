@@ -1,11 +1,11 @@
 # Bestand: core.py
-# Versienommer: 0.1.0
-# Doel: Definieer die synth-kernkontrak en instansie-besitte kanaalregistry.
-# Sprint: Sprint 1
-# Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-002 Clean Repository And Project Skeleton
-# Actienr: MCP-ACT-002-GREEN-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-002
+# Versienommer: 0.13.0
+# Doel: Definieer die blokrenderende synth-kernkontrak en kanaalregistry.
+# Sprint: Sprint 2
+# Epic: MCP-EPIC-003 Audio And Chip Core
+# User-Story: MCP-US-014 AudioOutput Port And Null Backend
+# Actienr: MCP-ACT-014-GREEN-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-014-START
 
 
 class SynthCore:
@@ -19,8 +19,8 @@ class SynthCore:
     def handle_event(self, event):
         raise NotImplementedError("SynthCore.handle_event must be implemented")
 
-    def render_frame(self):
-        raise NotImplementedError("SynthCore.render_frame must be implemented")
+    def render_audio_block(self):
+        raise NotImplementedError("SynthCore.render_audio_block must be implemented")
 
     def stop(self):
         raise NotImplementedError("SynthCore.stop must be implemented")

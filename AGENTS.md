@@ -55,7 +55,7 @@ Toetse self word ook in toetsklasse georganiseer. 'n Uitsondering op hierdie ree
 6. Geen GUI-, web-, nuwe kern-, DSP-, PCB- of packaging-werk word vroeer ingetrek omdat dit interessant lyk nie.
 7. Codex waarsku die Product Owner wanneer 'n versoek die logiese volgorde, argitektuur of werkende synth kan breek.
 8. Die bevrore MVP Acceptance Set in `docs/mvp_scope_v0.1.0.md` is die enigste release-scope; post-MVP werk kan dit nie stilweg verbreed nie.
-9. Die bindende oorblywende pad is `US-014 -> US-016 -> US-063 -> US-055 -> US-057`; US-005 se menslike UNSET-HIL is gesluit.
+9. Die bindende oorblywende pad is `US-016 -> US-063 -> US-055 -> US-057`; US-005 en die US-014 AudioOutput-kontrak is gesluit.
 10. US-016 se `device/i2s_test.py` is klasgebaseerd, het geen synth-package-import of globale status nie en besit I2S eksklusief terwyl dit loop.
 11. SN76489 en elke volgende kern begin eers nadat die D1/Logic MVP aanvaar is.
 12. Elke langlopende runtime-story verklaar `Burn-in: Required` of gemotiveerd `Burn-in: N/A`; die duur en heap-grense volg `docs/burn_in_heap_stability_spec_v0.1.0.md`.

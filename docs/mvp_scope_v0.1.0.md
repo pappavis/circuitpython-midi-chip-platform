@@ -86,9 +86,9 @@ MCP-US-020 bly 'n aparte post-MVP-story vir 'n geïntegreerde, opsionele G-C-D-o
 
 ## Geordende pad
 
-`MCP-US-014 -> MCP-US-016 -> MCP-US-063 -> MCP-US-055 -> MCP-US-057`
+`MCP-US-016 -> MCP-US-063 -> MCP-US-055 -> MCP-US-057`
 
-MCP-US-005 se UNSET-HIL is aanvaar. MCP-US-014 is die aktiewe volgende story; geen D1- of I2S-implementering spring hierdie WIP-hek oor nie.
+MCP-US-005 en MCP-US-014 is gesluit. MCP-US-016 is die aktiewe volgende story; geen D1-implementering spring die hoorbare I2S-hek oor nie.
 
 ## Besluithekke
 

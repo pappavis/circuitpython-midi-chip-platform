@@ -24,6 +24,7 @@ Aanvaar. Hierdie weergawe vervang die breër mono-I2S/PWM-MVP-besluit.
 - Ander standaard PCM-I2S-modules kan dieselfde profielkontrak gebruik. 'n Modulenaam word eers as fisies gevalideer gepubliseer nadat spesifieke HIL slaag.
 - Die standalone toepassing en die synth-runtime gebruik die I2S-backend nooit gelyktydig nie; elke toepassing skep, gebruik en sluit die hulpbron.
 - Die normale D1-kern skryf later deur die `AudioOutput`-poort en ken nie die fisiese backend nie.
+- Die produksiepoort gebruik begrensde interleaved signed 16-bit PCM-blokke met eksplisiete sample rate, mono/stereo-kanaaltelling en frames-per-block; cores render blokke en nie individuele Python-samples nie.
 - PWM, stereo en die geïntegreerde US-020-opstartmelodie is post-MVP werk of 'n eksplisiete impediment-contingency.
 
 ## Waarom onafhanklikheid doelbewus is

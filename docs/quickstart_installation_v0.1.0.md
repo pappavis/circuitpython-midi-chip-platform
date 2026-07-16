@@ -282,4 +282,4 @@ Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
 
 ## Huidige pausepunt
 
-MCP-US-005, MCP-US-007, MCP-US-008 en MCP-US-009 is Done. Private leë settings rapporteer fisies veilig `UNSET`; die dependency-closed deploy, harde boot, imports en werklike USB-MIDI Note On/Off is ook groen. Nou volg US-014, die onafhanklike US-016 G-C-D/MAX98357-diagnose, US-063 D1 en US-055 Logic-aanvaarding. `device/i2s_test.py` is beplan maar bestaan nog nie; moenie 'n ongedokumenteerde lêer na CIRCUITPY kopieer voordat US-016 begin en sy toetsinstruksies gepubliseer is nie.
+MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009 en MCP-US-014 is Done. Private settings en USB-MIDI is fisies groen; die blokgebaseerde AudioOutput-kontrak is host-groen maar maak nog geen klankclaim nie. Nou volg die onafhanklike US-016 G-C-D/MAX98357-diagnose, US-063 D1 en US-055 Logic-aanvaarding. `device/i2s_test.py` is beplan maar bestaan nog nie; moenie 'n ongedokumenteerde lêer na CIRCUITPY kopieer voordat US-016 begin en sy toetsinstruksies gepubliseer is nie.

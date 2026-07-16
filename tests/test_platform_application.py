@@ -1,12 +1,13 @@
 # Bestand: test_platform_application.py
-# Versienommer: 0.1.0
-# Doel: Toets dependency injection en die minimale platform-lifecycle.
-# Sprint: Sprint 1
-# Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-002 Clean Repository And Project Skeleton
-# Actienr: MCP-ACT-002-RED-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-002
+# Versienommer: 0.13.0
+# Doel: Toets dependency injection en die blokgebaseerde platform-lifecycle.
+# Sprint: Sprint 2
+# Epic: MCP-EPIC-003 Audio And Chip Core
+# User-Story: MCP-US-014 AudioOutput Port And Null Backend
+# Actienr: MCP-ACT-014-RED-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-014-START
 
+from midi_chip_platform.audio import AudioStreamFormat
 from midi_chip_platform.application import PlatformApplication
 from midi_chip_platform.core import CoreRegistry
 from midi_chip_platform.events import MidiEvent
@@ -23,11 +24,12 @@ class TestPlatformApplication:
     def test_application_routes_one_event_through_injected_instances(self) -> None:
         event = MidiEvent.note_on(channel=3, note=60, velocity=100)
         midi_input = MemoryMidiInput((event,))
-        audio_output = MemoryAudioOutput()
+        audio_format = AudioStreamFormat()
+        audio_output = MemoryAudioOutput(audio_format)
         clock = ManualClock()
         configuration = MemoryConfiguration({"audio.channel": "stereo"})
         registry = CoreRegistry()
-        core = RecordingSynthCore("sn76489-test")
+        core = RecordingSynthCore("d1-test", audio_format)
         registry.register(channel=3, core=core)
         application = PlatformApplication(midi_input, audio_output, clock, configuration, registry)
 
@@ -37,14 +39,15 @@ class TestPlatformApplication:
 
         assert processed is True
         assert core.events == (event,)
-        assert audio_output.frames == ((0.0, 0.0),)
+        assert len(audio_output.blocks) == 1
+        assert audio_output.blocks[0].samples == (0,)
         assert clock.tick_count == 1
         assert midi_input.is_open is False
         assert audio_output.is_open is False
 
     def test_application_can_be_constructed_without_starting_dependencies(self) -> None:
         midi_input = MemoryMidiInput()
-        audio_output = MemoryAudioOutput()
+        audio_output = MemoryAudioOutput(AudioStreamFormat())
         application = PlatformApplication(
             midi_input,
             audio_output,

@@ -46,7 +46,7 @@ Die standalone I2S-diagnoselaan is doelbewus nie aan `Application`, `SynthCore`,
 | `MidiInputPort` | Lewer genormaliseerde events | Synth core, audio device |
 | Router | Kies kanaal/core instance | USB/BLE implementasiedetail |
 | `SynthCore` | Verwerk events en lewer voices/samples | Fisiese I2S-penne |
-| `AudioOutput` | Neem mono/stereo buffers of voices aan | MIDI-toestelnaam |
+| `AudioOutput` | Neem begrensde interleaved signed-16 mono/stereo PCM-blokke aan | MIDI-toestelnaam en fisiese I2S-penne |
 | Configuration | Lewer openbare en private waardes via instances | Hardgekodeerde secrets |
 | Capability profile | Rapporteer module-, pen- en bordvermoë | Produkbesluit op grond van bordnaam alleen |
 
@@ -78,7 +78,7 @@ Die standalone I2S-diagnoselaan is doelbewus nie aan `Application`, `SynthCore`,
 
 ## Evolusievolgorde
 
-Die bindende oorblywende MVP-volgorde is `US-014 -> US-016 -> US-063 -> US-055 -> US-057`; US-005 se UNSET-HIL is gesluit. US-016 bewys I2S onafhanklik; US-063 voeg D1 by; US-055 bewys die volle Logic-na-klankvloei. SN76489 en alle ander kerne, webbeheer, BLE, multi-core, DSP en USB-instance-polish volg ná die MVP.
+Die bindende oorblywende MVP-volgorde is `US-016 -> US-063 -> US-055 -> US-057`; US-005 en die US-014 blokgebaseerde AudioOutput-kontrak is gesluit. US-016 bewys I2S onafhanklik; US-063 voeg D1 by; US-055 bewys die volle Logic-na-klankvloei. SN76489 en alle ander kerne, webbeheer, BLE, multi-core, DSP en USB-instance-polish volg ná die MVP.
 
 ## Argitektuurfitness
 
