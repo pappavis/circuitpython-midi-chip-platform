@@ -75,6 +75,7 @@ Status: **PASS vir 74 stories, 10 epics en die bevrore 16-story MVP Acceptance S
 - MCP-US-002 is ná menslike installasie-, diagnose- en toetsbewys `Done`.
 - MCP-US-005 is `Done`: v0.12.3 het leë private settings as drie `UNSET`-statusse gerapporteer terwyl configuration en device execution groen gebly het.
 - MCP-US-014 is `Done`: v0.13.0 se begrensde blok-PCM, Null/Memory outputs, application-integrasie en 17-lêer deploymanifest is host-groen sonder 'n fisiese klankclaim.
+- MCP-US-016 is `In Review`: v0.14.0 se onafhanklike G-C-D-toets, 18-lêer manifest en 103 hosttoetse is groen; hoorbare MAX98357-HIL en 30-minute smoke bly oop.
 - MCP-US-003 is ná fisiese connection/deploy/execution/USB-MIDI-bewys `Done`.
 - MCP-US-007 is `Done`: v0.12.2 het op die Wemos S2 werklike Note On/Off ontvang en `matched_notes=1` gerapporteer. MCP-US-051 bly `In Review` tot sy latere klankadapterhek.
 - Die bevrore MVP Acceptance Set is US-001 tot US-009 (US-010 uitgesluit), US-014, US-016, US-050, US-051, US-055, US-057 en US-063.

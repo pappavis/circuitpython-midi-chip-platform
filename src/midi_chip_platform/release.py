@@ -1,18 +1,18 @@
 # Bestand: release.py
-# Versienommer: 0.13.0
-# Doel: Besit release-naspeurbaarheid vir die blokgebaseerde audio-kontrak.
+# Versienommer: 0.14.0
+# Doel: Besit release-naspeurbaarheid vir die standalone I2S-diagnostiek.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-003 Audio And Chip Core
-# User-Story: MCP-US-014 AudioOutput Port And Null Backend
-# Actienr: MCP-ACT-014-GREEN-006
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-014-START
+# User-Story: MCP-US-016 Standalone I2S Audible Diagnostic
+# Actienr: MCP-ACT-016-GREEN-002
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-016-START
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.13.0",
-        user_story="MCP-US-014",
+        version="0.14.0",
+        user_story="MCP-US-016",
         release_date="2026-07-16",
     ):
         self._version = str(version)

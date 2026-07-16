@@ -2,7 +2,7 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.21.0
+Versienommer: 0.22.0
 Doel: Volledige geordende backlog met 'n bevrore, verkleinde MVP Acceptance Set.
 Sprint: Sprint 2
 Epic: Alle epics
@@ -59,7 +59,7 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|
 | MCP-US-014 | AudioOutput Port And Null Backend | Done | US-002 | Blokgebaseerde mono/stereo signed-16 PCM-kontrak, Null/Memory-backends, application-integrasie en dependency-closed manifest slaag 99 hosttoetse sonder fisiese klankclaim |
-| MCP-US-016 | Standalone I2S Audible Diagnostic (MAX98357 Default) | MVP-Must | US-004, US-014 | `device/i2s_test.py` is klasgebaseerd, het geen synth-package-import of globale status nie, speel G3-C4-D4 square waves deur 'n geïnjekteerde PCM-I2S-profiel, valideer MAX98357 IO5/IO3/IO7 fisies, stel I2S vry en slaag 'n 30-minute smoke |
+| MCP-US-016 | Standalone I2S Audible Diagnostic (MAX98357 Default) | MVP-Must (In Review) | US-004, US-014 | v0.14.0 se standalone, klasgebaseerde G3-C4-D4 RawSample/I2SOut-toets het 103 groen hosttoetse; hoorbare MAX98357 PASS, normale runtime-herstel en 30-minute smoke wag op HIL |
 | MCP-US-015 | PWM Diagnostic Fallback | Post-MVP/contingency | US-004, US-014 | Gekose debugpenne lewer 'n meetbare fallback-sein wanneer I2S nie beskikbaar is nie |
 | MCP-US-063 | Portable D1 Baseline Synth Core | MVP-Must | US-006, US-008, US-009, US-014, US-016 | Nuut-geporteerde sine/saw/square D1-gedrag speel Note On/Off via AudioOutput, ruim op en slaag 'n 30-minute D1 smoke; geen desktop-backend of produksierepo-wysiging nie |
 | MCP-US-017 | SN76489-Lite Three-Voice Core | Post-MVP | US-063, US-057 | Drie toonstemme speel onafhanklik met gedokumenteerde akkuraatheid |

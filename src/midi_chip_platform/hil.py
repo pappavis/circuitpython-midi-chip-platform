@@ -31,6 +31,7 @@ class HilDeploymentManifest:
             (
                 ("device/boot.py", "boot.py"),
                 ("device/code.py", "code.py"),
+                ("device/i2s_test.py", "i2s_test.py"),
                 ("src/midi_chip_platform/__init__.py", "lib/midi_chip_platform/__init__.py"),
                 ("src/midi_chip_platform/release.py", "lib/midi_chip_platform/release.py"),
                 ("src/midi_chip_platform/usb_boot.py", "lib/midi_chip_platform/usb_boot.py"),

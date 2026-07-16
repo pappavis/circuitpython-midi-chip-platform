@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr. Die eerste klein MVP bewys slegs **Logic USB
 
 ## Projekstatus
 
-Die projek is by **Sprint 2**, runtime **v0.13.0**. MCP-US-014 se blokgebaseerde AudioOutput plus Null/Memory-backends is host-groen; dit is nog nie 'n fisiese klankclaim nie. Die volgende story is die onafhanklike MCP-US-016 G-C-D/MAX98357 I2S-toets, gevolg deur die D1-kern en hoorbare Logic-aanvaarding.
+Die projek is by **Sprint 3**, runtime **v0.14.0**. MCP-US-016 se onafhanklike G-C-D/MAX98357 I2S-diagnostiek is host-groen met 103 toetse en wag op hoorbare menslike HIL. Die normale runtime word nie deur die toetsskrip vervang nie; D1 begin eers ná hierdie klankhek.
 
 ## Begin hier
 
@@ -64,6 +64,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [MCP-US-004 bordvermoëns-review en bedrading](docs/mcp_us_004_board_capability_review_v0.1.0.md)
 - [MCP-US-005 konfigurasie- en geheimegrens-review](docs/mcp_us_005_configuration_secret_boundary_review_v0.1.0.md)
 - [MCP-US-014 AudioOutput-review](docs/mcp_us_014_audio_output_review_v0.1.0.md)
+- [MCP-US-016 standalone I2S-diagnostiek-review](docs/mcp_us_016_i2s_diagnostic_review_v0.1.0.md)
 - [MCP-US-006 draagbare MIDI-eventmodel-review](docs/mcp_us_006_portable_event_model_review_v0.1.0.md)
 - [MCP-US-007 USB-MIDI receive-loop-review](docs/mcp_us_007_usb_midi_receive_review_v0.1.0.md)
 - [MCP-US-062 BLE-MIDI capability-review](docs/mcp_us_062_ble_midi_capability_review_v0.1.0.md)
