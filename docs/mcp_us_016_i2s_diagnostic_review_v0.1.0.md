@@ -21,7 +21,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-016-START
 - Verstekprofiel: BCLK IO5, WS/LRC IO3, DATA/DIN IO7, 16000 Hz, mono unsigned 16-bit `RawSample` en lae amplitude.
 - Die toepassing speel G3, C4 en D4 as kort square waves, stop tussen note en roep altyd `deinit()` aan.
 - Serial-uitset bevat weergawe/story/datum, penprofiel, gevraagde/werklike frekwensie, heap voor/ná en `PASS` of `FAIL`.
-- Die 18-lêer HIL-manifest deploy `i2s_test.py` as 'n aparte lêer en vervang nie die normale runtime nie.
+- Die huidige HIL-manifest deploy `i2s_test.py` as 'n aparte lêer en vervang nie die normale runtime nie.
 
 ## RED/GREEN-bewys
 

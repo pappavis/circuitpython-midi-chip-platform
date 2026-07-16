@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.27.0
+Versienommer: 0.28.0
 Doel: Volledige geordende backlog met 'n bevrore, verkleinde MVP Acceptance Set.
 Sprint: Sprint 2
 Epic: Alle epics
-User-Story: MCP-US-075 en MCP-US-076
-Actienr: MCP-ACT-075-PO-EXCEPTION-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-PO-EXCEPTION-ACCEPTED
+User-Story: MCP-US-055, MCP-US-075 en MCP-US-076
+Actienr: MCP-ACT-055-IN-REVIEW-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 -->
 
 ## Statuslegende
@@ -128,7 +128,7 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | MCP-US-052 | Cross-Board Capability Profiles | Post-MVP | US-004 | 'n tweede BLE-geskikte CircuitPython-mikrobeheerder werk via 'n profiel sonder S2-regressie |
 | MCP-US-053 | Raspberry Pi Linux Blinka Adapter | Later | US-014, US-050 | Pi Zero/2/3 gebruik Linux/Blinka sonder om firmwareportabiliteit te beweer |
 | MCP-US-054 | Windows USB MIDI Acceptance | Post-MVP | US-003, US-007 | Toestel verskyn en ontvang note op 'n skoon Windows-rekenaar |
-| MCP-US-055 | macOS Logic Pro Audible D1 Acceptance | MVP-Must | US-003, US-007, US-009, US-014, US-016, US-063, US-075 | Logic kies die bord as External MIDI destination en die gebruiker hoor D1 deur die goedgekeurde veilige uitsetprofiel; die verwysingsbord slaag daarna die 8-uur USB-MIDI/audio/heap-burn-in |
+| MCP-US-055 | macOS Logic Pro Audible D1 Acceptance | MVP-Must (In Review) | US-003, US-007, US-009, US-014, US-016, US-063, US-075 | v0.17.0 verbind USB-MIDI, D1 en veilige I2S; 125 hosttoetse slaag. Closure wag op Product Owner HIL: Logic kies die bord as External MIDI destination en die gebruiker hoor D1 |
 | MCP-US-056 | Install Recovery And Diagnostics | Post-MVP | US-005, US-051 | Beginner-runbook dek geen MIDI, geen klank, safe mode en herstel |
 | MCP-US-068 | Stable USB MIDI Instance Identity | Post-MVP | US-003, US-004, US-055 | Elke toestel exposeer 'n herkenbare produknaam plus stabiele vier-karakter instance-ID; twee toestelle is onderskeibaar sonder UID/MAC-lekkasie |
 | MCP-US-059 | MIDI Guitar Hardware Acceptance | Post-MVP | US-018, US-058 | 'n Generiese MIDI-kitaar en Fishman-verwysing speel note, akkoorde, bends en slides; geen toestelnaam is 'n kodekonstante nie |

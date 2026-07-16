@@ -22,7 +22,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-063-START
 - `D1SynthCore` map MIDI-noot 69 na 440 Hz, skaal amplitude met velocity, behou fase tussen blokke en maak die monofoniese stem op Note Off of `stop()` skoon.
 - Die verstekformaat is die fisies geverifieerde 16000 Hz mono-profiel met 128 rame per blok.
 - `PlatformApplication.step()` render kernblokke ook tussen MIDI-boodskappe, sodat 'n Note On kan aanhou totdat Note Off arriveer.
-- Die dependency-closed toestelmanifest bevat nou 19 lêers, insluitend `d1_core.py`.
+- Die dependency-closed toestelmanifest bevat nou 21 lêers, insluitend `d1_core.py`, `d1_runtime.py` en `i2s_audio.py`.
 
 ## RED/GREEN-bewys
 

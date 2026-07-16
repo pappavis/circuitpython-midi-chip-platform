@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.16.0
-# Doel: Spesifiseer publieke verstekke, veilige audio en private settings.
+# Versienommer: 0.17.0
+# Doel: Spesifiseer publieke D1-runtime, veilige audio en private settings.
 # Sprint: Sprint 1
-# Epic: MCP-EPIC-001 Platform Foundation
-# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
-# Actienr: MCP-ACT-075-RED-003
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
+# Epic: MCP-EPIC-008 Portability, Quality And Release
+# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
+# Actienr: MCP-ACT-055-RED-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -34,6 +34,13 @@ class TestConfigurationDefaults:
         assert snapshot.get("audio.shutdown_mode") == "software-mute"
         assert snapshot.get("audio.output_load") == "speaker-4-8-ohm"
         assert snapshot.get("clock.bpm") == 120
+        assert snapshot.get("synth.d1.enabled") is True
+        assert snapshot.get("synth.d1.waveform") == "sine"
+        assert snapshot.get("synth.d1.sample_rate") == 16000
+        assert snapshot.get("synth.d1.frames_per_block") == 128
+        assert snapshot.get("synth.d1.amplitude") == 0.2
+        assert snapshot.get("synth.d1.max_blocks") == 0
+        assert snapshot.get("synth.d1.idle_sleep_seconds") == 0.001
         assert snapshot.get("midi.diagnostic.enabled") is False
         assert snapshot.get("midi.diagnostic.max_events") == 8
         assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
@@ -48,6 +55,9 @@ class TestConfigurationDefaults:
         assert 'AUDIO_MASTER_GAIN = "0.08"' in settings_example
         assert 'AUDIO_MAXIMUM_MASTER_GAIN = "0.25"' in settings_example
         assert 'AUDIO_STARTUP_MUTED = "true"' in settings_example
+        assert 'D1_RUNTIME_ENABLED = "true"' in settings_example
+        assert 'D1_AMPLITUDE = "0.2"' in settings_example
+        assert 'D1_IDLE_SLEEP_SECONDS = "0.001"' in settings_example
 
 
 class TestConfigurationSecretBoundary:
@@ -135,6 +145,9 @@ class TestConfigurationSecretBoundary:
         values = {
             "CLOCK_BPM": "96",
             "AUDIO_STARTUP_TEST": "true",
+            "D1_RUNTIME_ENABLED": "false",
+            "D1_SAMPLE_RATE": "22050",
+            "D1_AMPLITUDE": "0.1",
             "MIDI_DIAGNOSTIC_ENABLED": "true",
             "MIDI_DIAGNOSTIC_MAX_EVENTS": "12",
         }
@@ -145,6 +158,9 @@ class TestConfigurationSecretBoundary:
 
         assert snapshot.get("clock.bpm") == 96
         assert snapshot.get("audio.startup_test") is True
+        assert snapshot.get("synth.d1.enabled") is False
+        assert snapshot.get("synth.d1.sample_rate") == 22050
+        assert snapshot.get("synth.d1.amplitude") == 0.1
         assert snapshot.get("midi.diagnostic.enabled") is True
         assert snapshot.get("midi.diagnostic.max_events") == 12
 

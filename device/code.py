@@ -1,14 +1,15 @@
 # Bestand: code.py
-# Versienommer: 0.16.0
-# Doel: Rapporteer toestelgereedheid en smoke-toets veilige D1-audio-afhanklikhede.
+# Versienommer: 0.17.0
+# Doel: Start die Logic USB-MIDI na D1 na I2S runtime op die toestel.
 # Sprint: Sprint 3
-# Epic: MCP-EPIC-007 DSP And Pedal Hardware
-# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
-# Actienr: MCP-ACT-075-GREEN-008
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
+# Epic: MCP-EPIC-008 Portability, Quality And Release
+# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
+# Actienr: MCP-ACT-055-GREEN-006
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 
 from midi_chip_platform.configuration import CircuitPythonConfigurationFactory
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
+from midi_chip_platform.d1_runtime import D1UsbMidiI2sRuntimeFactory
 from midi_chip_platform.midi_usb import CircuitPythonUsbMidiDiagnosticFactory
 from midi_chip_platform.platform_capabilities import CircuitPythonCapabilityFactory
 from midi_chip_platform.release import ReleaseMetadata
@@ -37,7 +38,9 @@ if __name__ == "__main__":
                 "midi_chip_platform.configuration",
                 "midi_chip_platform.core",
                 "midi_chip_platform.d1_core",
+                "midi_chip_platform.d1_runtime",
                 "midi_chip_platform.events",
+                "midi_chip_platform.i2s_audio",
                 "midi_chip_platform.midi_performance",
                 "midi_chip_platform.midi_semantics",
                 "midi_chip_platform.midi_usb",
@@ -46,6 +49,10 @@ if __name__ == "__main__":
             ),
         ),
         midi_diagnostic_factory=CircuitPythonUsbMidiDiagnosticFactory(
+            importer=__import__,
+            output=print,
+        ),
+        synth_runtime_factory=D1UsbMidiI2sRuntimeFactory(
             importer=__import__,
             output=print,
         ),

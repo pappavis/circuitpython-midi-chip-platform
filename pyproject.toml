@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "circuitpython-midi-chip-platform"
-version = "0.16.0"
+version = "0.17.0"
 description = "Import-safe CircuitPython capability and USB-MIDI foundation for a retro-synth platform"
 readme = "README.md"
 requires-python = ">=3.11"

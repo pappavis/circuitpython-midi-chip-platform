@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.16.0
-# Doel: Laai publieke veilige-audioverstekke en normaliseer private settings.
+# Versienommer: 0.17.0
+# Doel: Laai publieke D1-runtime, veilige-audioverstekke en private settings.
 # Sprint: Sprint 3
-# Epic: MCP-EPIC-007 DSP And Pedal Hardware
-# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
-# Actienr: MCP-ACT-075-GREEN-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
+# Epic: MCP-EPIC-008 Portability, Quality And Release
+# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
+# Actienr: MCP-ACT-055-GREEN-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -27,6 +27,13 @@ class ConfigurationDefaults:
             "audio.output_load": "speaker-4-8-ohm",
             "audio.startup_test": False,
             "clock.bpm": 120,
+            "synth.d1.enabled": True,
+            "synth.d1.waveform": "sine",
+            "synth.d1.sample_rate": 16000,
+            "synth.d1.frames_per_block": 128,
+            "synth.d1.amplitude": 0.2,
+            "synth.d1.max_blocks": 0,
+            "synth.d1.idle_sleep_seconds": 0.001,
             "midi.input.port_index": 0,
             "midi.diagnostic.enabled": False,
             "midi.diagnostic.max_events": 8,
@@ -59,6 +66,13 @@ class EnvironmentSettingsSource:
             "audio.output_load": "AUDIO_OUTPUT_LOAD",
             "audio.startup_test": "AUDIO_STARTUP_TEST",
             "clock.bpm": "CLOCK_BPM",
+            "synth.d1.enabled": "D1_RUNTIME_ENABLED",
+            "synth.d1.waveform": "D1_WAVEFORM",
+            "synth.d1.sample_rate": "D1_SAMPLE_RATE",
+            "synth.d1.frames_per_block": "D1_FRAMES_PER_BLOCK",
+            "synth.d1.amplitude": "D1_AMPLITUDE",
+            "synth.d1.max_blocks": "D1_MAX_BLOCKS",
+            "synth.d1.idle_sleep_seconds": "D1_IDLE_SLEEP_SECONDS",
             "midi.input.port_index": "MIDI_INPUT_PORT_INDEX",
             "midi.diagnostic.enabled": "MIDI_DIAGNOSTIC_ENABLED",
             "midi.diagnostic.max_events": "MIDI_DIAGNOSTIC_MAX_EVENTS",

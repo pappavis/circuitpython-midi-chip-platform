@@ -1,11 +1,11 @@
 # Bestand: test_device_runtime.py
-# Versienommer: 0.12.0
-# Doel: Spesifiseer toestel-uitvoer, dependency-bewys en opt-in USB-MIDI-diagnostiek.
-# Sprint: Sprint 2
+# Versienommer: 0.17.0
+# Doel: Spesifiseer toestel-uitvoer, dependency-bewys, diagnostiek en D1-runtime-start.
+# Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-RED-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
+# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
+# Actienr: MCP-ACT-055-RED-004
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
 from midi_chip_platform.release import ReleaseMetadata
@@ -69,6 +69,25 @@ class TestDeviceRuntimeApplication:
             if not configuration.get("midi.diagnostic.enabled", False):
                 return None
             return self._diagnostic
+
+    class FakeRuntime:
+        def __init__(self):
+            self.run_count = 0
+
+        def run(self):
+            self.run_count += 1
+            return True
+
+    class FakeRuntimeFactory:
+        def __init__(self, runtime):
+            self._runtime = runtime
+            self.configuration = None
+
+        def create_if_enabled(self, configuration):
+            self.configuration = configuration
+            if not configuration.get("synth.d1.enabled", False):
+                return None
+            return self._runtime
 
     def test_runtime_reports_execution_proof(self) -> None:
         output = []
@@ -192,3 +211,51 @@ class TestDeviceRuntimeApplication:
         assert diagnostic.run_count == 1
         assert factory.configuration.get("midi.diagnostic.enabled") is True
         assert output[-1] == "DEVICE_EXECUTION_STATUS=READY"
+
+    def test_runtime_starts_d1_synth_when_configuration_enables_it(self) -> None:
+        output = []
+        runtime = self.FakeRuntime()
+        factory = self.FakeRuntimeFactory(runtime)
+        application = DeviceRuntimeApplication(
+            release_metadata=ReleaseMetadata(
+                version="0.17.0",
+                user_story="MCP-US-055",
+                release_date="2026-07-16",
+            ),
+            configuration_loader=self.FakeConfigurationLoader(
+                {"synth.d1.enabled": True}
+            ),
+            synth_runtime_factory=factory,
+            output=output.append,
+        )
+
+        result = application.run()
+
+        assert result is True
+        assert runtime.run_count == 1
+        assert factory.configuration.get("synth.d1.enabled") is True
+        assert output[-1] == "DEVICE_EXECUTION_STATUS=READY"
+
+    def test_midi_diagnostic_takes_precedence_over_d1_runtime(self) -> None:
+        output = []
+        diagnostic = self.FakeDiagnostic()
+        runtime = self.FakeRuntime()
+        application = DeviceRuntimeApplication(
+            release_metadata=ReleaseMetadata(
+                version="0.17.0",
+                user_story="MCP-US-055",
+                release_date="2026-07-16",
+            ),
+            configuration_loader=self.FakeConfigurationLoader(
+                {"midi.diagnostic.enabled": True, "synth.d1.enabled": True}
+            ),
+            midi_diagnostic_factory=self.FakeDiagnosticFactory(diagnostic),
+            synth_runtime_factory=self.FakeRuntimeFactory(runtime),
+            output=output.append,
+        )
+
+        result = application.run()
+
+        assert result is True
+        assert diagnostic.run_count == 1
+        assert runtime.run_count == 0

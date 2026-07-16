@@ -18,6 +18,16 @@ AUDIO_GAIN_PIN_PROFILE = "floating-9db"
 AUDIO_SHUTDOWN_MODE = "software-mute"
 AUDIO_OUTPUT_LOAD = "speaker-4-8-ohm"
 
+# Default MVP synth runtime. Set D1_RUNTIME_ENABLED = "false" when you only want
+# boot/config diagnostics and no continuous synth loop.
+D1_RUNTIME_ENABLED = "true"
+D1_WAVEFORM = "sine"
+D1_SAMPLE_RATE = 16000
+D1_FRAMES_PER_BLOCK = 128
+D1_AMPLITUDE = "0.2"
+D1_MAX_BLOCKS = 0
+D1_IDLE_SLEEP_SECONDS = "0.001"
+
 # Optional, bounded USB-MIDI Note On/Off acceptance diagnostic.
 # Leave disabled for normal startup. Enable temporarily, then restart the board.
 # CircuitPython 10.0.x os.getenv settings support strings and integers.

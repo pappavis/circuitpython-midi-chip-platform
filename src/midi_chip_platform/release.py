@@ -1,18 +1,18 @@
 # Bestand: release.py
-# Versienommer: 0.16.0
-# Doel: Besit release-naspeurbaarheid vir die veilige audio-uitsethek.
+# Versienommer: 0.17.0
+# Doel: Besit release-naspeurbaarheid vir die Logic USB-MIDI na D1/I2S runtime.
 # Sprint: Sprint 3
-# Epic: MCP-EPIC-007 DSP And Pedal Hardware
-# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
-# Actienr: MCP-ACT-075-GREEN-005
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
+# Epic: MCP-EPIC-008 Portability, Quality And Release
+# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
+# Actienr: MCP-ACT-055-GREEN-003
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.16.0",
-        user_story="MCP-US-075",
+        version="0.17.0",
+        user_story="MCP-US-055",
         release_date="2026-07-16",
     ):
         self._version = str(version)

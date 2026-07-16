@@ -1,11 +1,11 @@
 # Bestand: hil.py
-# Versienommer: 0.12.2
-# Doel: Verifieer dependency-closed deploy met robuuste CircuitPython REPL/autoreload-handdruk.
-# Sprint: Sprint 2
+# Versienommer: 0.17.0
+# Doel: Verifieer dependency-closed deploy met D1-runtime en CircuitPython REPL/autoreload-handdruk.
+# Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-IMP-005-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-005
+# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
+# Actienr: MCP-ACT-055-GREEN-007
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 
 import ast
 import hashlib
@@ -58,6 +58,14 @@ class HilDeploymentManifest:
                 (
                     "src/midi_chip_platform/d1_core.py",
                     "lib/midi_chip_platform/d1_core.py",
+                ),
+                (
+                    "src/midi_chip_platform/d1_runtime.py",
+                    "lib/midi_chip_platform/d1_runtime.py",
+                ),
+                (
+                    "src/midi_chip_platform/i2s_audio.py",
+                    "lib/midi_chip_platform/i2s_audio.py",
                 ),
                 (
                     "src/midi_chip_platform/core.py",

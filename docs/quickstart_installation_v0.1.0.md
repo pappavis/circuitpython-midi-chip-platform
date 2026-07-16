@@ -2,18 +2,18 @@
 
 <!--
 Bestand: quickstart_installation_v0.1.0.md
-Versienommer: 0.13.0
-Doel: Beginnerstappe vir installasie, diagnose en ontwikkeling sonder IDE-afhanklikheid.
+Versienommer: 0.14.0
+Doel: Beginnerstappe vir installasie, US-055 Logic-toets, diagnose en ontwikkeling sonder IDE-afhanklikheid.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MCP-US-005, MCP-US-075 en MCP-US-076
-Actienr: MCP-ACT-075-PO-EXCEPTION-006
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-PO-EXCEPTION-ACCEPTED
+User-Story: MCP-US-005, MCP-US-055, MCP-US-075 en MCP-US-076
+Actienr: MCP-ACT-055-HIL-READY-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 -->
 
 ## Wat hierdie weergawe doen
 
-Hierdie weergawe bevat die host-skelet, USB-MIDI-bootprofiel, capability discovery, veilige konfigurasiegrens, draagbare events, USB/BLE-vervoergrense, kanaalroetering, note-off-semantiek, per-kanaal pitch bend/CC1-toestand, 'n draagbare D1-basiskern en 'n hoorbare lae-volume I2S-diagnose. Die geïntegreerde Logic-na-D1-pad volg in US-055. Hosttoetse bewys die klasse; `hil-deploy` kopieer 'n dependency-geslote manifest en `hil-verify` bewys verbinding, libraries, boot, clean imports en uitvoering op die bord.
+Hierdie weergawe bevat die host-skelet, USB-MIDI-bootprofiel, capability discovery, veilige konfigurasiegrens, draagbare events, USB/BLE-vervoergrense, kanaalroetering, note-off-semantiek, per-kanaal pitch bend/CC1-toestand, 'n draagbare D1-basiskern, 'n hoorbare lae-volume I2S-diagnose en die eerste Logic/USB-MIDI na D1 na I2S runtime. Hosttoetse bewys die klasse; `hil-deploy` kopieer 'n dependency-geslote manifest en `hil-verify` bewys verbinding, libraries, boot, clean imports en uitvoering op die bord.
 
 ## Wat jy nodig het
 
@@ -280,9 +280,50 @@ Lees [Device Connection Proof](device_connection_proof_v0.1.0.md). Dit onderskei
 
 Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
 
+## US-055 Logic Pro D1-toets
+
+Hierdie toets is die huidige menslike acceptatiehek. Gebruik net een serial tool op 'n slag: Thonny of `screen`, nie albei nie.
+
+1. Maak Thonny en serial monitors toe.
+2. Deploy die huidige firmware:
+
+```bash
+python -m midi_chip_platform hil-deploy \
+  --source-root . \
+  --device-root /Volumes/CIRCUITPY \
+  --serial-port <jou-/dev/cu.usbmodem...-poort>
+```
+
+3. Herstart die bord of gebruik `hil-reset`.
+4. Open Thonny REPL of 'n enkele serial monitor.
+5. Verwag:
+
+```text
+circuitpython-midi-chip-platform v0.17.0 | story=MCP-US-055 | release-date=2026-07-16
+DEVICE_EXECUTION_STATUS=READY
+D1_RUNTIME_STATUS=START;core=d1;sample_rate=16000;frames_per_block=128;max_blocks=0
+```
+
+6. Open Logic Pro.
+7. Maak `MIDI -> External MIDI`.
+8. Kies die CircuitPython/Wemos bestemming, tans waarskynlik `S2 Mini`.
+9. Kies MIDI Channel `All` of `1`.
+10. Speel 'n noot of kort MIDI-region.
+
+PASS:
+
+```text
+D1_MIDI_EVENT=note_on;channel=1;note=...
+D1_MIDI_EVENT=note_off;channel=1;note=...
+```
+
+en jy hoor D1-klank deur die MAX98357A-prototipe-opstelling.
+
+Stop met `Ctrl-C`. `D1_RUNTIME_STATUS=INTERRUPTED` is normaal wanneer jy self stop.
+
 ## Huidige pausepunt
 
-MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is Done. US-075 is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer die gesertifiseerde hardware-cleanup. US-055 is nou die aktiewe pad vir werklike Logic/USB-MIDI-na-hoorbare-D1/I2S.
+MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is Done. US-075 is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer die gesertifiseerde hardware-cleanup. US-055 is In Review: hosttoetse is groen en die Product Owner moet nou Logic/USB-MIDI-na-hoorbare-D1/I2S op die bord toets.
 
 ## MAX98357A veilige toetslas
 

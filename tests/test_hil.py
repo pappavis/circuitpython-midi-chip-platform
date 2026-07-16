@@ -1,11 +1,11 @@
 # Bestand: test_hil.py
-# Versienommer: 0.16.0
-# Doel: Spesifiseer deploy-, execution- en veilige-audio releasebewys.
+# Versienommer: 0.17.0
+# Doel: Spesifiseer deploy-, execution- en D1-runtime releasebewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
-# Actienr: MCP-ACT-075-RED-006
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
+# User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
+# Actienr: MCP-ACT-055-RED-006
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
 
 from io import StringIO
 from pathlib import Path
@@ -26,12 +26,20 @@ class TestHilDeploymentManifest:
     def test_default_manifest_contains_minimal_device_release(self) -> None:
         manifest = HilDeploymentManifest.default()
 
-        assert len(manifest.entries) == 19
+        assert len(manifest.entries) == 21
         assert ("device/boot.py", "boot.py") in manifest.entries
         assert ("device/i2s_test.py", "i2s_test.py") in manifest.entries
         assert (
             "src/midi_chip_platform/d1_core.py",
             "lib/midi_chip_platform/d1_core.py",
+        ) in manifest.entries
+        assert (
+            "src/midi_chip_platform/d1_runtime.py",
+            "lib/midi_chip_platform/d1_runtime.py",
+        ) in manifest.entries
+        assert (
+            "src/midi_chip_platform/i2s_audio.py",
+            "lib/midi_chip_platform/i2s_audio.py",
         ) in manifest.entries
         assert (
             "src/midi_chip_platform/device_runtime.py",
@@ -331,14 +339,14 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.16.0 | story=MCP-US-075 | "
+            "circuitpython-midi-chip-platform v0.17.0 | story=MCP-US-055 | "
             "release-date=2026-07-16\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.16.0 | story=MCP-US-075 | "
+            "circuitpython-midi-chip-platform v0.17.0 | story=MCP-US-055 | "
             "release-date=2026-07-16\nDEVICE_IMPORT_STATUS=PASS\n"
             "DEVICE_EXECUTION_STATUS=READY"
         )
@@ -396,7 +404,7 @@ class TestHardwareInLoopVerifier:
         (device_root / "boot.py").write_bytes(b"approved")
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
-            "circuitpython-midi-chip-platform v0.16.0 | story=MCP-US-075 | "
+            "circuitpython-midi-chip-platform v0.17.0 | story=MCP-US-055 | "
             "release-date=2026-07-16\nBOOT_STATUS=PASS",
             encoding="utf-8",
         )
@@ -406,7 +414,7 @@ class TestHardwareInLoopVerifier:
             serial_port="redacted",
             manifest=manifest,
             serial_probe=self.FakeSerialProbe(
-                "circuitpython-midi-chip-platform v0.16.0 | story=MCP-US-075 | "
+                "circuitpython-midi-chip-platform v0.17.0 | story=MCP-US-055 | "
                 "release-date=2026-07-16\nDEVICE_EXECUTION_STATUS=READY"
             ),
             output=StringIO(),
