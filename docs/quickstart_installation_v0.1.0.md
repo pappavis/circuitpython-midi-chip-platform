@@ -282,4 +282,4 @@ Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
 
 ## Huidige pausepunt
 
-MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009 en MCP-US-014 is Done. MCP-US-016 se `device/i2s_test.py` bestaan nou en is host-groen; volg die review se Thonny-stappe vir hoorbare G-C-D/MAX98357-aanvaarding. US-063 D1 en US-055 Logic-aanvaarding begin eers daarna.
+MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014 en MCP-US-016 is Done. `device/i2s_test.py` het op die Wemos S2 hoorbare G-C-D deur die MAX98357A en serial `PASS` bewys. Die volgende MVP-stap is US-063 se draagbare D1-basiskern; US-055 volg vir Logic-aanvaarding.

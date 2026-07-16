@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr. Die eerste klein MVP bewys slegs **Logic USB
 
 ## Projekstatus
 
-Die projek is by **Sprint 3**, runtime **v0.14.0**. MCP-US-016 se onafhanklike G-C-D/MAX98357 I2S-diagnostiek is host-groen met 103 toetse en wag op hoorbare menslike HIL. Die normale runtime word nie deur die toetsskrip vervang nie; D1 begin eers ná hierdie klankhek.
+Die projek is by **Sprint 3**, runtime **v0.14.0**. MCP-US-016 is Done: die Wemos S2 het G3-C4-D4 hoorbaar deur die MAX98357A gespeel, serial `PASS` gerapporteer en 103 hosttoetse bly groen. Die volgende MVP-story is MCP-US-063 se draagbare D1-basiskern.
 
 ## Begin hier
 

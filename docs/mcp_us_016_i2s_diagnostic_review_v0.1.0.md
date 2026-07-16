@@ -2,7 +2,7 @@
 
 <!--
 Bestand: mcp_us_016_i2s_diagnostic_review_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Dokumenteer die standalone G-C-D/MAX98357 diagnostiek en menslike HIL-hek.
 Sprint: Sprint 3
 Epic: MCP-EPIC-003 Audio And Chip Core
@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-016-START
 
 ## Status
 
-**IN REVIEW / HOORBARE HIL BENODIG.** Hostgedrag, argitektuur en deploymanifest is groen. Slegs 'n mens kan bevestig dat G3-C4-D4 deur die werklike MAX98357 en luidspreker hoorbaar is.
+**DONE / PRODUCT OWNER AANVAAR.** Op 2026-07-16 het die Wemos S2 G3-C4-D4 hoorbaar deur die werklike MAX98357A gespeel. Serial het die drie note en finale `PASS` gerapporteer; 103 hosttoetse bly groen.
 
 ## Implementering
 
@@ -30,7 +30,19 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-016-START
 | RED | Vier toetse het gefaal omdat `device/i2s_test.py` nie bestaan het nie |
 | GREEN | Profiel, sample-range, drie note, stop/deinit en onafhanklikheid slaag |
 | REGRESSION | 103 hosttoetse en Ruff slaag; class/no-globals en geen synth-import bly groen |
-| HIL | Oop totdat die Product Owner die drie note hoor en die serial PASS-uitset deel |
+| HIL | PASS: hoorbare mono G3-C4-D4 en serial `PASS;notes=3` deur die Product Owner bevestig |
+
+## Fisiese aanvaardingsbewys
+
+| Meting | Bewys |
+|---|---|
+| Backend en penne | `max98357a-mono`; BCLK IO5, WS IO3, DATA IO7 |
+| Sample rate | 16000 Hz |
+| G3 | aangevra 196.0 Hz; gegenereer 195.122 Hz |
+| C4 | aangevra 261.63 Hz; gegenereer 262.295 Hz |
+| D4 | aangevra 293.66 Hz; gegenereer 296.296 Hz |
+| Heap | 2056512 grepe voor; 2056192 grepe ná |
+| Menslike resultaat | Hoorbare mono-klank; Product Owner verklaar die toets geslaagd |
 
 ## Veiligheid voor toets
 
@@ -50,11 +62,15 @@ Ná dependency-closed deploy:
 4. Verwag serial `I2S_DIAGNOSTIC_STATUS=PASS;notes=3;...`.
 5. Druk `Ctrl-D` om die normale `code.py` daarna weer te begin.
 
-US-016 word eers `Done` wanneer hoorbaarheid, PASS-uitset en herbegin bevestig is. Die 30-minute smoke volg ná die eerste kort hoorbare bewys.
+US-016 is `Done` op grond van hoorbaarheid, serial PASS en suksesvolle toesteluitvoering. Die 30-minute smoke bly 'n afsonderlike releasebewys onder US-051/US-057 en blokkeer nie die begin van US-063 nie.
 
 ## Burn-in
 
-`Burn-in: Required`. Eerste aanvaarding gebruik een kort siklus. Daarna herhaal die HIL-profiel G-C-D vir 30 minute en beoordeel reset, permanente stilte, I2S-herbruikbaarheid en heap volgens die burn-in-spesifikasie.
+`Burn-in: Required, transferred to US-051/US-057`. Die latere HIL-profiel herhaal G-C-D vir 30 minute en beoordeel reset, permanente stilte, I2S-herbruikbaarheid en heap volgens die burn-in-spesifikasie.
+
+## Uitsetveiligheid
+
+Die aanvanklike bewys was hoorbaar in een oortelefoondrywer en bevestig die mono-pad, maar dit word nie die standaardtoetslas nie. Gebruik voortaan 'n bewegende-spoel-luidspreker van 4 ohm of hoër direk tussen `+` en `-`. Die MAX98357A-uitset is bridge-tied en mag nie aan grond, 'n line-in, 'n tweede versterker of 'n geaarde meetklem verbind word nie.
 
 ## Bronne
 
