@@ -282,4 +282,12 @@ Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.
 
 ## Huidige pausepunt
 
-MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014 en MCP-US-016 is Done. US-063 se draagbare D1-kern is host-groen en kan met `python -m midi_chip_platform d1-diagnose` aanvaar word. US-055 volg daarna vir die werklike Logic/USB-MIDI-na-hoorbare-I2S-pad.
+MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016 en MCP-US-063 is Done. US-075 beveilig nou die fisiese testlas en volume; US-055 volg daarna vir die werklike Logic/USB-MIDI-na-hoorbare-I2S-pad.
+
+## MAX98357A veilige toetslas
+
+- Ontkoppel 'n direk-gekoppelde koptelefoon en moenie dit op jou ore sit tydens synthontwikkeling nie.
+- Gebruik vir die MAX98357A 'n bewegende-spoel-luidspreker van 4-8 ohm met geskikte kraggradering, direk tussen `+` en `-`.
+- Verbind geen uitsetterminaal aan grond, Scarlett/line-in, 'n tweede versterker of 'n geaarde scope-klem nie.
+- Plaas geen gewone enkelpotmeter in of oor die bridge-tied speakeruitset nie.
+- US-075 spesifiseer lae digitale master gain, startup mute en die GAIN/SD-penprofiel. 'n Toekomstige koptelefoon- of pedal-line-out gebruik 'n geskikte DAC/headphone-amp-pad.

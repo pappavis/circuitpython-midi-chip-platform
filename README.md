@@ -8,7 +8,7 @@ Die seinpad bly doelbewus modulêr. Die eerste klein MVP bewys slegs **Logic USB
 
 ## Projekstatus
 
-Die projek is by **Sprint 3**, runtime **v0.15.0**. MCP-US-016 se MAX98357A-klankhek is Done. MCP-US-063 se draagbare monofoniese D1-kern lewer nou sine, saw en square met korrekte Note On/Off en wag op host-aanvaarding; hoorbare Logic-integrasie bly US-055.
+Die projek is by **Sprint 3**, runtime **v0.15.0**. MCP-US-016 se MAX98357A-klankhek en US-063 se draagbare monofoniese D1-kern is Done. Die onmiddellike veiligheidshek is US-075: 'n 4-8 ohm luidsprekerlas, begrensde volume en veilige GAIN/SD-profiel voor US-055 se hoorbare Logic-integrasie.
 
 ## Begin hier
 
@@ -66,6 +66,7 @@ Die bestaande `pappavis/midi-chip-platform` bevat waardevolle idees, dokumentasi
 - [MCP-US-014 AudioOutput-review](docs/mcp_us_014_audio_output_review_v0.1.0.md)
 - [MCP-US-016 standalone I2S-diagnostiek-review](docs/mcp_us_016_i2s_diagnostic_review_v0.1.0.md)
 - [MCP-US-063 draagbare D1-basiskern-review](docs/mcp_us_063_d1_core_review_v0.1.0.md)
+- [Sprint 3 lessons learned: I2S, D1 en veilige uitset](docs/lessons_learned_sprint_3_checkpoint_004_v0.1.0.md)
 - [MCP-US-006 draagbare MIDI-eventmodel-review](docs/mcp_us_006_portable_event_model_review_v0.1.0.md)
 - [MCP-US-007 USB-MIDI receive-loop-review](docs/mcp_us_007_usb_midi_receive_review_v0.1.0.md)
 - [MCP-US-062 BLE-MIDI capability-review](docs/mcp_us_062_ble_midi_capability_review_v0.1.0.md)

@@ -40,7 +40,7 @@ Die volledige hoststel is **68 passed**.
 
 ## Hoorbare hek
 
-Die oorspronklike aanvaardingskriterium vereis hoorbare bend en vibrato. Dit kan nog nie eerlik uitgevoer word nie: MCP-US-016 se MAX98357-klankpad en MCP-US-063 se draagbare D1-kern bestaan nog nie. US-010 bly daarom **In Review (control state ready)**. Geen hostberekening word as hoorbare hardewarebewys voorgestel nie.
+Die oorspronklike aanvaardingskriterium vereis hoorbare bend en vibrato. MCP-US-016 se MAX98357-klankpad en MCP-US-063 se draagbare D1-kern bestaan nou, maar hulle is nog nie deur US-075/US-055 veilig en hoorbaar geïntegreer nie. US-010 bly daarom **In Review (control state ready)**. Geen hostberekening word as hoorbare hardewarebewys voorgestel nie.
 
 Wanneer die klankpad gereed is, moet die menslike toets minstens die volgende bewys:
 

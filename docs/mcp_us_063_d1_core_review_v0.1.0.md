@@ -2,7 +2,7 @@
 
 <!--
 Bestand: mcp_us_063_d1_core_review_v0.1.0.md
-Versienommer: 0.1.0
+Versienommer: 0.2.0
 Doel: Dokumenteer die draagbare D1-basiskern, RED/GREEN-bewys en aanvaardingsgrens.
 Sprint: Sprint 3
 Epic: MCP-EPIC-003 Audio And Chip Core
@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-063-START
 
 ## Status
 
-**IN REVIEW / HOST-AANVAARDING BENODIG.** Die draagbare monofoniese D1-kern en sy diagnostiese opdrag is groen. Hoorbare USB-MIDI-na-I2S-integrasie is doelbewus MCP-US-055 en word nie valslik deur hierdie story geclaim nie.
+**DONE / PRODUCT OWNER AANVAAR.** Op 2026-07-16 het die Product Owner die volledige v0.15.0 `d1-diagnose`-uitset gedeel en sine, saw, square, A4=440 Hz, velocity en finale `PASS` aanvaar. Hoorbare USB-MIDI-na-I2S-integrasie bly doelbewus MCP-US-055.
 
 ## Implementering
 
@@ -31,7 +31,8 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-063-START
 | RED | Pytest collection het met `ModuleNotFoundError: midi_chip_platform.d1_core` gefaal |
 | GREEN | Patchvalidasie, A4=440 Hz, velocity, drie waveforms, fase, Note Off, cleanup en deurlopende application-rendering slaag |
 | REGRESSION | 114 pytest-toetse en Ruff slaag; architecture-toetse bevestig geen globals/modulefunksies of hardeware-imports nie |
-| HIL | Nie deel van hierdie draagbare kernstory nie; US-055 verbind Logic/USB-MIDI, D1 en die produksie-I2S-adapter |
+| PRODUCT OWNER | PASS: drie waveform-reëls en `D1_CORE_STATUS=PASS;note=69;frequency_hz=440.000000` gedeel |
+| HIL | Nie deel van hierdie draagbare kernstory nie; US-075 beveilig die fisiese las en US-055 verbind Logic/USB-MIDI, D1 en produksie-I2S |
 
 ## Menslike host-aanvaarding
 
@@ -76,7 +77,7 @@ Hierdie toets bewys PCM-gedrag en Note Off-stilte, nie hoorbare MAX98357-klank n
 | DSP/Chip Engineer | Lewer fasekontinue sine/saw/square en signed-16 begrensing. |
 | Web Engineer | Not impacted: geen web- of Wi-Fi-koppeling. |
 | QA/HIL Engineer | Lewer RED/GREEN, volle regressie en deterministiese CLI-aanvaarding. |
-| Release/Documentation | Merk v0.15.0 eerlik as In Review totdat die host-opdrag aanvaar is. |
+| Release/Documentation | Merk v0.15.0 as Done ná die Product Owner se volledige host-PASS en hou hoorbare integrasie onder US-075/US-055. |
 | External Architecture Reviewer (Copilot) | Die vroeë begrensde blok- en burn-in-aanbevelings bly gevolg. |
 | Devil's Advocate | Waarsku dat PCM PASS nog nie bewys dat Logic hoorbare klank speel nie. |
 

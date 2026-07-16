@@ -35,7 +35,7 @@ Die MVP is geslaag wanneer een herhaalbare vertikale vloei op die verwysingsbord
 
 Slegs hierdie stories beheer MVP-aanvaarding:
 
-`MCP-US-001`, `MCP-US-002`, `MCP-US-003`, `MCP-US-004`, `MCP-US-005`, `MCP-US-006`, `MCP-US-007`, `MCP-US-008`, `MCP-US-009`, `MCP-US-014`, `MCP-US-016`, `MCP-US-050`, `MCP-US-051`, `MCP-US-055`, `MCP-US-057` en `MCP-US-063`.
+`MCP-US-001`, `MCP-US-002`, `MCP-US-003`, `MCP-US-004`, `MCP-US-005`, `MCP-US-006`, `MCP-US-007`, `MCP-US-008`, `MCP-US-009`, `MCP-US-014`, `MCP-US-016`, `MCP-US-050`, `MCP-US-051`, `MCP-US-055`, `MCP-US-057`, `MCP-US-063` en die veiligheidshek `MCP-US-075`.
 
 `MVP-Enabler`-stories bou die veilige kontrakte. `MVP-Must`-stories lewer die eindgebruiker se direkte hoorbare bewys. Reeds voltooide werk buite hierdie lys bly waardevol, maar verbreed nie die releasehek nie.
 
@@ -86,9 +86,9 @@ MCP-US-020 bly 'n aparte post-MVP-story vir 'n geïntegreerde, opsionele G-C-D-o
 
 ## Geordende pad
 
-`MCP-US-016 -> MCP-US-063 -> MCP-US-055 -> MCP-US-057`
+`MCP-US-016 -> MCP-US-063 -> MCP-US-075 -> MCP-US-055 -> MCP-US-057`
 
-MCP-US-005, MCP-US-014 en MCP-US-016 is gesluit. MCP-US-063 is die aktiewe story en implementeer die draagbare D1-kern ná die geslaagde hoorbare I2S-hek; US-055 verbind dit daarna aan Logic en produksie-I2S.
+MCP-US-005, MCP-US-014, MCP-US-016 en MCP-US-063 is gesluit. MCP-US-075 is die aktiewe veiligheidshek; US-055 verbind D1 daarna aan Logic en produksie-I2S met 'n goedgekeurde speakerlas en volumeprofiel.
 
 ## Besluithekke
 

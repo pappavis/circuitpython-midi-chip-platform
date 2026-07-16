@@ -69,4 +69,4 @@ Voor luidsprekertoets word MAX98357 se BTL-uitgang en voeding bevestig. US-016 s
 
 ## Exit-kriteria
 
-'n Story verlaat In Review wanneer alle eksplisiete menslike/HIL-kriteria aanvaar is. 'n Release verlaat Candidate wanneer die 16-story MVP Acceptance Set Done is, die Product Owner Logic-na-hoorbare-D1 aanvaar, oop risiko's aanvaar is en die tag na die geverifieerde commit wys.
+'n Story verlaat In Review wanneer alle eksplisiete menslike/HIL-kriteria aanvaar is. 'n Release verlaat Candidate wanneer die veiligheidsgewysigde 17-story MVP Acceptance Set Done is, die Product Owner Logic-na-hoorbare-D1 aanvaar, oop risiko's aanvaar is en die tag na die geverifieerde commit wys.

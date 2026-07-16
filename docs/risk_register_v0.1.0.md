@@ -2,7 +2,7 @@
 
 <!--
 Bestand: risk_register_v0.1.0.md
-Versienommer: 0.11.0
+Versienommer: 0.12.0
 Doel: Tegniese, produk-, veiligheids- en afleweringsrisiko’s vir die MVP.
 Sprint: Sprint 0
 Epic: Alle epics
@@ -25,7 +25,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
 | R-010 | SID/OPL-emulasie skep lisensie- of akkuraatheidsaansprake | Medium | Hoog | PO/Release | Bronlisensie-register; akkuraatheidsvlakke; geen “cycle accurate” sonder bewys | Oop |
 | R-011 | MIDI clock (24 PPQN) oorlaai ontvangslus | Medium | Hoog | MIDI | Prioriteitsry, geen onnodige logging, klok-jittertoetse | Oop |
 | R-012 | Dedupe-logika verwyder geldige note of clock | Medium | Hoog | MIDI/QA | Boodskapspesifieke dedupe; nooit blind op clock toepas nie | Oop |
-| R-013 | MAX98357 bridge-tied uitset word geaard of as line-out gebruik | Medium | Kritiek | Hardware | Bedradingsdiagram; luidspreker direk tussen + en -; geen grond/line-input; HIL-kontrolelys | Oop |
+| R-013 | MAX98357 bridge-tied uitset word geaard, as line-out gebruik of dryf 'n full-volume koptelefoon naby die gebruiker | Hoog | Kritiek | Hardware/PO | Ontkoppel direkte TRS-las; 4-8 ohm speaker; geen grond/line-input/pot op BTL-uitset; software gain, startup mute en GAIN/SD-profiel in US-075 | Impediment - MCP-US-075 |
 | R-014 | DSP delay/reverb oorskry geheue en latensie | Hoog | Hoog | DSP | Harde bufferbegroting; bypass; no-go aanvaarbaar vir reverb-spike | Oop |
 | R-015 | Outomatiese toestelkopie beskadig werkende prototipe | Laag | Kritiek | Release/QA | Rugsteun, manifest, dry-run, staging en eksplisiete deploy-story | Beheer aktief |
 | R-016 | Side quests breek logiese storyvolgorde | Hoog | Medium | Scrum Master | Now/Next/Later/Parking Lot; uitvoerplan-goedkeuring per story | Beheer aktief |
@@ -52,7 +52,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / QA-BURN-IN-AMENDMENT-001
 
 1. **Roteer die blootgestelde Wi-Fi-wagwoord.** Dit kan nie deur kode alleen herstel word nie.
 2. Hou MCP-US-003 se `boot.py` minimaal en herstelbaar.
-3. Sluit US-005, bou US-014 en bewys daarna die onafhanklike US-016 G-C-D/MAX98357-pad voor D1.
+3. Verkry 'n geskikte 4-8 ohm speaker en sluit US-075 voordat volgehoue Logic/D1-klanktoetse begin.
 4. Publiseer geen toestelrugsteun, unieke USB-ID of plaaslike netwerkdetail nie.
 5. Behandel ’n sigbare `ESP_*`-SSID as onbevestig totdat ’n beheerde power-cycle of device-log die fisiese bord korreleer.
 6. Hou SN76489, web, BLE, stereo, PWM, DSP, multi-core en USB-instance-polish post-MVP totdat Logic na hoorbare D1 aanvaar is.

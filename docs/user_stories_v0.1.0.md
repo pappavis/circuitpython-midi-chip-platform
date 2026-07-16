@@ -2,7 +2,7 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.24.0
+Versienommer: 0.25.0
 Doel: Volledige geordende backlog met 'n bevrore, verkleinde MVP Acceptance Set.
 Sprint: Sprint 2
 Epic: Alle epics
@@ -27,7 +27,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 
 ## Bevrore MVP Acceptance Set
 
-Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, `US-008`, `US-009`, `US-014`, `US-016`, `US-050`, `US-051`, `US-055`, `US-057` en `US-063` beheer MVP-aanvaarding. Die produkbewys is USB-MIDI uit Logic Pro na 'n hoorbare D1-basiskern op die verwysingsbord. Alle ander stories is reeds voltooide ekstra werk, governance of post-MVP voortsetting.
+Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, `US-008`, `US-009`, `US-014`, `US-016`, `US-050`, `US-051`, `US-055`, `US-057`, `US-063` en `US-075` beheer MVP-aanvaarding. Die produkbewys is USB-MIDI uit Logic Pro na 'n hoorbare D1-basiskern op die verwysingsbord met 'n veilige toetslas en begrensde volume. Alle ander stories is reeds voltooide ekstra werk, governance of post-MVP voortsetting.
 
 ## MCP-EPIC-001 Platform Foundation
 
@@ -61,7 +61,7 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | MCP-US-014 | AudioOutput Port And Null Backend | Done | US-002 | Blokgebaseerde mono/stereo signed-16 PCM-kontrak, Null/Memory-backends, application-integrasie en dependency-closed manifest slaag 99 hosttoetse sonder fisiese klankclaim |
 | MCP-US-016 | Standalone I2S Audible Diagnostic (MAX98357 Default) | Done | US-004, US-014 | Product Owner het op Wemos S2 hoorbare G3-C4-D4 mono-klank bevestig; serial `PASS`, 103 hosttoetse en heap 2056512->2056192 is bewys. Lang burn-in word onder US-051/US-057 voltooi |
 | MCP-US-015 | PWM Diagnostic Fallback | Post-MVP/contingency | US-004, US-014 | Gekose debugpenne lewer 'n meetbare fallback-sein wanneer I2S nie beskikbaar is nie |
-| MCP-US-063 | Portable D1 Baseline Synth Core | MVP-Must (In Review) | US-006, US-008, US-009, US-014, US-016 | v0.15.0 se monofoniese sine/saw/square-kern, velocity, fasekontinuïteit, Note Off-stilte, deurlopende blokrendering en `d1-diagnose` is host-groen; hoorbare Logic/I2S en lang smoke volg onder US-055/US-051 |
+| MCP-US-063 | Portable D1 Baseline Synth Core | Done | US-006, US-008, US-009, US-014, US-016 | Product Owner het v0.15.0 se sine/saw/square `d1-diagnose`, A4=440 Hz, velocity en PASS aanvaar; hoorbare Logic/I2S en lang smoke volg onder US-055/US-051 |
 | MCP-US-017 | SN76489-Lite Three-Voice Core | Post-MVP | US-063, US-057 | Drie toonstemme speel onafhanklik met gedokumenteerde akkuraatheid |
 | MCP-US-018 | Voice Allocation And Stealing | Post-MVP | US-017 | Vierde noot volg 'n toetsbare steal-policy sonder vasloop |
 | MCP-US-020 | Optional Integrated G-C-D Startup Test | Post-MVP | US-016, US-063 | Opsionele sestiendenootreeks gebruik die D1/runtime-klankpad; dit is nie die onafhanklike US-016 hardewarediagnose nie |
@@ -113,8 +113,9 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | MCP-US-044 | Lightweight Delay Echo | Post-MVP | US-043 | Beperkte delay is hoorbaar, beheerbaar en MIDI-stabiel |
 | MCP-US-045 | Lightweight Reverb Spike | Post-MVP | US-043 | Eenvoudige reverb slaag die begroting of lewer 'n gedokumenteerde no-go |
 | MCP-US-046 | Footswitch And Status LED | Later | US-004 | Debounce, bypass en LED-status werk sonder globale status |
-| MCP-US-047 | Pedal Power And Audio Protection | Later | US-021 | Krag, vlakke, filtering en beskerming is geskematiseer en gemeet |
-| MCP-US-048 | KiCad Reference PCB | Later | US-047 | Skematiese, PCB en BOM slaag ERC/DRC en bring-up-runbook |
+| MCP-US-047 | Pedal Power, Safe Volume And Audio Protection | Later | US-021, US-075 | Krag, speaker/headphone/line-out-grense, gain/attenuasie, mute, filtering, ESD/polariteit en beskerming is op breadboard geskematiseer en met veilige testpunte gemeet |
+| MCP-US-048 | KiCad Reference Pedal PCB | Later | US-047 | Die Hardware Engineer en ervare KiCad Product Owner lewer skema, PCB, footprints, testpunte en BOM; ERC/DRC, bring-up en vervaardigingsuitsette slaag |
+| MCP-US-075 | Safe Development Audio Load And Volume Gate | MVP-Enabler | US-016, US-063 | 'n 4-8 ohm luidsprekerlas, lae software master gain, startup mute en gedokumenteerde MAX98357 GAIN/SD-profiel is veilig hoorbaar; geen direkte koptelefoon, line-in of potmeter oor die BTL-uitset nie; headphone/line-out kry 'n aparte DAC/amp-besluit |
 | MCP-US-049 | External Audio Input Architecture | Parking lot | US-047 | ADC/codec, headroom en DSP-roete het ’n goedgekeurde ADR |
 
 ## MCP-EPIC-008 Portability, Quality And Release
@@ -126,12 +127,12 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | MCP-US-052 | Cross-Board Capability Profiles | Post-MVP | US-004 | 'n tweede BLE-geskikte CircuitPython-mikrobeheerder werk via 'n profiel sonder S2-regressie |
 | MCP-US-053 | Raspberry Pi Linux Blinka Adapter | Later | US-014, US-050 | Pi Zero/2/3 gebruik Linux/Blinka sonder om firmwareportabiliteit te beweer |
 | MCP-US-054 | Windows USB MIDI Acceptance | Post-MVP | US-003, US-007 | Toestel verskyn en ontvang note op 'n skoon Windows-rekenaar |
-| MCP-US-055 | macOS Logic Pro Audible D1 Acceptance | MVP-Must | US-003, US-007, US-009, US-014, US-016, US-063 | Logic kies die bord as External MIDI destination en die gebruiker hoor D1; die verwysingsbord slaag daarna die 8-uur USB-MIDI/audio/heap-burn-in |
+| MCP-US-055 | macOS Logic Pro Audible D1 Acceptance | MVP-Must | US-003, US-007, US-009, US-014, US-016, US-063, US-075 | Logic kies die bord as External MIDI destination en die gebruiker hoor D1 deur die goedgekeurde veilige uitsetprofiel; die verwysingsbord slaag daarna die 8-uur USB-MIDI/audio/heap-burn-in |
 | MCP-US-056 | Install Recovery And Diagnostics | Post-MVP | US-005, US-051 | Beginner-runbook dek geen MIDI, geen klank, safe mode en herstel |
 | MCP-US-068 | Stable USB MIDI Instance Identity | Post-MVP | US-003, US-004, US-055 | Elke toestel exposeer 'n herkenbare produknaam plus stabiele vier-karakter instance-ID; twee toestelle is onderskeibaar sonder UID/MAC-lekkasie |
 | MCP-US-059 | MIDI Guitar Hardware Acceptance | Post-MVP | US-018, US-058 | 'n Generiese MIDI-kitaar en Fishman-verwysing speel note, akkoorde, bends en slides; geen toestelnaam is 'n kodekonstante nie |
 | MCP-US-060 | Standalone External MIDI Host Acceptance | Post-MVP | US-013, US-017 | Controller na Raspberry Pi/eksterne USB-host na DIN/UART lewer note, bend en clock sonder DAW |
-| MCP-US-057 | MVP Release Candidate And Demo | MVP-Must | US-001 tot US-009, US-014, US-016, US-050, US-051, US-055, US-063 | Tag, release notes, bekende beperkings en 'n geslaagde 8-uur burn-inverslag vergesel die herhaalbare Logic USB-MIDI na hoorbare D1-demo |
+| MCP-US-057 | MVP Release Candidate And Demo | MVP-Must | US-001 tot US-009, US-014, US-016, US-050, US-051, US-055, US-063, US-075 | Tag, release notes, bekende beperkings en 'n geslaagde 8-uur burn-inverslag vergesel die herhaalbare Logic USB-MIDI na hoorbare D1-demo |
 
 ## MCP-EPIC-009 Framework Engineering
 
@@ -146,7 +147,7 @@ Hierdie epic beheer hoe mense en agente projekkennis laai, besluite neem en bewy
 
 ## MCP-EPIC-010 Physical Chip And Display Expansion
 
-Hierdie epic is doelbewus **ná MVP**. Dit verander nie die huidige hoorbare volgorde `US-014 -> US-016 -> US-063 -> US-055 -> US-057` nie en maak geen elektriese aanspraak voordat die betrokke fisiese chip en breakout gemeet is nie.
+Hierdie epic is doelbewus **ná MVP**. Dit verander nie die huidige hoorbare volgorde `US-014 -> US-016 -> US-063 -> US-075 -> US-055 -> US-057` nie en maak geen elektriese aanspraak voordat die betrokke fisiese chip en breakout gemeet is nie.
 
 | ID | User story | Fase | Afhanklikheid | Kern-aanvaardingsbewys |
 |---|---|---|---|---|

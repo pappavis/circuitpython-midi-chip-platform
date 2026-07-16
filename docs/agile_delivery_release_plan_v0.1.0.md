@@ -40,7 +40,7 @@ Die Framework Engineering-bootloader in `docs/framework_engineering/README.md` v
 - Dokumentasie-/impedimentwerk binne dieselfde story tel nie as 'n tweede story nie.
 - 'n Nuwe idee word geklassifiseer en georden; dit onderbreek nie die aktiewe story nie.
 - Die Scrum Master en Architect moet enige versoek stop wat 'n ongetoetste kernpad, werkende klankpad of importgrens kan breek.
-- Die bevrore oorblywende pad volg `MCP-US-063 -> MCP-US-055 -> MCP-US-057`; MCP-US-005, US-014 en die hoorbare US-016 I2S-hek is gesluit.
+- Die veiligheidsgewysigde oorblywende pad volg `MCP-US-075 -> MCP-US-055 -> MCP-US-057`; MCP-US-005, US-014, US-016 en US-063 is gesluit.
 - US-016 se standalone I2S-toets kom voor D1 en deel geen synth-runtimekode nie; MAX98357 mono-I2S is die fisiese verstek.
 - SN76489, web, BLE, stereo, PWM, DSP, MIDI-kitaar en multi-core is post-MVP en kan nie hierdie volgorde onderbreek nie.
 - Sonder verdere kwalifikasie beteken `synth` hierdie CircuitPython-projek; `python-d1-synth` word slegs as 'n eksplisiet benoemde leesalleen-verwysing gebruik.
