@@ -1,11 +1,11 @@
 # Bestand: d1_runtime.py
-# Versienommer: 0.17.5
-# Doel: Verbind USB-MIDI, D1-kern en 'n bewese hoorbare I2S-toonpad vir die Logic MVP.
+# Versienommer: 0.17.6
+# Doel: Verbind USB-MIDI vinnig met D1 en 'n hoorbare I2S-toonpad vir die Logic MVP.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-AUDIBLE-TONE-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-HIL-PASS-RECEIVED
+# Actienr: MCP-ACT-055-P0-REALTIME-BOOT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-001
 
 from midi_chip_platform.audio import AudioSafetyProfile, AudioStreamFormat, SafeAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
@@ -54,6 +54,8 @@ class D1UsbMidiI2sRuntime:
         self._tone_started = False
         self._tone_started_at = 0.0
         self._pending_tone_stop_at = None
+        self._runtime_started_at = 0.0
+        self._runtime_ready_at = 0.0
 
     @property
     def block_count(self):
@@ -83,11 +85,17 @@ class D1UsbMidiI2sRuntime:
             f"master_gain={self._master_gain_label()}"
         )
         try:
+            self._runtime_started_at = self._current_time()
             self._midi_input.open()
             self._audio_output.open()
             self._core.start()
             self._audio_output.unmute()
             self._output("D1_MIDI_INPUT_STATUS=OPEN")
+            self._runtime_ready_at = self._current_time()
+            self._output(
+                "D1_RUNTIME_READY;"
+                f"ready_ms={self._milliseconds_between(self._runtime_started_at, self._runtime_ready_at)}"
+            )
             while self._should_continue():
                 self._stop_pending_tone_if_due()
                 event = self._midi_input.receive()
@@ -100,13 +108,20 @@ class D1UsbMidiI2sRuntime:
                         f"note={event.note};velocity={event.velocity}"
                     )
                     if event.is_note_on and event.velocity > 0:
+                        event_received_at = self._current_time()
+                        tone_started_at = self._start_minimum_audible_tone(
+                            event,
+                            playable_event,
+                        )
                         self._output(
                             "D1_REALTIME_MIDI_NOTE=note_on;"
                             f"channel={event.channel};note={event.note};"
                             f"velocity={event.velocity};frequency_hz="
-                            f"{self._core.active_frequency_hz:.3f}"
+                            f"{self._core.active_frequency_hz:.3f};"
+                            f"event_ms={self._milliseconds_between(self._runtime_ready_at, event_received_at)};"
+                            f"tone_start_ms={self._milliseconds_between(self._runtime_ready_at, tone_started_at)};"
+                            f"note_latency_ms={self._milliseconds_between(event_received_at, tone_started_at)}"
                         )
-                        self._start_minimum_audible_tone(event, playable_event)
                         if self._max_blocks > 0 and self._block_count >= self._max_blocks:
                             continue
                         continue
@@ -190,8 +205,9 @@ class D1UsbMidiI2sRuntime:
                 f"minimum_seconds={self._seconds_for_blocks(requested_blocks):.3f};"
                 f"midi_velocity={event.velocity};play_velocity={playable_event.velocity}"
             )
-            return
+            return self._current_time()
         self._write_minimum_audible_note(event, playable_event)
+        return self._current_time()
 
     def _schedule_tone_stop(self):
         if not self._tone_started:
@@ -218,6 +234,10 @@ class D1UsbMidiI2sRuntime:
         if self._sleeper is not None and hasattr(self._sleeper, "monotonic"):
             return float(self._sleeper.monotonic())
         return 0.0
+
+    @staticmethod
+    def _milliseconds_between(started_at, ended_at):
+        return int(round((float(ended_at) - float(started_at)) * 1000.0))
 
     def _write_single_runtime_block(self):
         block = self._core.render_audio_block()

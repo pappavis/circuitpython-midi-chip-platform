@@ -21,6 +21,7 @@ AUDIO_OUTPUT_LOAD = "speaker-4-8-ohm"
 # Default MVP synth runtime. Set D1_RUNTIME_ENABLED = "false" when you only want
 # boot/config diagnostics and no continuous synth loop.
 D1_RUNTIME_ENABLED = "true"
+D1_FAST_BOOT_MODE = "true"
 D1_WAVEFORM = "square"
 D1_SAMPLE_RATE = 16000
 D1_FRAMES_PER_BLOCK = 128

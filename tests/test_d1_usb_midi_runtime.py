@@ -1,11 +1,11 @@
 # Bestand: test_d1_usb_midi_runtime.py
-# Versienommer: 0.17.5
-# Doel: Spesifiseer die USB-MIDI na D1 na I2S hoorbare toonpad vir Logic-aanvaarding.
+# Versienommer: 0.17.6
+# Doel: Spesifiseer die USB-MIDI na D1 na I2S fast-boot toonpad vir Logic-aanvaarding.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-AUDIBLE-TONE-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-HIL-PASS-RECEIVED
+# Actienr: MCP-ACT-055-P0-REALTIME-BOOT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-001
 
 from midi_chip_platform.audio import AudioStreamFormat, MemoryAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
@@ -86,6 +86,7 @@ class TestD1UsbMidiI2sRuntime:
         assert any(audio_output.blocks[1].samples)
         assert output[0].startswith("D1_RUNTIME_STATUS=START")
         assert "D1_MIDI_INPUT_STATUS=OPEN" in output
+        assert "D1_RUNTIME_READY;ready_ms=0" in output
         assert "D1_MIDI_EVENT=note_on;channel=1;note=60;velocity=100" in output
         assert output[-1].startswith("D1_RUNTIME_STATUS=PASS")
 
@@ -186,6 +187,7 @@ class TestD1UsbMidiI2sRuntime:
                 "D1_REALTIME_MIDI_NOTE=note_on;channel=1;note=69;velocity=100;"
                 "frequency_hz=440.000"
             )
+            and "event_ms=0;tone_start_ms=0;note_latency_ms=0" in line
             for line in output
         )
         assert any(

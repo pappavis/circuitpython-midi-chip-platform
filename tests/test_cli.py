@@ -1,5 +1,5 @@
 # Bestand: test_cli.py
-# Versienommer: 0.17.5
+# Versienommer: 0.17.6
 # Doel: Toets hostdiagnose, D1-runtime release en release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
@@ -69,7 +69,7 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.17.5 | "
+            "circuitpython-midi-chip-platform v0.17.6 | "
             "story=MCP-US-055 | release-date=2026-07-16\n"
         )
 

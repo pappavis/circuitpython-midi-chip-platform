@@ -432,7 +432,11 @@ class SerialExecutionProbe:
                 chunk = connection.read(4096)
                 if chunk:
                     chunks.append(chunk)
-                    if b"DEVICE_EXECUTION_STATUS=READY" in b"".join(chunks):
+                    captured = b"".join(chunks)
+                    if (
+                        b"DEVICE_EXECUTION_STATUS=READY" in captured
+                        or b"D1_RUNTIME_READY" in captured
+                    ):
                         break
                 self._sleeper.sleep(self._read_pause_seconds)
             return b"".join(chunks).decode("utf-8", "replace")
@@ -541,15 +545,25 @@ class HardwareInLoopVerifier:
             capture = self._serial_probe.capture(self._serial_port)
         except Exception:
             capture = ""
-        passed = (
+        import_smoke_passed = (
             "DEVICE_EXECUTION_STATUS=READY" in capture
             and "DEVICE_IMPORT_STATUS=PASS" in capture
             and self._release_metadata.banner() in capture
         )
+        fast_boot_passed = (
+            "DEVICE_FAST_BOOT_STATUS=ENABLED" in capture
+            and "D1_MIDI_INPUT_STATUS=OPEN" in capture
+            and "D1_RUNTIME_READY" in capture
+            and self._release_metadata.banner() in capture
+        )
+        passed = import_smoke_passed or fast_boot_passed
+        evidence = "current release and dependency-import markers via serial REPL"
+        if fast_boot_passed:
+            evidence = "current release and D1 fast-boot runtime markers via serial REPL"
         return HilCheckResult(
             "execution",
             passed,
-            "current release and dependency-import markers via serial REPL",
+            evidence,
         )
 
     def _digest(self, path):

@@ -1,11 +1,11 @@
 # Bestand: device_runtime.py
-# Versienommer: 0.17.0
-# Doel: Lewer toestelbewys en aktiveer USB-MIDI-diagnostiek of D1-runtime via konfigurasie.
+# Versienommer: 0.17.6
+# Doel: Lewer toestelbewys en aktiveer D1 fast boot of diagnostiek via konfigurasie.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-GREEN-005
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+# Actienr: MCP-ACT-055-P0-REALTIME-BOOT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-001
 
 from midi_chip_platform.release import ReleaseMetadata
 
@@ -48,12 +48,18 @@ class DeviceRuntimeApplication:
     def run(self):
         configuration = None
         self._output(self._release_metadata.banner())
+        if self._configuration_loader is not None:
+            configuration = self._configuration_loader.load()
+        if self._should_fast_boot(configuration):
+            self._output("DEVICE_FAST_BOOT_STATUS=ENABLED")
+            runtime = self._synth_runtime_factory.create_if_enabled(configuration)
+            if runtime is not None:
+                return bool(runtime.run())
         if self._capability_discovery is not None:
             snapshot = self._capability_discovery.discover()
             for line in snapshot.report_lines():
                 self._output(line)
-        if self._configuration_loader is not None:
-            configuration = self._configuration_loader.load()
+        if configuration is not None:
             for line in configuration.report_lines():
                 self._output(line)
         if self._import_smoke_check is not None:
@@ -69,3 +75,12 @@ class DeviceRuntimeApplication:
             if runtime is not None:
                 return bool(runtime.run())
         return True
+
+    def _should_fast_boot(self, configuration):
+        if configuration is None or self._synth_runtime_factory is None:
+            return False
+        if configuration.get("midi.diagnostic.enabled", False):
+            return False
+        if not configuration.get("synth.d1.enabled", True):
+            return False
+        return bool(configuration.get("synth.d1.fast_boot_mode", False))

@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.17.5
-# Doel: Spesifiseer publieke latched D1-runtime, veilige audio en private settings.
+# Versienommer: 0.17.6
+# Doel: Spesifiseer publieke fast-boot D1-runtime, veilige audio en private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-AUDIBLE-TONE-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-HIL-PASS-RECEIVED
+# Actienr: MCP-ACT-055-P0-REALTIME-BOOT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-001
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -35,6 +35,7 @@ class TestConfigurationDefaults:
         assert snapshot.get("audio.output_load") == "speaker-4-8-ohm"
         assert snapshot.get("clock.bpm") == 120
         assert snapshot.get("synth.d1.enabled") is True
+        assert snapshot.get("synth.d1.fast_boot_mode") is True
         assert snapshot.get("synth.d1.waveform") == "square"
         assert snapshot.get("synth.d1.sample_rate") == 16000
         assert snapshot.get("synth.d1.frames_per_block") == 128
@@ -61,6 +62,7 @@ class TestConfigurationDefaults:
         assert 'AUDIO_MAXIMUM_MASTER_GAIN = "0.25"' in settings_example
         assert 'AUDIO_STARTUP_MUTED = "true"' in settings_example
         assert 'D1_RUNTIME_ENABLED = "true"' in settings_example
+        assert 'D1_FAST_BOOT_MODE = "true"' in settings_example
         assert 'D1_WAVEFORM = "square"' in settings_example
         assert 'D1_AMPLITUDE = "0.5"' in settings_example
         assert 'D1_IDLE_SLEEP_SECONDS = "0.001"' in settings_example

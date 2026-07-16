@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.17.5
-# Doel: Laai publieke D1-runtime, latched-tone audioverstekke en private settings.
+# Versienommer: 0.17.6
+# Doel: Laai publieke D1-runtime, fast-boot audioverstekke en private settings.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-AUDIBLE-TONE-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-HIL-PASS-RECEIVED
+# Actienr: MCP-ACT-055-P0-REALTIME-BOOT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-001
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -28,6 +28,7 @@ class ConfigurationDefaults:
             "audio.startup_test": False,
             "clock.bpm": 120,
             "synth.d1.enabled": True,
+            "synth.d1.fast_boot_mode": True,
             "synth.d1.waveform": "square",
             "synth.d1.sample_rate": 16000,
             "synth.d1.frames_per_block": 128,
@@ -72,6 +73,7 @@ class EnvironmentSettingsSource:
             "audio.startup_test": "AUDIO_STARTUP_TEST",
             "clock.bpm": "CLOCK_BPM",
             "synth.d1.enabled": "D1_RUNTIME_ENABLED",
+            "synth.d1.fast_boot_mode": "D1_FAST_BOOT_MODE",
             "synth.d1.waveform": "D1_WAVEFORM",
             "synth.d1.sample_rate": "D1_SAMPLE_RATE",
             "synth.d1.frames_per_block": "D1_FRAMES_PER_BLOCK",

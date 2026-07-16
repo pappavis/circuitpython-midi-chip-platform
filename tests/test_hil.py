@@ -1,5 +1,5 @@
 # Bestand: test_hil.py
-# Versienommer: 0.17.5
+# Versienommer: 0.17.6
 # Doel: Spesifiseer deploy-, execution- en D1-runtime releasebewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
@@ -339,14 +339,14 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.17.5 | story=MCP-US-055 | "
+            "circuitpython-midi-chip-platform v0.17.6 | story=MCP-US-055 | "
             "release-date=2026-07-16\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.17.5 | story=MCP-US-055 | "
+            "circuitpython-midi-chip-platform v0.17.6 | story=MCP-US-055 | "
             "release-date=2026-07-16\nDEVICE_IMPORT_STATUS=PASS\n"
             "DEVICE_EXECUTION_STATUS=READY"
         )
@@ -366,6 +366,48 @@ class TestHardwareInLoopVerifier:
         assert "device-libraries: PASS" in output.getvalue()
         assert "execution: PASS" in output.getvalue()
         assert "private-port-id" not in output.getvalue()
+
+    def test_fast_boot_d1_runtime_proof_passes_without_import_smoke(
+        self, tmp_path
+    ) -> None:
+        source_root = tmp_path / "source"
+        device_root = tmp_path / "device"
+        manifest = HilDeploymentManifest.default()
+        for source_relative, device_relative in manifest.entries:
+            source_path = source_root / source_relative
+            device_path = device_root / device_relative
+            source_path.parent.mkdir(parents=True, exist_ok=True)
+            device_path.parent.mkdir(parents=True, exist_ok=True)
+            source_path.write_bytes(source_relative.encode("ascii"))
+            device_path.write_bytes(source_relative.encode("ascii"))
+        (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
+        (device_root / "boot_out.txt").write_text(
+            "Board ID:lolin_s2_mini\n"
+            "circuitpython-midi-chip-platform v0.17.6 | story=MCP-US-055 | "
+            "release-date=2026-07-16\n"
+            "BOOT_STATUS=PASS\n",
+            encoding="utf-8",
+        )
+        output = StringIO()
+        serial_probe = self.FakeSerialProbe(
+            "circuitpython-midi-chip-platform v0.17.6 | story=MCP-US-055 | "
+            "release-date=2026-07-16\n"
+            "DEVICE_FAST_BOOT_STATUS=ENABLED\n"
+            "D1_MIDI_INPUT_STATUS=OPEN\n"
+            "D1_RUNTIME_READY;ready_ms=52"
+        )
+        verifier = HardwareInLoopVerifier(
+            source_root=source_root,
+            device_root=device_root,
+            serial_port="private-port-id",
+            manifest=manifest,
+            serial_probe=serial_probe,
+            output=output,
+        )
+
+        assert verifier.run() is True
+        assert "execution: PASS" in output.getvalue()
+        assert "D1 fast-boot runtime markers" in output.getvalue()
 
     def test_hash_mismatch_fails_deployment_proof(self, tmp_path) -> None:
         source_root = tmp_path / "source"
@@ -404,7 +446,7 @@ class TestHardwareInLoopVerifier:
         (device_root / "boot.py").write_bytes(b"approved")
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
-            "circuitpython-midi-chip-platform v0.17.5 | story=MCP-US-055 | "
+            "circuitpython-midi-chip-platform v0.17.6 | story=MCP-US-055 | "
             "release-date=2026-07-16\nBOOT_STATUS=PASS",
             encoding="utf-8",
         )
@@ -414,7 +456,7 @@ class TestHardwareInLoopVerifier:
             serial_port="redacted",
             manifest=manifest,
             serial_probe=self.FakeSerialProbe(
-                "circuitpython-midi-chip-platform v0.17.5 | story=MCP-US-055 | "
+                "circuitpython-midi-chip-platform v0.17.6 | story=MCP-US-055 | "
                 "release-date=2026-07-16\nDEVICE_EXECUTION_STATUS=READY"
             ),
             output=StringIO(),
@@ -474,6 +516,22 @@ class TestSerialExecutionProbe:
         capture = probe.capture("private-port-id")
 
         assert "DEVICE_EXECUTION_STATUS=READY" in capture
+        assert b"\x04" in connection.writes
+        assert connection.closed is True
+
+    def test_probe_stops_on_d1_runtime_ready_marker(self) -> None:
+        connection = self.FakeConnection()
+        connection._reads = [b"", b"D1_RUNTIME_READY;ready_ms=42\n"]
+        factory = self.FakeFactory(connection)
+        probe = SerialExecutionProbe(
+            serial_factory=factory,
+            sleeper=self.NoSleep(),
+            read_attempts=5,
+        )
+
+        capture = probe.capture("private-port-id")
+
+        assert "D1_RUNTIME_READY;ready_ms=42" in capture
         assert b"\x04" in connection.writes
         assert connection.closed is True
 

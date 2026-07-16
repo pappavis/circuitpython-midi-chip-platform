@@ -1,11 +1,11 @@
 # Bestand: test_device_runtime.py
-# Versienommer: 0.17.0
-# Doel: Spesifiseer toestel-uitvoer, dependency-bewys, diagnostiek en D1-runtime-start.
+# Versienommer: 0.17.6
+# Doel: Spesifiseer toestel-uitvoer, dependency-bewys, diagnostiek en D1 fast-boot runtime-start.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-RED-004
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+# Actienr: MCP-ACT-055-P0-REALTIME-BOOT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-001
 
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
 from midi_chip_platform.release import ReleaseMetadata
@@ -28,7 +28,11 @@ class TestDeviceRuntimeApplication:
             )
 
     class FakeDiscovery:
+        def __init__(self):
+            self.run_count = 0
+
         def discover(self):
+            self.run_count += 1
             return TestDeviceRuntimeApplication.FakeSnapshot()
 
     class FakeConfigurationSnapshot:
@@ -259,3 +263,43 @@ class TestDeviceRuntimeApplication:
         assert result is True
         assert diagnostic.run_count == 1
         assert runtime.run_count == 0
+
+    def test_fast_boot_starts_d1_before_capability_and_import_smoke(self) -> None:
+        output = []
+        runtime = self.FakeRuntime()
+        factory = self.FakeRuntimeFactory(runtime)
+        importer = self.FakeImporter()
+        discovery = self.FakeDiscovery()
+        application = DeviceRuntimeApplication(
+            release_metadata=ReleaseMetadata(
+                version="0.17.6",
+                user_story="MCP-US-055",
+                release_date="2026-07-16",
+            ),
+            capability_discovery=discovery,
+            configuration_loader=self.FakeConfigurationLoader(
+                {
+                    "synth.d1.enabled": True,
+                    "synth.d1.fast_boot_mode": True,
+                    "midi.diagnostic.enabled": False,
+                }
+            ),
+            import_smoke_check=DeviceImportSmokeCheck(
+                importer=importer,
+                module_names=("slow.module",),
+            ),
+            synth_runtime_factory=factory,
+            output=output.append,
+        )
+
+        result = application.run()
+
+        assert result is True
+        assert runtime.run_count == 1
+        assert discovery.run_count == 0
+        assert importer.module_names == []
+        assert output == [
+            "circuitpython-midi-chip-platform v0.17.6 | "
+            "story=MCP-US-055 | release-date=2026-07-16",
+            "DEVICE_FAST_BOOT_STATUS=ENABLED",
+        ]

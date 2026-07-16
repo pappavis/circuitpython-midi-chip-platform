@@ -299,10 +299,12 @@ python -m midi_chip_platform hil-deploy \
 5. Verwag:
 
 ```text
-circuitpython-midi-chip-platform v0.17.5 | story=MCP-US-055 | release-date=2026-07-16
+circuitpython-midi-chip-platform v0.17.6 | story=MCP-US-055 | release-date=2026-07-16
 DEVICE_EXECUTION_STATUS=READY
+DEVICE_FAST_BOOT_STATUS=ENABLED
 D1_RUNTIME_STATUS=START;core=d1;sample_rate=16000;frames_per_block=128;max_blocks=0;minimum_note_seconds=0.35;minimum_note_velocity=64;master_gain=0.250
 D1_MIDI_INPUT_STATUS=OPEN
+D1_RUNTIME_READY;ready_ms=...
 ```
 
 6. Open Logic Pro.
@@ -325,7 +327,7 @@ Stop met `Ctrl-C`. `D1_RUNTIME_STATUS=INTERRUPTED` is normaal wanneer jy self st
 
 ## Huidige pausepunt
 
-MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is Done. US-075 is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer die gesertifiseerde hardware-cleanup. US-055 is In Review: hosttoetse is groen en die Product Owner moet nou Logic/USB-MIDI-na-hoorbare-D1/I2S op die bord toets. Die v0.17.5 hertest moet `master_gain=0.250`, `minimum_note_velocity=64`, `D1_MIDI_INPUT_STATUS=OPEN`, `D1_REALTIME_MIDI_NOTE` en `D1_AUDIO_EVENT=audible_note;mode=latched_tone` wys vir elke hoorbare MIDI-note; die I2S-adapter gebruik nou 'n latched RawSample-tone soos die hoorbare standalone I2S-diagnose.
+MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is Done. US-075 is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer die gesertifiseerde hardware-cleanup. US-055 is In Review: hosttoetse is groen en die Product Owner moet nou Logic/USB-MIDI-na-hoorbare-D1/I2S op die bord toets. Die v0.17.6 hertest moet `master_gain=0.250`, `minimum_note_velocity=64`, `D1_MIDI_INPUT_STATUS=OPEN`, `D1_REALTIME_MIDI_NOTE` en `D1_AUDIO_EVENT=audible_note;mode=latched_tone` wys vir elke hoorbare MIDI-note; die I2S-adapter gebruik nou 'n latched RawSample-tone soos die hoorbare standalone I2S-diagnose.
 
 ## MAX98357A veilige toetslas
 
