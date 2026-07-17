@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-IMPEDIMENT-001
 
 ## Status
 
-**IN REVIEW / HIL RETEST READY.** `v0.18.1` voeg 'n boot-audition by die P0 realtime-baseline. Die vorige HIL-log het gewys dat firmware NoteOn ontvang en `I2SOut.play()` binne `0-16 ms` aanroep, maar die Product Owner hoor die toon ongeveer 12 sekondes later. Hierdie fix verminder per-note serial logging na `none` en speel by boot eers self 'n bekende I2S-toon. Daarmee skei ons die fout nou in twee vrae: klink die baseline-I2S-pad self onmiddellik, en klink Logic NoteOn daarna onmiddellik?
+**IN REVIEW / LOGIC RETEST OPEN.** `v0.18.1` voeg 'n boot-audition by die P0 realtime-baseline. Die vorige HIL-log het gewys dat firmware NoteOn ontvang en `I2SOut.play()` binne `0-16 ms` aanroep, maar die Product Owner hoor die toon ongeveer 12 sekondes later. Op 2026-07-17 het die Product Owner bevestig dat `i2s_test.py` slaag en dat die boot-audition onmiddellik hoorbaar is by startup. Daarmee is die I2S-audio-startpad voorlopig vrygespreek; die oorblywende P0-vraag is of Logic/USB-MIDI NoteOn na `REALTIME_BASELINE_READY` onmiddellik hoorbaar kan trigger.
 
 Die doel is nie musikaliteit nie. Die doel is om hard te bewys of die Wemos S2 Mini + MAX98357A + Logic Pro pad realtime hoorbaar kan reageer voordat die D1-kern weer ingebou word.
 
@@ -35,7 +35,7 @@ Die doel is nie musikaliteit nie. Die doel is om hard te bewys of die Wemos S2 M
 | RED | Release- en HIL-contracte het gefaal toe `ReleaseMetadata` na `0.18.1/MCP-US-077` beweeg is |
 | GREEN | `RealtimeMidiAudioBaselineRuntime` start voorafberekende tone op NoteOn; D1 bly uit wanneer baseline aan is |
 | REGRESSION | `144 passed in 0.83s` |
-| HIL | Wag op Product Owner: hoor boot-audition onmiddellik; speel daarna Logic NoteOn en luister of die vaste toon onmiddellik volg |
+| HIL | Product Owner bevestig: `i2s_test.py` slaag, boot-audition is hoorbaar by startup, en `REALTIME_BASELINE_READY;ready_ms=613` word gerapporteer |
 
 ## Waarom hierdie baseline anders is as US-055
 
@@ -87,6 +87,8 @@ REALTIME_BASELINE_READY;ready_ms=...
 ```
 
 **Eerste acceptatievraag:** hoor je die boot-audition direct tijdens de startup? Als dit al 12 seconden later klinkt, ligt het probleem onder Logic/MIDI en moeten we het I2S/audio-startpad of hardwarepad onderzoeken.
+
+**Antwoord 2026-07-17:** ja, boot-audition is hoorbaar by startup. Dit beteken dat die 12-sekonde vertraging nie in die basiese I2S-audio-startpad sit nie.
 
 ### 4. Logic Pro test
 
@@ -141,9 +143,11 @@ REALTIME_BASELINE_NOTE_ON;channel=1;note=60;velocity=90;event_ms=...;tone_start_
 
 ## Volgende stap na HIL
 
-As US-077 slaag, is die logiese volgende actie:
+Omdat die boot-audition nou slaag, is die logiese volgende actie:
 
-1. US-055 refactor: vervang die D1 realtime-pad met dieselfde precomputed/continuous audio primitive of `synthio`, afhangend van die Copilot-review.
-2. Voeg eers daarna pitch/velocity/musikaliteit terug.
+1. Herhaal Logic NoteOn met baseline enabled en `event_logging=none`.
+2. As Logic steeds 12 sekondes laat klink, maak die volgende spike kleiner: meet USB-MIDI receive sonder serial logging en sonder `I2SOut.stop()`/restart per note.
+3. Eers nadat realtime NoteOn gesluit is, US-055 refactor: vervang die D1 realtime-pad met dieselfde bewezen primitive of `synthio`, afhangend van die Copilot-review.
+4. Voeg eers daarna pitch/velocity/musikaliteit terug.
 
 As US-077 faal, stop D1-werk en diagnoseer USB-MIDI/I2S primitive met scope markers.
