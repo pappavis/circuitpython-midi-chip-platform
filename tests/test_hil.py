@@ -1,11 +1,11 @@
 # Bestand: test_hil.py
 # Versienommer: 0.18.1
-# Doel: Spesifiseer deploy-, execution-, realtime-baseline- en D1-runtime releasebewys.
+# Doel: Spesifiseer deploy-tempbestanden, execution, realtime-baseline en D1-runtime releasebewys.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
-# Actienr: MCP-ACT-077-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
+# Actienr: MCP-ACT-077-IMP-002-RED-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-DEPLOY-IMPEDIMENT-001
 
 from io import StringIO
 from pathlib import Path
@@ -201,6 +201,8 @@ class TestHardwareInLoopDeployer:
         assert (device_root / "boot.py").read_text(encoding="utf-8") == "boot"
         assert (device_root / "code.py").read_text(encoding="utf-8") == "code"
         assert (device_root / "keep.txt").read_text(encoding="utf-8") == "preserve"
+        assert not (device_root / ".boot.py.deploying").exists()
+        assert not (device_root / "boot.py.deploying").exists()
         assert "HIL_DEPLOY_STATUS=PASS;files=2" in output.getvalue()
         assert str(device_root) not in output.getvalue()
 

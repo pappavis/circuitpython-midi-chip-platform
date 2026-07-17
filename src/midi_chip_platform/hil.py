@@ -1,11 +1,11 @@
 # Bestand: hil.py
 # Versienommer: 0.18.1
-# Doel: Verifieer dependency-closed deploy met realtime-baseline, D1-runtime en CircuitPython REPL/autoreload-handdruk.
+# Doel: Verifieer dependency-closed deploy met CircuitPython-vriendelijke tempbestanden.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
-# Actienr: MCP-ACT-077-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
+# Actienr: MCP-ACT-077-IMP-002-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-DEPLOY-IMPEDIMENT-001
 
 import ast
 import hashlib
@@ -269,7 +269,7 @@ class HardwareInLoopDeployer:
                 source_path = self._source_root / source_relative
                 device_path = self._device_root / device_relative
                 device_path.parent.mkdir(parents=True, exist_ok=True)
-                temporary_path = device_path.with_name(f".{device_path.name}.deploying")
+                temporary_path = device_path.with_name(f"{device_path.name}.deploying")
                 shutil.copyfile(source_path, temporary_path)
                 temporary_path.replace(device_path)
             copied = True
