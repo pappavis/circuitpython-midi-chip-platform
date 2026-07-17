@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.18.0
-# Doel: Spesifiseer publieke fast-boot D1-runtime, realtime-baseline, veilige audio en private settings.
+# Versienommer: 0.18.1
+# Doel: Spesifiseer publieke D1-runtime, realtime-baseline boot-audition en private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
-# Actienr: MCP-ACT-077-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
+# Actienr: MCP-ACT-077-IMP-001-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-IMPEDIMENT-001
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -58,7 +58,8 @@ class TestConfigurationDefaults:
         assert snapshot.get("realtime_baseline.max_note_events") == 0
         assert snapshot.get("realtime_baseline.timeout_seconds") == 0.0
         assert snapshot.get("realtime_baseline.idle_sleep_seconds") == 0.0
-        assert snapshot.get("realtime_baseline.event_logging") == "summary"
+        assert snapshot.get("realtime_baseline.event_logging") == "none"
+        assert snapshot.get("realtime_baseline.boot_audition_seconds") == 0.6
         assert snapshot.get("midi.diagnostic.enabled") is False
         assert snapshot.get("midi.diagnostic.max_events") == 8
         assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
@@ -94,7 +95,8 @@ class TestConfigurationDefaults:
         assert "REALTIME_BASELINE_MAX_NOTE_EVENTS = 0" in settings_example
         assert 'REALTIME_BASELINE_TIMEOUT_SECONDS = "0.0"' in settings_example
         assert 'REALTIME_BASELINE_IDLE_SLEEP_SECONDS = "0.0"' in settings_example
-        assert 'REALTIME_BASELINE_EVENT_LOGGING = "summary"' in settings_example
+        assert 'REALTIME_BASELINE_EVENT_LOGGING = "none"' in settings_example
+        assert 'REALTIME_BASELINE_BOOT_AUDITION_SECONDS = "0.6"' in settings_example
 
 
 class TestConfigurationSecretBoundary:

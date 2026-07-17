@@ -1,11 +1,11 @@
 # Bestand: test_realtime_baseline.py
-# Versienommer: 0.18.0
-# Doel: Spesifiseer die kleinste realtime USB-MIDI NoteOn na voorafberekende I2S-toon baseline.
+# Versienommer: 0.18.1
+# Doel: Spesifiseer realtime USB-MIDI en direkte I2S-audio met boot-audition.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
-# Actienr: MCP-ACT-077-RED-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
+# Actienr: MCP-ACT-077-IMP-001-RED-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-IMPEDIMENT-001
 
 from midi_chip_platform.events import NoteEvent
 from midi_chip_platform.realtime_baseline import (
@@ -50,6 +50,10 @@ class TestRealtimeMidiAudioBaseline:
         def close(self):
             self.calls.append("close")
 
+        def play_for_duration(self, duration_seconds, sleeper):
+            self.calls.append(("play_for_duration", float(duration_seconds)))
+            sleeper.sleep(duration_seconds)
+
     def test_profile_defaults_are_small_and_realtime_focused(self) -> None:
         profile = RealtimeBaselineProfile()
 
@@ -60,7 +64,8 @@ class TestRealtimeMidiAudioBaseline:
         assert profile.max_note_events == 0
         assert profile.timeout_seconds == 0.0
         assert profile.idle_sleep_seconds == 0.0
-        assert profile.event_logging == "summary"
+        assert profile.event_logging == "none"
+        assert profile.boot_audition_seconds == 0.6
 
     def test_runtime_starts_precomputed_tone_on_note_on_without_d1_core(self) -> None:
         output = []
@@ -83,17 +88,20 @@ class TestRealtimeMidiAudioBaseline:
 
         assert result is True
         assert runtime.note_on_count == 1
-        assert tone_output.calls == ["open", "start", "stop", "close"]
+        assert tone_output.calls == [
+            "open",
+            ("play_for_duration", 0.6),
+            "start",
+            "stop",
+            "close",
+        ]
         assert output[0].startswith("REALTIME_BASELINE_STATUS=START")
         assert "REALTIME_BASELINE_AUDIO_STATUS=OPEN;actual_frequency_hz=440.000" in output
+        assert "REALTIME_BASELINE_BOOT_AUDITION=START;seconds=0.600" in output
+        assert "REALTIME_BASELINE_BOOT_AUDITION=PASS" in output
         assert "REALTIME_BASELINE_MIDI_INPUT_STATUS=OPEN" in output
-        assert "REALTIME_BASELINE_READY;ready_ms=0" in output
-        assert any(
-            line.startswith(
-                "REALTIME_BASELINE_NOTE_ON;channel=1;note=60;velocity=90;"
-            )
-            for line in output
-        )
+        assert "REALTIME_BASELINE_READY;ready_ms=600" in output
+        assert not any(line.startswith("REALTIME_BASELINE_NOTE_ON") for line in output)
         assert output[-1] == "REALTIME_BASELINE_STATUS=PASS;note_on=1;ignored=0"
 
     def test_runtime_can_suppress_per_note_summary_logging(self) -> None:
@@ -165,9 +173,9 @@ class TestRealtimeMidiAudioBaseline:
                     "realtime_baseline.timeout_seconds": 0.0,
                     "realtime_baseline.idle_sleep_seconds": 0.0,
                     "realtime_baseline.event_logging": "summary",
+                    "realtime_baseline.boot_audition_seconds": 0.6,
                 }
             )
         )
 
         assert runtime is not None
-

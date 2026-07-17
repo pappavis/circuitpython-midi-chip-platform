@@ -1,5 +1,5 @@
 # Bestand: test_device_runtime.py
-# Versienommer: 0.18.0
+# Versienommer: 0.18.1
 # Doel: Spesifiseer toestel-uitvoer, dependency-bewys, diagnostiek, realtime-baseline en D1 fast-boot runtime-start.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
@@ -271,9 +271,9 @@ class TestDeviceRuntimeApplication:
         d1_runtime = self.FakeRuntime()
         application = DeviceRuntimeApplication(
             release_metadata=ReleaseMetadata(
-                version="0.18.0",
+                version="0.18.1",
                 user_story="MCP-US-077",
-                release_date="2026-07-16",
+                release_date="2026-07-17",
             ),
             configuration_loader=self.FakeConfigurationLoader(
                 {
@@ -342,9 +342,9 @@ class TestDeviceRuntimeApplication:
         d1_runtime = self.FakeRuntime()
         application = DeviceRuntimeApplication(
             release_metadata=ReleaseMetadata(
-                version="0.18.0",
+                version="0.18.1",
                 user_story="MCP-US-077",
-                release_date="2026-07-16",
+                release_date="2026-07-17",
             ),
             configuration_loader=self.FakeConfigurationLoader(
                 {
@@ -368,7 +368,7 @@ class TestDeviceRuntimeApplication:
         assert baseline.run_count == 1
         assert d1_runtime.run_count == 0
         assert output == [
-            "circuitpython-midi-chip-platform v0.18.0 | "
-            "story=MCP-US-077 | release-date=2026-07-16",
+            "circuitpython-midi-chip-platform v0.18.1 | "
+            "story=MCP-US-077 | release-date=2026-07-17",
             "DEVICE_FAST_BOOT_STATUS=ENABLED",
         ]

@@ -1,11 +1,11 @@
 # Bestand: realtime_baseline.py
-# Versienommer: 0.18.0
-# Doel: Bewys die kleinste realtime USB-MIDI NoteOn na voorafberekende I2S-toon primitive.
+# Versienommer: 0.18.1
+# Doel: Bewys realtime MIDI en direkte I2S-audio met boot-audition en min logging.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
-# Actienr: MCP-ACT-077-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
+# Actienr: MCP-ACT-077-IMP-001-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-IMPEDIMENT-001
 
 from midi_chip_platform.events import NoteEvent
 from midi_chip_platform.midi_usb import CircuitPythonUsbMidiFactory
@@ -22,7 +22,8 @@ class RealtimeBaselineProfile:
         max_note_events=0,
         timeout_seconds=0.0,
         idle_sleep_seconds=0.0,
-        event_logging="summary",
+        event_logging="none",
+        boot_audition_seconds=0.6,
     ):
         self._sample_rate = int(sample_rate)
         self._frequency_hz = float(frequency_hz)
@@ -32,6 +33,7 @@ class RealtimeBaselineProfile:
         self._timeout_seconds = float(timeout_seconds)
         self._idle_sleep_seconds = float(idle_sleep_seconds)
         self._event_logging = str(event_logging).lower()
+        self._boot_audition_seconds = float(boot_audition_seconds)
         self._validate()
 
     @property
@@ -66,6 +68,10 @@ class RealtimeBaselineProfile:
     def event_logging(self):
         return self._event_logging
 
+    @property
+    def boot_audition_seconds(self):
+        return self._boot_audition_seconds
+
     def _validate(self):
         if self._sample_rate <= 0:
             raise ValueError("sample_rate must be positive")
@@ -83,6 +89,8 @@ class RealtimeBaselineProfile:
             raise ValueError("idle_sleep_seconds must not be negative")
         if self._event_logging not in ("none", "summary", "verbose"):
             raise ValueError("event_logging must be none, summary or verbose")
+        if self._boot_audition_seconds < 0.0:
+            raise ValueError("boot_audition_seconds must not be negative")
 
 
 class CircuitPythonPrecomputedI2sToneOutput:
@@ -157,6 +165,13 @@ class CircuitPythonPrecomputedI2sToneOutput:
         if self._device is not None:
             self._device.stop()
         self._is_playing = False
+
+    def play_for_duration(self, duration_seconds, sleeper):
+        if not self.is_open:
+            raise RuntimeError("baseline I2S output is closed")
+        self.start()
+        sleeper.sleep(float(duration_seconds))
+        self.stop()
 
     def close(self):
         if self._device is None:
@@ -237,7 +252,8 @@ class RealtimeMidiAudioBaselineRuntime:
             f"tone_seconds={self._profile.tone_seconds:.3f};"
             f"max_note_events={self._profile.max_note_events};"
             f"timeout_seconds={self._profile.timeout_seconds:g};"
-            f"event_logging={self._profile.event_logging}"
+            f"event_logging={self._profile.event_logging};"
+            f"boot_audition_seconds={self._profile.boot_audition_seconds:.3f}"
         )
         try:
             self._started_at = self._current_time()
@@ -248,6 +264,7 @@ class RealtimeMidiAudioBaselineRuntime:
                 "REALTIME_BASELINE_AUDIO_STATUS=OPEN;"
                 f"actual_frequency_hz={self._tone_output.actual_frequency_hz:.3f}"
             )
+            self._run_boot_audition()
             self._output("REALTIME_BASELINE_MIDI_INPUT_STATUS=OPEN")
             self._ready_at = self._current_time()
             self._output(
@@ -306,6 +323,21 @@ class RealtimeMidiAudioBaselineRuntime:
             f"tone_start_ms={self._milliseconds_between(self._ready_at, tone_started_at)};"
             f"latency_ms={self._milliseconds_between(event_at, tone_started_at)}"
         )
+
+    def _run_boot_audition(self):
+        if self._profile.boot_audition_seconds <= 0.0:
+            return
+        if self._sleeper is None or not hasattr(self._tone_output, "play_for_duration"):
+            return
+        self._output(
+            "REALTIME_BASELINE_BOOT_AUDITION=START;"
+            f"seconds={self._profile.boot_audition_seconds:.3f}"
+        )
+        self._tone_output.play_for_duration(
+            self._profile.boot_audition_seconds,
+            self._sleeper,
+        )
+        self._output("REALTIME_BASELINE_BOOT_AUDITION=PASS")
 
     def _should_continue(self):
         if (
@@ -382,7 +414,11 @@ class RealtimeMidiAudioBaselineFactory:
             max_note_events=configuration.get("realtime_baseline.max_note_events", 0),
             timeout_seconds=configuration.get("realtime_baseline.timeout_seconds", 0.0),
             idle_sleep_seconds=configuration.get("realtime_baseline.idle_sleep_seconds", 0.0),
-            event_logging=configuration.get("realtime_baseline.event_logging", "summary"),
+            event_logging=configuration.get("realtime_baseline.event_logging", "none"),
+            boot_audition_seconds=configuration.get(
+                "realtime_baseline.boot_audition_seconds",
+                0.6,
+            ),
         )
         return RealtimeMidiAudioBaselineRuntime(
             midi_input=CircuitPythonUsbMidiFactory(self._importer).create_input(
@@ -399,4 +435,3 @@ class RealtimeMidiAudioBaselineFactory:
             output=self._output,
             sleeper=self._importer("time"),
         )
-

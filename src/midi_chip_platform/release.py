@@ -1,19 +1,19 @@
 # Bestand: release.py
-# Versienommer: 0.18.0
-# Doel: Besit release-naspeurbaarheid vir die realtime MIDI-audio baseline spike.
+# Versienommer: 0.18.1
+# Doel: Besit release-naspeurbaarheid vir die realtime baseline boot-audition fix.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
-# Actienr: MCP-ACT-077-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
+# Actienr: MCP-ACT-077-IMP-001-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-IMPEDIMENT-001
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.18.0",
+        version="0.18.1",
         user_story="MCP-US-077",
-        release_date="2026-07-16",
+        release_date="2026-07-17",
     ):
         self._version = str(version)
         self._user_story = str(user_story)

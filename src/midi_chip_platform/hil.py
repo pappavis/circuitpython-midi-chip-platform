@@ -1,5 +1,5 @@
 # Bestand: hil.py
-# Versienommer: 0.18.0
+# Versienommer: 0.18.1
 # Doel: Verifieer dependency-closed deploy met realtime-baseline, D1-runtime en CircuitPython REPL/autoreload-handdruk.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release

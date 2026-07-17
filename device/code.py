@@ -1,5 +1,5 @@
 # Bestand: code.py
-# Versienommer: 0.18.0
+# Versienommer: 0.18.1
 # Doel: Start die realtime MIDI-audio baseline of D1 runtime op die toestel.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release

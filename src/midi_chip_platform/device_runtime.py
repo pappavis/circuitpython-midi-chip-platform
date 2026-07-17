@@ -1,5 +1,5 @@
 # Bestand: device_runtime.py
-# Versienommer: 0.18.0
+# Versienommer: 0.18.1
 # Doel: Lewer toestelbewys en aktiveer realtime-baseline, D1 fast boot of diagnostiek.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
