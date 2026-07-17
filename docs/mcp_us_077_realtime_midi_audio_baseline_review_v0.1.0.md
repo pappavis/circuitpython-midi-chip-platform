@@ -90,6 +90,8 @@ REALTIME_BASELINE_READY;ready_ms=...
 
 **Antwoord 2026-07-17:** ja, boot-audition is hoorbaar by startup. Dit beteken dat die 12-sekonde vertraging nie in die basiese I2S-audio-startpad sit nie.
 
+**Logic retest 2026-07-17:** met `event_logging=none` was daar na `REALTIME_BASELINE_READY` geen hoorbare Logic NoteOn-klank en geen MIDI-gerelateerde debugoutput. Omdat `none` per-note logging doelbewus uitskakel, is die volgende P0-story `MCP-US-078`: herhaal dieselfde Logic-test met `REALTIME_BASELINE_EVENT_LOGGING=summary` en bewys eers of NoteOn events die S2 ná ready bereik.
+
 ### 4. Logic Pro test
 
 1. Open Logic Pro.
@@ -145,9 +147,10 @@ REALTIME_BASELINE_NOTE_ON;channel=1;note=60;velocity=90;event_ms=...;tone_start_
 
 Omdat die boot-audition nou slaag, is die logiese volgende actie:
 
-1. Herhaal Logic NoteOn met baseline enabled en `event_logging=none`.
-2. As Logic steeds 12 sekondes laat klink, maak die volgende spike kleiner: meet USB-MIDI receive sonder serial logging en sonder `I2SOut.stop()`/restart per note.
-3. Eers nadat realtime NoteOn gesluit is, US-055 refactor: vervang die D1 realtime-pad met dieselfde bewezen primitive of `synthio`, afhangend van die Copilot-review.
-4. Voeg eers daarna pitch/velocity/musikaliteit terug.
+1. MCP-US-078: herhaal Logic NoteOn met baseline enabled en `event_logging=summary`.
+2. As daar geen `REALTIME_BASELINE_NOTE_ON` verskyn nie, fokus op Logic/CoreMIDI bestemming, USB-MIDI port index en post-ready receive-loop.
+3. As NoteOn wel verskyn maar geen klank klink nie, maak die volgende spike kleiner: geen `I2SOut.stop()`/restart per note, maar latched continuous tone state.
+4. Eers nadat realtime NoteOn gesluit is, US-055 refactor: vervang die D1 realtime-pad met dieselfde bewezen primitive of `synthio`, afhangend van die Copilot-review.
+5. Voeg eers daarna pitch/velocity/musikaliteit terug.
 
 As US-077 faal, stop D1-werk en diagnoseer USB-MIDI/I2S primitive met scope markers.
