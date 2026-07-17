@@ -203,6 +203,7 @@ class TestHardwareInLoopDeployer:
         assert (device_root / "keep.txt").read_text(encoding="utf-8") == "preserve"
         assert not (device_root / ".boot.py.deploying").exists()
         assert not (device_root / "boot.py.deploying").exists()
+        assert not (device_root / "__mcp_deploy_boot.py.tmp").exists()
         assert "HIL_DEPLOY_STATUS=PASS;files=2" in output.getvalue()
         assert str(device_root) not in output.getvalue()
 

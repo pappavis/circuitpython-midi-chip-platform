@@ -269,7 +269,9 @@ class HardwareInLoopDeployer:
                 source_path = self._source_root / source_relative
                 device_path = self._device_root / device_relative
                 device_path.parent.mkdir(parents=True, exist_ok=True)
-                temporary_path = device_path.with_name(f"{device_path.name}.deploying")
+                temporary_path = device_path.with_name(
+                    f"__mcp_deploy_{device_path.name}.tmp"
+                )
                 shutil.copyfile(source_path, temporary_path)
                 temporary_path.replace(device_path)
             copied = True
