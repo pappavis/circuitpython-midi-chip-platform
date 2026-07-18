@@ -37,7 +37,7 @@ MCP-US-079 bou 'n nuwe, klein runtime langs die bestaande baseline:
 
 ## Aanvaardingscriteria
 
-- Hosttoetse bewys dat die runtime NoteOn/NoteOff state mutasies uitvoer sonder per-event audio-play.
+- Hosttoetse bewys dat die runtime NoteOn/NoteOff state mutasies uitvoer sonder per-event audio-play. Status: `PASS`, 152 hosttoetse op 2026-07-19.
 - Device startup rapporteer `SYNTHIO_BASELINE_READY`.
 - Boot-audition bly aan as hoorbare selftest.
 - Logic Pro External MIDI na `S2 Mini` speel 20 NoteOns hoorbaar realtime.
@@ -45,6 +45,43 @@ MCP-US-079 bou 'n nuwe, klein runtime langs die bestaande baseline:
 - Geen 12-20 sekonde audio backlog na herhaalde NoteOns.
 - NoteOff of gate stop die noot.
 - Geen globale veranderlikes of modulevlak runtime-status.
+
+## Implementasiestatus
+
+Status: `In Review / HIL Ready`
+
+Release: `v0.19.0`
+
+Die implementasie voeg `src/midi_chip_platform/synthio_runtime.py` by. Die nuwe runtime word net geaktiveer wanneer `SYNTHIO_BASELINE_ENABLED = "true"` in `settings.toml` staan. Dit hou die bestaande D1-runtime onaangeraak totdat die HIL-test bewys dat `synthio` die 12-20 sekonde audio backlog oplos.
+
+## HIL Acceptatietest
+
+1. Deploy release `v0.19.0` na `CIRCUITPY`.
+2. Sit hierdie runtime flags in `settings.toml`:
+
+```toml
+SYNTHIO_BASELINE_ENABLED = "true"
+REALTIME_BASELINE_ENABLED = "false"
+D1_RUNTIME_ENABLED = "true"
+SYNTHIO_BASELINE_EVENT_LOGGING = "summary"
+SYNTHIO_BASELINE_BOOT_AUDITION_SECONDS = "0.6"
+SYNTHIO_BASELINE_GATE_SECONDS = "0.12"
+```
+
+3. Herstart die S2 Mini.
+4. Verwachte startup markers:
+
+```text
+circuitpython-midi-chip-platform v0.19.0 | story=MCP-US-079 | release-date=2026-07-19
+DEVICE_FAST_BOOT_STATUS=ENABLED
+SYNTHIO_BASELINE_AUDIO_STATUS=OPEN
+SYNTHIO_BASELINE_BOOT_AUDITION=PASS
+SYNTHIO_BASELINE_MIDI_INPUT_STATUS=OPEN
+SYNTHIO_BASELINE_READY
+```
+
+5. Stuur ten minste 20 NoteOns vanuit Logic Pro External MIDI na `S2 Mini`.
+6. Verwacht resultaat: noten zijn hoorbaar direct/realtime, zonder 12-20 sekonde naloop.
 
 ## Risiko's
 

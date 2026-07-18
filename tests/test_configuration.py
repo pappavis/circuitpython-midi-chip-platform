@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.18.1
-# Doel: Spesifiseer publieke D1-runtime, realtime-baseline boot-audition en private settings.
+# Versienommer: 0.19.0
+# Doel: Spesifiseer publieke D1-runtime, realtime-, synthio-baseline en private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
-# Actienr: MCP-ACT-077-IMP-001-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-IMPEDIMENT-001
+# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
+# Actienr: MCP-ACT-079-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -60,6 +60,16 @@ class TestConfigurationDefaults:
         assert snapshot.get("realtime_baseline.idle_sleep_seconds") == 0.0
         assert snapshot.get("realtime_baseline.event_logging") == "none"
         assert snapshot.get("realtime_baseline.boot_audition_seconds") == 0.6
+        assert snapshot.get("synthio_baseline.enabled") is False
+        assert snapshot.get("synthio_baseline.sample_rate") == 16000
+        assert snapshot.get("synthio_baseline.channel_count") == 1
+        assert snapshot.get("synthio_baseline.max_note_events") == 0
+        assert snapshot.get("synthio_baseline.timeout_seconds") == 0.0
+        assert snapshot.get("synthio_baseline.idle_sleep_seconds") == 0.001
+        assert snapshot.get("synthio_baseline.event_logging") == "summary"
+        assert snapshot.get("synthio_baseline.boot_audition_note") == 69
+        assert snapshot.get("synthio_baseline.boot_audition_seconds") == 0.6
+        assert snapshot.get("synthio_baseline.gate_seconds") == 0.12
         assert snapshot.get("midi.diagnostic.enabled") is False
         assert snapshot.get("midi.diagnostic.max_events") == 8
         assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
@@ -97,6 +107,16 @@ class TestConfigurationDefaults:
         assert 'REALTIME_BASELINE_IDLE_SLEEP_SECONDS = "0.0"' in settings_example
         assert 'REALTIME_BASELINE_EVENT_LOGGING = "none"' in settings_example
         assert 'REALTIME_BASELINE_BOOT_AUDITION_SECONDS = "0.6"' in settings_example
+        assert 'SYNTHIO_BASELINE_ENABLED = "false"' in settings_example
+        assert "SYNTHIO_BASELINE_SAMPLE_RATE = 16000" in settings_example
+        assert "SYNTHIO_BASELINE_CHANNEL_COUNT = 1" in settings_example
+        assert "SYNTHIO_BASELINE_MAX_NOTE_EVENTS = 0" in settings_example
+        assert 'SYNTHIO_BASELINE_TIMEOUT_SECONDS = "0.0"' in settings_example
+        assert 'SYNTHIO_BASELINE_IDLE_SLEEP_SECONDS = "0.001"' in settings_example
+        assert 'SYNTHIO_BASELINE_EVENT_LOGGING = "summary"' in settings_example
+        assert "SYNTHIO_BASELINE_BOOT_AUDITION_NOTE = 69" in settings_example
+        assert 'SYNTHIO_BASELINE_BOOT_AUDITION_SECONDS = "0.6"' in settings_example
+        assert 'SYNTHIO_BASELINE_GATE_SECONDS = "0.12"' in settings_example
 
 
 class TestConfigurationSecretBoundary:
@@ -189,6 +209,8 @@ class TestConfigurationSecretBoundary:
             "D1_AMPLITUDE": "0.1",
             "REALTIME_BASELINE_ENABLED": "true",
             "REALTIME_BASELINE_TONE_SECONDS": "0.2",
+            "SYNTHIO_BASELINE_ENABLED": "true",
+            "SYNTHIO_BASELINE_GATE_SECONDS": "0.18",
             "MIDI_DIAGNOSTIC_ENABLED": "true",
             "MIDI_DIAGNOSTIC_MAX_EVENTS": "12",
         }
@@ -204,6 +226,8 @@ class TestConfigurationSecretBoundary:
         assert snapshot.get("synth.d1.amplitude") == 0.1
         assert snapshot.get("realtime_baseline.enabled") is True
         assert snapshot.get("realtime_baseline.tone_seconds") == 0.2
+        assert snapshot.get("synthio_baseline.enabled") is True
+        assert snapshot.get("synthio_baseline.gate_seconds") == 0.18
         assert snapshot.get("midi.diagnostic.enabled") is True
         assert snapshot.get("midi.diagnostic.max_events") == 12
 

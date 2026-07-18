@@ -51,6 +51,20 @@ REALTIME_BASELINE_IDLE_SLEEP_SECONDS = "0.0"
 REALTIME_BASELINE_EVENT_LOGGING = "none"
 REALTIME_BASELINE_BOOT_AUDITION_SECONDS = "0.6"
 
+# P0 persistent synthio audio graph spike. Enable this temporarily when
+# MCP-US-079 is under test. It opens I2S once and keeps synthio running; MIDI
+# NoteOn/Off only calls synth.press/release.
+SYNTHIO_BASELINE_ENABLED = "false"
+SYNTHIO_BASELINE_SAMPLE_RATE = 16000
+SYNTHIO_BASELINE_CHANNEL_COUNT = 1
+SYNTHIO_BASELINE_MAX_NOTE_EVENTS = 0
+SYNTHIO_BASELINE_TIMEOUT_SECONDS = "0.0"
+SYNTHIO_BASELINE_IDLE_SLEEP_SECONDS = "0.001"
+SYNTHIO_BASELINE_EVENT_LOGGING = "summary"
+SYNTHIO_BASELINE_BOOT_AUDITION_NOTE = 69
+SYNTHIO_BASELINE_BOOT_AUDITION_SECONDS = "0.6"
+SYNTHIO_BASELINE_GATE_SECONDS = "0.12"
+
 # Optional, bounded USB-MIDI Note On/Off acceptance diagnostic.
 # Leave disabled for normal startup. Enable temporarily, then restart the board.
 # CircuitPython 10.0.x os.getenv settings support strings and integers.

@@ -1,11 +1,11 @@
 # Bestand: device_runtime.py
-# Versienommer: 0.18.1
-# Doel: Lewer toestelbewys en aktiveer realtime-baseline, D1 fast boot of diagnostiek.
+# Versienommer: 0.19.0
+# Doel: Lewer toestelbewys en aktiveer synthio-baseline, realtime-baseline, D1 fast boot of diagnostiek.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
-# Actienr: MCP-ACT-077-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
+# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
+# Actienr: MCP-ACT-079-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
 
 from midi_chip_platform.release import ReleaseMetadata
 
@@ -32,6 +32,7 @@ class DeviceRuntimeApplication:
         configuration_loader=None,
         import_smoke_check=None,
         midi_diagnostic_factory=None,
+        synthio_baseline_factory=None,
         realtime_baseline_factory=None,
         synth_runtime_factory=None,
         output=None,
@@ -43,6 +44,7 @@ class DeviceRuntimeApplication:
         self._configuration_loader = configuration_loader
         self._import_smoke_check = import_smoke_check
         self._midi_diagnostic_factory = midi_diagnostic_factory
+        self._synthio_baseline_factory = synthio_baseline_factory
         self._realtime_baseline_factory = realtime_baseline_factory
         self._synth_runtime_factory = synth_runtime_factory
         self._output = output if output is not None else print
@@ -72,6 +74,10 @@ class DeviceRuntimeApplication:
             diagnostic = self._midi_diagnostic_factory.create_if_enabled(configuration)
             if diagnostic is not None:
                 return bool(diagnostic.run())
+        if self._synthio_baseline_factory is not None and configuration is not None:
+            baseline = self._synthio_baseline_factory.create_if_enabled(configuration)
+            if baseline is not None:
+                return bool(baseline.run())
         if self._realtime_baseline_factory is not None and configuration is not None:
             baseline = self._realtime_baseline_factory.create_if_enabled(configuration)
             if baseline is not None:
@@ -88,6 +94,11 @@ class DeviceRuntimeApplication:
         if configuration.get("midi.diagnostic.enabled", False):
             return False
         if (
+            self._synthio_baseline_factory is not None
+            and configuration.get("synthio_baseline.enabled", False)
+        ):
+            return True
+        if (
             self._realtime_baseline_factory is not None
             and configuration.get("realtime_baseline.enabled", False)
         ):
@@ -99,6 +110,13 @@ class DeviceRuntimeApplication:
         return bool(configuration.get("synth.d1.fast_boot_mode", False))
 
     def _create_runtime(self, configuration):
+        if (
+            self._synthio_baseline_factory is not None
+            and configuration.get("synthio_baseline.enabled", False)
+        ):
+            baseline = self._synthio_baseline_factory.create_if_enabled(configuration)
+            if baseline is not None:
+                return baseline
         if (
             self._realtime_baseline_factory is not None
             and configuration.get("realtime_baseline.enabled", False)

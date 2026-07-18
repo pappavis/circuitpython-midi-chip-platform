@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.18.1
-# Doel: Laai publieke D1-runtime, realtime-baseline boot-audition en private settings.
+# Versienommer: 0.19.0
+# Doel: Laai publieke D1-runtime, realtime- en synthio-baseline plus private settings.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
-# Actienr: MCP-ACT-077-IMP-001-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-IMPEDIMENT-001
+# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
+# Actienr: MCP-ACT-079-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -53,6 +53,16 @@ class ConfigurationDefaults:
             "realtime_baseline.idle_sleep_seconds": 0.0,
             "realtime_baseline.event_logging": "none",
             "realtime_baseline.boot_audition_seconds": 0.6,
+            "synthio_baseline.enabled": False,
+            "synthio_baseline.sample_rate": 16000,
+            "synthio_baseline.channel_count": 1,
+            "synthio_baseline.max_note_events": 0,
+            "synthio_baseline.timeout_seconds": 0.0,
+            "synthio_baseline.idle_sleep_seconds": 0.001,
+            "synthio_baseline.event_logging": "summary",
+            "synthio_baseline.boot_audition_note": 69,
+            "synthio_baseline.boot_audition_seconds": 0.6,
+            "synthio_baseline.gate_seconds": 0.12,
             "midi.input.port_index": 0,
             "midi.diagnostic.enabled": False,
             "midi.diagnostic.max_events": 8,
@@ -111,6 +121,16 @@ class EnvironmentSettingsSource:
             "realtime_baseline.idle_sleep_seconds": "REALTIME_BASELINE_IDLE_SLEEP_SECONDS",
             "realtime_baseline.event_logging": "REALTIME_BASELINE_EVENT_LOGGING",
             "realtime_baseline.boot_audition_seconds": "REALTIME_BASELINE_BOOT_AUDITION_SECONDS",
+            "synthio_baseline.enabled": "SYNTHIO_BASELINE_ENABLED",
+            "synthio_baseline.sample_rate": "SYNTHIO_BASELINE_SAMPLE_RATE",
+            "synthio_baseline.channel_count": "SYNTHIO_BASELINE_CHANNEL_COUNT",
+            "synthio_baseline.max_note_events": "SYNTHIO_BASELINE_MAX_NOTE_EVENTS",
+            "synthio_baseline.timeout_seconds": "SYNTHIO_BASELINE_TIMEOUT_SECONDS",
+            "synthio_baseline.idle_sleep_seconds": "SYNTHIO_BASELINE_IDLE_SLEEP_SECONDS",
+            "synthio_baseline.event_logging": "SYNTHIO_BASELINE_EVENT_LOGGING",
+            "synthio_baseline.boot_audition_note": "SYNTHIO_BASELINE_BOOT_AUDITION_NOTE",
+            "synthio_baseline.boot_audition_seconds": "SYNTHIO_BASELINE_BOOT_AUDITION_SECONDS",
+            "synthio_baseline.gate_seconds": "SYNTHIO_BASELINE_GATE_SECONDS",
             "midi.input.port_index": "MIDI_INPUT_PORT_INDEX",
             "midi.diagnostic.enabled": "MIDI_DIAGNOSTIC_ENABLED",
             "midi.diagnostic.max_events": "MIDI_DIAGNOSTIC_MAX_EVENTS",

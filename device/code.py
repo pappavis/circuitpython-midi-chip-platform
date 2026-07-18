@@ -1,11 +1,11 @@
 # Bestand: code.py
-# Versienommer: 0.18.1
-# Doel: Start die realtime MIDI-audio baseline of D1 runtime op die toestel.
+# Versienommer: 0.19.0
+# Doel: Start die synthio-baseline, realtime MIDI-audio baseline of D1 runtime op die toestel.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
-# Actienr: MCP-ACT-077-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-START
+# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
+# Actienr: MCP-ACT-079-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
 
 from midi_chip_platform.configuration import CircuitPythonConfigurationFactory
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
@@ -14,6 +14,7 @@ from midi_chip_platform.midi_usb import CircuitPythonUsbMidiDiagnosticFactory
 from midi_chip_platform.platform_capabilities import CircuitPythonCapabilityFactory
 from midi_chip_platform.realtime_baseline import RealtimeMidiAudioBaselineFactory
 from midi_chip_platform.release import ReleaseMetadata
+from midi_chip_platform.synthio_runtime import SynthioBaselineRuntimeFactory
 
 
 if __name__ == "__main__":
@@ -48,6 +49,7 @@ if __name__ == "__main__":
                 "midi_chip_platform.ports",
                 "midi_chip_platform.realtime_baseline",
                 "midi_chip_platform.routing",
+                "midi_chip_platform.synthio_runtime",
             ),
         ),
         midi_diagnostic_factory=CircuitPythonUsbMidiDiagnosticFactory(
@@ -55,6 +57,10 @@ if __name__ == "__main__":
             output=print,
         ),
         realtime_baseline_factory=RealtimeMidiAudioBaselineFactory(
+            importer=__import__,
+            output=print,
+        ),
+        synthio_baseline_factory=SynthioBaselineRuntimeFactory(
             importer=__import__,
             output=print,
         ),

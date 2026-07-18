@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.18.1
-# Doel: Toets hostdiagnose, realtime-baseline boot-audition release en release-naspeurbaarheid.
+# Versienommer: 0.19.0
+# Doel: Toets hostdiagnose, synthio-baseline release en release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
-# Actienr: MCP-ACT-077-IMP-001-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-IMPEDIMENT-001
+# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
+# Actienr: MCP-ACT-079-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
 
 from io import StringIO
 from pathlib import Path
@@ -69,8 +69,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.18.1 | "
-            "story=MCP-US-077 | release-date=2026-07-17\n"
+            "circuitpython-midi-chip-platform v0.19.0 | "
+            "story=MCP-US-079 | release-date=2026-07-19\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:

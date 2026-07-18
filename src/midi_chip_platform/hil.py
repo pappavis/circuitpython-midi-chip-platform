@@ -1,11 +1,11 @@
 # Bestand: hil.py
-# Versienommer: 0.18.1
-# Doel: Verifieer dependency-closed deploy met CircuitPython-vriendelijke tempbestanden.
+# Versienommer: 0.19.0
+# Doel: Verifieer dependency-closed deploy met synthio-baseline en CircuitPython-vriendelijke tempbestanden.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-077 Realtime MIDI Audio Baseline Spike
-# Actienr: MCP-ACT-077-IMP-002-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-DEPLOY-IMPEDIMENT-001
+# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
+# Actienr: MCP-ACT-079-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
 
 import ast
 import hashlib
@@ -70,6 +70,10 @@ class HilDeploymentManifest:
                 (
                     "src/midi_chip_platform/realtime_baseline.py",
                     "lib/midi_chip_platform/realtime_baseline.py",
+                ),
+                (
+                    "src/midi_chip_platform/synthio_runtime.py",
+                    "lib/midi_chip_platform/synthio_runtime.py",
                 ),
                 (
                     "src/midi_chip_platform/core.py",
@@ -569,12 +573,25 @@ class HardwareInLoopVerifier:
             and "REALTIME_BASELINE_READY" in capture
             and self._release_metadata.banner() in capture
         )
-        passed = import_smoke_passed or fast_boot_passed or realtime_baseline_passed
+        synthio_baseline_passed = (
+            "DEVICE_FAST_BOOT_STATUS=ENABLED" in capture
+            and "SYNTHIO_BASELINE_MIDI_INPUT_STATUS=OPEN" in capture
+            and "SYNTHIO_BASELINE_READY" in capture
+            and self._release_metadata.banner() in capture
+        )
+        passed = (
+            import_smoke_passed
+            or fast_boot_passed
+            or realtime_baseline_passed
+            or synthio_baseline_passed
+        )
         evidence = "current release and dependency-import markers via serial REPL"
         if fast_boot_passed:
             evidence = "current release and D1 fast-boot runtime markers via serial REPL"
         if realtime_baseline_passed:
             evidence = "current release and realtime-baseline markers via serial REPL"
+        if synthio_baseline_passed:
+            evidence = "current release and synthio-baseline markers via serial REPL"
         return HilCheckResult(
             "execution",
             passed,
