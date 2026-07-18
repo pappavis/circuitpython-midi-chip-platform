@@ -92,6 +92,8 @@ REALTIME_BASELINE_READY;ready_ms=...
 
 **Logic retest 2026-07-17:** met `event_logging=none` was daar na `REALTIME_BASELINE_READY` geen hoorbare Logic NoteOn-klank en geen MIDI-gerelateerde debugoutput. Omdat `none` per-note logging doelbewus uitskakel, is die volgende P0-story `MCP-US-078`: herhaal dieselfde Logic-test met `REALTIME_BASELINE_EVENT_LOGGING=summary` en bewys eers of NoteOn events die S2 ná ready bereik.
 
+**MCP-US-078 retest 2026-07-19:** met `REALTIME_BASELINE_EVENT_LOGGING=summary` bereik Logic Pro NoteOn events die S2 ná `REALTIME_BASELINE_READY`. Die Product Owner-log bevat 17 `REALTIME_BASELINE_NOTE_ON` events op channel 1 met `latency_ms=0-4`. Daarmee is die post-ready USB-MIDI receive-loop voorlopig vrygespreek. Hoorbare post-ready MIDI-tone is nog nie eksplisiet deur die Product Owner bevestig nie; audio-acceptance bly dus apart van receive-acceptance.
+
 ### 4. Logic Pro test
 
 1. Open Logic Pro.
@@ -147,10 +149,9 @@ REALTIME_BASELINE_NOTE_ON;channel=1;note=60;velocity=90;event_ms=...;tone_start_
 
 Omdat die boot-audition nou slaag, is die logiese volgende actie:
 
-1. MCP-US-078: herhaal Logic NoteOn met baseline enabled en `event_logging=summary`.
-2. As daar geen `REALTIME_BASELINE_NOTE_ON` verskyn nie, fokus op Logic/CoreMIDI bestemming, USB-MIDI port index en post-ready receive-loop.
-3. As NoteOn wel verskyn maar geen klank klink nie, maak die volgende spike kleiner: geen `I2SOut.stop()`/restart per note, maar latched continuous tone state.
-4. Eers nadat realtime NoteOn gesluit is, US-055 refactor: vervang die D1 realtime-pad met dieselfde bewezen primitive of `synthio`, afhangend van die Copilot-review.
-5. Voeg eers daarna pitch/velocity/musikaliteit terug.
+1. Vraag Product Owner om te bevestig of die `REALTIME_BASELINE_NOTE_ON` events ook hoorbare korte tones gegee het.
+2. As NoteOn wel verskyn maar geen klank klink nie, maak die volgende spike kleiner: geen `I2SOut.stop()`/restart per note, maar latched continuous tone state.
+3. As NoteOn en klank albei slaag, sluit MCP-US-077/078 as P0-baseline en refactor US-055: vervang die D1 realtime-pad met dieselfde bewezen primitive of `synthio`, afhangend van die Copilot-review.
+4. Voeg eers daarna pitch/velocity/musikaliteit terug.
 
 As US-077 faal, stop D1-werk en diagnoseer USB-MIDI/I2S primitive met scope markers.
