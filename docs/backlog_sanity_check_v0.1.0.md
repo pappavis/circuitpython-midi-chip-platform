@@ -13,12 +13,12 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-IMPEDIMENT-001
 
 ## Resultaat
 
-Status: **PASS vir 77 stories, 10 epics en die veiligheidsgewysigde 18-story MVP Acceptance Set**.
+Status: **PASS vir 79 stories, 10 epics en die veiligheidsgewysigde 18-story MVP Acceptance Set**.
 
 | Kontrole | Resultaat |
 |---|---|
 | Epic-ID's | 10 unieke epics, MCP-EPIC-001 tot MCP-EPIC-010 |
-| Story-ID's | 78 unieke stories, MCP-US-001 tot MCP-US-078 met US-075/US-076/US-077/US-078 as latere stabiliserings-ID's |
+| Story-ID's | 79 unieke stories, MCP-US-001 tot MCP-US-079 met US-075/US-076/US-077/US-078/US-079 as latere stabiliserings-ID's |
 | Duplikate story-ID's | Geen |
 | Verlore nommers | Geen |
 | Storytitel | Elke story het 'n titel |
@@ -35,7 +35,7 @@ Status: **PASS vir 77 stories, 10 epics en die veiligheidsgewysigde 18-story MVP
 | Produkvereiste | Gedek deur |
 |---|---|
 | MVP USB-MIDI van Logic na verwysingsbord | MCP-US-003, US-007, US-055 |
-| US-055 realtime deblokkering deur kleinste primitive | MCP-US-077 |
+| US-055 realtime deblokkering deur kleinste primitive | MCP-US-077, US-078, US-079 |
 | BLE-MIDI met veilige S2 capability gate | MCP-US-052, US-062 |
 | Standalone eksterne USB-host na DIN/UART | MCP-US-013, US-060 |
 | Note On/Off, velocity, pitch bend, modulation | MCP-US-006, US-009, US-010 |
@@ -81,11 +81,12 @@ Status: **PASS vir 77 stories, 10 epics en die veiligheidsgewysigde 18-story MVP
 - MCP-US-075 is `Done (PO exception)`: v0.16.0 bewys startup mute, `0.08` gain, `0.25` plafon, 120 groen hosttoetse en hoorbare G-C-D. Die PO aanvaar die tydelike TRS-prototiperisiko; US-076 parkeer gesertifiseerde fisiese uitsetcleanup ná MVP.
 - MCP-US-055 is `P0 Impediment`: v0.17.8 verbind Logic/USB-MIDI, D1 en veilige I2S op host met 136 groen toetse, maar sewe menslike HIL-pogings het nie betroubare realtime Logic-klank bewys nie. US-077 is bygevoeg as terug-na-basics herstelstory.
 - MCP-US-077 is `In Review / Audio Confirmation Open`: v0.18.1 voeg boot-audition en stiller serial defaults by om die 12s hoorbare vertraging te isoleer; 144 hosttoetse slaag. Product Owner bevestig op 2026-07-17 dat `i2s_test.py` slaag en boot-audition onmiddellik hoorbaar is. US-078 bewys daarna dat Logic NoteOn die S2 bereik; hoorbare post-ready tone bly die laaste baseline-vraag.
-- MCP-US-078 is `Receive PASS / Audio TBD`: op 2026-07-19 rapporteer die S2 17 post-ready Logic NoteOn events met `latency_ms=0-4`. Dit vryspreek die USB-MIDI receive-loop; die volgende besluit hang van eksplisiete hoorbare NoteOn-tone bevestiging af.
+- MCP-US-078 is `Receive PASS / Audio delayed`: op 2026-07-19 rapporteer die S2 17 post-ready Logic NoteOn events met `latency_ms=0-4`. Dit vryspreek die USB-MIDI receive-loop, maar die Product Owner bevestig dat die hoorbare tone steeds ongeveer 20 sekondes laat is.
+- MCP-US-079 is `Next / P0`: ADR-004 herbaseer realtime audio op 'n permanente `synthio` audio graph. Die MIDI hot path mag nie meer `I2SOut.play()` of `I2SOut.stop()` roep nie.
 - MCP-US-003 is ná fisiese connection/deploy/execution/USB-MIDI-bewys `Done`.
 - MCP-US-007 is `Done`: v0.12.2 het op die Wemos S2 werklike Note On/Off ontvang en `matched_notes=1` gerapporteer. MCP-US-051 bly `In Review` tot sy latere klankadapterhek.
 - Die MVP Acceptance Set is US-001 tot US-009 (US-010 uitgesluit), US-014, US-016, US-050, US-051, US-055, US-057, US-063 en die veiligheidshek US-075.
-- Die bindende oorblywende volgorde is `US-077 -> US-055 -> US-057`; US-016, US-063 en US-075 is gesluit.
+- Die bindende oorblywende volgorde is `US-079 -> US-055 -> US-057`; US-016, US-063, US-075 en die MIDI-receive deel van US-078 is gesluit.
 - US-016 besit die nuwe onafhanklike `device/i2s_test.py`; US-020 bly die latere geïntegreerde startupmelodie en is nie 'n duplikaat nie.
 - MAX98357 is die gevalideerde verstek. Ander PCM-I2S-profiele is uitbreibaar, maar nie fisies ondersteun verklaar sonder hulle eie HIL nie.
 - US-058 skei platform-onafhanklike guitar-MIDI bend/slide-semantiek van US-059 se fisiese Fishman/generiese HIL-aanvaarding.

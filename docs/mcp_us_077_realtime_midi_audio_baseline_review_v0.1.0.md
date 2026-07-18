@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-IMPEDIMENT-001
 
 ## Status
 
-**IN REVIEW / LOGIC RETEST OPEN.** `v0.18.1` voeg 'n boot-audition by die P0 realtime-baseline. Die vorige HIL-log het gewys dat firmware NoteOn ontvang en `I2SOut.play()` binne `0-16 ms` aanroep, maar die Product Owner hoor die toon ongeveer 12 sekondes later. Op 2026-07-17 het die Product Owner bevestig dat `i2s_test.py` slaag en dat die boot-audition onmiddellik hoorbaar is by startup. Daarmee is die I2S-audio-startpad voorlopig vrygespreek; die oorblywende P0-vraag is of Logic/USB-MIDI NoteOn na `REALTIME_BASELINE_READY` onmiddellik hoorbaar kan trigger.
+**IN REVIEW / RECEIVE PASS / AUDIO DELAYED.** `v0.18.1` voeg 'n boot-audition by die P0 realtime-baseline. Die HIL-log wys dat firmware NoteOn ontvang en `I2SOut.play()` binne `0-4 ms` aanroep, maar die Product Owner hoor die tone ongeveer 20 sekondes later. `i2s_test.py` en boot-audition is onmiddellik hoorbaar. Daarmee is die I2S-bedrading, basiese audio-start en USB-MIDI receive-loop voorlopig vrygespreek; die oorblywende P0-probleem is die per-event audio-runtime primitive.
 
 Die doel is nie musikaliteit nie. Die doel is om hard te bewys of die Wemos S2 Mini + MAX98357A + Logic Pro pad realtime hoorbaar kan reageer voordat die D1-kern weer ingebou word.
 
@@ -92,7 +92,7 @@ REALTIME_BASELINE_READY;ready_ms=...
 
 **Logic retest 2026-07-17:** met `event_logging=none` was daar na `REALTIME_BASELINE_READY` geen hoorbare Logic NoteOn-klank en geen MIDI-gerelateerde debugoutput. Omdat `none` per-note logging doelbewus uitskakel, is die volgende P0-story `MCP-US-078`: herhaal dieselfde Logic-test met `REALTIME_BASELINE_EVENT_LOGGING=summary` en bewys eers of NoteOn events die S2 ná ready bereik.
 
-**MCP-US-078 retest 2026-07-19:** met `REALTIME_BASELINE_EVENT_LOGGING=summary` bereik Logic Pro NoteOn events die S2 ná `REALTIME_BASELINE_READY`. Die Product Owner-log bevat 17 `REALTIME_BASELINE_NOTE_ON` events op channel 1 met `latency_ms=0-4`. Daarmee is die post-ready USB-MIDI receive-loop voorlopig vrygespreek. Hoorbare post-ready MIDI-tone is nog nie eksplisiet deur die Product Owner bevestig nie; audio-acceptance bly dus apart van receive-acceptance.
+**MCP-US-078 retest 2026-07-19:** met `REALTIME_BASELINE_EVENT_LOGGING=summary` bereik Logic Pro NoteOn events die S2 ná `REALTIME_BASELINE_READY`. Die Product Owner-log bevat 17 `REALTIME_BASELINE_NOTE_ON` events op channel 1 met `latency_ms=0-4`. Daarmee is die post-ready USB-MIDI receive-loop voorlopig vrygespreek. Die Product Owner bevestig daarna dat NoteOn-tone wel hoorbaar is, maar steeds ongeveer 20 sekondes laat. Die probleem bly dus in die audio-runtime primitive, nie in I2S wiring of USB-MIDI receive nie.
 
 ### 4. Logic Pro test
 
@@ -149,9 +149,10 @@ REALTIME_BASELINE_NOTE_ON;channel=1;note=60;velocity=90;event_ms=...;tone_start_
 
 Omdat die boot-audition nou slaag, is die logiese volgende actie:
 
-1. Vraag Product Owner om te bevestig of die `REALTIME_BASELINE_NOTE_ON` events ook hoorbare korte tones gegee het.
-2. As NoteOn wel verskyn maar geen klank klink nie, maak die volgende spike kleiner: geen `I2SOut.stop()`/restart per note, maar latched continuous tone state.
-3. As NoteOn en klank albei slaag, sluit MCP-US-077/078 as P0-baseline en refactor US-055: vervang die D1 realtime-pad met dieselfde bewezen primitive of `synthio`, afhangend van die Copilot-review.
-4. Voeg eers daarna pitch/velocity/musikaliteit terug.
+1. Aanvaar ADR-004 as rigting: realtime MIDI-performance gebruik 'n permanente audio graph.
+2. Implementeer MCP-US-079 met `synthio.Synthesizer`: `audio.play(synth)` by startup en `synth.press/release` op MIDI events.
+3. Bewys met HIL dat 20 Logic NoteOns binne menslik hoorbare realtime klink sonder 12-20s backlog.
+4. Eers daarna US-055 refactor: herbou D1-runtime op die bewezen persistent-audio primitive.
+5. Voeg eers daarna pitch/velocity/musikaliteit terug.
 
 As US-077 faal, stop D1-werk en diagnoseer USB-MIDI/I2S primitive met scope markers.

@@ -18,6 +18,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / FRAMEWORK-ENGINEERING-001
 | [ADR-001](../decisions/ADR-001-repository-strategy.md) | Aanvaar | Skoon repository met beheerde hergebruik | Leesalleen D1-grens, reuse matrix, Git history |
 | [ADR-002](../decisions/ADR-002-reference-platform.md) | Aanvaar | Wemos S2 as verwysingsbord; portabiliteit deur profiele | Capability discovery en tweede-bordstory |
 | [ADR-003](../decisions/ADR-003-audio-strategy.md) | Aanvaar | MAX98357 mono-I2S eerste; PWM fallback | MCP-US-016 hoorbare HIL en US-021 stereo-besluit |
+| [ADR-004](../decisions/ADR-004-persistent-realtime-audio-graph.md) | Proposed | Realtime MIDI-performance gebruik 'n permanente audio graph, nie per-event `I2SOut.play/stop` nie | MCP-US-077/078 HIL-bewys en MCP-US-079 synthio spike |
 
 ## Wanneer 'n ADR nodig is
 
