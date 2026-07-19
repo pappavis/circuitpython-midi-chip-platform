@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.19.0
-# Doel: Laai publieke D1-runtime, realtime- en synthio-baseline plus private settings.
+# Versienommer: 0.19.2
+# Doel: Laai publieke D1-runtime, realtime- en multi-port synthio-baseline plus private settings.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
+# Actienr: MCP-ACT-079-IMP-002-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-002
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -63,6 +63,7 @@ class ConfigurationDefaults:
             "synthio_baseline.boot_audition_note": 69,
             "synthio_baseline.boot_audition_seconds": 0.6,
             "synthio_baseline.gate_seconds": 0.12,
+            "synthio_baseline.scan_all_midi_ports": True,
             "midi.input.port_index": 0,
             "midi.diagnostic.enabled": False,
             "midi.diagnostic.max_events": 8,
@@ -131,6 +132,7 @@ class EnvironmentSettingsSource:
             "synthio_baseline.boot_audition_note": "SYNTHIO_BASELINE_BOOT_AUDITION_NOTE",
             "synthio_baseline.boot_audition_seconds": "SYNTHIO_BASELINE_BOOT_AUDITION_SECONDS",
             "synthio_baseline.gate_seconds": "SYNTHIO_BASELINE_GATE_SECONDS",
+            "synthio_baseline.scan_all_midi_ports": "SYNTHIO_BASELINE_SCAN_ALL_MIDI_PORTS",
             "midi.input.port_index": "MIDI_INPUT_PORT_INDEX",
             "midi.diagnostic.enabled": "MIDI_DIAGNOSTIC_ENABLED",
             "midi.diagnostic.max_events": "MIDI_DIAGNOSTIC_MAX_EVENTS",

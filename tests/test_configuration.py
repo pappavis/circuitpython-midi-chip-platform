@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.19.0
-# Doel: Spesifiseer publieke D1-runtime, realtime-, synthio-baseline en private settings.
+# Versienommer: 0.19.2
+# Doel: Spesifiseer publieke D1-runtime, realtime-, multi-port synthio-baseline en private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
+# Actienr: MCP-ACT-079-IMP-002-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-002
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -70,6 +70,7 @@ class TestConfigurationDefaults:
         assert snapshot.get("synthio_baseline.boot_audition_note") == 69
         assert snapshot.get("synthio_baseline.boot_audition_seconds") == 0.6
         assert snapshot.get("synthio_baseline.gate_seconds") == 0.12
+        assert snapshot.get("synthio_baseline.scan_all_midi_ports") is True
         assert snapshot.get("midi.diagnostic.enabled") is False
         assert snapshot.get("midi.diagnostic.max_events") == 8
         assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
@@ -117,6 +118,7 @@ class TestConfigurationDefaults:
         assert "SYNTHIO_BASELINE_BOOT_AUDITION_NOTE = 69" in settings_example
         assert 'SYNTHIO_BASELINE_BOOT_AUDITION_SECONDS = "0.6"' in settings_example
         assert 'SYNTHIO_BASELINE_GATE_SECONDS = "0.12"' in settings_example
+        assert 'SYNTHIO_BASELINE_SCAN_ALL_MIDI_PORTS = "true"' in settings_example
 
 
 class TestConfigurationSecretBoundary:
@@ -211,6 +213,7 @@ class TestConfigurationSecretBoundary:
             "REALTIME_BASELINE_TONE_SECONDS": "0.2",
             "SYNTHIO_BASELINE_ENABLED": "true",
             "SYNTHIO_BASELINE_GATE_SECONDS": "0.18",
+            "SYNTHIO_BASELINE_SCAN_ALL_MIDI_PORTS": "false",
             "MIDI_DIAGNOSTIC_ENABLED": "true",
             "MIDI_DIAGNOSTIC_MAX_EVENTS": "12",
         }
@@ -228,6 +231,7 @@ class TestConfigurationSecretBoundary:
         assert snapshot.get("realtime_baseline.tone_seconds") == 0.2
         assert snapshot.get("synthio_baseline.enabled") is True
         assert snapshot.get("synthio_baseline.gate_seconds") == 0.18
+        assert snapshot.get("synthio_baseline.scan_all_midi_ports") is False
         assert snapshot.get("midi.diagnostic.enabled") is True
         assert snapshot.get("midi.diagnostic.max_events") == 12
 

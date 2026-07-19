@@ -1,11 +1,11 @@
 # Bestand: midi_usb.py
-# Versienommer: 0.12.1
-# Doel: Vertaal USB-MIDI en lewer begrensde fisiese Note On/Off-aanvaardingsdiagnostiek.
+# Versienommer: 0.19.2
+# Doel: Vertaal USB-MIDI en ondersteun enkel- of multi-port receive vir realtime synthio diagnose.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
-# User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-IMP-004-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-IMPEDIMENT-004
+# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
+# Actienr: MCP-ACT-079-IMP-002-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-002
 
 from midi_chip_platform.events import ClockEvent, ControlEvent, NoteEvent
 from midi_chip_platform.ports import MidiInputPort
@@ -131,6 +131,46 @@ class UsbMidiInputPort(MidiInputPort):
         self._raw_midi = None
 
 
+class MultiUsbMidiInputPort(MidiInputPort):
+    def __init__(self, midi_inputs):
+        self._midi_inputs = tuple(midi_inputs)
+        if not self._midi_inputs:
+            raise ValueError("multi USB MIDI input requires at least one port")
+        self._is_open = False
+        self._next_index = 0
+
+    @property
+    def is_open(self):
+        return self._is_open
+
+    @property
+    def port_count(self):
+        return len(self._midi_inputs)
+
+    def open(self):
+        if self._is_open:
+            return
+        for midi_input in self._midi_inputs:
+            midi_input.open()
+        self._is_open = True
+
+    def receive(self):
+        if not self._is_open:
+            raise RuntimeError("USB MIDI input is closed")
+        for offset in range(len(self._midi_inputs)):
+            index = (self._next_index + offset) % len(self._midi_inputs)
+            event = self._midi_inputs[index].receive()
+            if event is not None:
+                self._next_index = (index + 1) % len(self._midi_inputs)
+                return event
+        return None
+
+    def close(self):
+        for midi_input in self._midi_inputs:
+            midi_input.close()
+        self._is_open = False
+
+
 class AdafruitMidiObjectFactory:
     def __init__(self, midi_class, usb_midi_module):
         self._midi_class = midi_class
@@ -150,7 +190,32 @@ class CircuitPythonUsbMidiFactory:
     def create_input(self, port_index=0):
         adafruit_midi = self._importer("adafruit_midi", None, None, ("MIDI",))
         usb_midi = self._importer("usb_midi")
-        message_types = MidiMessageTypes(
+        message_types = self._create_message_types()
+        return UsbMidiInputPort(
+            factory=AdafruitMidiObjectFactory(adafruit_midi.MIDI, usb_midi),
+            translator=MidiMessageTranslator(message_types),
+            port_index=port_index,
+        )
+
+    def create_all_inputs(self):
+        adafruit_midi = self._importer("adafruit_midi", None, None, ("MIDI",))
+        usb_midi = self._importer("usb_midi")
+        message_types = self._create_message_types()
+        midi_inputs = tuple(
+            UsbMidiInputPort(
+                factory=AdafruitMidiObjectFactory(adafruit_midi.MIDI, usb_midi),
+                translator=MidiMessageTranslator(message_types),
+                port_index=port_index,
+            )
+            for port_index in range(len(usb_midi.ports))
+        )
+        return MultiUsbMidiInputPort(midi_inputs)
+
+    def port_count(self):
+        return len(self._importer("usb_midi").ports)
+
+    def _create_message_types(self):
+        return MidiMessageTypes(
             note_on_type=self._message_type("adafruit_midi.note_on", "NoteOn"),
             note_off_type=self._message_type("adafruit_midi.note_off", "NoteOff"),
             control_change_type=self._message_type(
@@ -165,11 +230,6 @@ class CircuitPythonUsbMidiFactory:
             continue_type=self._optional_message_type(
                 "adafruit_midi.midi_continue", "Continue"
             ),
-        )
-        return UsbMidiInputPort(
-            factory=AdafruitMidiObjectFactory(adafruit_midi.MIDI, usb_midi),
-            translator=MidiMessageTranslator(message_types),
-            port_index=port_index,
         )
 
     def _message_type(self, module_name, class_name):

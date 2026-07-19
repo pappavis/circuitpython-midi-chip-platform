@@ -1,11 +1,11 @@
 # Bestand: synthio_runtime.py
-# Versienommer: 0.19.1
-# Doel: Bewys realtime MIDI-klank met 'n permanente synthio audio graph en laat USB-MIDI na audio open.
+# Versienommer: 0.19.2
+# Doel: Bewys realtime MIDI-klank met 'n permanente synthio graph en multi-port USB-MIDI scan.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-IMP-001-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-001
+# Actienr: MCP-ACT-079-IMP-002-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-002
 
 from midi_chip_platform.events import NoteEvent
 from midi_chip_platform.midi_usb import CircuitPythonUsbMidiFactory
@@ -24,6 +24,8 @@ class SynthioBaselineProfile:
         boot_audition_note=69,
         boot_audition_seconds=0.6,
         gate_seconds=0.12,
+        scan_all_midi_ports=True,
+        midi_port_count=1,
     ):
         self._sample_rate = int(sample_rate)
         self._channel_count = int(channel_count)
@@ -34,6 +36,8 @@ class SynthioBaselineProfile:
         self._boot_audition_note = int(boot_audition_note)
         self._boot_audition_seconds = float(boot_audition_seconds)
         self._gate_seconds = float(gate_seconds)
+        self._scan_all_midi_ports = bool(scan_all_midi_ports)
+        self._midi_port_count = int(midi_port_count)
         self._validate()
 
     @property
@@ -72,6 +76,14 @@ class SynthioBaselineProfile:
     def gate_seconds(self):
         return self._gate_seconds
 
+    @property
+    def scan_all_midi_ports(self):
+        return self._scan_all_midi_ports
+
+    @property
+    def midi_port_count(self):
+        return self._midi_port_count
+
     def _validate(self):
         if self._sample_rate <= 0:
             raise ValueError("sample_rate must be positive")
@@ -91,6 +103,8 @@ class SynthioBaselineProfile:
             raise ValueError("boot_audition_seconds must not be negative")
         if self._gate_seconds < 0.0:
             raise ValueError("gate_seconds must not be negative")
+        if self._midi_port_count < 1:
+            raise ValueError("midi_port_count must be at least 1")
 
 
 class CircuitPythonSynthioAudioGraph:
@@ -217,7 +231,9 @@ class SynthioBaselineRuntime:
             f"timeout_seconds={self._profile.timeout_seconds:g};"
             f"event_logging={self._profile.event_logging};"
             f"boot_audition_seconds={self._profile.boot_audition_seconds:.3f};"
-            f"gate_seconds={self._profile.gate_seconds:.3f}"
+            f"gate_seconds={self._profile.gate_seconds:.3f};"
+            f"scan_all_midi_ports={str(self._profile.scan_all_midi_ports).lower()};"
+            f"midi_port_count={self._profile.midi_port_count}"
         )
         try:
             self._started_at = self._current_time()
@@ -225,7 +241,11 @@ class SynthioBaselineRuntime:
             self._output("SYNTHIO_BASELINE_AUDIO_STATUS=OPEN")
             self._run_boot_audition()
             self._midi_input.open()
-            self._output("SYNTHIO_BASELINE_MIDI_INPUT_STATUS=OPEN")
+            self._output(
+                "SYNTHIO_BASELINE_MIDI_INPUT_STATUS=OPEN;"
+                f"scan_all_ports={str(self._profile.scan_all_midi_ports).lower()};"
+                f"port_count={self._profile.midi_port_count}"
+            )
             self._ready_at = self._current_time()
             self._output(
                 "SYNTHIO_BASELINE_READY;"
@@ -402,11 +422,21 @@ class SynthioBaselineRuntimeFactory:
                 0.6,
             ),
             gate_seconds=configuration.get("synthio_baseline.gate_seconds", 0.12),
-        )
-        return SynthioBaselineRuntime(
-            midi_input=CircuitPythonUsbMidiFactory(self._importer).create_input(
-                port_index=configuration.get("midi.input.port_index", 0)
+            scan_all_midi_ports=configuration.get(
+                "synthio_baseline.scan_all_midi_ports",
+                True,
             ),
+            midi_port_count=self._midi_factory().port_count(),
+        )
+        midi_factory = self._midi_factory()
+        if profile.scan_all_midi_ports:
+            midi_input = midi_factory.create_all_inputs()
+        else:
+            midi_input = midi_factory.create_input(
+                port_index=configuration.get("midi.input.port_index", 0)
+            )
+        return SynthioBaselineRuntime(
+            midi_input=midi_input,
             audio_graph=CircuitPythonSynthioAudioGraph(
                 profile=profile,
                 importer=self._importer,
@@ -418,3 +448,6 @@ class SynthioBaselineRuntimeFactory:
             output=self._output,
             sleeper=self._importer("time"),
         )
+
+    def _midi_factory(self):
+        return CircuitPythonUsbMidiFactory(self._importer)

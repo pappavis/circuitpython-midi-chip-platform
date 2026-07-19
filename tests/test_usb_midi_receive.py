@@ -1,17 +1,18 @@
 # Bestand: test_usb_midi_receive.py
-# Versienommer: 0.12.1
-# Doel: Bewys USB-MIDI-vertaling en begrensde Note On/Off-HIL-diagnostiek sonder hardeware.
+# Versienommer: 0.19.2
+# Doel: Bewys USB-MIDI-vertaling, multi-port receive en begrensde Note On/Off-HIL-diagnostiek.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
-# User-Story: MCP-US-007 USB MIDI Receive Loop
-# Actienr: MCP-ACT-007-IMP-004-RED-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007
+# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
+# Actienr: MCP-ACT-079-IMP-002-RED-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-002
 
 from midi_chip_platform.events import NoteEvent
 from midi_chip_platform.midi_usb import (
     CircuitPythonUsbMidiFactory,
     MidiMessageTranslator,
     MidiMessageTypes,
+    MultiUsbMidiInputPort,
     UsbMidiInputPort,
     UsbMidiReceiveDiagnostic,
 )
@@ -143,6 +144,22 @@ class TestUsbMidiReceive:
             assert str(error) == "USB MIDI input is closed"
         else:
             raise AssertionError("closed USB MIDI input must reject receive")
+
+    def test_multi_port_input_polls_all_ports_until_event_arrives(self) -> None:
+        first = MemoryMidiInput(())
+        second = MemoryMidiInput((NoteEvent.note_on(channel=1, note=72, velocity=88),))
+        multi_port = MultiUsbMidiInputPort((first, second))
+
+        multi_port.open()
+        event = multi_port.receive()
+        multi_port.close()
+
+        assert multi_port.port_count == 2
+        assert event.message_type == "note_on"
+        assert event.note == 72
+        assert event.velocity == 88
+        assert first.is_open is False
+        assert second.is_open is False
 
     def test_circuitpython_factory_uses_positional_import_arguments(self) -> None:
         midi_class = type("MidiClass", (), {})

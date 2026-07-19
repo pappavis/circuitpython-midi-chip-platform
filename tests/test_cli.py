@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.19.1
+# Versienommer: 0.19.2
 # Doel: Toets hostdiagnose, synthio-baseline impediment release en release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-IMP-001-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-001
+# Actienr: MCP-ACT-079-IMP-002-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-002
 
 from io import StringIO
 from pathlib import Path
@@ -69,7 +69,7 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.19.1 | "
+            "circuitpython-midi-chip-platform v0.19.2 | "
             "story=MCP-US-079 | release-date=2026-07-19\n"
         )
 

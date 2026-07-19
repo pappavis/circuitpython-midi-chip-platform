@@ -1,11 +1,11 @@
 # Bestand: test_synthio_runtime.py
-# Versienommer: 0.19.1
-# Doel: Spesifiseer 'n permanente synthio audio graph met USB-MIDI open na audio graph start.
+# Versienommer: 0.19.2
+# Doel: Spesifiseer 'n permanente synthio audio graph met multi-port USB-MIDI scan.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-IMP-001-RED-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-001
+# Actienr: MCP-ACT-079-IMP-002-RED-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-002
 
 from midi_chip_platform.events import NoteEvent
 from midi_chip_platform.synthio_runtime import (
@@ -73,6 +73,8 @@ class TestSynthioBaselineRuntime:
         assert profile.boot_audition_note == 69
         assert profile.boot_audition_seconds == 0.6
         assert profile.gate_seconds == 0.12
+        assert profile.scan_all_midi_ports is True
+        assert profile.midi_port_count == 1
 
     def test_runtime_presses_and_releases_notes_on_persistent_graph(self) -> None:
         output = []
@@ -113,7 +115,10 @@ class TestSynthioBaselineRuntime:
         assert "SYNTHIO_BASELINE_AUDIO_STATUS=OPEN" in output
         assert "SYNTHIO_BASELINE_BOOT_AUDITION=START;note=69;seconds=0.600" in output
         assert "SYNTHIO_BASELINE_BOOT_AUDITION=PASS" in output
-        assert "SYNTHIO_BASELINE_MIDI_INPUT_STATUS=OPEN" in output
+        assert (
+            "SYNTHIO_BASELINE_MIDI_INPUT_STATUS=OPEN;"
+            "scan_all_ports=true;port_count=1"
+        ) in output
         assert "SYNTHIO_BASELINE_READY;ready_ms=600" in output
         assert any(line.startswith("SYNTHIO_BASELINE_NOTE_ON") for line in output)
         assert output[-1] == "SYNTHIO_BASELINE_STATUS=PASS;note_on=1;note_off=0;ignored=0"
@@ -178,7 +183,7 @@ class TestSynthioBaselineRuntime:
                         {"PitchBend": type("PitchBend", (), {})},
                     )
                 if module_name == "usb_midi":
-                    return type("FakeUsbMidi", (), {"ports": (object(),)})
+                    return type("FakeUsbMidi", (), {"ports": (object(), object())})
                 if module_name == "time":
                     return TestSynthioBaselineRuntime.NoSleep()
                 raise ImportError(module_name)
@@ -199,6 +204,7 @@ class TestSynthioBaselineRuntime:
                     "synthio_baseline.boot_audition_note": 69,
                     "synthio_baseline.boot_audition_seconds": 0.6,
                     "synthio_baseline.gate_seconds": 0.12,
+                    "synthio_baseline.scan_all_midi_ports": True,
                 }
             )
         )
