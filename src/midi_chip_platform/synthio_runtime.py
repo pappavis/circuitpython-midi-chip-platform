@@ -1,11 +1,11 @@
 # Bestand: synthio_runtime.py
-# Versienommer: 0.19.0
-# Doel: Bewys realtime MIDI-klank met 'n permanente synthio audio graph.
+# Versienommer: 0.19.1
+# Doel: Bewys realtime MIDI-klank met 'n permanente synthio audio graph en laat USB-MIDI na audio open.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-RED-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
+# Actienr: MCP-ACT-079-IMP-001-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-001
 
 from midi_chip_platform.events import NoteEvent
 from midi_chip_platform.midi_usb import CircuitPythonUsbMidiFactory
@@ -221,10 +221,10 @@ class SynthioBaselineRuntime:
         )
         try:
             self._started_at = self._current_time()
-            self._midi_input.open()
             self._audio_graph.open()
             self._output("SYNTHIO_BASELINE_AUDIO_STATUS=OPEN")
             self._run_boot_audition()
+            self._midi_input.open()
             self._output("SYNTHIO_BASELINE_MIDI_INPUT_STATUS=OPEN")
             self._ready_at = self._current_time()
             self._output(

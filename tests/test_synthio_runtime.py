@@ -1,11 +1,11 @@
 # Bestand: test_synthio_runtime.py
-# Versienommer: 0.19.0
-# Doel: Spesifiseer 'n permanente synthio audio graph sonder per-event I2S play/stop.
+# Versienommer: 0.19.1
+# Doel: Spesifiseer 'n permanente synthio audio graph met USB-MIDI open na audio graph start.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-RED-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
+# Actienr: MCP-ACT-079-IMP-001-RED-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-001
 
 from midi_chip_platform.events import NoteEvent
 from midi_chip_platform.synthio_runtime import (
@@ -17,6 +17,19 @@ from midi_chip_platform.testing import MemoryConfiguration, MemoryMidiInput
 
 
 class TestSynthioBaselineRuntime:
+    class RecordingMidiInput(MemoryMidiInput):
+        def __init__(self, events, calls):
+            super().__init__(events)
+            self._calls = calls
+
+        def open(self):
+            self._calls.append("midi_open")
+            super().open()
+
+        def close(self):
+            self._calls.append("midi_close")
+            super().close()
+
     class NoSleep:
         def __init__(self):
             self._now = 0.0
@@ -65,12 +78,14 @@ class TestSynthioBaselineRuntime:
         output = []
         sleeper = self.NoSleep()
         graph = self.RecordingAudioGraph()
+        calls = graph.calls
         runtime = SynthioBaselineRuntime(
-            midi_input=MemoryMidiInput(
+            midi_input=self.RecordingMidiInput(
                 (
                     NoteEvent.note_on(channel=1, note=60, velocity=90),
                     NoteEvent.note_off(channel=1, note=60, velocity=64),
-                )
+                ),
+                calls,
             ),
             audio_graph=graph,
             profile=SynthioBaselineProfile(
@@ -89,9 +104,11 @@ class TestSynthioBaselineRuntime:
             "open",
             ("press", 69),
             ("release", 69),
+            "midi_open",
             ("press", 60),
             "release_all",
             "close",
+            "midi_close",
         ]
         assert "SYNTHIO_BASELINE_AUDIO_STATUS=OPEN" in output
         assert "SYNTHIO_BASELINE_BOOT_AUDITION=START;note=69;seconds=0.600" in output

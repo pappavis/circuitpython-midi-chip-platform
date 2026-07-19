@@ -1,17 +1,17 @@
 # Bestand: release.py
-# Versienommer: 0.19.0
-# Doel: Besit release-naspeurbaarheid vir die synthio realtime-baseline spike.
+# Versienommer: 0.19.1
+# Doel: Besit release-naspeurbaarheid vir die synthio MIDI-open volgorde fix.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
+# Actienr: MCP-ACT-079-IMP-001-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-001
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.19.0",
+        version="0.19.1",
         user_story="MCP-US-079",
         release_date="2026-07-19",
     ):

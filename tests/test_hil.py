@@ -350,14 +350,14 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.19.0 | story=MCP-US-079 | "
+            "circuitpython-midi-chip-platform v0.19.1 | story=MCP-US-079 | "
             "release-date=2026-07-19\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.19.0 | story=MCP-US-079 | "
+            "circuitpython-midi-chip-platform v0.19.1 | story=MCP-US-079 | "
             "release-date=2026-07-19\nDEVICE_IMPORT_STATUS=PASS\n"
             "DEVICE_EXECUTION_STATUS=READY"
         )
@@ -394,14 +394,14 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.19.0 | story=MCP-US-079 | "
+            "circuitpython-midi-chip-platform v0.19.1 | story=MCP-US-079 | "
             "release-date=2026-07-19\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.19.0 | story=MCP-US-079 | "
+            "circuitpython-midi-chip-platform v0.19.1 | story=MCP-US-079 | "
             "release-date=2026-07-19\n"
             "DEVICE_FAST_BOOT_STATUS=ENABLED\n"
             "D1_MIDI_INPUT_STATUS=OPEN\n"
@@ -436,14 +436,14 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.19.0 | story=MCP-US-079 | "
+            "circuitpython-midi-chip-platform v0.19.1 | story=MCP-US-079 | "
             "release-date=2026-07-19\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.19.0 | story=MCP-US-079 | "
+            "circuitpython-midi-chip-platform v0.19.1 | story=MCP-US-079 | "
             "release-date=2026-07-19\n"
             "DEVICE_FAST_BOOT_STATUS=ENABLED\n"
             "REALTIME_BASELINE_MIDI_INPUT_STATUS=OPEN\n"
@@ -478,14 +478,14 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.19.0 | story=MCP-US-079 | "
+            "circuitpython-midi-chip-platform v0.19.1 | story=MCP-US-079 | "
             "release-date=2026-07-19\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.19.0 | story=MCP-US-079 | "
+            "circuitpython-midi-chip-platform v0.19.1 | story=MCP-US-079 | "
             "release-date=2026-07-19\n"
             "DEVICE_FAST_BOOT_STATUS=ENABLED\n"
             "SYNTHIO_BASELINE_MIDI_INPUT_STATUS=OPEN\n"
