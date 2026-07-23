@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.19.2
-# Doel: Spesifiseer publieke D1-runtime, realtime-, multi-port synthio-baseline en private settings.
+# Versienommer: 0.20.0
+# Doel: Spesifiseer publieke D1-runtime, realtime-, synthio- en MIDI-routing diagnose-instellings plus private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-IMP-002-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-002
+# User-Story: MCP-US-080 USB MIDI Endpoint Routing Diagnostic
+# Actienr: MCP-ACT-080-RED-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-START
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -74,6 +74,13 @@ class TestConfigurationDefaults:
         assert snapshot.get("midi.diagnostic.enabled") is False
         assert snapshot.get("midi.diagnostic.max_events") == 8
         assert snapshot.get("midi.diagnostic.timeout_seconds") == 60
+        assert snapshot.get("midi.routing_diagnostic.enabled") is False
+        assert snapshot.get("midi.routing_diagnostic.scan_all_ports") is True
+        assert snapshot.get("midi.routing_diagnostic.max_events") == 16
+        assert snapshot.get("midi.routing_diagnostic.timeout_seconds") == 60.0
+        assert snapshot.get("midi.routing_diagnostic.idle_sleep_seconds") == 0.001
+        assert snapshot.get("midi.routing_diagnostic.event_logging") == "summary"
+        assert snapshot.get("midi.routing_diagnostic.heartbeat_seconds") == 2.0
 
     def test_device_settings_example_quotes_non_integer_values_for_circuitpython_10(self) -> None:
         settings_example = (
@@ -119,6 +126,13 @@ class TestConfigurationDefaults:
         assert 'SYNTHIO_BASELINE_BOOT_AUDITION_SECONDS = "0.6"' in settings_example
         assert 'SYNTHIO_BASELINE_GATE_SECONDS = "0.12"' in settings_example
         assert 'SYNTHIO_BASELINE_SCAN_ALL_MIDI_PORTS = "true"' in settings_example
+        assert 'MIDI_ROUTING_DIAGNOSTIC_ENABLED = "false"' in settings_example
+        assert 'MIDI_ROUTING_DIAGNOSTIC_SCAN_ALL_PORTS = "true"' in settings_example
+        assert "MIDI_ROUTING_DIAGNOSTIC_MAX_EVENTS = 16" in settings_example
+        assert 'MIDI_ROUTING_DIAGNOSTIC_TIMEOUT_SECONDS = "60.0"' in settings_example
+        assert 'MIDI_ROUTING_DIAGNOSTIC_IDLE_SLEEP_SECONDS = "0.001"' in settings_example
+        assert 'MIDI_ROUTING_DIAGNOSTIC_EVENT_LOGGING = "summary"' in settings_example
+        assert 'MIDI_ROUTING_DIAGNOSTIC_HEARTBEAT_SECONDS = "2.0"' in settings_example
 
 
 class TestConfigurationSecretBoundary:
@@ -214,6 +228,10 @@ class TestConfigurationSecretBoundary:
             "SYNTHIO_BASELINE_ENABLED": "true",
             "SYNTHIO_BASELINE_GATE_SECONDS": "0.18",
             "SYNTHIO_BASELINE_SCAN_ALL_MIDI_PORTS": "false",
+            "MIDI_ROUTING_DIAGNOSTIC_ENABLED": "true",
+            "MIDI_ROUTING_DIAGNOSTIC_SCAN_ALL_PORTS": "false",
+            "MIDI_ROUTING_DIAGNOSTIC_MAX_EVENTS": "32",
+            "MIDI_ROUTING_DIAGNOSTIC_HEARTBEAT_SECONDS": "0.5",
             "MIDI_DIAGNOSTIC_ENABLED": "true",
             "MIDI_DIAGNOSTIC_MAX_EVENTS": "12",
         }
@@ -232,6 +250,10 @@ class TestConfigurationSecretBoundary:
         assert snapshot.get("synthio_baseline.enabled") is True
         assert snapshot.get("synthio_baseline.gate_seconds") == 0.18
         assert snapshot.get("synthio_baseline.scan_all_midi_ports") is False
+        assert snapshot.get("midi.routing_diagnostic.enabled") is True
+        assert snapshot.get("midi.routing_diagnostic.scan_all_ports") is False
+        assert snapshot.get("midi.routing_diagnostic.max_events") == 32
+        assert snapshot.get("midi.routing_diagnostic.heartbeat_seconds") == 0.5
         assert snapshot.get("midi.diagnostic.enabled") is True
         assert snapshot.get("midi.diagnostic.max_events") == 12
 

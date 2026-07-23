@@ -66,6 +66,17 @@ SYNTHIO_BASELINE_BOOT_AUDITION_SECONDS = "0.6"
 SYNTHIO_BASELINE_GATE_SECONDS = "0.12"
 SYNTHIO_BASELINE_SCAN_ALL_MIDI_PORTS = "true"
 
+# P0 USB-MIDI routing diagnostic. Enable this temporarily when Logic/CoreMIDI
+# routing must be measured without any synth audio path. Expect serial
+# MIDI_ROUTING_EVENT lines, not sound.
+MIDI_ROUTING_DIAGNOSTIC_ENABLED = "false"
+MIDI_ROUTING_DIAGNOSTIC_SCAN_ALL_PORTS = "true"
+MIDI_ROUTING_DIAGNOSTIC_MAX_EVENTS = 16
+MIDI_ROUTING_DIAGNOSTIC_TIMEOUT_SECONDS = "60.0"
+MIDI_ROUTING_DIAGNOSTIC_IDLE_SLEEP_SECONDS = "0.001"
+MIDI_ROUTING_DIAGNOSTIC_EVENT_LOGGING = "summary"
+MIDI_ROUTING_DIAGNOSTIC_HEARTBEAT_SECONDS = "2.0"
+
 # Optional, bounded USB-MIDI Note On/Off acceptance diagnostic.
 # Leave disabled for normal startup. Enable temporarily, then restart the board.
 # CircuitPython 10.0.x os.getenv settings support strings and integers.

@@ -1,11 +1,11 @@
 # Bestand: hil.py
-# Versienommer: 0.19.0
-# Doel: Verifieer dependency-closed deploy met synthio-baseline en CircuitPython-vriendelijke tempbestanden.
+# Versienommer: 0.20.0
+# Doel: Verifieer dependency-closed deploy met MIDI-routing diagnose, synthio-baseline en CircuitPython-vriendelijke tempbestanden.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
+# User-Story: MCP-US-080 USB MIDI Endpoint Routing Diagnostic
+# Actienr: MCP-ACT-080-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-START
 
 import ast
 import hashlib
@@ -86,6 +86,10 @@ class HilDeploymentManifest:
                 (
                     "src/midi_chip_platform/midi_usb.py",
                     "lib/midi_chip_platform/midi_usb.py",
+                ),
+                (
+                    "src/midi_chip_platform/midi_routing_diagnostic.py",
+                    "lib/midi_chip_platform/midi_routing_diagnostic.py",
                 ),
                 (
                     "src/midi_chip_platform/ble_midi.py",
@@ -579,11 +583,18 @@ class HardwareInLoopVerifier:
             and "SYNTHIO_BASELINE_READY" in capture
             and self._release_metadata.banner() in capture
         )
+        midi_routing_passed = (
+            "DEVICE_FAST_BOOT_STATUS=ENABLED" in capture
+            and "MIDI_ROUTING_DIAGNOSTIC_INPUT_STATUS=OPEN" in capture
+            and "MIDI_ROUTING_DIAGNOSTIC_READY" in capture
+            and self._release_metadata.banner() in capture
+        )
         passed = (
             import_smoke_passed
             or fast_boot_passed
             or realtime_baseline_passed
             or synthio_baseline_passed
+            or midi_routing_passed
         )
         evidence = "current release and dependency-import markers via serial REPL"
         if fast_boot_passed:
@@ -592,6 +603,8 @@ class HardwareInLoopVerifier:
             evidence = "current release and realtime-baseline markers via serial REPL"
         if synthio_baseline_passed:
             evidence = "current release and synthio-baseline markers via serial REPL"
+        if midi_routing_passed:
+            evidence = "current release and MIDI-routing diagnostic markers via serial REPL"
         return HilCheckResult(
             "execution",
             passed,

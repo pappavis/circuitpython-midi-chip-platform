@@ -1,11 +1,11 @@
 # Bestand: test_device_runtime.py
-# Versienommer: 0.19.0
-# Doel: Spesifiseer toestel-uitvoer, dependency-bewys, diagnostiek, synthio-baseline en D1 fast-boot runtime-start.
+# Versienommer: 0.20.0
+# Doel: Spesifiseer toestel-uitvoer, dependency-bewys, MIDI-routing diagnostiek, synthio-baseline en D1 fast-boot runtime-start.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
+# User-Story: MCP-US-080 USB MIDI Endpoint Routing Diagnostic
+# Actienr: MCP-ACT-080-RED-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-START
 
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
 from midi_chip_platform.release import ReleaseMetadata
@@ -265,6 +265,44 @@ class TestDeviceRuntimeApplication:
         assert diagnostic.run_count == 1
         assert runtime.run_count == 0
 
+    def test_midi_routing_diagnostic_takes_precedence_over_synthio_and_d1(self) -> None:
+        output = []
+        routing_diagnostic = self.FakeRuntime()
+        synthio_baseline = self.FakeRuntime()
+        d1_runtime = self.FakeRuntime()
+        application = DeviceRuntimeApplication(
+            release_metadata=ReleaseMetadata(
+                version="0.20.0",
+                user_story="MCP-US-080",
+                release_date="2026-07-23",
+            ),
+            configuration_loader=self.FakeConfigurationLoader(
+                {
+                    "midi.routing_diagnostic.enabled": True,
+                    "synthio_baseline.enabled": True,
+                    "synth.d1.enabled": True,
+                    "synth.d1.fast_boot_mode": False,
+                }
+            ),
+            midi_routing_diagnostic_factory=self.FakeRuntimeFactory(
+                routing_diagnostic,
+                key="midi.routing_diagnostic.enabled",
+            ),
+            synthio_baseline_factory=self.FakeRuntimeFactory(
+                synthio_baseline,
+                key="synthio_baseline.enabled",
+            ),
+            synth_runtime_factory=self.FakeRuntimeFactory(d1_runtime),
+            output=output.append,
+        )
+
+        result = application.run()
+
+        assert result is True
+        assert routing_diagnostic.run_count == 1
+        assert synthio_baseline.run_count == 0
+        assert d1_runtime.run_count == 0
+
     def test_realtime_baseline_takes_precedence_over_d1_runtime(self) -> None:
         output = []
         baseline = self.FakeRuntime()
@@ -371,6 +409,52 @@ class TestDeviceRuntimeApplication:
         assert output == [
             "circuitpython-midi-chip-platform v0.17.8 | "
             "story=MCP-US-055 | release-date=2026-07-16",
+            "DEVICE_FAST_BOOT_STATUS=ENABLED",
+        ]
+
+    def test_fast_boot_starts_midi_routing_diagnostic_before_synthio_and_d1(
+        self,
+    ) -> None:
+        output = []
+        routing_diagnostic = self.FakeRuntime()
+        synthio_baseline = self.FakeRuntime()
+        d1_runtime = self.FakeRuntime()
+        application = DeviceRuntimeApplication(
+            release_metadata=ReleaseMetadata(
+                version="0.20.0",
+                user_story="MCP-US-080",
+                release_date="2026-07-23",
+            ),
+            configuration_loader=self.FakeConfigurationLoader(
+                {
+                    "midi.routing_diagnostic.enabled": True,
+                    "synthio_baseline.enabled": True,
+                    "synth.d1.enabled": True,
+                    "synth.d1.fast_boot_mode": True,
+                    "midi.diagnostic.enabled": False,
+                }
+            ),
+            midi_routing_diagnostic_factory=self.FakeRuntimeFactory(
+                routing_diagnostic,
+                key="midi.routing_diagnostic.enabled",
+            ),
+            synthio_baseline_factory=self.FakeRuntimeFactory(
+                synthio_baseline,
+                key="synthio_baseline.enabled",
+            ),
+            synth_runtime_factory=self.FakeRuntimeFactory(d1_runtime),
+            output=output.append,
+        )
+
+        result = application.run()
+
+        assert result is True
+        assert routing_diagnostic.run_count == 1
+        assert synthio_baseline.run_count == 0
+        assert d1_runtime.run_count == 0
+        assert output == [
+            "circuitpython-midi-chip-platform v0.20.0 | "
+            "story=MCP-US-080 | release-date=2026-07-23",
             "DEVICE_FAST_BOOT_STATUS=ENABLED",
         ]
 

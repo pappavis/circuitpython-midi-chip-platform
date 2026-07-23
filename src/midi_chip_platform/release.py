@@ -1,19 +1,19 @@
 # Bestand: release.py
-# Versienommer: 0.19.3
-# Doel: Besit release-naspeurbaarheid vir die synthio multi-port endpoint foutisolasie.
+# Versienommer: 0.20.0
+# Doel: Besit release-naspeurbaarheid vir die USB-MIDI routing diagnose.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-IMP-003-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-003
+# User-Story: MCP-US-080 USB MIDI Endpoint Routing Diagnostic
+# Actienr: MCP-ACT-080-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-START
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.19.3",
-        user_story="MCP-US-079",
-        release_date="2026-07-19",
+        version="0.20.0",
+        user_story="MCP-US-080",
+        release_date="2026-07-23",
     ):
         self._version = str(version)
         self._user_story = str(user_story)

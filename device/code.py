@@ -1,15 +1,16 @@
 # Bestand: code.py
-# Versienommer: 0.19.0
-# Doel: Start die synthio-baseline, realtime MIDI-audio baseline of D1 runtime op die toestel.
+# Versienommer: 0.20.0
+# Doel: Start MIDI-routing diagnose, synthio-baseline, realtime MIDI-audio baseline of D1 runtime op die toestel.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-START
+# User-Story: MCP-US-080 USB MIDI Endpoint Routing Diagnostic
+# Actienr: MCP-ACT-080-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-START
 
 from midi_chip_platform.configuration import CircuitPythonConfigurationFactory
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
 from midi_chip_platform.d1_runtime import D1UsbMidiI2sRuntimeFactory
+from midi_chip_platform.midi_routing_diagnostic import MidiRoutingDiagnosticFactory
 from midi_chip_platform.midi_usb import CircuitPythonUsbMidiDiagnosticFactory
 from midi_chip_platform.platform_capabilities import CircuitPythonCapabilityFactory
 from midi_chip_platform.realtime_baseline import RealtimeMidiAudioBaselineFactory
@@ -44,6 +45,7 @@ if __name__ == "__main__":
                 "midi_chip_platform.events",
                 "midi_chip_platform.i2s_audio",
                 "midi_chip_platform.midi_performance",
+                "midi_chip_platform.midi_routing_diagnostic",
                 "midi_chip_platform.midi_semantics",
                 "midi_chip_platform.midi_usb",
                 "midi_chip_platform.ports",
@@ -53,6 +55,10 @@ if __name__ == "__main__":
             ),
         ),
         midi_diagnostic_factory=CircuitPythonUsbMidiDiagnosticFactory(
+            importer=__import__,
+            output=print,
+        ),
+        midi_routing_diagnostic_factory=MidiRoutingDiagnosticFactory(
             importer=__import__,
             output=print,
         ),

@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.19.2
-# Doel: Laai publieke D1-runtime, realtime- en multi-port synthio-baseline plus private settings.
+# Versienommer: 0.20.0
+# Doel: Laai publieke D1-runtime, realtime-, synthio- en MIDI-routing diagnose-instellings plus private settings.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-IMP-002-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-002
+# User-Story: MCP-US-080 USB MIDI Endpoint Routing Diagnostic
+# Actienr: MCP-ACT-080-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-START
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -69,6 +69,13 @@ class ConfigurationDefaults:
             "midi.diagnostic.max_events": 8,
             "midi.diagnostic.timeout_seconds": 60,
             "midi.diagnostic.poll_interval_seconds": 0.01,
+            "midi.routing_diagnostic.enabled": False,
+            "midi.routing_diagnostic.scan_all_ports": True,
+            "midi.routing_diagnostic.max_events": 16,
+            "midi.routing_diagnostic.timeout_seconds": 60.0,
+            "midi.routing_diagnostic.idle_sleep_seconds": 0.001,
+            "midi.routing_diagnostic.event_logging": "summary",
+            "midi.routing_diagnostic.heartbeat_seconds": 2.0,
             "wifi.mode": "auto",
         }
 
@@ -138,6 +145,13 @@ class EnvironmentSettingsSource:
             "midi.diagnostic.max_events": "MIDI_DIAGNOSTIC_MAX_EVENTS",
             "midi.diagnostic.timeout_seconds": "MIDI_DIAGNOSTIC_TIMEOUT_SECONDS",
             "midi.diagnostic.poll_interval_seconds": "MIDI_DIAGNOSTIC_POLL_INTERVAL_SECONDS",
+            "midi.routing_diagnostic.enabled": "MIDI_ROUTING_DIAGNOSTIC_ENABLED",
+            "midi.routing_diagnostic.scan_all_ports": "MIDI_ROUTING_DIAGNOSTIC_SCAN_ALL_PORTS",
+            "midi.routing_diagnostic.max_events": "MIDI_ROUTING_DIAGNOSTIC_MAX_EVENTS",
+            "midi.routing_diagnostic.timeout_seconds": "MIDI_ROUTING_DIAGNOSTIC_TIMEOUT_SECONDS",
+            "midi.routing_diagnostic.idle_sleep_seconds": "MIDI_ROUTING_DIAGNOSTIC_IDLE_SLEEP_SECONDS",
+            "midi.routing_diagnostic.event_logging": "MIDI_ROUTING_DIAGNOSTIC_EVENT_LOGGING",
+            "midi.routing_diagnostic.heartbeat_seconds": "MIDI_ROUTING_DIAGNOSTIC_HEARTBEAT_SECONDS",
             "wifi.mode": "WIFI_MODE",
             "wifi.ssid": "WIFI_SSID",
             "wifi.password": "WIFI_PASSWORD",
