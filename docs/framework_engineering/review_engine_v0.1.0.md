@@ -27,6 +27,7 @@ Reviews kan van Product Owner, spanlid, Copilot, Codex, eksterne QA, gebruikerst
 
 ## Reviewvolgorde
 
+0. **Principal QA Gate:** voor enige kodewysiging moet `docs/governance/principal_qa_architect_agent_v0.1.0.md` en `docs/governance/regression_memory_v0.1.0.md` toegepas word. Twyfel beteken `REJECT`.
 1. **Reproduceer:** lees die werklike kode/docs en voer bestaande bewys uit.
 2. **Classificeer erns:** P0 veiligheid/data/brick; P1 kernfunksie; P2 maintainability; P3 polish.
 3. **Kontroleer scope:** defek in aktiewe story of nuwe requirement?
@@ -37,6 +38,8 @@ Reviews kan van Product Owner, spanlid, Copilot, Codex, eksterne QA, gebruikerst
 
 ## Stopreels
 
+- Stop kodewerk wanneer die Principal QA Architect pre-code review ontbreek, nie deur die Product Owner goedgekeur is nie, of `REJECT` gee.
+- Stop MIDI/audio/HIL werk wanneer `REG-080-001` nie eksplisiet oorweeg is nie.
 - Stop wanneer 'n voorstel globale runtime-status, import-newe-effekte of 'n secret in Git vereis.
 - Stop firmwarewerk wanneer die verkeerde checkout/remote/manifest aktief is.
 - Stop HIL-deploy wanneer Thonny of 'n ander proses die serialpoort besit.
@@ -45,12 +48,15 @@ Reviews kan van Product Owner, spanlid, Copilot, Codex, eksterne QA, gebruikerst
 
 ## Devil's Advocate-vrae
 
+- Is dit dalk weer 'n false PASS waar net Control Change-events gesien word en geen `NoteOn`/`NoteOff` nie?
 - Wat sou hierdie PASS vals positief maak?
 - Watter bord-, firmware- of hostaanname is verborge?
 - Kan die gebruiker herstel sonder ons ontwikkelmasjien?
 - Wat gebeur met twee toestelle, twee cores, vol heap of verlore Note Off?
 - Watter private data kan in logs beland?
 
-## Uitsettemplate
+## Algemene uitsettemplate
 
 Elke reviewuitset bevat: bron, bevinding, bewys, erns, klassifikasie, story/risiko, eienaar, besluit, toets en status. Lang menings sonder hierdie velde is discovery-invoer, nie 'n change request nie.
+
+Vir die verpligte Principal QA Architect Gate vervang `docs/governance/principal_qa_architect_agent_v0.1.0.md` hierdie algemene template met sy presiese verdict-formaat.

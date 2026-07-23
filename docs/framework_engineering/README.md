@@ -22,6 +22,7 @@ Hierdie gids is die **konteks-bootloader** vir Framework Engineering. Dit is nie
 3. Lees slegs die relevante deel van [`architecture_v0.1.0.md`](architecture_v0.1.0.md).
 4. Gebruik [`glossary_v0.1.0.md`](glossary_v0.1.0.md) en [`enterprise_meta_model_v0.1.0.md`](enterprise_meta_model_v0.1.0.md) om terme en verhoudings te bevestig.
 5. Pas [`quality_manual_v0.1.0.md`](quality_manual_v0.1.0.md), [`test_strategy_v0.1.0.md`](test_strategy_v0.1.0.md) en [`review_engine_v0.1.0.md`](review_engine_v0.1.0.md) toe voor Done.
+6. Voor enige kodewysiging, laai die permanente [`Principal QA Architect Agent`](../governance/principal_qa_architect_agent_v0.1.0.md) en die [`Regression Memory`](../governance/regression_memory_v0.1.0.md).
 
 ## Artefakkaart
 
@@ -36,13 +37,15 @@ Hierdie gids is die **konteks-bootloader** vir Framework Engineering. Dit is nie
 | Kwaliteit | [Quality Manual](quality_manual_v0.1.0.md) | Watter hekke beskerm die produk? |
 | Toetsing | [Test Strategy](test_strategy_v0.1.0.md) | Waar en hoe word gedrag bewys? |
 | Review | [Review Engine](review_engine_v0.1.0.md) | Hoe word interne en eksterne bevindinge geklassifiseer? |
+| Governance | [Principal QA Architect Agent](../governance/principal_qa_architect_agent_v0.1.0.md) | Watter harde pre-code en post-implementation QA-gate geld? |
+| Governance | [Regression Memory](../governance/regression_memory_v0.1.0.md) | Watter bekende regressies mag nooit weer as PASS deurglip nie? |
 | Agentwerk | [Prompt Compiler Specification](prompt_compiler_specification_v0.1.0.md) | Hoe word 'n begrensde taakpakket saamgestel? |
 | Konteks | [Context Loader Specification](context_loader_specification_v0.1.0.md) | Wat moet vir 'n story gelees word? |
 | Kennis | [Knowledge Base Structure](knowledge_base_structure_v0.1.0.md) | Waar hoort bevestigde kennis? |
 
 ## Gesagsvolgorde
 
-`AGENTS.md` en menslike veiligheidsinstruksies > goedgekeurde Product Owner-besluit > user-story/backlog > ADR > argitektuur- en kwaliteitshandleidings > story-review > adviserende review. 'n Laer laag mag nooit 'n hoër laag stilweg oorskryf nie.
+`AGENTS.md` en menslike veiligheidsinstruksies > Principal QA Architect Gate > goedgekeurde Product Owner-besluit > user-story/backlog > ADR > argitektuur- en kwaliteitshandleidings > story-review > adviserende review. 'n Laer laag mag nooit 'n hoër laag stilweg oorskryf nie.
 
 ## Veiligheidsgrens
 

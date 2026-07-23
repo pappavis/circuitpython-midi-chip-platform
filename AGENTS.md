@@ -2,13 +2,13 @@
 
 <!--
 Bestand: AGENTS.md
-Versienommer: 0.8.0
+Versienommer: 0.9.0
 Doel: Afdwingbare werkreels vir mense, Codex en ander ontwikkelagente.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: MVP-SCOPE-REDUCTION-001
-Actienr: MCP-ACT-MVP-SCOPE-001-GOV-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MVP-SCOPE-REDUCTION-001
+User-Story: PRINCIPAL-QA-ARCHITECT-001
+Actienr: MCP-ACT-QA-ARCHITECT-001-GOV-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / PRINCIPAL-QA-ARCHITECT-001
 -->
 
 ## Harde argitektuurreels
@@ -59,6 +59,19 @@ Toetse self word ook in toetsklasse georganiseer. 'n Uitsondering op hierdie ree
 10. US-016 se `device/i2s_test.py` is klasgebaseerd, het geen synth-package-import of globale status nie en besit I2S eksklusief terwyl dit loop.
 11. SN76489 en elke volgende kern begin eers nadat die D1/Logic MVP aanvaar is.
 12. Elke langlopende runtime-story verklaar `Burn-in: Required` of gemotiveerd `Burn-in: N/A`; die duur en heap-grense volg `docs/burn_in_heap_stability_spec_v0.1.0.md`.
+
+## Principal QA Architect Gate
+
+1. Voor elke kodewysiging is 'n Principal QA Architect review verpligtend volgens `docs/governance/principal_qa_architect_agent_v0.1.0.md`.
+2. Die Principal QA Architect is 'n review-agent, nie 'n programmeer-agent nie; die agent skryf geen kode en implementeer geen fix nie.
+3. Die implementer wys eers slegs die QA-review aan die Product Owner en wag op goedkeuring voordat enige kode verander word.
+4. Na implementering word dieselfde Principal QA Architect review weer uitgevoer voordat die werk as gereed, gepubliseer of Done gemerk word.
+5. By enige twyfel oor regressie, timing, MIDI-ontvangs, audio-uitset, HIL-bewys of scope is die verdict `REJECT`.
+6. Die bewyslas is regressiebewys: bewys dat bestaande funksionaliteit nog werk; groen host-toetse alleen is onvoldoende.
+7. Elke MIDI-, audio-, runtime-, HIL- of diagnostic-wysiging moet `docs/governance/regression_memory_v0.1.0.md` raadpleeg.
+8. `REG-080-001` is 'n aktiewe P0 regressieherinnering: audition weg, geen `NoteOn`/`NoteOff`, slegs CC7, en 'n foutiewe `PASS`.
+9. 'n Diagnostic wat note-routing moet bewys, mag nie slaag wanneer `note_on=0` en `note_off=0` nie.
+10. Geen patch mag 'n werkende audition, I2S-preflight, USB-MIDI receive, Logic Pro routing of hoorbare audio stilweg verwyder nie.
 
 ## Produksie-repositorygrens
 

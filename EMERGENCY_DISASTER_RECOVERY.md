@@ -381,6 +381,8 @@ Repository-supported business rules:
 | SN76489, SID, OPL, web, BLE, stereo, DSP and multi-core are post-MVP | `docs/mvp_scope_v0.1.0.md`, `docs/user_stories_v0.1.0.md` | High |
 | `python-d1-synth` is read-only reference | `AGENTS.md` | High |
 | No globals or import side effects are allowed | `AGENTS.md`, `tests/test_architecture.py` | High |
+| Principal QA Architect review is mandatory before every code change | `AGENTS.md`, `docs/governance/principal_qa_architect_agent_v0.1.0.md` | High |
+| `REG-080-001` must be checked for MIDI/audio/HIL work | `docs/governance/regression_memory_v0.1.0.md` | High |
 | HIL claims require device evidence, not host tests only | `AGENTS.md`, `docs/agile_delivery_release_plan_v0.1.0.md` | High |
 | Physical audio safety is not production-certified yet | `docs/risk_register_v0.1.0.md`, `docs/mvp_scope_v0.1.0.md` | High |
 
@@ -388,14 +390,18 @@ Repository-supported business rules:
 
 Validation layers:
 
-1. AST governance validation: no module-level runtime state, no globals, no import-side hardware effects.
-2. Unit and contract tests: events, MIDI, audio, D1 core, configuration, runtime factories.
-3. HIL deploy validation: manifest closure, hashes, device libraries.
-4. HIL execution validation: release banner, boot marker, runtime markers.
-5. Human HIL validation: audible sound, Logic routing, oscilloscope observations.
-6. Burn-in validation: heap and long-run stability per spec.
+1. Principal QA Architect pre-code review: reject on doubt and check active regression memory.
+2. AST governance validation: no module-level runtime state, no globals, no import-side hardware effects.
+3. Unit and contract tests: events, MIDI, audio, D1 core, configuration, runtime factories.
+4. HIL deploy validation: manifest closure, hashes, device libraries.
+5. HIL execution validation: release banner, boot marker, runtime markers.
+6. Human HIL validation: audible sound, Logic routing, oscilloscope observations.
+7. Principal QA Architect post-implementation review: verify regression evidence before Done.
+8. Burn-in validation: heap and long-run stability per spec.
 
 Do not mark a story Done solely because tests pass if its acceptance criteria require human hardware evidence.
+
+Active regression memory: `REG-080-001` records the MCP-US-080 failure where audition disappeared, Logic note routing produced no `NoteOn`/`NoteOff`, only CC7 was observed, and the diagnostic still reported `PASS`. Future diagnostics that validate musical note routing must fail when note evidence is absent.
 
 ## 18. Logging Strategy
 
