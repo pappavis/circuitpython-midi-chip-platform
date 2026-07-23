@@ -90,16 +90,20 @@ Die Product Owner moet dus een bestaande kandidaatpad kies voordat MCP-US-100 in
 ## 4. Product Owner Decision
 
 SELECTED OPTION:
-_____
+B. Heropen `MCP-US-055`: macOS Logic Pro Audible D1 Acceptance
 
 Product Owner naam:
-_____
+Michiel Erasmus ("Vliegbasis71")
 
 Datum:
-_____
+2026-07-23
 
 Besluitnotitie:
-_____
+MCP-US-090 heeft de native CoreMIDI-route objectief bewezen. Vanaf dit moment verschuift de focus van infrastructuur naar productfunctionaliteit.
+
+De eerstvolgende MVP-stap is het objectief aantonen dat een eindgebruiker vanuit Logic Pro via de bestaande runtime hoorbare audio op D1/MAX98357 produceert.
+
+Deze story mag uitsluitend bestaande goedgekeurde architectuur implementeren. Nieuwe architectuur, refactoring en ontwerpbeslissingen zijn niet toegestaan. Wanneer de acceptatietest faalt, wordt geen runtime aangepast binnen MCP-US-055; daarvoor wordt een afzonderlijke fixstory aangemaakt.
 
 ## 5. Gevolg
 
