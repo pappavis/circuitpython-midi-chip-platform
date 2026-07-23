@@ -1,11 +1,11 @@
 # Bestand: test_i2s_audio_output.py
-# Versienommer: 0.17.5
-# Doel: Spesifiseer timed CircuitPython I2S playback en diagnose-gelyke tone.
+# Versienommer: 0.20.2
+# Doel: Spesifiseer timed CircuitPython I2S playback, diagnose-gelyke tone en latched sample-lifetime.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-003 Audio And Chip Core
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-AUDIBLE-TONE-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-HIL-PASS-RECEIVED
+# Actienr: BUG-001-MINIMAL-FIX-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / BUG-001
 
 from midi_chip_platform.audio import AudioBlock, AudioStreamFormat
 from midi_chip_platform.i2s_audio import CircuitPythonI2sAudioOutput
@@ -173,10 +173,14 @@ class TestCircuitPythonI2sAudioOutput:
         output.start_tone(frequency_hz=440.0, amplitude=2048)
 
         assert len(audio_bus.device.played) == 1
+        sample, loop = audio_bus.device.played[0]
+        assert loop is True
         assert fake_time.sleep_calls == []
         assert output._active_sample is not None
+        assert output._active_buffer is sample.buffer
 
         output.stop_tone()
 
         assert output._active_sample is None
+        assert output._active_buffer is None
         assert audio_bus.device.stop_count >= 2

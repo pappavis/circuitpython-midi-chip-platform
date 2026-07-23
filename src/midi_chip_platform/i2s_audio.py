@@ -1,11 +1,11 @@
 # Bestand: i2s_audio.py
-# Versienommer: 0.17.5
-# Doel: Lewer CircuitPython I2S-blokuitvoer en 'n diagnose-gelyke hoorbare toonpad.
+# Versienommer: 0.20.2
+# Doel: Lewer CircuitPython I2S-blokuitvoer en hou latched toonbuffers aktief.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-003 Audio And Chip Core
 # User-Story: MCP-US-055 macOS Logic Pro Audible D1 Acceptance
-# Actienr: MCP-ACT-055-P0-AUDIBLE-TONE-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-HIL-PASS-RECEIVED
+# Actienr: BUG-001-MINIMAL-FIX-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / BUG-001
 
 from midi_chip_platform.audio import AudioBlock, AudioStreamFormat
 from midi_chip_platform.ports import AudioOutputPort
@@ -35,6 +35,7 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
         self._device = None
         self._is_muted = True
         self._active_sample = None
+        self._active_buffer = None
 
     @property
     def audio_format(self):
@@ -78,11 +79,12 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
         if self._is_muted:
             self._sleep_for_block(selected_block)
             return
-        self._active_sample = self._raw_sample_for(selected_block)
+        self._active_buffer, self._active_sample = self._raw_sample_for(selected_block)
         self._device.play(self._active_sample, loop=True)
         self._sleep_for_block(selected_block)
         self._device.stop()
         self._active_sample = None
+        self._active_buffer = None
 
     def play_tone(self, frequency_hz, duration_seconds, amplitude=2048):
         if not self.is_open:
@@ -107,15 +109,16 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
             high_value if index < half_period else low_value
             for index in range(period_length)
         ]
-        buffer = self._array_module.array("H", values)
+        self._active_buffer = self._array_module.array("H", values)
         self._active_sample = self._audiocore_module.RawSample(
-            buffer,
+            self._active_buffer,
             sample_rate=self._audio_format.sample_rate,
         )
         self._device.play(self._active_sample, loop=True)
         self._time_module.sleep(max(selected_duration, self._poll_sleep_seconds))
         self._device.stop()
         self._active_sample = None
+        self._active_buffer = None
 
     def start_tone(self, frequency_hz, amplitude=2048):
         if not self.is_open:
@@ -137,9 +140,9 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
             high_value if index < half_period else low_value
             for index in range(period_length)
         ]
-        buffer = self._array_module.array("H", values)
+        self._active_buffer = self._array_module.array("H", values)
         self._active_sample = self._audiocore_module.RawSample(
-            buffer,
+            self._active_buffer,
             sample_rate=self._audio_format.sample_rate,
         )
         self._device.play(self._active_sample, loop=True)
@@ -148,6 +151,7 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
         if self._device is not None:
             self._device.stop()
         self._active_sample = None
+        self._active_buffer = None
 
     def mute(self):
         self._is_muted = True
@@ -170,7 +174,7 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
         for sample in block.samples:
             values.append(max(0, min(65535, int(sample) + 32768)))
         buffer = self._array_module.array("H", values)
-        return self._audiocore_module.RawSample(
+        return buffer, self._audiocore_module.RawSample(
             buffer,
             sample_rate=self._audio_format.sample_rate,
         )
