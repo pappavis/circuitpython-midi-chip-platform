@@ -1,11 +1,11 @@
 # Bestand: midi_usb.py
-# Versienommer: 0.19.2
-# Doel: Vertaal USB-MIDI en ondersteun enkel- of multi-port receive vir realtime synthio diagnose.
+# Versienommer: 0.19.3
+# Doel: Vertaal USB-MIDI en isoleer foutiewe multi-port endpoints vir synthio diagnose.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
 # User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-IMP-002-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-002
+# Actienr: MCP-ACT-079-IMP-003-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-003
 
 from midi_chip_platform.events import ClockEvent, ControlEvent, NoteEvent
 from midi_chip_platform.ports import MidiInputPort
@@ -138,6 +138,7 @@ class MultiUsbMidiInputPort(MidiInputPort):
             raise ValueError("multi USB MIDI input requires at least one port")
         self._is_open = False
         self._next_index = 0
+        self._disabled_indexes = set()
 
     @property
     def is_open(self):
@@ -147,11 +148,19 @@ class MultiUsbMidiInputPort(MidiInputPort):
     def port_count(self):
         return len(self._midi_inputs)
 
+    @property
+    def active_port_count(self):
+        return len(self._midi_inputs) - len(self._disabled_indexes)
+
     def open(self):
         if self._is_open:
             return
-        for midi_input in self._midi_inputs:
-            midi_input.open()
+        self._disabled_indexes.clear()
+        for index, midi_input in enumerate(self._midi_inputs):
+            try:
+                midi_input.open()
+            except (AttributeError, ValueError, OSError, RuntimeError):
+                self._disabled_indexes.add(index)
         self._is_open = True
 
     def receive(self):
@@ -159,14 +168,22 @@ class MultiUsbMidiInputPort(MidiInputPort):
             raise RuntimeError("USB MIDI input is closed")
         for offset in range(len(self._midi_inputs)):
             index = (self._next_index + offset) % len(self._midi_inputs)
-            event = self._midi_inputs[index].receive()
+            if index in self._disabled_indexes:
+                continue
+            try:
+                event = self._midi_inputs[index].receive()
+            except (AttributeError, ValueError, OSError, RuntimeError):
+                self._disabled_indexes.add(index)
+                continue
             if event is not None:
                 self._next_index = (index + 1) % len(self._midi_inputs)
                 return event
         return None
 
     def close(self):
-        for midi_input in self._midi_inputs:
+        for index, midi_input in enumerate(self._midi_inputs):
+            if index in self._disabled_indexes:
+                continue
             midi_input.close()
         self._is_open = False
 

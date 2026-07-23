@@ -1,17 +1,17 @@
 # Bestand: release.py
-# Versienommer: 0.19.2
-# Doel: Besit release-naspeurbaarheid vir die synthio multi-port MIDI fix.
+# Versienommer: 0.19.3
+# Doel: Besit release-naspeurbaarheid vir die synthio multi-port endpoint foutisolasie.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
 # User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-IMP-002-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-002
+# Actienr: MCP-ACT-079-IMP-003-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-003
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.19.2",
+        version="0.19.3",
         user_story="MCP-US-079",
         release_date="2026-07-19",
     ):

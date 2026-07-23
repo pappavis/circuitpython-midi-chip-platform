@@ -1,11 +1,11 @@
 # Bestand: test_usb_midi_receive.py
-# Versienommer: 0.19.2
-# Doel: Bewys USB-MIDI-vertaling, multi-port receive en begrensde Note On/Off-HIL-diagnostiek.
+# Versienommer: 0.19.3
+# Doel: Bewys USB-MIDI-vertaling, multi-port foutisolasie en begrensde Note On/Off-HIL-diagnostiek.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
 # User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-IMP-002-RED-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-002
+# Actienr: MCP-ACT-079-IMP-003-RED-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-003
 
 from midi_chip_platform.events import NoteEvent
 from midi_chip_platform.midi_usb import (
@@ -57,6 +57,10 @@ class TestUsbMidiReceive:
             if not self._messages:
                 return None
             return self._messages.pop(0)
+
+    class FailingMidiInput(MemoryMidiInput):
+        def receive(self):
+            raise AttributeError("not an input endpoint")
 
     class Factory:
         def __init__(self, raw_midi):
@@ -160,6 +164,22 @@ class TestUsbMidiReceive:
         assert event.velocity == 88
         assert first.is_open is False
         assert second.is_open is False
+
+    def test_multi_port_input_disables_non_input_endpoint_and_keeps_polling(self) -> None:
+        failing = self.FailingMidiInput(())
+        working = MemoryMidiInput((NoteEvent.note_on(channel=1, note=76, velocity=91),))
+        multi_port = MultiUsbMidiInputPort((failing, working))
+
+        multi_port.open()
+        event = multi_port.receive()
+        multi_port.close()
+
+        assert multi_port.port_count == 2
+        assert multi_port.active_port_count == 1
+        assert event.message_type == "note_on"
+        assert event.note == 76
+        assert event.velocity == 91
+        assert working.is_open is False
 
     def test_circuitpython_factory_uses_positional_import_arguments(self) -> None:
         midi_class = type("MidiClass", (), {})
