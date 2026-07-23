@@ -1,0 +1,39 @@
+MCP-US-080-INV-003 OPENED MIDI CLIENTS PROCESS SNAPSHOT
+timestamp=2026-07-23T18:39:40.867681+00:00
+method=ps ax filtered by MIDI/audio/app keywords
+NOTE=This is a process snapshot only. It does not prove exact CoreMIDI endpoint handles per process.
+filtered_process_count=34
+  572 /usr/sbin/coreau /usr/sbin/coreaudiod
+  707 /System/Library/ /System/Library/Audio/Plug-Ins/usbaudio.bundle/Contents/MacOS/usbaudiod
+  743 /Applications/Fo /Applications/Focusrite Control.app/Contents/Library/LoginItems/FocusriteControlServer.app/Contents/MacOS/FocusriteControlServer daemon
+  828 /Applications/Gu /Applications/Guitar Pro 8.app/Contents/MacOS/GuitarPro
+  849 /System/Applicat /System/Applications/Utilities/Audio MIDI Setup.app/Contents/MacOS/Audio MIDI Setup
+  852 /Applications/Th /Applications/Thonny.app/Contents/Resources/launch.py -I /Applications/Thonny.app/Contents/Resources/thonnymain.py
+  854 /Applications/Am /Applications/Ampero Editor.app/Contents/MacOS/Ampero Editor
+  860 /Applications/Fo /Applications/Focusrite Control.app/Contents/MacOS/Focusrite Control
+  867 /Applications/Sy /Applications/Synthesia.app/Contents/MacOS/Synthesia
+ 1080 /System/Library/ /System/Library/Frameworks/CoreMIDI.framework/MIDIServer
+ 3096 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python -
+13877 /Volumes/data1/A /Volumes/data1/Applications/Logic Pro.app/Contents/MacOS/Logic Pro
+39054 /Users/REDACTED/ /Users/REDACTED/.vscode/extensions/ms-python.vscode-python-envs-1.36.0-darwin-arm64/python-env-tools/bin/pet server
+39219 /Applications/Vi /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) /Users/REDACTED/.vscode/extensions/ms-python.vscode-pylance-2026.3.1/dist/server.bundle.js --cancellationReceive=file:7b0f32163ba906f6034936f717235233fd2a862b11 --node-ipc --clientProcessId=38976
+58452 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.black-formatter-2026.6.0/bundled/tool/lsp_server.py
+58453 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.isort-2026.6.0/bundled/tool/lsp_server.py
+58458 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.black-formatter-2026.6.0/bundled/tool/lsp_runner.py
+58459 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.isort-2026.6.0/bundled/tool/lsp_runner.py
+58466 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.isort-2026.6.0/bundled/tool/lsp_runner.py
+58467 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.black-formatter-2026.6.0/bundled/tool/lsp_runner.py
+58479 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.isort-2026.6.0/bundled/tool/lsp_runner.py
+58481 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.black-formatter-2026.6.0/bundled/tool/lsp_runner.py
+58483 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.isort-2026.6.0/bundled/tool/lsp_runner.py
+58484 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.black-formatter-2026.6.0/bundled/tool/lsp_runner.py
+58485 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.isort-2026.6.0/bundled/tool/lsp_runner.py
+58487 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.black-formatter-2026.6.0/bundled/tool/lsp_runner.py
+58489 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.isort-2026.6.0/bundled/tool/lsp_runner.py
+58491 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.black-formatter-2026.6.0/bundled/tool/lsp_runner.py
+58512 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.isort-2026.6.0/bundled/tool/lsp_runner.py
+58513 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/REDACTED/.vscode/extensions/ms-python.black-formatter-2026.6.0/bundled/tool/lsp_runner.py
+85285 /Applications/So /Applications/Song Master Pro 5.app/Contents/MacOS/SMPro_M1
+85837 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python -
+ 6296 /opt/homebrew/Ce /opt/homebrew/Cellar/REDACTED_EMAIL/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Volumes/data1/Yandex.Disk.localized/michiele/Programmering/Python/python_normaal/github_python_normaal/clipboard_json_logger/src/clipboard_json_logger.py
+28032 /Volumes/data1/m /Volumes/data1/michiele/.cache/uv/archive-v0/Rb7U3DPa0EZaRGChJjZji/bin/python /Volumes/data1/michiele/.cache/uv/archive-v0/Rb7U3DPa0EZaRGChJjZji/bin/muscriptor serve

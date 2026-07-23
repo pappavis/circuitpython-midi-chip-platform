@@ -1,0 +1,23 @@
+MCP-US-080-INV-003 FINAL ASSESSMENT
+timestamp=2026-07-23T18:39:40.867681+00:00
+story=MCP-US-080-INV-003
+title=Identify Actual MIDI Routing Path
+status=PARTIAL
+runtime_code_changed=false
+firmware_code_changed=false
+settings_toml_changed=false
+release_bumped=false
+tests_a_b_c_rerun=false
+read_only_investigation=true
+COREMIDI_ENDPOINTS_OBSERVED=true
+COREMIDI_SOURCES=10
+COREMIDI_DESTINATIONS=11
+S2_SOURCE_MATCHES=1
+S2_DESTINATION_MATCHES=1
+S2_USB_MIDISERVER_OWNER=pid 1080, MIDIServer
+HOST_OPENED_UNIQUEID=UNKNOWN
+HOST_AND_DEVICE_ROUTE_CONFIRMED=false
+HOST_AND_DEVICE_ROUTE_MISMATCH=false
+INV003_RESULT=UNKNOWN
+reason=Endpoint inventory and USB ownership are known, but dynamic host-send endpoint handle and prior device event source are not objectively attributable from read-only post-hoc evidence.
+next_investigation_need=live host-side send handle attribution or CoreMIDI event monitor with source/destination UniqueID correlation; not performed in this read-only INV-003 run.

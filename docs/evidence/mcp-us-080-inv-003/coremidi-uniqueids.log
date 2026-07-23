@@ -1,0 +1,8 @@
+MCP-US-080-INV-003 COREMIDI UNIQUEIDS
+timestamp=2026-07-23T18:39:40.867681+00:00
+target_endpoint_name=S2 Mini CircuitPython usb_midi.ports[0]
+target_matches=2
+endpoint_type=source;index=8;name=CircuitPython usb_midi.ports[0];displayName=S2 Mini CircuitPython usb_midi.ports[0];manufacturer=Lolin;driver=com.apple.AppleMIDIUSBDriver;model=S2 Mini;entity=CircuitPython usb_midi.ports[0];device=S2 Mini;deviceDisplayName=UNKNOWN(status=-10835);uniqueID=1261743653;persistentUniqueID=1261743653;deviceUniqueID=-304408385;offline=0;private=UNKNOWN(status=-10835);object_ref=4423762
+endpoint_type=destination;index=8;name=CircuitPython usb_midi.ports[0];displayName=S2 Mini CircuitPython usb_midi.ports[0];manufacturer=Lolin;driver=com.apple.AppleMIDIUSBDriver;model=S2 Mini;entity=CircuitPython usb_midi.ports[0];device=S2 Mini;deviceDisplayName=UNKNOWN(status=-10835);uniqueID=2064399636;persistentUniqueID=2064399636;deviceUniqueID=-304408385;offline=0;private=UNKNOWN(status=-10835);object_ref=4423763
+HOST_OPENED_UNIQUEID=UNKNOWN
+reason=No active host-send process is currently open and previous TEST A2 host-open action cannot be proven post-hoc from CoreMIDI state without runtime/open-handle instrumentation.

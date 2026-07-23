@@ -1,0 +1,14 @@
+MCP-US-080-INV-003 ROUTE ANALYSIS
+timestamp=2026-07-23T18:39:40.867681+00:00
+withdrawn_previous_conclusion=FIRST_DISAPPEARANCE_OF_NOTEON=BETWEEN_COREMIDI_ENDPOINT_AND_USB_DEVICE
+current_first_disappearance=UNKNOWN
+s2_source_matches=1
+s2_destination_matches=1
+S2_SOURCE;endpoint_type=source;index=8;name=CircuitPython usb_midi.ports[0];displayName=S2 Mini CircuitPython usb_midi.ports[0];manufacturer=Lolin;driver=com.apple.AppleMIDIUSBDriver;model=S2 Mini;entity=CircuitPython usb_midi.ports[0];device=S2 Mini;deviceDisplayName=UNKNOWN(status=-10835);uniqueID=1261743653;persistentUniqueID=1261743653;deviceUniqueID=-304408385;offline=0;private=UNKNOWN(status=-10835);object_ref=4423762
+S2_DESTINATION;endpoint_type=destination;index=8;name=CircuitPython usb_midi.ports[0];displayName=S2 Mini CircuitPython usb_midi.ports[0];manufacturer=Lolin;driver=com.apple.AppleMIDIUSBDriver;model=S2 Mini;entity=CircuitPython usb_midi.ports[0];device=S2 Mini;deviceDisplayName=UNKNOWN(status=-10835);uniqueID=2064399636;persistentUniqueID=2064399636;deviceUniqueID=-304408385;offline=0;private=UNKNOWN(status=-10835);object_ref=4423763
+host_opened_exact_uniqueid=UNKNOWN
+host_to_device_same_endpoint_proven=false
+reason=Current read-only evidence confirms S2 CoreMIDI endpoints and USB MIDIServer ownership, but does not prove which UniqueID the prior host sender or Logic actually opened at send time.
+noteon_72_79_origin=UNKNOWN
+reason_noteon_origin=Multiple CoreMIDI sources and MIDI-capable applications exist in the process snapshot; no timestamped source attribution exists for the prior device-observed channel-1 NoteOn 72/79 events.
+INV003_CONCLUSION=UNKNOWN
