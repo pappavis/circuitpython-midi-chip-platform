@@ -225,8 +225,7 @@ class TestD1UsbMidiI2sRuntime:
 
         assert result is True
         assert len(audio_output.blocks) == 0
-        assert audio_output.tones[0] == ("start", 440.0, 8192)
-        assert audio_output.tones[-1] == ("stop",)
+        assert audio_output.tones[0] == ("play", 440.0, 0.05, 8192)
         assert marker.calls == ("open", "begin", "end", "close")
         assert any(
             line.startswith(
@@ -238,8 +237,8 @@ class TestD1UsbMidiI2sRuntime:
         )
         assert any(
             line.startswith(
-                "D1_AUDIO_EVENT=audible_note;mode=latched_tone;note=69;"
-                "blocks=5;minimum_seconds=0.050"
+                "D1_AUDIO_EVENT=audible_note;mode=blocking_tone;note=69;"
+                "blocks=5;seconds=0.050"
             )
             for line in output
         ) is False
@@ -323,8 +322,8 @@ class TestD1UsbMidiI2sRuntime:
         assert "D1_MIDI_EVENT=note_on;channel=1;note=69;velocity=100" in output
         assert any(
             line.startswith(
-                "D1_AUDIO_EVENT=audible_note;mode=latched_tone;note=69;"
-                "blocks=5;minimum_seconds=0.050"
+                "D1_AUDIO_EVENT=audible_note;mode=blocking_tone;note=69;"
+                "blocks=5;seconds=0.050"
             )
             for line in output
         )

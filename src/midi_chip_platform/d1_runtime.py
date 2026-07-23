@@ -279,26 +279,27 @@ class D1UsbMidiI2sRuntime:
             requested_blocks = max(0, min(requested_blocks, remaining_blocks))
         if requested_blocks <= 0:
             return
-        if hasattr(self._audio_output, "start_tone"):
+        if hasattr(self._audio_output, "play_tone"):
             self._mvp_timing_recorder.record_pcm(event)
             self._timing_marker.begin_note_on()
             try:
-                self._audio_output.start_tone(
+                self._mvp_timing_recorder.record_audio_start(event)
+                self._audio_output.play_tone(
                     frequency_hz=self._core.active_frequency_hz,
+                    duration_seconds=self._seconds_for_blocks(requested_blocks),
                     amplitude=self._audition_tone_amplitude,
                 )
             finally:
                 self._timing_marker.end_note_on()
-            self._mvp_timing_recorder.record_audio_start(event)
-            self._tone_started = True
-            self._tone_started_at = self._current_time()
+            self._tone_started = False
+            self._tone_started_at = 0.0
             self._pending_tone_stop_at = None
             self._block_count += requested_blocks
             self._audible_note_count += 1
             self._log_verbose(
                 "D1_AUDIO_EVENT=audible_note;"
-                f"mode=latched_tone;note={event.note};blocks={requested_blocks};"
-                f"minimum_seconds={self._seconds_for_blocks(requested_blocks):.3f};"
+                f"mode=blocking_tone;note={event.note};blocks={requested_blocks};"
+                f"seconds={self._seconds_for_blocks(requested_blocks):.3f};"
                 f"midi_velocity={event.velocity};play_velocity={playable_event.velocity}"
             )
             self._mvp_timing_recorder.emit_if_ready(self._output)
