@@ -1,0 +1,7 @@
+MCP-US-080-INV-002 TEST_B CORRELATION
+timestamp=2026-07-23T20:26:00Z
+status=NOT_RUN
+reason=TEST_A2_DID_NOT_PASS
+required_precondition=TEST_A2 exact channel-16 CC119 and NoteOn/NoteOff pattern observed on S2
+precondition_result=FAIL
+conclusion=TEST_B_NOT_EXECUTED

@@ -1,0 +1,34 @@
+MCP-US-080-INV-002 FINAL ASSESSMENT
+timestamp=2026-07-23T20:26:00Z
+story=MCP-US-080-INV-002
+title=Resolve Host-to-S2 Note Correlation
+status=PARTIAL
+
+SCOPE_RULES_OBSERVED=true
+runtime_code_changed=false
+firmware_code_changed=false
+governance_changed=false
+release_bumped=false
+evidence_only=true
+
+DEVICE_UNDER_TEST=circuitpython-midi-chip-platform v0.20.1 | story=MCP-US-080-INV-001 | release-date=2026-07-23
+HOST_DESTINATION=S2 Mini CircuitPython usb_midi.ports[0]
+HOST_TEST_A2_PATTERN=channel16;cc119=17;note_on_60_velocity_41;note_off_60_velocity_0;note_on_64_velocity_73;note_off_64_velocity_0;note_on_67_velocity_109;note_off_67_velocity_0
+
+TEST_A2_RUN1_STATUS=INVALID
+TEST_A2_RUN1_REASON=device_configuration_parse_error_ready_false_sent_false
+TEST_A2_RUN2_STATUS=FAIL
+TEST_A2_RUN2_HOST_SEND_STATUS=COMPLETE
+TEST_A2_RUN2_DEVICE_SUMMARY_STATUS=COMPLETE
+TEST_A2_RUN2_EXACT_MATCH=false
+TEST_A2_RUN2_MATCHED_COUNT=0
+TEST_A2_RUN2_DEVICE_NOTEONS_OBSERVED=channel1_note72_velocity32;channel1_note76_velocity79;channel1_note79_velocity74
+TEST_A2_RUN2_EXPECTED_NOTEONS=channel16_note60_velocity41;channel16_note64_velocity73;channel16_note67_velocity109
+
+OBJECTIVE_FINDING=Host sent the unique A2 pattern to the configured S2 destination, but the S2 diagnostic did not observe that exact pattern. The S2 observed other NoteOn events on channel 1 plus a CC7 flood.
+INDEPENDENT_HOST_TO_S2_NOTEON=FAIL
+FIRST_DISAPPEARANCE_OF_NOTEON=BETWEEN_COREMIDI_ENDPOINT_AND_USB_DEVICE
+TEST_B_STATUS=NOT_RUN
+TEST_B_REASON=TEST_A2_DID_NOT_PASS
+
+NEXT_STEP=Do not run Logic TEST_B yet. Investigate why host-sent channel-16 raw MIDI bytes are not observed exactly at the S2 USB MIDI diagnostic endpoint.

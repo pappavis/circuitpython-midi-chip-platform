@@ -1,0 +1,22 @@
+MCP-US-080-INV-002 TEST_A2 CORRELATION
+timestamp=2026-07-23T20:23:31.600734
+expected=[('control_change', 16, None, None, 119, 17), ('note_on', 16, 60, 41, None, None), ('note_off', 16, 60, 0, None, None), ('note_on', 16, 64, 73, None, None), ('note_off', 16, 64, 0, None, None), ('note_on', 16, 67, 109, None, None), ('note_off', 16, 67, 0, None, None)]
+matched_count=0
+exact_match=false
+matched_events=[]
+other_noteons=[]
+INDEPENDENT_HOST_TO_S2_NOTEON=FAIL
+FIRST_DISAPPEARANCE_OF_NOTEON=BETWEEN_COREMIDI_ENDPOINT_AND_USB_DEVICE
+RUN1_INVALID=true;reason=device_configuration_parse_error_ready_false_sent_false
+RUN1_CONCLUSION_SUPERSEDED_BY=RUN2
+--- RUN2 CORRELATION ---
+timestamp=2026-07-23T20:25:25.787260
+expected=[('control_change', 16, None, None, 119, 17), ('note_on', 16, 60, 41, None, None), ('note_off', 16, 60, 0, None, None), ('note_on', 16, 64, 73, None, None), ('note_off', 16, 64, 0, None, None), ('note_on', 16, 67, 109, None, None), ('note_off', 16, 67, 0, None, None)]
+run2_ready=true;run2_sent=true;run2_summary=true
+run2_device_event_count=1779
+run2_matched_count=0
+run2_exact_match=false
+run2_matched_events=[]
+run2_other_noteons=['MIDI_ROUTING_EVENT=note_on;channel=1;note=72;velocity=32;event_ms=8394', 'MIDI_ROUTING_EVENT=note_on;channel=1;note=72;velocity=32;event_ms=8439', 'MIDI_ROUTING_EVENT=note_on;channel=1;note=76;velocity=79;event_ms=13193', 'MIDI_ROUTING_EVENT=note_on;channel=1;note=76;velocity=79;event_ms=13247', 'MIDI_ROUTING_EVENT=note_on;channel=1;note=79;velocity=74;event_ms=18206', 'MIDI_ROUTING_EVENT=note_on;channel=1;note=79;velocity=74;event_ms=18252']
+INDEPENDENT_HOST_TO_S2_NOTEON=FAIL
+FIRST_DISAPPEARANCE_OF_NOTEON=BETWEEN_COREMIDI_ENDPOINT_AND_USB_DEVICE

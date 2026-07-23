@@ -1,0 +1,5 @@
+MCP-US-080-INV-002 TEST_B DEVICE LOG
+timestamp=2026-07-23T20:26:00Z
+status=NOT_RUN
+reason=TEST_A2_DID_NOT_PASS
+detail=TEST_B is intentionally blocked by the investigation plan until TEST_A2 proves exact host-to-S2 NoteOn correlation.
