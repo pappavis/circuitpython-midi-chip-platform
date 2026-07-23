@@ -1,0 +1,17 @@
+MCP-US-080-INV-002 TEST_A PYTHON_DIRECT_TO_S2
+timestamp=2026-07-23T20:07:39.785882
+destination=S2 Mini CircuitPython usb_midi.ports[0]
+outputs=['IAC-besturingsbestand Bus 1', 'Scarlett 8i6 USB', 'Ampero Mini', 'Haxophone', '  Poort 1', '  Poort 2', '  Poort 3', 'SMK-37 Pro_BLE Bluetooth', 'S2 Mini CircuitPython usb_midi.ports[0]', 'Software Synthesizer', 'Logic Pro Virtual In']
+matches=['S2 Mini CircuitPython usb_midi.ports[0]']
+HOST_EVENT;timestamp=2026-07-23T20:07:42.047162;destination=S2 Mini CircuitPython usb_midi.ports[0];eventtype=note_on;statusbyte=0x90;channel=1;note=60;note_name=C4;velocity=100
+HOST_EVENT;timestamp=2026-07-23T20:07:42.551944;destination=S2 Mini CircuitPython usb_midi.ports[0];eventtype=note_off;statusbyte=0x80;channel=1;note=60;note_name=C4;velocity=0
+HOST_EVENT;timestamp=2026-07-23T20:07:42.607019;destination=S2 Mini CircuitPython usb_midi.ports[0];eventtype=note_on;statusbyte=0x90;channel=1;note=64;note_name=E4;velocity=100
+HOST_EVENT;timestamp=2026-07-23T20:07:43.110591;destination=S2 Mini CircuitPython usb_midi.ports[0];eventtype=note_off;statusbyte=0x80;channel=1;note=64;note_name=E4;velocity=0
+HOST_EVENT;timestamp=2026-07-23T20:07:43.163345;destination=S2 Mini CircuitPython usb_midi.ports[0];eventtype=note_on;statusbyte=0x90;channel=1;note=67;note_name=G4;velocity=100
+HOST_EVENT;timestamp=2026-07-23T20:07:43.664776;destination=S2 Mini CircuitPython usb_midi.ports[0];eventtype=note_off;statusbyte=0x80;channel=1;note=67;note_name=G4;velocity=0
+TEST_A_HOST_SEND_STATUS=COMPLETE;events=6
+TEST_A_DEVICE_NOTEON_SEEN=true
+PYTHON_TO_S2_NOTEON=INCONCLUSIVE;reason=device_saw_noteon_but_not_host_sent_c4_e4_g4
+TEST_A_EXACT_C4_E4_G4_DEVICE_MATCH=false
+TEST_A_DEVICE_OBSERVED_NOTES=note_off:72,note_off:72,note_on:79,note_on:79
+TEST_A_EXACT_RESULT=INCONCLUSIVE;reason=device_note_events_do_not_match_host_sent_c4_e4_g4

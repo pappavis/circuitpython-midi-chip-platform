@@ -1,0 +1,34 @@
+MCP-US-080-INV-002 HOST MIDI PORT INVENTORY
+timestamp=2026-07-23T20:06:35.702689
+mido_backend=<backend mido.backends.rtmidi (not loaded)>
+input_count=10
+INPUT[0]=IAC-besturingsbestand Bus 1;flags=IAC
+INPUT[1]=Scarlett 8i6 USB;flags=none
+INPUT[2]=Ampero Mini;flags=S2_CANDIDATE
+INPUT[3]=Haxophone;flags=none
+INPUT[4]=  Poort 1;flags=none
+INPUT[5]=  Poort 2;flags=none
+INPUT[6]=  Poort 3;flags=none
+INPUT[7]=SMK-37 Pro_BLE Bluetooth;flags=none
+INPUT[8]=S2 Mini CircuitPython usb_midi.ports[0];flags=S2_CANDIDATE
+INPUT[9]=Logic Pro Virtual Out;flags=LOGIC
+output_count=11
+OUTPUT[0]=IAC-besturingsbestand Bus 1;flags=IAC
+OUTPUT[1]=Scarlett 8i6 USB;flags=none
+OUTPUT[2]=Ampero Mini;flags=S2_CANDIDATE
+OUTPUT[3]=Haxophone;flags=none
+OUTPUT[4]=  Poort 1;flags=none
+OUTPUT[5]=  Poort 2;flags=none
+OUTPUT[6]=  Poort 3;flags=none
+OUTPUT[7]=SMK-37 Pro_BLE Bluetooth;flags=none
+OUTPUT[8]=S2 Mini CircuitPython usb_midi.ports[0];flags=S2_CANDIDATE
+OUTPUT[9]=Software Synthesizer;flags=none
+OUTPUT[10]=Logic Pro Virtual In;flags=LOGIC
+matches_s2_inputs=['8:S2 Mini CircuitPython usb_midi.ports[0]']
+matches_s2_outputs=['8:S2 Mini CircuitPython usb_midi.ports[0]']
+matches_mini_inputs=['2:Ampero Mini', '8:S2 Mini CircuitPython usb_midi.ports[0]']
+matches_mini_outputs=['2:Ampero Mini', '8:S2 Mini CircuitPython usb_midi.ports[0]']
+matches_iac_inputs=['0:IAC-besturingsbestand Bus 1']
+matches_iac_outputs=['0:IAC-besturingsbestand Bus 1']
+matches_logic_inputs=['9:Logic Pro Virtual Out']
+matches_logic_outputs=['10:Logic Pro Virtual In']

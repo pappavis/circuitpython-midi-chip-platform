@@ -1,0 +1,6 @@
+MCP-US-080-INV-002 CC7 SOURCE ANALYSIS
+timestamp=2026-07-23T20:10:52.535576
+CC7_SOURCE=UNKNOWN;reason=all_input_coremidi_monitor_did_not_complete_reliably
+OBSERVED_ON_DEVICE=true;device_stage=USB_ENDPOINT_PORT_0;channel=1;control=7;value=0
+HOST_SOURCE_PROOF=INSUFFICIENT
+NEXT_REQUIRED_ACTION=manual_logic_or_iac_isolation

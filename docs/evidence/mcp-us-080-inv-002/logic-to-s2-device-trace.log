@@ -1,0 +1,5 @@
+MCP-US-080-INV-002 TEST_B LOGIC_DIRECT_TO_S2 DEVICE TRACE
+timestamp=2026-07-23T20:11:12.938266
+TEST_B_STATUS=BLOCKED
+reason=manual_clean_logic_external_midi_configuration_required_before_device_capture
+device_capture=NOT_PERFORMED

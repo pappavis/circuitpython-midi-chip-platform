@@ -1,0 +1,19 @@
+MCP-US-080-INV-002 INVESTIGATION SUMMARY
+timestamp=2026-07-23T20:11:27.766442
+repository_runtime_code_changed=false
+firmware_redeployed=false
+s2_destination_name=S2 Mini CircuitPython usb_midi.ports[0]
+s2_output_index=8
+s2_input_index=8
+iac_input_index=0
+iac_output_index=0
+logic_virtual_out_input_index=9
+logic_virtual_in_output_index=10
+TEST_A=INCONCLUSIVE
+TEST_A_HOST_SENT=C4,E4,G4 channel=1 velocity=100 to S2 output index 8
+TEST_A_DEVICE_OBSERVED=note_off:72,note_off:72,note_on:79,note_on:79 plus CC7 flood
+TEST_A_EXACT_MATCH=false
+TEST_B=BLOCKED;reason=manual_clean_logic_external_midi_configuration_required
+TEST_C=NOT_RUN;reason=TEST_B_not_yet_objectively_observed
+CC7_SOURCE=UNKNOWN;reason=host_source_not_proven;device_observed_cc7_on_usb_endpoint_port_0
+FIRST_DISAPPEARANCE_OF_NOTEON=UNKNOWN;reason=host_to_s2_exact_c4_e4_g4_not_yet_objectively_matched_and_logic_egress_not_yet_observed
