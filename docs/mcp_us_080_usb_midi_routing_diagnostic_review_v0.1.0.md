@@ -80,4 +80,6 @@ MIDI_ROUTING_DIAGNOSTIC_READY
 
 ## Status
 
-Hosttoetse en HIL-deploybewys is deel van v0.20.0. Menslike HIL-acceptatie wag op Product Owner serial output vanaf Logic Pro.
+Hosttoetse en HIL-deploybewys is deel van v0.20.0. Menslike HIL-output op 2026-07-23 het `REG-080-001` bevestig: slegs CC7, geen `NoteOn`/`NoteOff`, en 'n foutiewe `PASS`.
+
+Hierdie story bly `REJECTED / P0 Impediment`. Die opvolg is `MCP-US-080-INV-001 Locate First Disappearance Of NoteOn`, 'n investigation-only story wat geen fix of refactor mag uitvoer nie.

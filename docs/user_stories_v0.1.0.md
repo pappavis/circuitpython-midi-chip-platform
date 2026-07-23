@@ -2,13 +2,13 @@
 
 <!--
 Bestand: user_stories_v0.1.0.md
-Versienommer: 0.30.0
-Doel: Volledige geordende backlog met US-077 realtime-baseline in review.
+Versienommer: 0.31.0
+Doel: Volledige geordende backlog met MCP-US-080-INV-001 as P0 investigation vir NoteOn-verdwynpunt.
 Sprint: Sprint 2
 Epic: Alle epics
-User-Story: MCP-US-055 en MCP-US-077
-Actienr: MCP-ACT-077-IMP-001-GREEN-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-077-IMPEDIMENT-001
+User-Story: MCP-US-080-INV-001
+Actienr: MCP-ACT-080-INV-001-STORY-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
 -->
 
 ## Statuslegende
@@ -27,7 +27,7 @@ Die tabelvolgorde en eksplisiete afhanklikhede bepaal die implementeringsvolgord
 
 ## Bevrore MVP Acceptance Set
 
-Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, `US-008`, `US-009`, `US-014`, `US-016`, `US-050`, `US-051`, `US-055`, `US-057`, `US-063`, `US-075` en die P0-herstelstory `US-077` beheer MVP-aanvaarding. Die produkbewys is USB-MIDI uit Logic Pro na 'n hoorbare D1-basiskern op die verwysingsbord met begrensde digitale volume. US-077 is geen scope-uitbreiding nie; dit is die terug-na-basics realtime-baseline wat US-055 moet deblokkeer. US-075 se fisiese prototipe-las is deur 'n eksplisiete PO-uitondering aanvaar; US-076 is verpligtend voor 'n produksieveiligheidsclaim. Alle ander stories is reeds voltooide ekstra werk, governance of post-MVP voortsetting.
+Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, `US-008`, `US-009`, `US-014`, `US-016`, `US-050`, `US-051`, `US-055`, `US-057`, `US-063`, `US-075` en die P0-herstel-/investigation-stories `US-077` en `MCP-US-080-INV-001` beheer MVP-aanvaarding. Die produkbewys is USB-MIDI uit Logic Pro na 'n hoorbare D1-basiskern op die verwysingsbord met begrensde digitale volume. US-077 is geen scope-uitbreiding nie; dit is die terug-na-basics realtime-baseline wat US-055 moet deblokkeer. MCP-US-080-INV-001 is geen scope-uitbreiding nie; dit lokaliseer objektief waar `NoteOn` eerste verdwyn. US-075 se fisiese prototipe-las is deur 'n eksplisiete PO-uitondering aanvaar; US-076 is verpligtend voor 'n produksieveiligheidsclaim. Alle ander stories is reeds voltooide ekstra werk, governance of post-MVP voortsetting.
 
 ## MCP-EPIC-001 Platform Foundation
 
@@ -128,11 +128,12 @@ Slegs `MCP-US-001`, `US-002`, `US-003`, `US-004`, `US-005`, `US-006`, `US-007`, 
 | MCP-US-052 | Cross-Board Capability Profiles | Post-MVP | US-004 | 'n tweede BLE-geskikte CircuitPython-mikrobeheerder werk via 'n profiel sonder S2-regressie |
 | MCP-US-053 | Raspberry Pi Linux Blinka Adapter | Later | US-014, US-050 | Pi Zero/2/3 gebruik Linux/Blinka sonder om firmwareportabiliteit te beweer |
 | MCP-US-054 | Windows USB MIDI Acceptance | Post-MVP | US-003, US-007 | Toestel verskyn en ontvang note op 'n skoon Windows-rekenaar |
-| MCP-US-055 | macOS Logic Pro Audible D1 Acceptance | MVP-Must (P0 Impediment) | US-003, US-007, US-009, US-014, US-016, US-063, US-075, US-077, US-078, US-079, US-080 | v0.17.8 verbind USB-MIDI, D1 en veilige I2S op host, maar sewe menslike HIL-pogings het nie betroubare realtime Logic-klank bewys nie. Closure wag op die persistent-audio-graph rebaseline, USB-MIDI routing-isolasie en daarna 'n Product Owner HIL-pass |
+| MCP-US-055 | macOS Logic Pro Audible D1 Acceptance | MVP-Must (P0 Impediment) | US-003, US-007, US-009, US-014, US-016, US-063, US-075, US-077, US-078, US-079, US-080, MCP-US-080-INV-001 | v0.17.8 verbind USB-MIDI, D1 en veilige I2S op host, maar sewe menslike HIL-pogings het nie betroubare realtime Logic-klank bewys nie. Closure wag op objektiewe bepaling van `FIRST_DISAPPEARANCE_OF_NOTEON`, daarna 'n gerigte fix en Product Owner HIL-pass |
 | MCP-US-077 | Realtime MIDI Audio Baseline Spike | MVP-Enabler (In Review / Audio Confirmation Open) | US-007, US-016, US-075 | v0.18.1 voeg 'n boot-audition en stiller serial defaults by nadat NoteOn-start intern `0-16 ms` gemeet het maar hoorbaar 12s laat was; 144 hosttoetse slaag. Product Owner bevestig op 2026-07-17 dat `i2s_test.py` slaag en boot-audition onmiddellik hoorbaar is; US-078 bewys op 2026-07-19 dat Logic NoteOn events die S2 bereik met `0-4 ms` latency. Closure wag op eksplisiete hoorbare MIDI-tone bevestiging |
 | MCP-US-078 | Post-Ready Logic USB-MIDI Receive Probe | MVP-Enabler (Receive PASS / Audio TBD) | US-007, US-077 | Met `REALTIME_BASELINE_EVENT_LOGGING=summary` rapporteer die S2 17 Logic NoteOn events ná `REALTIME_BASELINE_READY`, channel 1, `latency_ms=0-4`. Receive-loop is vrygespreek; hoorbare tone per NoteOn moet nog eksplisiet bevestig word |
 | MCP-US-079 | Persistent Synthio Audio Graph Spike | MVP-Enabler (In Review / HIL Ready) | US-016, US-077, US-078, ADR-004 | v0.19.0 voeg `synthio_runtime.py` en `SYNTHIO_BASELINE_ENABLED` by. I2S word een keer oopgemaak, `synthio.Synthesizer` word een keer met `audio.play(synth)` gekoppel, en Logic NoteOn/NoteOff verander net `press`/`release` state. Hosttoetse: 152 groen. HIL moet bewys dat 20 NoteOns hoorbaar realtime is sonder 12-20s backlog |
 | MCP-US-080 | USB MIDI Endpoint Routing Diagnostic | MVP-Enabler (In Review / HIL Ready) | US-007, US-078, US-079 | v0.20.0 voeg 'n MIDI-only fast-boot diagnose by wat alle USB-MIDI endpoints skandeer, hartkloplogs skryf en `MIDI_ROUTING_EVENT` met `event_ms` rapporteer sonder enige audio graph. HIL moet bepaal of Logic/CoreMIDI events self laat aankom of of die vertraging ná ontvangs in die audio pad ontstaan |
+| MCP-US-080-INV-001 | Locate First Disappearance Of NoteOn | MVP-Enabler (P0 Investigation / Ready For PO Review) | MCP-US-080, REG-080-001 | Investigation-only story. Geen fixes/refactor/optimalisering. Doel is objektief bepaal waar `NoteOn` vir die eerste keer verdwyn in die keten Logic Pro -> CoreMIDI -> USB endpoint -> CircuitPython -> `adafruit_midi` -> receive loop -> router -> synth dispatcher -> D1 -> I2S -> speaker |
 | MCP-US-056 | Install Recovery And Diagnostics | Post-MVP | US-005, US-051 | Beginner-runbook dek geen MIDI, geen klank, safe mode en herstel |
 | MCP-US-068 | Stable USB MIDI Instance Identity | Post-MVP | US-003, US-004, US-055 | Elke toestel exposeer 'n herkenbare produknaam plus stabiele vier-karakter instance-ID; twee toestelle is onderskeibaar sonder UID/MAC-lekkasie |
 | MCP-US-059 | MIDI Guitar Hardware Acceptance | Post-MVP | US-018, US-058 | 'n Generiese MIDI-kitaar en Fishman-verwysing speel note, akkoorde, bends en slides; geen toestelnaam is 'n kodekonstante nie |
