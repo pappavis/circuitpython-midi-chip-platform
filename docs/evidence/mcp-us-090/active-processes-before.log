@@ -1,0 +1,20 @@
+MCP-US-090 ACTIVE PROCESSES BEFORE
+timestamp=2026-07-23T19:00:06.574736+00:00
+method=ps ax filtered by MIDI/audio/app keywords
+process_snapshot_purpose=source_isolation_before_controlled_live_send
+relevant_process_count=12
+blocking_user_process_count=9
+USER_ACTION_REQUIRED_CLOSE_MIDI_APPS=true
+--- FILTERED_PROCESSES ---
+  572 /usr/sbin/coreau /usr/sbin/coreaudiod
+  707 /System/Library/ /System/Library/Audio/Plug-Ins/usbaudio.bundle/Contents/MacOS/usbaudiod
+  743 /Applications/Fo /Applications/Focusrite Control.app/Contents/Library/LoginItems/FocusriteControlServer.app/Contents/MacOS/FocusriteControlServer daemon
+  828 /Applications/Gu /Applications/Guitar Pro 8.app/Contents/MacOS/GuitarPro
+  849 /System/Applicat /System/Applications/Utilities/Audio MIDI Setup.app/Contents/MacOS/Audio MIDI Setup
+  852 /Applications/Th /Applications/Thonny.app/Contents/Resources/launch.py -I /Applications/Thonny.app/Contents/Resources/thonnymain.py
+  854 /Applications/Am /Applications/Ampero Editor.app/Contents/MacOS/Ampero Editor
+  860 /Applications/Fo /Applications/Focusrite Control.app/Contents/MacOS/Focusrite Control
+  867 /Applications/Sy /Applications/Synthesia.app/Contents/MacOS/Synthesia
+ 1080 /System/Library/ /System/Library/Frameworks/CoreMIDI.framework/MIDIServer
+13270 /Applications/Th /Applications/Thonny.app/Contents/Frameworks/Python.framework/Versions/3.10/Resources/Python.app/Contents/MacOS/Python -s -u -B /Applications/Thonny.app/Contents/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/thonny/plugins/circuitpython/cirpy_back.py {'clean': False, 'port': '/dev/cu.usbserial-211110', 'dtr': None, 'rts': None, 'submit_mode': None, 'interrupt_on_connect': False, 'write_block_size': None, 'write_block_delay': None, 'proxy_class': 'CircuitPythonProxy', 'sync_time': True, 'validate_time': False, 'local_rtc': True}
+85285 /Applications/So /Applications/Song Master Pro 5.app/Contents/MacOS/SMPro_M1

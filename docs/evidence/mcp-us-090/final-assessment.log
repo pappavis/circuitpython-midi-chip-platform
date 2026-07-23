@@ -1,0 +1,25 @@
+MCP-US-090 FINAL ASSESSMENT
+timestamp=2026-07-23T19:00:06.574736+00:00
+story=MCP-US-090
+title=Live CoreMIDI Endpoint Attribution and Controlled MIDI Route Proof
+status=USER_ACTION_REQUIRED_CLOSE_MIDI_APPS
+runtime_code_changed=false
+firmware_code_changed=false
+settings_toml_changed=false
+release_bumped=false
+dependency_changed=false
+rtmidi_used=false
+mido_used=false
+swift_helper_created=true
+swift_helper_compiled_to_tmp=true
+binary_committed=false
+host_send_executed=false
+device_capture_executed=false
+LIVE_ROUTE_CONFIRMED=false
+HOST_SEND_CONFIRMED_DEVICE_PATTERN_ABSENT=false
+LIVE_DESTINATION_IDENTIFICATION_FAIL=false
+DEVICE_CAPTURE_BLOCKED=false
+UNKNOWN=false
+blocking_user_process_count=9
+reason=Controlled live send stopped before transmission because relevant MIDI/audio user applications are still active.
+required_user_action=Close Logic Pro, Audio MIDI Setup, Thonny, Synthesia, Guitar Pro, Song Master Pro, Ampero/Focusrite UI apps, and other non-required MIDI utilities; then rerun MCP-US-090 controlled live test.

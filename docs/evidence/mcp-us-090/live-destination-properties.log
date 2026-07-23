@@ -1,0 +1,8 @@
+MCP-US-090 LIVE DESTINATION PROPERTIES
+timestamp=2026-07-23T19:00:06.574736+00:00
+status=NOT_RUN
+reason=USER_ACTION_REQUIRED_CLOSE_MIDI_APPS
+host_send_executed=false
+device_capture_executed=false
+firmware_changed=false
+settings_toml_changed=false

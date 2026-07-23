@@ -1,0 +1,8 @@
+MCP-US-090 RTMIDI EXCLUSION
+timestamp=2026-07-23T18:50:45.065461+00:00
+python_rtmidi_allowed=false
+mido_rtmidi_backend_allowed=false
+rtmidi_midiin_allowed=false
+rtmidi_midiout_allowed=false
+reason=Story explicitly forbids RtMidi because prior CoreMIDI client initialization crashed with EXC_CRASH/SIGABRT/abort trap 6 in MidiInCore::getCoreMidiClientSingleton().
+action_taken=No RtMidi import or mido endpoint listing was executed for MCP-US-090.

@@ -1,0 +1,9 @@
+MCP-US-090 NATIVE COREMIDI TOOL INVENTORY
+timestamp=2026-07-23T18:50:45.065461+00:00
+command_rc=0
+search_paths=/opt/homebrew/bin,/usr/local/bin,/usr/bin
+search_pattern=midi|coremidi|sendmidi|receivemidi|midimon|monitor
+raw_matches=/opt/homebrew/bin/dbus-monitor
+suitable_existing_tool=NONE
+rtmidi_tools_excluded=true
+decision=minimal temporary Swift/CoreMIDI helper required before controlled live test
