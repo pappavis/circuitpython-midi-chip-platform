@@ -1,0 +1,40 @@
+MCP-US-100A ACCEPTANCE LOG
+STORY=MCP-US-100A
+SOURCE_STORY=MCP-US-055
+
+FINAL_OUTCOME:
+MCP-US-055_ACCEPTANCE = FAIL
+
+FIRST_OBJECTIVE_FAILURE:
+Expected: full device output from boot through D1 runtime readiness and Logic Pro HIL observation.
+Observed: serial capture was blocked with SerialException: read failed: [Errno 6] Device not configured.
+
+D1_RUNTIME_READY_PRESENT=NO
+MIDI_RECEIVED=UNKNOWN_NOT_PROVEN
+AUDIO_RENDERED=UNKNOWN_NOT_PROVEN
+HUMAN_AUDIBLE_AUDIO=NO
+
+LOGIC_CONFIGURATION_RECORDED:
+destination=UNKNOWN_NOT_RECORDED_DUE_DEVICE_CAPTURE_BLOCKED
+midi_channel=UNKNOWN_NOT_RECORDED_DUE_DEVICE_CAPTURE_BLOCKED
+played_notes_expected=C4,E4,G4
+played_notes_observed=UNKNOWN_NOT_RECORDED_DUE_DEVICE_CAPTURE_BLOCKED
+
+FAIL_RULES_APPLIED:
+NoteOn without NoteOff: not evaluated because NoteOn was not proven.
+CC-only: not evaluated because device HIL capture was blocked.
+MIDI received without audible audio: not evaluated because MIDI_RECEIVED was not proven.
+
+SCOPE:
+Acceptance harness only. No runtime code, firmware code, parser code, USB code, synth code, dependencies, helpers, wrappers, services, or architecture changed.
+
+TEST_CONFIGURATION_ACTION:
+Temporary CIRCUITPY/settings.toml D1 test configuration was documented before HIL.
+After HIL failure, CIRCUITPY/settings.toml was restored to the previously observed MIDI routing diagnostic configuration.
+Repository product code was not changed.
+
+HOST_REGRESSION:
+166 passed in 0.60s
+
+NO_FIX_STATEMENT:
+No fix, workaround, parser change, synthio change, USB change, runtime change, or configuration fix was performed after FAIL.

@@ -1,0 +1,15 @@
+MCP-US-100A HOST LOG
+TIMESTAMP_LOCAL=2026-07-23T21:42:00
+STORY=MCP-US-100A
+PURPOSE=host regression before MCP-US-055 acceptance harness
+COMMAND=/Volumes/data1/michiele/venv/venv3.12/bin/python -m pytest -q
+RETURNCODE=0
+
+STDOUT:
+........................................................................ [ 43%]
+........................................................................ [ 86%]
+......................                                                   [100%]
+166 passed in 0.60s
+
+STDERR:
+

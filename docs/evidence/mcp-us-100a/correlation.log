@@ -1,0 +1,28 @@
+MCP-US-100A CORRELATION LOG
+STORY=MCP-US-100A
+
+EXPECTED_ROUTE:
+Logic Pro
+CoreMIDI
+AppleMIDIUSBDriver
+USB
+CircuitPython usb_midi
+Existing D1 runtime
+I2S MAX98357
+Audible audio
+
+CORRELATION_RESULT:
+MCP-US-055_ACCEPTANCE = FAIL
+
+FIRST_OBJECTIVE_FAILURE:
+Device HIL capture could not record full boot and D1 readiness output.
+
+MIDI_RECEIVED=UNKNOWN_NOT_PROVEN
+AUDIO_RENDERED=UNKNOWN_NOT_PROVEN
+HUMAN_AUDIBLE_AUDIO=NO
+
+CORRELATION_STATUS:
+The full Logic Pro to audible D1/MAX98357 chain was not proven.
+
+NO_ROOT_CAUSE_ANALYSIS:
+No root cause is stated in MCP-US-100A. This story records the acceptance result only.
