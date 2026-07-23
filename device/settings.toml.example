@@ -78,6 +78,19 @@ MIDI_ROUTING_DIAGNOSTIC_EVENT_LOGGING = "summary"
 MIDI_ROUTING_DIAGNOSTIC_HEARTBEAT_SECONDS = "2.0"
 MIDI_ROUTING_DIAGNOSTIC_MAX_TRACE_LINES = 96
 
+# Layered HIL diagnostic framework. Disabled by default; when enabled, it prints
+# exactly one HIL boot summary and does not start the D1 performance runtime.
+HIL_DIAGNOSTIC_ENABLED = "false"
+HIL_EXPECTED_VERSION = ""
+HIL_EXPECTED_RELEASE_DATE = ""
+HIL_EXPECTED_STORY = ""
+HIL_EXPECTED_CODE_PY_SHA256 = ""
+HIL_EXPECTED_BOOT_PY_SHA256 = ""
+HIL_RAW_MIDI_MAX_PACKETS = 8
+HIL_RAW_MIDI_TIMEOUT_SECONDS = "0.25"
+HIL_PARSER_MAX_MESSAGES = 8
+HIL_PARSER_TIMEOUT_SECONDS = "0.25"
+
 # Optional, bounded USB-MIDI Note On/Off acceptance diagnostic.
 # Leave disabled for normal startup. Enable temporarily, then restart the board.
 # CircuitPython 10.0.x os.getenv settings support strings and integers.

@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.20.1
-# Doel: Laai publieke D1-runtime, realtime-, synthio- en bounded MIDI-investigation-instellings plus private settings.
+# Versienommer: 0.21.0
+# Doel: Laai publieke D1-runtime, realtime-, synthio-, MIDI- en HIL-diagnostiek plus private settings.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
-# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
+# User-Story: HIL-DIAGNOSTIC-FRAMEWORK-001 Deterministic HIL Diagnostic Framework
+# Actienr: HIL-DIAG-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / HIL-DIAGNOSTIC-FRAMEWORK-001
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -77,6 +77,16 @@ class ConfigurationDefaults:
             "midi.routing_diagnostic.event_logging": "summary",
             "midi.routing_diagnostic.heartbeat_seconds": 2.0,
             "midi.routing_diagnostic.max_trace_lines": 96,
+            "hil.diagnostic.enabled": False,
+            "hil.deployment.expected_version": None,
+            "hil.deployment.expected_release_date": None,
+            "hil.deployment.expected_story": None,
+            "hil.deployment.expected_code_checksum": None,
+            "hil.deployment.expected_boot_checksum": None,
+            "hil.raw_midi.max_packets": 8,
+            "hil.raw_midi.timeout_seconds": 0.25,
+            "hil.parser.max_messages": 8,
+            "hil.parser.timeout_seconds": 0.25,
             "wifi.mode": "auto",
         }
 
@@ -154,6 +164,16 @@ class EnvironmentSettingsSource:
             "midi.routing_diagnostic.event_logging": "MIDI_ROUTING_DIAGNOSTIC_EVENT_LOGGING",
             "midi.routing_diagnostic.heartbeat_seconds": "MIDI_ROUTING_DIAGNOSTIC_HEARTBEAT_SECONDS",
             "midi.routing_diagnostic.max_trace_lines": "MIDI_ROUTING_DIAGNOSTIC_MAX_TRACE_LINES",
+            "hil.diagnostic.enabled": "HIL_DIAGNOSTIC_ENABLED",
+            "hil.deployment.expected_version": "HIL_EXPECTED_VERSION",
+            "hil.deployment.expected_release_date": "HIL_EXPECTED_RELEASE_DATE",
+            "hil.deployment.expected_story": "HIL_EXPECTED_STORY",
+            "hil.deployment.expected_code_checksum": "HIL_EXPECTED_CODE_PY_SHA256",
+            "hil.deployment.expected_boot_checksum": "HIL_EXPECTED_BOOT_PY_SHA256",
+            "hil.raw_midi.max_packets": "HIL_RAW_MIDI_MAX_PACKETS",
+            "hil.raw_midi.timeout_seconds": "HIL_RAW_MIDI_TIMEOUT_SECONDS",
+            "hil.parser.max_messages": "HIL_PARSER_MAX_MESSAGES",
+            "hil.parser.timeout_seconds": "HIL_PARSER_TIMEOUT_SECONDS",
             "wifi.mode": "WIFI_MODE",
             "wifi.ssid": "WIFI_SSID",
             "wifi.password": "WIFI_PASSWORD",

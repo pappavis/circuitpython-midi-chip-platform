@@ -1,11 +1,11 @@
 # Bestand: test_device_runtime.py
-# Versienommer: 0.20.1
-# Doel: Spesifiseer toestel-uitvoer, dependency-bewys, MIDI-routing diagnostiek, synthio-baseline en D1 fast-boot runtime-start.
+# Versienommer: 0.21.0
+# Doel: Spesifiseer toestel-uitvoer, dependency-bewys, HIL-diagnostiek en runtime-startvolgorde.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
-# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
+# User-Story: HIL-DIAGNOSTIC-FRAMEWORK-001 Deterministic HIL Diagnostic Framework
+# Actienr: HIL-DIAG-RED-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / HIL-DIAGNOSTIC-FRAMEWORK-001
 
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
 from midi_chip_platform.release import ReleaseMetadata
@@ -272,9 +272,9 @@ class TestDeviceRuntimeApplication:
         d1_runtime = self.FakeRuntime()
         application = DeviceRuntimeApplication(
             release_metadata=ReleaseMetadata(
-                version="0.20.1",
-                user_story="MCP-US-080-INV-001",
-                release_date="2026-07-23",
+                version="0.21.0",
+                user_story="HIL-DIAGNOSTIC-FRAMEWORK-001",
+                release_date="2026-07-24",
             ),
             configuration_loader=self.FakeConfigurationLoader(
                 {
@@ -301,6 +301,44 @@ class TestDeviceRuntimeApplication:
         assert result is True
         assert routing_diagnostic.run_count == 1
         assert synthio_baseline.run_count == 0
+        assert d1_runtime.run_count == 0
+
+    def test_hil_diagnostic_takes_precedence_over_midi_routing_and_d1(self) -> None:
+        output = []
+        hil_diagnostic = self.FakeRuntime()
+        routing_diagnostic = self.FakeRuntime()
+        d1_runtime = self.FakeRuntime()
+        application = DeviceRuntimeApplication(
+            release_metadata=ReleaseMetadata(
+                version="0.21.0",
+                user_story="HIL-DIAGNOSTIC-FRAMEWORK-001",
+                release_date="2026-07-24",
+            ),
+            configuration_loader=self.FakeConfigurationLoader(
+                {
+                    "hil.diagnostic.enabled": True,
+                    "midi.routing_diagnostic.enabled": True,
+                    "synth.d1.enabled": True,
+                    "synth.d1.fast_boot_mode": False,
+                }
+            ),
+            hil_diagnostic_factory=self.FakeRuntimeFactory(
+                hil_diagnostic,
+                key="hil.diagnostic.enabled",
+            ),
+            midi_routing_diagnostic_factory=self.FakeRuntimeFactory(
+                routing_diagnostic,
+                key="midi.routing_diagnostic.enabled",
+            ),
+            synth_runtime_factory=self.FakeRuntimeFactory(d1_runtime),
+            output=output.append,
+        )
+
+        result = application.run()
+
+        assert result is True
+        assert hil_diagnostic.run_count == 1
+        assert routing_diagnostic.run_count == 0
         assert d1_runtime.run_count == 0
 
     def test_realtime_baseline_takes_precedence_over_d1_runtime(self) -> None:
@@ -421,9 +459,9 @@ class TestDeviceRuntimeApplication:
         d1_runtime = self.FakeRuntime()
         application = DeviceRuntimeApplication(
             release_metadata=ReleaseMetadata(
-                version="0.20.1",
-                user_story="MCP-US-080-INV-001",
-                release_date="2026-07-23",
+                version="0.21.0",
+                user_story="HIL-DIAGNOSTIC-FRAMEWORK-001",
+                release_date="2026-07-24",
             ),
             configuration_loader=self.FakeConfigurationLoader(
                 {
@@ -453,8 +491,54 @@ class TestDeviceRuntimeApplication:
         assert synthio_baseline.run_count == 0
         assert d1_runtime.run_count == 0
         assert output == [
-            "circuitpython-midi-chip-platform v0.20.1 | "
-            "story=MCP-US-080-INV-001 | release-date=2026-07-23",
+            "circuitpython-midi-chip-platform v0.21.0 | "
+            "story=HIL-DIAGNOSTIC-FRAMEWORK-001 | release-date=2026-07-24",
+            "DEVICE_FAST_BOOT_STATUS=ENABLED",
+        ]
+
+    def test_fast_boot_starts_hil_diagnostic_before_midi_routing_and_d1(
+        self,
+    ) -> None:
+        output = []
+        hil_diagnostic = self.FakeRuntime()
+        routing_diagnostic = self.FakeRuntime()
+        d1_runtime = self.FakeRuntime()
+        application = DeviceRuntimeApplication(
+            release_metadata=ReleaseMetadata(
+                version="0.21.0",
+                user_story="HIL-DIAGNOSTIC-FRAMEWORK-001",
+                release_date="2026-07-24",
+            ),
+            configuration_loader=self.FakeConfigurationLoader(
+                {
+                    "hil.diagnostic.enabled": True,
+                    "midi.routing_diagnostic.enabled": True,
+                    "synth.d1.enabled": True,
+                    "synth.d1.fast_boot_mode": True,
+                    "midi.diagnostic.enabled": False,
+                }
+            ),
+            hil_diagnostic_factory=self.FakeRuntimeFactory(
+                hil_diagnostic,
+                key="hil.diagnostic.enabled",
+            ),
+            midi_routing_diagnostic_factory=self.FakeRuntimeFactory(
+                routing_diagnostic,
+                key="midi.routing_diagnostic.enabled",
+            ),
+            synth_runtime_factory=self.FakeRuntimeFactory(d1_runtime),
+            output=output.append,
+        )
+
+        result = application.run()
+
+        assert result is True
+        assert hil_diagnostic.run_count == 1
+        assert routing_diagnostic.run_count == 0
+        assert d1_runtime.run_count == 0
+        assert output == [
+            "circuitpython-midi-chip-platform v0.21.0 | "
+            "story=HIL-DIAGNOSTIC-FRAMEWORK-001 | release-date=2026-07-24",
             "DEVICE_FAST_BOOT_STATUS=ENABLED",
         ]
 

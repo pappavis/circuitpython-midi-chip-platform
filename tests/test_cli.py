@@ -1,11 +1,11 @@
 # Bestand: test_cli.py
-# Versienommer: 0.20.1
-# Doel: Toets hostdiagnose, NoteOn-investigation release en release-naspeurbaarheid.
+# Versienommer: 0.21.0
+# Doel: Toets hostdiagnose, HIL-diagnostics release en release-naspeurbaarheid.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
-# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
+# User-Story: HIL-DIAGNOSTIC-FRAMEWORK-001 Layered HIL Diagnostic Framework
+# Actienr: MCP-ACT-HIL-DIAGNOSTIC-FRAMEWORK-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / HIL-DIAGNOSTIC-FRAMEWORK-001
 
 from io import StringIO
 from pathlib import Path
@@ -69,8 +69,8 @@ class TestCommandLineApplication:
 
         assert exit_code == 0
         assert output.getvalue().startswith(
-            "circuitpython-midi-chip-platform v0.20.1 | "
-            "story=MCP-US-080-INV-001 | release-date=2026-07-23\n"
+            "circuitpython-midi-chip-platform v0.21.0 | "
+            "story=HIL-DIAGNOSTIC-FRAMEWORK-001 | release-date=2026-07-24\n"
         )
 
     def test_diagnose_reports_import_safe_skeleton(self) -> None:
