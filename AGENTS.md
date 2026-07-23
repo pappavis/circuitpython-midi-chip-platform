@@ -2,13 +2,13 @@
 
 <!--
 Bestand: AGENTS.md
-Versienommer: 0.9.0
-Doel: Afdwingbare werkreels vir mense, Codex en ander ontwikkelagente.
+Versienommer: 1.0.0
+Doel: Afdwingbare werkreels vir mense, Codex en ander ontwikkelagente, inclusief investigation governance.
 Sprint: Sprint 0
 Epic: MCP-EPIC-001 Platform Foundation
-User-Story: PRINCIPAL-QA-ARCHITECT-001
-Actienr: MCP-ACT-QA-ARCHITECT-001-GOV-001
-ChatID: CHATOD-20260714-MCP-CP-MVP-001 / PRINCIPAL-QA-ARCHITECT-001
+User-Story: INVESTIGATION-GOVERNANCE-001
+Actienr: MCP-ACT-IDR-TEMPLATE-001-GOV-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / INVESTIGATION-GOVERNANCE-001
 -->
 
 ## Harde argitektuurreels
@@ -72,6 +72,11 @@ Toetse self word ook in toetsklasse georganiseer. 'n Uitsondering op hierdie ree
 8. `REG-080-001` is 'n aktiewe P0 regressieherinnering: audition weg, geen `NoteOn`/`NoteOff`, slegs CC7, en 'n foutiewe `PASS`.
 9. 'n Diagnostic wat note-routing moet bewys, mag nie slaag wanneer `note_on=0` en `note_off=0` nie.
 10. Geen patch mag 'n werkende audition, I2S-preflight, USB-MIDI receive, Logic Pro routing of hoorbare audio stilweg verwyder nie.
+11. Elke goedgekeurde Investigation Story kry 'n Instrumentation Design Review volgens `docs/governance/instrumentation_design_review_template_v1.0.md` voordat tydelike instrumentasie geïmplementeer mag word.
+12. Elke HIL-, investigation- of releasebewys gebruik `docs/governance/evidence_package_template_v1.0.md` of motiveer eksplisiet waarom dit `UNKNOWN` bly.
+13. 'n Investigation Story sluit met `FIRST_DISAPPEARANCE_OF_<EVENT>` of `UNKNOWN`; geen fixadvies, argitektuurvoorstel of implementasiekeuse is deel van Done nie.
+14. Tydelike instrumentasie word ná die investigation verwyder of standaard gedeaktiveer voordat 'n latere fixstory Done mag word.
+15. Vir die huidige P0-blokker is governance-uitbreiding ná IDR/Evidence Package bevries; verdere werk fokus op tegniese observasie en meting.
 
 ## Produksie-repositorygrens
 

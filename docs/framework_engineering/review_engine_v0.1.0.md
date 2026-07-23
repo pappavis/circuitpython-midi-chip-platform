@@ -36,9 +36,47 @@ Reviews kan van Product Owner, spanlid, Copilot, Codex, eksterne QA, gebruikerst
 6. **Besluit:** CEA/Solution Architect en QA adviseer; PO aanvaar scope/prioriteit.
 7. **Sluit:** bewys, docs, backlog, lessons learned en commit.
 
+## Investigation Story Workflow
+
+Elke goedgekeurde Investigation Story volg hierdie vaste volgorde:
+
+```text
+User Story
+↓
+Principal QA Review
+↓
+Investigation Story
+↓
+Instrumentation Design Review (IDR)
+↓
+Principal QA Review IDR
+↓
+Implementatie tijdelijke instrumentatie
+↓
+HIL metingen
+↓
+FIRST_DISAPPEARANCE_OF_<EVENT>
+of
+UNKNOWN
+↓
+Root Cause vastgesteld
+↓
+Nieuwe Fix Story
+↓
+Implementatie
+↓
+Validatie
+↓
+Verwijderen tijdelijke instrumentatie
+```
+
+Die IDR gebruik `docs/governance/instrumentation_design_review_template_v1.0.md`. HIL- en meetbewys gebruik `docs/governance/evidence_package_template_v1.0.md`.
+
 ## Stopreels
 
 - Stop kodewerk wanneer die Principal QA Architect pre-code review ontbreek, nie deur die Product Owner goedgekeur is nie, of `REJECT` gee.
+- Stop investigation-implementatie wanneer 'n goedgekeurde IDR ontbreek.
+- Stop HIL-aanvaarding wanneer 'n Evidence Package ontbreek of kernvelde `UNKNOWN` is sonder objektiewe rede.
 - Stop MIDI/audio/HIL werk wanneer `REG-080-001` nie eksplisiet oorweeg is nie.
 - Stop wanneer 'n voorstel globale runtime-status, import-newe-effekte of 'n secret in Git vereis.
 - Stop firmwarewerk wanneer die verkeerde checkout/remote/manifest aktief is.

@@ -23,6 +23,7 @@ Hierdie gids is die **konteks-bootloader** vir Framework Engineering. Dit is nie
 4. Gebruik [`glossary_v0.1.0.md`](glossary_v0.1.0.md) en [`enterprise_meta_model_v0.1.0.md`](enterprise_meta_model_v0.1.0.md) om terme en verhoudings te bevestig.
 5. Pas [`quality_manual_v0.1.0.md`](quality_manual_v0.1.0.md), [`test_strategy_v0.1.0.md`](test_strategy_v0.1.0.md) en [`review_engine_v0.1.0.md`](review_engine_v0.1.0.md) toe voor Done.
 6. Voor enige kodewysiging, laai die permanente [`Principal QA Architect Agent`](../governance/principal_qa_architect_agent_v0.1.0.md) en die [`Regression Memory`](../governance/regression_memory_v0.1.0.md).
+7. Vir 'n Investigation Story, maak eers 'n [`Instrumentation Design Review`](../governance/instrumentation_design_review_template_v1.0.md) en gebruik daarna die [`Evidence Package Template`](../governance/evidence_package_template_v1.0.md) vir HIL-/meetbewys.
 
 ## Artefakkaart
 
@@ -39,6 +40,8 @@ Hierdie gids is die **konteks-bootloader** vir Framework Engineering. Dit is nie
 | Review | [Review Engine](review_engine_v0.1.0.md) | Hoe word interne en eksterne bevindinge geklassifiseer? |
 | Governance | [Principal QA Architect Agent](../governance/principal_qa_architect_agent_v0.1.0.md) | Watter harde pre-code en post-implementation QA-gate geld? |
 | Governance | [Regression Memory](../governance/regression_memory_v0.1.0.md) | Watter bekende regressies mag nooit weer as PASS deurglip nie? |
+| Governance | [Instrumentation Design Review Template](../governance/instrumentation_design_review_template_v1.0.md) | Hoe word tydelike investigation-instrumentasie ontwerp sonder implementasie? |
+| Governance | [Evidence Package Template](../governance/evidence_package_template_v1.0.md) | Hoe word HIL-, investigation- en releasebewys reproduceerbaar vasgelê? |
 | Agentwerk | [Prompt Compiler Specification](prompt_compiler_specification_v0.1.0.md) | Hoe word 'n begrensde taakpakket saamgestel? |
 | Konteks | [Context Loader Specification](context_loader_specification_v0.1.0.md) | Wat moet vir 'n story gelees word? |
 | Kennis | [Knowledge Base Structure](knowledge_base_structure_v0.1.0.md) | Waar hoort bevestigde kennis? |
@@ -53,3 +56,4 @@ Hierdie gids is die **konteks-bootloader** vir Framework Engineering. Dit is nie
 - Geen agent mag dokumentasie as plaasvervanger vir host-, HIL- of menslike bewys gebruik nie.
 - `python-d1-synth` bly leesalleen.
 - Hardewarebewys gebruik ontdekte poorte en geredigeerde identiteite.
+- Governance-uitbreiding vir die huidige P0-blokker is ná IDR/Evidence Package bevries; die volgende werk moet tegniese observatie en meting wees.

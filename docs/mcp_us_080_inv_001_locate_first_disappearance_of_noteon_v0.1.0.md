@@ -249,3 +249,9 @@ Motivering: dit is 'n bounded investigation story. Langlopende stabiliteit hoort
 `Ready For Product Owner Review`
 
 Nog geen code. Nog geen fix. Nog geen refactor. Nog geen productontwerp.
+
+## Gekoppelde Artefakte
+
+- `docs/governance/instrumentation_design_review_template_v1.0.md`
+- `docs/governance/evidence_package_template_v1.0.md`
+- `docs/mcp_us_080_inv_001_instrumentation_design_review_v0.1.0.md`
