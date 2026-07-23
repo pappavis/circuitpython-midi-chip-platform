@@ -1,0 +1,56 @@
+CAPTURE_START
+TIMESTAMP_LOCAL=2026-07-23T21:15:01
+STORY=MCP-US-090
+COMMIT_BASE=e8ccce7
+SERIAL_PORT=REDACTED_USB_MODEM
+zachte herstart
+
+Auto-herlaad staat aan. Sla bestanden simpelweg via USB op om ze uit te voeren of start REPL om ze uit te schakelen.
+code.py uitvoer:
+
+circuitpython-midi-chip-platform v0.20.1 | story=MCP-US-080-INV-001 | release-date=2026-07-23
+DEVICE_FAST_BOOT_STATUS=ENABLED
+MIDI_ROUTING_DIAGNOSTIC_STATUS=START;scan_all_ports=true;port_count=2;max_events=4096;timeout_seconds=20;heartbeat_seconds=2
+TRACE_STAGE=COREMIDI_HOST_SEND;classification=UNKNOWN;reason=no_host_probe_in_repository
+TRACE_STAGE=USB_HOST_DESTINATION;classification=UNKNOWN;reason=device_firmware_cannot_verify_logic_destination
+MIDI_ROUTING_DIAGNOSTIC_INPUT_STATUS=OPEN;scan_all_ports=true;port_count=2
+MIDI_ROUTING_DIAGNOSTIC_READY;ready_ms=0
+TRACE_STAGE=USB_ENDPOINT_PORT_0;port_index=0;eventtype=control_change;classification=CONTROL_ONLY;channel=15;control=119;cc7=false;value=23;trace_count=1
+TRACE_STAGE=ADAFRUIT_MIDI_DECODE;port_index=0;eventtype=control_change;classification=CONTROL_ONLY;channel=16;control=119;cc7=false;value=23;pitch_bend=<bound_method>;trace_count=2
+TRACE_STAGE=MIDI_RECEIVE_LOOP;port_index=UNKNOWN;eventtype=control_change;classification=CONTROL_ONLY;channel=16;control=119;cc7=false;value=23;pitch_bend=<bound_method>;trace_count=3
+MIDI_ROUTING_EVENT=control_change;channel=16;control=119;cc7=false;value=23;event_ms=741
+TRACE_STAGE=USB_ENDPOINT_PORT_0;port_index=0;eventtype=note_on;classification=NOTEON_PRESENT;channel=15;note=61;velocity=37;trace_count=4
+TRACE_STAGE=ADAFRUIT_MIDI_DECODE;port_index=0;eventtype=note_on;classification=NOTEON_PRESENT;channel=16;note=61;velocity=37;pitch_bend=<bound_method>;trace_count=5
+TRACE_STAGE=MIDI_RECEIVE_LOOP;port_index=UNKNOWN;eventtype=note_on;classification=NOTEON_PRESENT;channel=16;note=61;velocity=37;pitch_bend=<bound_method>;trace_count=6
+MIDI_ROUTING_EVENT=note_on;channel=16;note=61;velocity=37;event_ms=1044
+TRACE_STAGE=USB_ENDPOINT_PORT_0;port_index=0;eventtype=note_off;classification=NOTEOFF_PRESENT;channel=15;note=61;velocity=0;trace_count=7
+TRACE_STAGE=ADAFRUIT_MIDI_DECODE;port_index=0;eventtype=note_off;classification=NOTEOFF_PRESENT;channel=16;note=61;velocity=0;pitch_bend=<bound_method>;trace_count=8
+TRACE_STAGE=MIDI_RECEIVE_LOOP;port_index=UNKNOWN;eventtype=note_off;classification=NOTEOFF_PRESENT;channel=16;note=61;velocity=0;pitch_bend=<bound_method>;trace_count=9
+MIDI_ROUTING_EVENT=note_off;channel=16;note=61;velocity=0;event_ms=1697
+MIDI_ROUTING_HEARTBEAT;elapsed_ms=2000;events=3
+TRACE_STAGE=USB_ENDPOINT_PORT_0;port_index=0;eventtype=note_on;classification=NOTEON_PRESENT;channel=15;note=66;velocity=79;trace_count=10
+TRACE_STAGE=ADAFRUIT_MIDI_DECODE;port_index=0;eventtype=note_on;classification=NOTEON_PRESENT;channel=16;note=66;velocity=79;pitch_bend=<bound_method>;trace_count=11
+TRACE_STAGE=MIDI_RECEIVE_LOOP;port_index=UNKNOWN;eventtype=note_on;classification=NOTEON_PRESENT;channel=16;note=66;velocity=79;pitch_bend=<bound_method>;trace_count=12
+MIDI_ROUTING_EVENT=note_on;channel=16;note=66;velocity=79;event_ms=2049
+TRACE_STAGE=USB_ENDPOINT_PORT_0;port_index=0;eventtype=note_off;classification=NOTEOFF_PRESENT;channel=15;note=66;velocity=0;trace_count=13
+TRACE_STAGE=ADAFRUIT_MIDI_DECODE;port_index=0;eventtype=note_off;classification=NOTEOFF_PRESENT;channel=16;note=66;velocity=0;pitch_bend=<bound_method>;trace_count=14
+TRACE_STAGE=MIDI_RECEIVE_LOOP;port_index=UNKNOWN;eventtype=note_off;classification=NOTEOFF_PRESENT;channel=16;note=66;velocity=0;pitch_bend=<bound_method>;trace_count=15
+MIDI_ROUTING_EVENT=note_off;channel=16;note=66;velocity=0;event_ms=2698
+TRACE_STAGE=USB_ENDPOINT_PORT_0;port_index=0;eventtype=note_on;classification=NOTEON_PRESENT;channel=15;note=70;velocity=113;trace_count=16
+TRACE_STAGE=ADAFRUIT_MIDI_DECODE;port_index=0;eventtype=note_on;classification=NOTEON_PRESENT;channel=16;note=70;velocity=113;pitch_bend=<bound_method>;trace_count=17
+TRACE_STAGE=MIDI_RECEIVE_LOOP;port_index=UNKNOWN;eventtype=note_on;classification=NOTEON_PRESENT;channel=16;note=70;velocity=113;pitch_bend=<bound_method>;trace_count=18
+MIDI_ROUTING_EVENT=note_on;channel=16;note=70;velocity=113;event_ms=3054
+TRACE_STAGE=USB_ENDPOINT_PORT_0;port_index=0;eventtype=note_off;classification=NOTEOFF_PRESENT;channel=15;note=70;velocity=0;trace_count=19
+TRACE_STAGE=ADAFRUIT_MIDI_DECODE;port_index=0;eventtype=note_off;classification=NOTEOFF_PRESENT;channel=16;note=70;velocity=0;pitch_bend=<bound_method>;trace_count=20
+TRACE_STAGE=MIDI_RECEIVE_LOOP;port_index=UNKNOWN;eventtype=note_off;classification=NOTEOFF_PRESENT;channel=16;note=70;velocity=0;pitch_bend=<bound_method>;trace_count=21
+MIDI_ROUTING_EVENT=note_off;channel=16;note=70;velocity=0;event_ms=3708
+MIDI_ROUTING_HEARTBEAT;elapsed_ms=4000;events=7
+MIDI_ROUTING_HEARTBEAT;elapsed_ms=6000;events=7
+MIDI_ROUTING_HEARTBEAT;elapsed_ms=8002;events=7
+MIDI_ROUTING_HEARTBEAT;elapsed_ms=10003;events=7
+MIDI_ROUTING_HEARTBEAT;elapsed_ms=12005;events=7
+MIDI_ROUTING_HEARTBEAT;elapsed_ms=14007;events=7
+MIDI_ROUTING_HEARTBEAT;elapsed_ms=16008;events=7
+MIDI_ROUTING_HEARTBEAT;elapsed_ms=18010;events=7
+TRACE_SUMMARY;stage=ADAFRUIT_MIDI_DECODE;port_index=0;classification=NOTEON_PRESENT;events=7;note_on=3;note_off=3;note_on_velocity_zero=0;control=1;cc7=0;clock=0;pitch_bend=0;program_change=0;unknown=0
+CAPTURE_END

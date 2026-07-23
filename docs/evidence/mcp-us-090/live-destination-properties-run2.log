@@ -1,0 +1,11 @@
+DESTINATION_CANDIDATE;index=0;name=Bus 1;displayName=IAC-besturingsbestand Bus 1;manufacturer=Apple Inc.;driver=com.apple.AppleMIDIIACDriver;model=IAC-besturingsbestand;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=1;name=Scarlett 8i6 USB;displayName=Scarlett 8i6 USB;manufacturer=Focusrite;driver=com.apple.AppleMIDIUSBDriver;model=Scarlett 8i6 USB;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=2;name=Ampero Mini;displayName=Ampero Mini;manufacturer=HOTONE AUDIO;driver=com.apple.AppleMIDIUSBDriver;model=Ampero Mini;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=3;name=Haxophone;displayName=Haxophone;manufacturer=CardonaBits;driver=com.apple.AppleMIDIUSBDriver;model=Haxophone;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=4;name=Poort 1;displayName=  Poort 1;manufacturer=SMK-37 Pro Midi;driver=com.apple.AppleMIDIUSBDriver;model= ;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=5;name=Poort 2;displayName=  Poort 2;manufacturer=SMK-37 Pro Midi;driver=com.apple.AppleMIDIUSBDriver;model= ;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=6;name=Poort 3;displayName=  Poort 3;manufacturer=SMK-37 Pro Midi;driver=com.apple.AppleMIDIUSBDriver;model= ;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=7;name=Bluetooth;displayName=SMK-37 Pro_BLE Bluetooth;manufacturer=sincoaudio;driver=com.apple.AppleMIDIBluetoothDriver;model=ble device;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=8;name=CircuitPython usb_midi.ports[0];displayName=S2 Mini CircuitPython usb_midi.ports[0];manufacturer=Lolin;driver=com.apple.AppleMIDIUSBDriver;model=S2 Mini;uniqueID=2064399636
+DESTINATION_MATCH_COUNT=1
+LIVE_DESTINATION_IDENTIFICATION=PASS

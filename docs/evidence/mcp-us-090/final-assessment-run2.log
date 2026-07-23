@@ -1,0 +1,11 @@
+MCP-US-090 RUN2 FINAL ASSESSMENT
+TIMESTAMP_LOCAL=2026-07-23T21:15:23
+PREPARATION_RUN_COMMIT=e8ccce7
+HELPER=tools/investigation/mcp_us_090_live_route_probe.swift
+TARGET_UNIQUE_ID=2064399636
+EXACT_ENDPOINT=see live-destination-properties-run2.log
+RAW_BYTES=BF 77 17,9F 3D 25,8F 3D 00,9F 42 4F,8F 42 00,9F 46 71,8F 46 00
+COREMIDI_RETURNCODES_SOURCE=live-host-send-run2.log;helper_returncode=0
+DEVICE_SIDE_EVENTS_SOURCE=live-device-capture-run2.log
+CORRELATION_SOURCE=live-correlation-run2.log
+MCP_US_090_STATUS=LIVE_ROUTE_CONFIRMED;reason=exact_note_on_pattern_observed_on_device

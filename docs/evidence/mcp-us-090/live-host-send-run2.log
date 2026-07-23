@@ -1,0 +1,29 @@
+MCP_US_090_HELPER_STATUS=START
+RTMIDI_USED=false
+TARGET_DESTINATION_UNIQUEID=2064399636
+COREMIDI_DESTINATION_COUNT=9
+DESTINATION_CANDIDATE;index=0;name=Bus 1;displayName=IAC-besturingsbestand Bus 1;manufacturer=Apple Inc.;driver=com.apple.AppleMIDIIACDriver;model=IAC-besturingsbestand;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=1;name=Scarlett 8i6 USB;displayName=Scarlett 8i6 USB;manufacturer=Focusrite;driver=com.apple.AppleMIDIUSBDriver;model=Scarlett 8i6 USB;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=2;name=Ampero Mini;displayName=Ampero Mini;manufacturer=HOTONE AUDIO;driver=com.apple.AppleMIDIUSBDriver;model=Ampero Mini;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=3;name=Haxophone;displayName=Haxophone;manufacturer=CardonaBits;driver=com.apple.AppleMIDIUSBDriver;model=Haxophone;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=4;name=Poort 1;displayName=  Poort 1;manufacturer=SMK-37 Pro Midi;driver=com.apple.AppleMIDIUSBDriver;model= ;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=5;name=Poort 2;displayName=  Poort 2;manufacturer=SMK-37 Pro Midi;driver=com.apple.AppleMIDIUSBDriver;model= ;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=6;name=Poort 3;displayName=  Poort 3;manufacturer=SMK-37 Pro Midi;driver=com.apple.AppleMIDIUSBDriver;model= ;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=7;name=Bluetooth;displayName=SMK-37 Pro_BLE Bluetooth;manufacturer=sincoaudio;driver=com.apple.AppleMIDIBluetoothDriver;model=ble device;uniqueID=REDACTED_NON_TARGET
+DESTINATION_CANDIDATE;index=8;name=CircuitPython usb_midi.ports[0];displayName=S2 Mini CircuitPython usb_midi.ports[0];manufacturer=Lolin;driver=com.apple.AppleMIDIUSBDriver;model=S2 Mini;uniqueID=2064399636
+DESTINATION_MATCH_COUNT=1
+LIVE_DESTINATION_IDENTIFICATION=PASS
+LIVE_DESTINATION;index=8;name=CircuitPython usb_midi.ports[0];displayName=S2 Mini CircuitPython usb_midi.ports[0];manufacturer=Lolin;driver=com.apple.AppleMIDIUSBDriver;model=S2 Mini;uniqueID=2064399636
+COREMIDI_CALL=MIDIClientCreate;status=0
+COREMIDI_CALL=MIDIOutputPortCreate;status=0
+HOST_PATTERN_BEGIN;monotonic_ns=42868728234875;wall_clock=2026-07-23T19:15:04Z
+HOST_EVENT;monotonic_ns=42868731002791;wall_clock=2026-07-23T19:15:04Z;destination_uniqueID=2064399636;client=MCP-US-090 Live Route Probe;output_port=MCP-US-090 Output Port;eventtype=control_change;channel=16;data1=119;data2=23;raw_bytes=[191, 119, 23];coremidi_status=0
+HOST_EVENT;monotonic_ns=42869036284833;wall_clock=2026-07-23T19:15:04Z;destination_uniqueID=2064399636;client=MCP-US-090 Live Route Probe;output_port=MCP-US-090 Output Port;eventtype=note_on;channel=16;data1=61;data2=37;raw_bytes=[159, 61, 37];coremidi_status=0
+HOST_EVENT;monotonic_ns=42869688999416;wall_clock=2026-07-23T19:15:05Z;destination_uniqueID=2064399636;client=MCP-US-090 Live Route Probe;output_port=MCP-US-090 Output Port;eventtype=note_off;channel=16;data1=61;data2=0;raw_bytes=[143, 61, 0];coremidi_status=0
+HOST_EVENT;monotonic_ns=42870041883750;wall_clock=2026-07-23T19:15:05Z;destination_uniqueID=2064399636;client=MCP-US-090 Live Route Probe;output_port=MCP-US-090 Output Port;eventtype=note_on;channel=16;data1=66;data2=79;raw_bytes=[159, 66, 79];coremidi_status=0
+HOST_EVENT;monotonic_ns=42870692642875;wall_clock=2026-07-23T19:15:06Z;destination_uniqueID=2064399636;client=MCP-US-090 Live Route Probe;output_port=MCP-US-090 Output Port;eventtype=note_off;channel=16;data1=66;data2=0;raw_bytes=[143, 66, 0];coremidi_status=0
+HOST_EVENT;monotonic_ns=42871048303000;wall_clock=2026-07-23T19:15:06Z;destination_uniqueID=2064399636;client=MCP-US-090 Live Route Probe;output_port=MCP-US-090 Output Port;eventtype=note_on;channel=16;data1=70;data2=113;raw_bytes=[159, 70, 113];coremidi_status=0
+HOST_EVENT;monotonic_ns=42871702478041;wall_clock=2026-07-23T19:15:07Z;destination_uniqueID=2064399636;client=MCP-US-090 Live Route Probe;output_port=MCP-US-090 Output Port;eventtype=note_off;channel=16;data1=70;data2=0;raw_bytes=[143, 70, 0];coremidi_status=0
+HOST_PATTERN_END;monotonic_ns=42871702789541;wall_clock=2026-07-23T19:15:07Z
+COREMIDI_RESOURCES_DISPOSED=true
+HOST_SEND_STATUS=PASS
