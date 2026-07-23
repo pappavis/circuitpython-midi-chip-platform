@@ -284,13 +284,17 @@ class TestHilDiagnostics:
         recorder.record_decoded_event(0, object(), event)
         recorder.record_scheduler(event)
         recorder.record_pcm(event)
-        recorder.record_audio_start(event)
+        recorder.record_play_tone_entered(event)
+        recorder.record_i2s_dma_write()
+        recorder.record_play_tone_returned(event)
         emitted = recorder.emit_if_ready(output.append)
 
         assert emitted is True
         assert output[0] == "HIL-MVP-001 START"
-        assert "HIL-MVP-001 TABLE=Layer|LatencyMs|Result" in output
-        assert any(line.startswith("HIL-MVP-001 ROW=USB receive|0|PASS") for line in output)
+        assert "HIL-MVP-001 TABLE=Timestamp|Layer|LatencyMs|DeltaMs|Result" in output
+        assert any(line.startswith("HIL-MVP-001 ROW=T0|USB receive|0|") for line in output)
+        assert any(line.startswith("HIL-MVP-001 ROW=T5|I2S first DMA write|") for line in output)
+        assert any(line.startswith("HIL-MVP-001 LARGEST_DELTA=") for line in output)
         assert output[-1].startswith("HIL-MVP-001 RESULT=PASS")
 
     @pytest.mark.smoke

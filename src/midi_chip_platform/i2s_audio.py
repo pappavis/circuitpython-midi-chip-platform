@@ -20,6 +20,7 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
         word_select_pin_name="IO3",
         data_pin_name="IO7",
         poll_sleep_seconds=0.001,
+        timing_observer=None,
     ):
         if not isinstance(audio_format, AudioStreamFormat):
             raise TypeError("audio_format must be AudioStreamFormat")
@@ -29,6 +30,7 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
         self._word_select_pin_name = str(word_select_pin_name)
         self._data_pin_name = str(data_pin_name)
         self._poll_sleep_seconds = float(poll_sleep_seconds)
+        self._timing_observer = timing_observer
         self._array_module = None
         self._audiocore_module = None
         self._time_module = None
@@ -80,6 +82,7 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
             self._sleep_for_block(selected_block)
             return
         self._active_buffer, self._active_sample = self._raw_sample_for(selected_block)
+        self._record_i2s_dma_write()
         self._device.play(self._active_sample, loop=True)
         self._sleep_for_block(selected_block)
         self._device.stop()
@@ -114,6 +117,7 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
             self._active_buffer,
             sample_rate=self._audio_format.sample_rate,
         )
+        self._record_i2s_dma_write()
         self._device.play(self._active_sample, loop=True)
         self._time_module.sleep(max(selected_duration, self._poll_sleep_seconds))
         self._device.stop()
@@ -145,6 +149,7 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
             self._active_buffer,
             sample_rate=self._audio_format.sample_rate,
         )
+        self._record_i2s_dma_write()
         self._device.play(self._active_sample, loop=True)
 
     def stop_tone(self):
@@ -182,3 +187,10 @@ class CircuitPythonI2sAudioOutput(AudioOutputPort):
     def _sleep_for_block(self, block):
         duration_seconds = block.frame_count / self._audio_format.sample_rate
         self._time_module.sleep(max(duration_seconds, self._poll_sleep_seconds))
+
+    def _record_i2s_dma_write(self):
+        if self._timing_observer is None:
+            return
+        record = getattr(self._timing_observer, "record_i2s_dma_write", None)
+        if callable(record):
+            record()

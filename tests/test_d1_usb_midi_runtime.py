@@ -31,15 +31,18 @@ class TestD1UsbMidiI2sRuntime:
             return self._now
 
     class ToneMemoryAudioOutput(MemoryAudioOutput):
-        def __init__(self, audio_format):
+        def __init__(self, audio_format, timing_observer=None):
             super().__init__(audio_format)
             self._tones = []
+            self._timing_observer = timing_observer
 
         @property
         def tones(self):
             return tuple(self._tones)
 
         def play_tone(self, frequency_hz, duration_seconds, amplitude=8192):
+            if self._timing_observer is not None:
+                self._timing_observer.record_i2s_dma_write()
             self._tones.append(
                 ("play", float(frequency_hz), float(duration_seconds), int(amplitude))
             )
@@ -202,7 +205,7 @@ class TestD1UsbMidiI2sRuntime:
                 NoteEvent.note_off(channel=1, note=69, velocity=64),
             )
         )
-        audio_output = self.ToneMemoryAudioOutput(audio_format)
+        audio_output = self.ToneMemoryAudioOutput(audio_format, timing_observer=recorder)
         core = D1SynthCore(
             D1Patch(waveform="square", audio_format=audio_format, amplitude=0.5)
         )
@@ -263,7 +266,7 @@ class TestD1UsbMidiI2sRuntime:
             ),
             observer=recorder,
         )
-        audio_output = self.ToneMemoryAudioOutput(audio_format)
+        audio_output = self.ToneMemoryAudioOutput(audio_format, timing_observer=recorder)
         core = D1SynthCore(
             D1Patch(waveform="square", audio_format=audio_format, amplitude=0.5)
         )
@@ -283,9 +286,12 @@ class TestD1UsbMidiI2sRuntime:
         result = runtime.run()
 
         assert result is True
-        assert any(line == "HIL-MVP-001 TABLE=Layer|LatencyMs|Result" for line in output)
-        assert any(line.startswith("HIL-MVP-001 ROW=USB receive|0|PASS") for line in output)
-        assert any(line.startswith("HIL-MVP-001 ROW=Audio start|0|PASS") for line in output)
+        assert any(line == "HIL-MVP-001 TABLE=Timestamp|Layer|LatencyMs|DeltaMs|Result" for line in output)
+        assert any(line.startswith("HIL-MVP-001 ROW=T0|USB receive|0|") for line in output)
+        assert any(line.startswith("HIL-MVP-001 ROW=T3|play_tone entered|") for line in output)
+        assert any(line.startswith("HIL-MVP-001 ROW=T4|play_tone returned|") for line in output)
+        assert any(line.startswith("HIL-MVP-001 ROW=T5|I2S first DMA write|") for line in output)
+        assert any(line.startswith("HIL-MVP-001 LARGEST_DELTA=") for line in output)
         assert any(line.startswith("HIL-MVP-001 RESULT=PASS") for line in output)
 
     def test_verbose_event_logging_keeps_diagnostic_midi_and_audio_lines(self) -> None:

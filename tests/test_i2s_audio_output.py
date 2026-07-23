@@ -69,6 +69,17 @@ class TestCircuitPythonI2sAudioOutput:
         def sleep(self, seconds):
             self.sleep_calls.append(seconds)
 
+    class FakeTimingObserver:
+        def __init__(self):
+            self._dma_writes = 0
+
+        @property
+        def dma_writes(self):
+            return self._dma_writes
+
+        def record_i2s_dma_write(self):
+            self._dma_writes += 1
+
     class Importer:
         def __init__(self, modules):
             self._modules = dict(modules)
@@ -117,6 +128,7 @@ class TestCircuitPythonI2sAudioOutput:
     def test_output_can_play_diagnostic_style_looped_tone(self) -> None:
         audio_bus = self.FakeAudioBusIo()
         fake_time = self.FakeTime()
+        observer = self.FakeTimingObserver()
         audio_format = AudioStreamFormat(sample_rate=16000, frames_per_block=128)
         output = CircuitPythonI2sAudioOutput(
             audio_format=audio_format,
@@ -132,6 +144,7 @@ class TestCircuitPythonI2sAudioOutput:
             bit_clock_pin_name="IO5",
             word_select_pin_name="IO3",
             data_pin_name="IO7",
+            timing_observer=observer,
         )
 
         output.open()
@@ -146,6 +159,7 @@ class TestCircuitPythonI2sAudioOutput:
         assert min(sample.buffer) == 32768 - 2048
         assert max(sample.buffer) == 32768 + 2048
         assert fake_time.sleep_calls == [0.35]
+        assert observer.dma_writes == 1
         assert output._active_sample is None
 
     def test_output_can_latch_and_stop_tone_without_sleeping(self) -> None:

@@ -283,12 +283,13 @@ class D1UsbMidiI2sRuntime:
             self._mvp_timing_recorder.record_pcm(event)
             self._timing_marker.begin_note_on()
             try:
-                self._mvp_timing_recorder.record_audio_start(event)
+                self._mvp_timing_recorder.record_play_tone_entered(event)
                 self._audio_output.play_tone(
                     frequency_hz=self._core.active_frequency_hz,
                     duration_seconds=self._seconds_for_blocks(requested_blocks),
                     amplitude=self._audition_tone_amplitude,
                 )
+                self._mvp_timing_recorder.record_play_tone_returned(event)
             finally:
                 self._timing_marker.end_note_on()
             self._tone_started = False
@@ -306,7 +307,8 @@ class D1UsbMidiI2sRuntime:
             return self._current_time()
         self._mvp_timing_recorder.record_pcm(event)
         self._write_minimum_audible_note(event, playable_event)
-        self._mvp_timing_recorder.record_audio_start(event)
+        self._mvp_timing_recorder.record_play_tone_entered(event)
+        self._mvp_timing_recorder.record_play_tone_returned(event)
         self._mvp_timing_recorder.emit_if_ready(self._output)
         return self._current_time()
 
@@ -443,12 +445,14 @@ class D1UsbMidiI2sRuntimeFactory:
             sample_width_bits=16,
             frames_per_block=configuration.get("synth.d1.frames_per_block", 128),
         )
+        mvp_timing_recorder = self._mvp_timing_recorder_for(configuration, time_module)
         i2s_output = CircuitPythonI2sAudioOutput(
             audio_format=audio_format,
             importer=self._importer,
             bit_clock_pin_name=configuration.get("audio.i2s.bit_clock", "IO5"),
             word_select_pin_name=configuration.get("audio.i2s.word_select", "IO3"),
             data_pin_name=configuration.get("audio.i2s.data", "IO7"),
+            timing_observer=mvp_timing_recorder,
         )
         safe_output = SafeAudioOutput(
             i2s_output,
@@ -473,7 +477,6 @@ class D1UsbMidiI2sRuntimeFactory:
             )
         )
         time_module = self._importer("time")
-        mvp_timing_recorder = self._mvp_timing_recorder_for(configuration, time_module)
         return D1UsbMidiI2sRuntime(
             midi_input=CircuitPythonUsbMidiFactory(self._importer).create_input(
                 port_index=configuration.get("midi.input.port_index", 0),

@@ -601,12 +601,21 @@ class HilMvp001TimingRecorder:
         if self._matches(event):
             self._record_once("PCM")
 
-    def record_audio_start(self, event):
+    def record_play_tone_entered(self, event):
         if self._matches(event):
-            self._record_once("Audio start")
+            self._record_once("play_tone entered")
+
+    def record_play_tone_returned(self, event):
+        if self._matches(event):
+            self._record_once("play_tone returned")
+
+    def record_i2s_dma_write(self):
+        if self._emitted or self._event is None:
+            return
+        self._record_once("I2S first DMA write")
 
     def emit_if_ready(self, output):
-        if self._emitted or "Audio start" not in self._timestamps:
+        if self._emitted or "play_tone returned" not in self._timestamps:
             return False
         for line in self._lines():
             output(line)
@@ -630,23 +639,29 @@ class HilMvp001TimingRecorder:
             "HIL-MVP-001 START",
             "HIL-MVP-001 EXPECTED="
             f"note={self._expected_note};velocity={self._expected_velocity}",
-            "HIL-MVP-001 TABLE=Layer|LatencyMs|Result",
+            "HIL-MVP-001 TABLE=Timestamp|Layer|LatencyMs|DeltaMs|Result",
         ]
         latencies = []
-        for layer in (
-            "USB receive",
-            "Parser",
-            "Scheduler",
-            "PCM",
-            "Audio start",
+        previous_latency = None
+        for marker, layer in (
+            ("T0", "USB receive"),
+            ("T1", "Parser"),
+            ("T2", "Scheduler"),
+            ("T3", "play_tone entered"),
+            ("T4", "play_tone returned"),
+            ("T5", "I2S first DMA write"),
         ):
             latency = self._latency_ms(layer)
+            delta = self._delta_ms(previous_latency, latency)
             result = self._result_for(latency)
             if latency is not None:
                 latencies.append(latency)
+                previous_latency = latency
             lines.append(
-                f"HIL-MVP-001 ROW={layer}|{self._latency_label(latency)}|{result}"
+                f"HIL-MVP-001 ROW={marker}|{layer}|"
+                f"{self._latency_label(latency)}|{self._latency_label(delta)}|{result}"
             )
+        lines.append(f"HIL-MVP-001 LARGEST_DELTA={self._largest_delta_line()}")
         lines.append(f"HIL-MVP-001 RESULT={self._overall_result(latencies)}")
         return tuple(lines)
 
@@ -666,6 +681,39 @@ class HilMvp001TimingRecorder:
             return "UNKNOWN"
         return str(int(latency))
 
+    @staticmethod
+    def _delta_ms(previous_latency, current_latency):
+        if previous_latency is None or current_latency is None:
+            return None
+        return int(current_latency) - int(previous_latency)
+
+    def _largest_delta_line(self):
+        largest = None
+        previous_latency = None
+        previous_layer = None
+        for layer in (
+            "USB receive",
+            "Parser",
+            "Scheduler",
+            "play_tone entered",
+            "play_tone returned",
+            "I2S first DMA write",
+        ):
+            latency = self._latency_ms(layer)
+            if latency is None:
+                previous_layer = layer
+                previous_latency = latency
+                continue
+            if previous_latency is not None:
+                delta = int(latency) - int(previous_latency)
+                if largest is None or delta > largest[2]:
+                    largest = (previous_layer, layer, delta)
+            previous_layer = layer
+            previous_latency = latency
+        if largest is None:
+            return "UNKNOWN"
+        return f"{largest[0]}->{largest[1]};delta_ms={largest[2]}"
+
     def _result_for(self, latency):
         if latency is None:
             return "UNKNOWN"
@@ -680,7 +728,7 @@ class HilMvp001TimingRecorder:
         return "PASS"
 
     def _overall_result(self, latencies):
-        if len(latencies) < 5:
+        if len(latencies) < 6:
             return "FAIL;reason=missing-layer-timestamp"
         worst = max(latencies)
         average = sum(latencies) / len(latencies)
@@ -715,7 +763,13 @@ class NullHilMvp001TimingRecorder:
     def record_pcm(self, event):
         self._record_count += 1
 
-    def record_audio_start(self, event):
+    def record_play_tone_entered(self, event):
+        self._record_count += 1
+
+    def record_play_tone_returned(self, event):
+        self._record_count += 1
+
+    def record_i2s_dma_write(self):
         self._record_count += 1
 
     def emit_if_ready(self, output):
