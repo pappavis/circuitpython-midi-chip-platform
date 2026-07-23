@@ -1,11 +1,11 @@
 # Bestand: midi_usb.py
-# Versienommer: 0.19.3
-# Doel: Vertaal USB-MIDI en isoleer foutiewe multi-port endpoints vir synthio diagnose.
+# Versienommer: 0.20.1
+# Doel: Vertaal USB-MIDI en lewer tydelike debug-only port/decode observasie.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
-# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-IMP-003-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-003
+# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
+# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
 
 from midi_chip_platform.events import ClockEvent, ControlEvent, NoteEvent
 from midi_chip_platform.ports import MidiInputPort
@@ -103,8 +103,23 @@ class MidiMessageTranslator:
         return expected_type is not None and isinstance(message, expected_type)
 
 
+class NullUsbMidiTraceObserver:
+    def __init__(self):
+        self._record_count = 0
+
+    @property
+    def record_count(self):
+        return self._record_count
+
+    def record_raw_message(self, port_index, message):
+        self._record_count += 1
+
+    def record_decoded_event(self, port_index, message, event):
+        self._record_count += 1
+
+
 class UsbMidiInputPort(MidiInputPort):
-    def __init__(self, factory, translator, port_index=0):
+    def __init__(self, factory, translator, port_index=0, trace_observer=None):
         if not isinstance(translator, MidiMessageTranslator):
             raise TypeError("translator must be MidiMessageTranslator")
         if int(port_index) < 0:
@@ -112,6 +127,11 @@ class UsbMidiInputPort(MidiInputPort):
         self._factory = factory
         self._translator = translator
         self._port_index = int(port_index)
+        self._trace_observer = (
+            trace_observer
+            if trace_observer is not None
+            else NullUsbMidiTraceObserver()
+        )
         self._raw_midi = None
 
     @property
@@ -125,7 +145,11 @@ class UsbMidiInputPort(MidiInputPort):
     def receive(self):
         if not self.is_open:
             raise RuntimeError("USB MIDI input is closed")
-        return self._translator.translate(self._raw_midi.receive())
+        message = self._raw_midi.receive()
+        self._trace_observer.record_raw_message(self._port_index, message)
+        event = self._translator.translate(message)
+        self._trace_observer.record_decoded_event(self._port_index, message, event)
+        return event
 
     def close(self):
         self._raw_midi = None
@@ -204,7 +228,7 @@ class CircuitPythonUsbMidiFactory:
     def __init__(self, importer=None):
         self._importer = importer if importer is not None else __import__
 
-    def create_input(self, port_index=0):
+    def create_input(self, port_index=0, trace_observer=None):
         adafruit_midi = self._importer("adafruit_midi", None, None, ("MIDI",))
         usb_midi = self._importer("usb_midi")
         message_types = self._create_message_types()
@@ -212,9 +236,10 @@ class CircuitPythonUsbMidiFactory:
             factory=AdafruitMidiObjectFactory(adafruit_midi.MIDI, usb_midi),
             translator=MidiMessageTranslator(message_types),
             port_index=port_index,
+            trace_observer=trace_observer,
         )
 
-    def create_all_inputs(self):
+    def create_all_inputs(self, trace_observer=None):
         adafruit_midi = self._importer("adafruit_midi", None, None, ("MIDI",))
         usb_midi = self._importer("usb_midi")
         message_types = self._create_message_types()
@@ -223,6 +248,7 @@ class CircuitPythonUsbMidiFactory:
                 factory=AdafruitMidiObjectFactory(adafruit_midi.MIDI, usb_midi),
                 translator=MidiMessageTranslator(message_types),
                 port_index=port_index,
+                trace_observer=trace_observer,
             )
             for port_index in range(len(usb_midi.ports))
         )

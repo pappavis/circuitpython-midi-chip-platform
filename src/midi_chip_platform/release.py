@@ -1,18 +1,18 @@
 # Bestand: release.py
-# Versienommer: 0.20.0
-# Doel: Besit release-naspeurbaarheid vir die USB-MIDI routing diagnose.
+# Versienommer: 0.20.1
+# Doel: Besit release-naspeurbaarheid vir die NoteOn investigation instrumentasie.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080 USB MIDI Endpoint Routing Diagnostic
-# Actienr: MCP-ACT-080-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-START
+# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
+# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
 
 
 class ReleaseMetadata:
     def __init__(
         self,
-        version="0.20.0",
-        user_story="MCP-US-080",
+        version="0.20.1",
+        user_story="MCP-US-080-INV-001",
         release_date="2026-07-23",
     ):
         self._version = str(version)

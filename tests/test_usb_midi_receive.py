@@ -1,11 +1,11 @@
 # Bestand: test_usb_midi_receive.py
-# Versienommer: 0.19.3
-# Doel: Bewys USB-MIDI-vertaling, multi-port foutisolasie en begrensde Note On/Off-HIL-diagnostiek.
+# Versienommer: 0.20.1
+# Doel: Bewys USB-MIDI-vertaling, observasiehooks, multi-port foutisolasie en HIL-diagnostiek.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-002 MIDI And Clock
-# User-Story: MCP-US-079 Persistent Synthio Audio Graph Spike
-# Actienr: MCP-ACT-079-IMP-003-RED-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-079-HIL-IMPEDIMENT-003
+# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
+# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
 
 from midi_chip_platform.events import NoteEvent
 from midi_chip_platform.midi_usb import (
@@ -88,6 +88,20 @@ class TestUsbMidiReceive:
                 raise ImportError(module_name)
             return self._modules[module_name]
 
+    class RecordingTraceObserver:
+        def __init__(self):
+            self._records = []
+
+        @property
+        def records(self):
+            return tuple(self._records)
+
+        def record_raw_message(self, port_index, message):
+            self._records.append(("raw", port_index, message.__class__.__name__))
+
+        def record_decoded_event(self, port_index, message, event):
+            self._records.append(("decoded", port_index, event.message_type))
+
     def _translator(self):
         return MidiMessageTranslator(
             MidiMessageTypes(
@@ -135,6 +149,31 @@ class TestUsbMidiReceive:
             7,
         )
         assert port.is_open is False
+
+    def test_input_port_observer_reports_port_without_consuming_event(self) -> None:
+        raw_midi = self.RawMidi((self.NoteOn(note=65, velocity=93, channel=0),))
+        observer = self.RecordingTraceObserver()
+        port = UsbMidiInputPort(
+            factory=self.Factory(raw_midi),
+            translator=self._translator(),
+            port_index=1,
+            trace_observer=observer,
+        )
+
+        port.open()
+        event = port.receive()
+        port.close()
+
+        assert (event.message_type, event.channel, event.note, event.velocity) == (
+            "note_on",
+            1,
+            65,
+            93,
+        )
+        assert observer.records == (
+            ("raw", 1, "NoteOn"),
+            ("decoded", 1, "note_on"),
+        )
 
     def test_input_port_requires_open_before_receive(self) -> None:
         port = UsbMidiInputPort(

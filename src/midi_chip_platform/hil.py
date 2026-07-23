@@ -1,11 +1,11 @@
 # Bestand: hil.py
-# Versienommer: 0.20.0
+# Versienommer: 0.20.1
 # Doel: Verifieer dependency-closed deploy met MIDI-routing diagnose, synthio-baseline en CircuitPython-vriendelijke tempbestanden.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080 USB MIDI Endpoint Routing Diagnostic
-# Actienr: MCP-ACT-080-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-START
+# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
+# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
 
 import ast
 import hashlib

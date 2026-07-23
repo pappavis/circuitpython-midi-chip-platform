@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.20.0
-# Doel: Spesifiseer publieke D1-runtime, realtime-, synthio- en MIDI-routing diagnose-instellings plus private settings.
+# Versienommer: 0.20.1
+# Doel: Spesifiseer publieke D1-runtime, realtime-, synthio- en bounded MIDI-investigation-instellings plus private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080 USB MIDI Endpoint Routing Diagnostic
-# Actienr: MCP-ACT-080-RED-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-START
+# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
+# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -81,6 +81,7 @@ class TestConfigurationDefaults:
         assert snapshot.get("midi.routing_diagnostic.idle_sleep_seconds") == 0.001
         assert snapshot.get("midi.routing_diagnostic.event_logging") == "summary"
         assert snapshot.get("midi.routing_diagnostic.heartbeat_seconds") == 2.0
+        assert snapshot.get("midi.routing_diagnostic.max_trace_lines") == 96
 
     def test_device_settings_example_quotes_non_integer_values_for_circuitpython_10(self) -> None:
         settings_example = (
@@ -133,6 +134,7 @@ class TestConfigurationDefaults:
         assert 'MIDI_ROUTING_DIAGNOSTIC_IDLE_SLEEP_SECONDS = "0.001"' in settings_example
         assert 'MIDI_ROUTING_DIAGNOSTIC_EVENT_LOGGING = "summary"' in settings_example
         assert 'MIDI_ROUTING_DIAGNOSTIC_HEARTBEAT_SECONDS = "2.0"' in settings_example
+        assert "MIDI_ROUTING_DIAGNOSTIC_MAX_TRACE_LINES = 96" in settings_example
 
 
 class TestConfigurationSecretBoundary:

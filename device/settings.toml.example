@@ -76,6 +76,7 @@ MIDI_ROUTING_DIAGNOSTIC_TIMEOUT_SECONDS = "60.0"
 MIDI_ROUTING_DIAGNOSTIC_IDLE_SLEEP_SECONDS = "0.001"
 MIDI_ROUTING_DIAGNOSTIC_EVENT_LOGGING = "summary"
 MIDI_ROUTING_DIAGNOSTIC_HEARTBEAT_SECONDS = "2.0"
+MIDI_ROUTING_DIAGNOSTIC_MAX_TRACE_LINES = 96
 
 # Optional, bounded USB-MIDI Note On/Off acceptance diagnostic.
 # Leave disabled for normal startup. Enable temporarily, then restart the board.

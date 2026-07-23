@@ -1,11 +1,11 @@
 # Bestand: configuration.py
-# Versienommer: 0.20.0
-# Doel: Laai publieke D1-runtime, realtime-, synthio- en MIDI-routing diagnose-instellings plus private settings.
+# Versienommer: 0.20.1
+# Doel: Laai publieke D1-runtime, realtime-, synthio- en bounded MIDI-investigation-instellings plus private settings.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080 USB MIDI Endpoint Routing Diagnostic
-# Actienr: MCP-ACT-080-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-START
+# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
+# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
 
 from midi_chip_platform.ports import ConfigurationPort
 
@@ -76,6 +76,7 @@ class ConfigurationDefaults:
             "midi.routing_diagnostic.idle_sleep_seconds": 0.001,
             "midi.routing_diagnostic.event_logging": "summary",
             "midi.routing_diagnostic.heartbeat_seconds": 2.0,
+            "midi.routing_diagnostic.max_trace_lines": 96,
             "wifi.mode": "auto",
         }
 
@@ -152,6 +153,7 @@ class EnvironmentSettingsSource:
             "midi.routing_diagnostic.idle_sleep_seconds": "MIDI_ROUTING_DIAGNOSTIC_IDLE_SLEEP_SECONDS",
             "midi.routing_diagnostic.event_logging": "MIDI_ROUTING_DIAGNOSTIC_EVENT_LOGGING",
             "midi.routing_diagnostic.heartbeat_seconds": "MIDI_ROUTING_DIAGNOSTIC_HEARTBEAT_SECONDS",
+            "midi.routing_diagnostic.max_trace_lines": "MIDI_ROUTING_DIAGNOSTIC_MAX_TRACE_LINES",
             "wifi.mode": "WIFI_MODE",
             "wifi.ssid": "WIFI_SSID",
             "wifi.password": "WIFI_PASSWORD",

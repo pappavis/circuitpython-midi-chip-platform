@@ -1,11 +1,11 @@
 # Bestand: device_runtime.py
-# Versienommer: 0.20.0
-# Doel: Lewer toestelbewys en aktiveer MIDI-routing diagnose, synthio-baseline, realtime-baseline, D1 fast boot of diagnostiek.
+# Versienommer: 0.20.1
+# Doel: Lewer toestelbewys en aktiveer NoteOn-investigation, synthio-baseline, realtime-baseline, D1 fast boot of diagnostiek.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080 USB MIDI Endpoint Routing Diagnostic
-# Actienr: MCP-ACT-080-GREEN-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-START
+# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
+# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
 
 from midi_chip_platform.release import ReleaseMetadata
 
