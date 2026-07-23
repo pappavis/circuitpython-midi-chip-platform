@@ -148,6 +148,9 @@ class TestConfigurationDefaults:
         assert 'HIL_DIAGNOSTIC_ENABLED = "false"' in settings_example
         assert 'HIL_RAW_MIDI_TIMEOUT_SECONDS = "0.25"' in settings_example
         assert 'HIL_PARSER_TIMEOUT_SECONDS = "0.25"' in settings_example
+        assert 'HIL_MVP_001_ENABLED = "false"' in settings_example
+        assert "HIL_MVP_001_NOTE = 60" in settings_example
+        assert "HIL_MVP_001_VELOCITY = 100" in settings_example
 
 
 class TestConfigurationSecretBoundary:
@@ -252,6 +255,14 @@ class TestConfigurationSecretBoundary:
             "HIL_RAW_MIDI_TIMEOUT_SECONDS": "0.5",
             "HIL_PARSER_MAX_MESSAGES": "5",
             "HIL_PARSER_TIMEOUT_SECONDS": "0.75",
+            "HIL_MVP_001_ENABLED": "true",
+            "HIL_MVP_001_NOTE": "61",
+            "HIL_MVP_001_VELOCITY": "99",
+            "HIL_MVP_001_AVERAGE_LIMIT_MS": "20",
+            "HIL_MVP_001_MAXIMUM_LIMIT_MS": "80",
+            "HIL_MVP_001_SINGLE_EVENT_LIMIT_MS": "200",
+            "HIL_MVP_001_FAIL_LIMIT_MS": "900",
+            "HIL_MVP_001_CRITICAL_LIMIT_MS": "9000",
             "MIDI_DIAGNOSTIC_ENABLED": "true",
             "MIDI_DIAGNOSTIC_MAX_EVENTS": "12",
         }
@@ -279,6 +290,14 @@ class TestConfigurationSecretBoundary:
         assert snapshot.get("hil.raw_midi.timeout_seconds") == 0.5
         assert snapshot.get("hil.parser.max_messages") == 5
         assert snapshot.get("hil.parser.timeout_seconds") == 0.75
+        assert snapshot.get("hil.mvp.enabled") is True
+        assert snapshot.get("hil.mvp.note") == 61
+        assert snapshot.get("hil.mvp.velocity") == 99
+        assert snapshot.get("hil.mvp.average_limit_ms") == 20
+        assert snapshot.get("hil.mvp.maximum_limit_ms") == 80
+        assert snapshot.get("hil.mvp.single_event_limit_ms") == 200
+        assert snapshot.get("hil.mvp.fail_limit_ms") == 900
+        assert snapshot.get("hil.mvp.critical_limit_ms") == 9000
         assert snapshot.get("midi.diagnostic.enabled") is True
         assert snapshot.get("midi.diagnostic.max_events") == 12
 

@@ -7,6 +7,8 @@
 # Actienr: HIL-DIAG-RED-GREEN-001
 # ChatID: CHATOD-20260714-MCP-CP-MVP-001 / HIL-DIAGNOSTIC-FRAMEWORK-001
 
+import pytest
+
 from midi_chip_platform.hil_diagnostics import (
     AdafruitMidiParserLayer,
     AmplifierLayer,
@@ -14,6 +16,7 @@ from midi_chip_platform.hil_diagnostics import (
     HardwareInLoopDiagnosticRuntime,
     HilBootSummary,
     HilLayerResult,
+    HilMvp001TimingRecorder,
     I2sDmaLayer,
     PcmGeneratorLayer,
     RawUsbMidiLayer,
@@ -22,6 +25,7 @@ from midi_chip_platform.hil_diagnostics import (
     UsbEnumerationLayer,
     VoiceAllocatorLayer,
 )
+from midi_chip_platform.events import NoteEvent
 from midi_chip_platform.release import ReleaseMetadata
 
 
@@ -126,6 +130,7 @@ class TestHilDiagnostics:
         def run(self):
             return self._result
 
+    @pytest.mark.smoke
     def test_layer_0_passes_when_deployment_identity_matches(self) -> None:
         layer = DeploymentIntegrityLayer(
             release_metadata=ReleaseMetadata(
@@ -160,6 +165,7 @@ class TestHilDiagnostics:
         assert result.status == "FAIL"
         assert any("mismatch=code.py" in detail for detail in result.details)
 
+    @pytest.mark.smoke
     def test_layer_1_reports_usb_midi_ports_and_missing_endpoints(self) -> None:
         passing = UsbEnumerationLayer(
             self.FakeUsbMidi((self.FakePortIn(), self.FakePortOut()))
@@ -170,6 +176,7 @@ class TestHilDiagnostics:
         assert "inputs=1;outputs=1" in passing.details
         assert failing.summary_line() == "HIL-010 FAIL USB"
 
+    @pytest.mark.smoke
     def test_layer_2_reports_raw_usb_midi_packets_without_decoding(self) -> None:
         clock = self.FakeClock()
         layer = RawUsbMidiLayer(
@@ -186,6 +193,7 @@ class TestHilDiagnostics:
         assert "packet_count=2" in result.details
         assert "bytes_received=8" in result.details
 
+    @pytest.mark.smoke
     def test_layer_3_reports_parser_counts_and_velocity_histogram(self) -> None:
         clock = self.FakeClock()
         layer = AdafruitMidiParserLayer(
@@ -209,6 +217,7 @@ class TestHilDiagnostics:
         assert "note_off=1" in result.details
         assert "velocity_histogram=0:0,1-31:0,32-63:0,64-95:1,96-127:1" in result.details
 
+    @pytest.mark.smoke
     def test_layer_4_reports_scheduler_metrics(self) -> None:
         result = SchedulerLayer(self.FakeScheduler()).run()
 
@@ -239,6 +248,7 @@ class TestHilDiagnostics:
         assert passing.summary_line() == "HIL-070 PASS DMA"
         assert "dma_writes=5" in passing.details
 
+    @pytest.mark.smoke
     def test_layer_8_reports_amplifier_tone_amplitudes(self) -> None:
         result = AmplifierLayer().run()
 
@@ -259,6 +269,31 @@ class TestHilDiagnostics:
         assert lines[1] == "HIL-030 FAIL MIDI Parser"
         assert lines[-1] == "FIRST FAIL = HIL-030"
 
+    @pytest.mark.smoke
+    def test_hil_mvp_001_reports_timing_table_for_middle_c(self) -> None:
+        clock = self.FakeClock()
+        output = []
+        event = NoteEvent.note_on(channel=1, note=60, velocity=100)
+        recorder = HilMvp001TimingRecorder(
+            monotonic=clock.monotonic,
+            expected_note=60,
+            expected_velocity=100,
+        )
+
+        recorder.record_raw_message(0, object())
+        recorder.record_decoded_event(0, object(), event)
+        recorder.record_scheduler(event)
+        recorder.record_pcm(event)
+        recorder.record_audio_start(event)
+        emitted = recorder.emit_if_ready(output.append)
+
+        assert emitted is True
+        assert output[0] == "HIL-MVP-001 START"
+        assert "HIL-MVP-001 TABLE=Layer|LatencyMs|Result" in output
+        assert any(line.startswith("HIL-MVP-001 ROW=USB receive|0|PASS") for line in output)
+        assert output[-1].startswith("HIL-MVP-001 RESULT=PASS")
+
+    @pytest.mark.smoke
     def test_integration_hil_runtime_prints_one_summary(self) -> None:
         output = []
         layers = (

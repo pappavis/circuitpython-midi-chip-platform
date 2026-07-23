@@ -550,6 +550,179 @@ class HardwareInLoopDiagnosticRuntime:
         return summary.first_fail == "NONE"
 
 
+class HilMvp001TimingRecorder:
+    def __init__(
+        self,
+        monotonic,
+        expected_note=60,
+        expected_velocity=100,
+        average_limit_ms=25,
+        maximum_limit_ms=100,
+        single_event_limit_ms=250,
+        fail_limit_ms=1000,
+        critical_limit_ms=10000,
+    ):
+        self._monotonic = monotonic
+        self._expected_note = int(expected_note)
+        self._expected_velocity = int(expected_velocity)
+        self._average_limit_ms = int(average_limit_ms)
+        self._maximum_limit_ms = int(maximum_limit_ms)
+        self._single_event_limit_ms = int(single_event_limit_ms)
+        self._fail_limit_ms = int(fail_limit_ms)
+        self._critical_limit_ms = int(critical_limit_ms)
+        self._timestamps = {}
+        self._event = None
+        self._emitted = False
+
+    @property
+    def is_emitted(self):
+        return self._emitted
+
+    def record_raw_message(self, port_index, message):
+        if self._emitted or message is None:
+            return
+        self._record_once("USB receive")
+
+    def record_decoded_event(self, port_index, message, event):
+        if self._emitted or not isinstance(event, NoteEvent):
+            return
+        if not event.is_note_on or event.velocity <= 0:
+            return
+        if event.note != self._expected_note:
+            return
+        self._event = event
+        self._record_once("Parser")
+
+    def record_scheduler(self, event):
+        if self._matches(event):
+            self._record_once("Scheduler")
+
+    def record_pcm(self, event):
+        if self._matches(event):
+            self._record_once("PCM")
+
+    def record_audio_start(self, event):
+        if self._matches(event):
+            self._record_once("Audio start")
+
+    def emit_if_ready(self, output):
+        if self._emitted or "Audio start" not in self._timestamps:
+            return False
+        for line in self._lines():
+            output(line)
+        self._emitted = True
+        return True
+
+    def _matches(self, event):
+        return (
+            isinstance(event, NoteEvent)
+            and event.is_note_on
+            and event.velocity > 0
+            and event.note == self._expected_note
+        )
+
+    def _record_once(self, layer):
+        if layer not in self._timestamps:
+            self._timestamps[layer] = self._monotonic()
+
+    def _lines(self):
+        lines = [
+            "HIL-MVP-001 START",
+            "HIL-MVP-001 EXPECTED="
+            f"note={self._expected_note};velocity={self._expected_velocity}",
+            "HIL-MVP-001 TABLE=Layer|LatencyMs|Result",
+        ]
+        latencies = []
+        for layer in (
+            "USB receive",
+            "Parser",
+            "Scheduler",
+            "PCM",
+            "Audio start",
+        ):
+            latency = self._latency_ms(layer)
+            result = self._result_for(latency)
+            if latency is not None:
+                latencies.append(latency)
+            lines.append(
+                f"HIL-MVP-001 ROW={layer}|{self._latency_label(latency)}|{result}"
+            )
+        lines.append(f"HIL-MVP-001 RESULT={self._overall_result(latencies)}")
+        return tuple(lines)
+
+    def _latency_ms(self, layer):
+        if "USB receive" not in self._timestamps or layer not in self._timestamps:
+            return None
+        return int(
+            round(
+                (self._timestamps[layer] - self._timestamps["USB receive"])
+                * 1000.0
+            )
+        )
+
+    @staticmethod
+    def _latency_label(latency):
+        if latency is None:
+            return "UNKNOWN"
+        return str(int(latency))
+
+    def _result_for(self, latency):
+        if latency is None:
+            return "UNKNOWN"
+        if latency > self._critical_limit_ms:
+            return "CRITICAL_BLOCKER"
+        if latency > self._fail_limit_ms:
+            return "FAIL"
+        if latency > self._single_event_limit_ms:
+            return "FAIL"
+        if latency > self._maximum_limit_ms:
+            return "FAIL"
+        return "PASS"
+
+    def _overall_result(self, latencies):
+        if len(latencies) < 5:
+            return "FAIL;reason=missing-layer-timestamp"
+        worst = max(latencies)
+        average = sum(latencies) / len(latencies)
+        if worst > self._critical_limit_ms:
+            return f"CRITICAL_BLOCKER;average_ms={average:.3f};worst_ms={worst}"
+        if worst > self._fail_limit_ms:
+            return f"FAIL;average_ms={average:.3f};worst_ms={worst}"
+        if worst > self._single_event_limit_ms:
+            return f"FAIL;average_ms={average:.3f};worst_ms={worst}"
+        if average >= self._average_limit_ms or worst >= self._maximum_limit_ms:
+            return f"FAIL;average_ms={average:.3f};worst_ms={worst}"
+        return f"PASS;average_ms={average:.3f};worst_ms={worst}"
+
+
+class NullHilMvp001TimingRecorder:
+    def __init__(self):
+        self._record_count = 0
+
+    @property
+    def record_count(self):
+        return self._record_count
+
+    def record_raw_message(self, port_index, message):
+        self._record_count += 1
+
+    def record_decoded_event(self, port_index, message, event):
+        self._record_count += 1
+
+    def record_scheduler(self, event):
+        self._record_count += 1
+
+    def record_pcm(self, event):
+        self._record_count += 1
+
+    def record_audio_start(self, event):
+        self._record_count += 1
+
+    def emit_if_ready(self, output):
+        self._record_count += 1
+        return False
+
+
 class CircuitPythonFileReader:
     def __init__(self, root=""):
         self._root = str(root)

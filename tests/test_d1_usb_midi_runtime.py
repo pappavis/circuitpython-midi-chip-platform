@@ -7,10 +7,13 @@
 # Actienr: MCP-ACT-055-P0-REALTIME-FIX-003
 # ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-003
 
+import pytest
+
 from midi_chip_platform.audio import AudioStreamFormat, MemoryAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
 from midi_chip_platform.d1_runtime import D1UsbMidiI2sRuntime, D1UsbMidiI2sRuntimeFactory
 from midi_chip_platform.events import NoteEvent
+from midi_chip_platform.hil_diagnostics import HilMvp001TimingRecorder
 from midi_chip_platform.testing import MemoryConfiguration, MemoryMidiInput
 
 
@@ -48,6 +51,18 @@ class TestD1UsbMidiI2sRuntime:
 
         def stop_tone(self):
             self._tones.append(("stop",))
+
+    class ObservedMemoryMidiInput(MemoryMidiInput):
+        def __init__(self, events, observer):
+            super().__init__(events)
+            self._observer = observer
+
+        def receive(self):
+            event = super().receive()
+            if event is not None:
+                self._observer.record_raw_message(0, object())
+                self._observer.record_decoded_event(0, object(), event)
+            return event
 
     class RecordingTimingMarker:
         def __init__(self):
@@ -228,6 +243,51 @@ class TestD1UsbMidiI2sRuntime:
             )
             for line in output
         ) is False
+
+    @pytest.mark.smoke
+    def test_hil_mvp_001_timing_table_is_opt_in_and_bounded(self) -> None:
+        audio_format = AudioStreamFormat(
+            sample_rate=16000,
+            frames_per_block=160,
+        )
+        sleeper = self.NoSleep()
+        recorder = HilMvp001TimingRecorder(
+            monotonic=sleeper.monotonic,
+            expected_note=60,
+            expected_velocity=100,
+        )
+        midi_input = self.ObservedMemoryMidiInput(
+            (
+                NoteEvent.note_on(channel=1, note=60, velocity=100),
+                NoteEvent.note_off(channel=1, note=60, velocity=64),
+                None,
+            ),
+            observer=recorder,
+        )
+        audio_output = self.ToneMemoryAudioOutput(audio_format)
+        core = D1SynthCore(
+            D1Patch(waveform="square", audio_format=audio_format, amplitude=0.5)
+        )
+        output = []
+        runtime = D1UsbMidiI2sRuntime(
+            midi_input=midi_input,
+            audio_output=audio_output,
+            core=core,
+            output=output.append,
+            sleeper=sleeper,
+            max_blocks=8,
+            minimum_note_seconds=0.05,
+            event_logging="summary",
+            mvp_timing_recorder=recorder,
+        )
+
+        result = runtime.run()
+
+        assert result is True
+        assert any(line == "HIL-MVP-001 TABLE=Layer|LatencyMs|Result" for line in output)
+        assert any(line.startswith("HIL-MVP-001 ROW=USB receive|0|PASS") for line in output)
+        assert any(line.startswith("HIL-MVP-001 ROW=Audio start|0|PASS") for line in output)
+        assert any(line.startswith("HIL-MVP-001 RESULT=PASS") for line in output)
 
     def test_verbose_event_logging_keeps_diagnostic_midi_and_audio_lines(self) -> None:
         audio_format = AudioStreamFormat(

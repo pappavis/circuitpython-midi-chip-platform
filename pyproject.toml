@@ -29,3 +29,6 @@ where = ["src"]
 testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "-ra"
+markers = [
+    "smoke: bounded HIL smoke checks for deployment, USB, raw MIDI, parser, scheduler and audible tone",
+]

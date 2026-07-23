@@ -91,6 +91,17 @@ HIL_RAW_MIDI_TIMEOUT_SECONDS = "0.25"
 HIL_PARSER_MAX_MESSAGES = 8
 HIL_PARSER_TIMEOUT_SECONDS = "0.25"
 
+# HIL-MVP-001 timing table. Disabled by default; enable only for the single
+# Middle C timing experiment.
+HIL_MVP_001_ENABLED = "false"
+HIL_MVP_001_NOTE = 60
+HIL_MVP_001_VELOCITY = 100
+HIL_MVP_001_AVERAGE_LIMIT_MS = 25
+HIL_MVP_001_MAXIMUM_LIMIT_MS = 100
+HIL_MVP_001_SINGLE_EVENT_LIMIT_MS = 250
+HIL_MVP_001_FAIL_LIMIT_MS = 1000
+HIL_MVP_001_CRITICAL_LIMIT_MS = 10000
+
 # Optional, bounded USB-MIDI Note On/Off acceptance diagnostic.
 # Leave disabled for normal startup. Enable temporarily, then restart the board.
 # CircuitPython 10.0.x os.getenv settings support strings and integers.
