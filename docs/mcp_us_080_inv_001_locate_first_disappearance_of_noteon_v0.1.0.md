@@ -2,8 +2,8 @@
 
 <!--
 Bestand: mcp_us_080_inv_001_locate_first_disappearance_of_noteon_v0.1.0.md
-Versienommer: 0.1.0
-Doel: Definieer die P0 investigation story wat objektief bepaal waar NoteOn eerste in die MIDI-keten verdwyn.
+Versienommer: 0.2.0
+Doel: Definieer die P0 investigation story wat deur observasie en meting bepaal waar NoteOn eerste in die MIDI-keten verdwyn.
 Sprint: Sprint 3
 Epic: MCP-EPIC-008 Portability, Quality And Release
 User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
@@ -13,7 +13,7 @@ ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
 
 ## Story
 
-As Product Owner wil ek objektief vasstel waar in die volledige Logic Pro na S2 synth-keten die eerste `NoteOn` verdwyn, sodat 'n volgende engineer die werklike bug kan oplos sonder om die foutlokasie weer te soek.
+As Product Owner wil ek objektief vasstel waar in die volledige Logic Pro na S2 synth-keten die eerste `NoteOn` verdwyn, sodat die volgende stap op meetdata gebaseer is en nie op spekulasie nie.
 
 ## Story Type
 
@@ -60,6 +60,7 @@ Hierdie story mag nie:
 - synthio/I2S gedrag verander nie;
 - Logic Pro workaround-code byvoeg nie;
 - host-toetse groen maak deur hardewaregedrag weg te steek nie.
+- fixadvies, argitektuurvoorstel of implementasiekeuse as Done-uitset lewer nie.
 
 ## Toegestane Werk
 
@@ -74,7 +75,7 @@ Slegs die volgende is toegelaat:
 - HIL-instrumentasie;
 - tydelike debug-uitvoer.
 
-Alle instrumentasie moet begrens en identifiseerbaar wees.
+Alle instrumentasie moet begrens, identifiseerbaar en tydelik wees. Instrumentasie is alleen toelaatbaar wanneer dit nodig is om te observeer, te meet, te lokaliseer of objektief te bewys waar `NoteOn` eerste verdwyn.
 
 ## Onderzoeksketen
 
@@ -99,7 +100,7 @@ Alle instrumentasie moet begrens en identifiseerbaar wees.
 | Meetpunt | Trace marker | Noodzaak |
 |---|---|---|
 | Logic Pro teststimulus | `TRACE_STAGE=LOGIC_PRO_TEST_STIMULUS` | Bevestigt dat de menselijke test exact C4/E4/G4 of live notes probeert te sturen |
-| CoreMIDI host sender | `TRACE_STAGE=COREMIDI_HOST_SEND` | Scheidt Logic-routing van firmware-routing; als host geen NoteOn verstuurt, is device-fix speculatie |
+| CoreMIDI host sender | `TRACE_STAGE=COREMIDI_HOST_SEND` | Observeert of een `NoteOn` vóór de device-grens meetbaar is; zonder dit bewijs blijft de hostlaag `UNKNOWN` |
 | USB destination mapping | `TRACE_STAGE=USB_HOST_DESTINATION` | Bevestigt welke S2 endpoint/destination door macOS/Logic wordt gebruikt |
 | USB endpoint per port | `TRACE_STAGE=USB_ENDPOINT;port_index=N` | Vangt verkeerde endpointselectie en duplicate/control-only poorten af |
 | CircuitPython port read | `TRACE_STAGE=CIRCUITPY_USB_STACK;port_index=N` | Bewijst of CircuitPython bytes/events per poort aanbiedt |
@@ -110,6 +111,23 @@ Alle instrumentasie moet begrens en identifiseerbaar wees.
 | D1 trigger | `TRACE_STAGE=D1_SYNTH` | Bewijst of het D1-pad een trigger krijgt |
 | I2S start | `TRACE_STAGE=I2S` | Bewijst of audio-uitvoer gestart wordt |
 | Speaker/load | `TRACE_STAGE=SPEAKER` | Menselijke/meterobservatie; firmware mag dit niet zelf claimen zonder HIL |
+
+## Instrumentatiegrens
+
+Alle tracepoints en meetinstrumentatie zijn:
+
+- tijdelijk;
+- debug-only;
+- bounded;
+- eenvoudig deactiveerbaar of verwijderbaar;
+- zonder wijziging van productgedrag;
+- zonder wijziging van routing;
+- zonder wijziging van timingstrategie;
+- zonder wijziging van eventsemantiek;
+- zonder wijziging van audio;
+- zonder wijziging van D1-functionaliteit.
+
+Tracepoints zijn observatiehulpmiddelen. Zij vormen geen productarchitectuur, geen nieuwe feature en geen permanente runtime-eis.
 
 ## Verwachte Output
 
@@ -184,7 +202,27 @@ De story is alleen gereed wanneer:
 - geen bestaande functionaliteit is gewijzigd;
 - geen bugfix is uitgevoerd;
 - geen refactor is uitgevoerd;
+- geen optimalisatie is uitgevoerd;
+- geen productarchitectuurwijziging is uitgevoerd;
+- alle tracepoints en meetinstrumentatie tijdelijk, debug-only, bounded en eenvoudig deactiveerbaar of verwijderbaar zijn;
+- tracepoints geen productgedrag, routing, timing, eventsemantiek, audio of D1-functionaliteit wijzigen;
 - Principal QA Architect `PASS` geeft voor de investigation-resultaten.
+
+## Done-Criterium
+
+De investigation sluit uitsluitend met een meetrapport dat één van deze uitkomsten objectief vastlegt:
+
+```text
+FIRST_DISAPPEARANCE_OF_NOTEON=<meetpunt>
+```
+
+of:
+
+```text
+UNKNOWN;reason=<objectief gemotiveerde reden>
+```
+
+Een fixadvies, architectuurvoorstel of implementatiekeuze is geen onderdeel van Done.
 
 ## Virtuele Teaminzet
 
@@ -197,7 +235,7 @@ De story is alleen gereed wanneer:
 | Solution Architect | Scheidt host-, USB-, decode-, router-, synth- en audio-lagen |
 | Embedded/MIDI Specialist | Definieert MIDI 1.0 eventclassificatie en endpointmetingen |
 | QA/HIL | Vereist echte S2/Logic HIL-output en `UNKNOWN` waar bewijs ontbreekt |
-| Release/Documentation | Legt uitkomst vast zodat volgende engineer de bug kan fixen |
+| Release/Documentation | Legt meetuitkomst en eventueel `UNKNOWN` vast zonder fixadvies |
 | Devil's Advocate | Verwerpt elke conclusie zonder meetdata |
 
 ## Burn-in
@@ -210,4 +248,4 @@ Motivering: dit is 'n bounded investigation story. Langlopende stabiliteit hoort
 
 `Ready For Product Owner Review`
 
-Nog geen code. Nog geen fix. Nog geen refactor.
+Nog geen code. Nog geen fix. Nog geen refactor. Nog geen productontwerp.

@@ -89,7 +89,7 @@ Status: **PASS vir 80 basisstories plus 1 P0 investigation substory, 10 epics en
 - MCP-US-003 is ná fisiese connection/deploy/execution/USB-MIDI-bewys `Done`.
 - MCP-US-007 is `Done`: v0.12.2 het op die Wemos S2 werklike Note On/Off ontvang en `matched_notes=1` gerapporteer. MCP-US-051 bly `In Review` tot sy latere klankadapterhek.
 - Die MVP Acceptance Set is US-001 tot US-009 (US-010 uitgesluit), US-014, US-016, US-050, US-051, US-055, US-057, US-063 en die veiligheidshek US-075.
-- Die bindende oorblywende volgorde is `MCP-US-080-INV-001 -> gerigte fixstory -> US-079/US-055 -> US-057`; US-016, US-063, US-075 en die MIDI-receive deel van US-078 is gesluit.
+- Die bindende oorblywende volgorde is `MCP-US-080-INV-001 -> besluit op basis van meetrapport -> US-079/US-055 -> US-057`; US-016, US-063, US-075 en die MIDI-receive deel van US-078 is gesluit.
 - US-016 besit die nuwe onafhanklike `device/i2s_test.py`; US-020 bly die latere geïntegreerde startupmelodie en is nie 'n duplikaat nie.
 - MAX98357 is die gevalideerde verstek. Ander PCM-I2S-profiele is uitbreibaar, maar nie fisies ondersteun verklaar sonder hulle eie HIL nie.
 - US-058 skei platform-onafhanklike guitar-MIDI bend/slide-semantiek van US-059 se fisiese Fishman/generiese HIL-aanvaarding.
