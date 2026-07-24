@@ -445,6 +445,7 @@ class D1UsbMidiI2sRuntimeFactory:
             sample_width_bits=16,
             frames_per_block=configuration.get("synth.d1.frames_per_block", 128),
         )
+        time_module = self._importer("time")
         mvp_timing_recorder = self._mvp_timing_recorder_for(configuration, time_module)
         i2s_output = CircuitPythonI2sAudioOutput(
             audio_format=audio_format,
@@ -476,7 +477,6 @@ class D1UsbMidiI2sRuntimeFactory:
                 amplitude=configuration.get("synth.d1.amplitude", 0.5),
             )
         )
-        time_module = self._importer("time")
         return D1UsbMidiI2sRuntime(
             midi_input=CircuitPythonUsbMidiFactory(self._importer).create_input(
                 port_index=configuration.get("midi.input.port_index", 0),

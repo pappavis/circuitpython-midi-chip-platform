@@ -205,7 +205,7 @@ class TestD1UsbMidiI2sRuntime:
                 NoteEvent.note_off(channel=1, note=69, velocity=64),
             )
         )
-        audio_output = self.ToneMemoryAudioOutput(audio_format, timing_observer=recorder)
+        audio_output = self.ToneMemoryAudioOutput(audio_format)
         core = D1SynthCore(
             D1Patch(waveform="square", audio_format=audio_format, amplitude=0.5)
         )
@@ -376,6 +376,76 @@ class TestD1UsbMidiI2sRuntime:
         factory = D1UsbMidiI2sRuntimeFactory()
 
         assert factory.create_if_enabled(MemoryConfiguration({"synth.d1.enabled": False})) is None
+
+    def test_factory_creates_runtime_with_mvp_timing_enabled(self) -> None:
+        no_sleep_cls = self.NoSleep
+
+        class FakeImporter:
+            def __call__(self, module_name, *args):
+                if module_name == "adafruit_midi":
+                    class FakeMidi:
+                        def __init__(self, midi_in=None, in_channel=None):
+                            self.midi_in = midi_in
+                            self.in_channel = in_channel
+
+                    return type("FakeAdafruitMidi", (), {"MIDI": FakeMidi})
+                if module_name == "adafruit_midi.note_on":
+                    return type("FakeNoteOnModule", (), {"NoteOn": type("NoteOn", (), {})})
+                if module_name == "adafruit_midi.note_off":
+                    return type("FakeNoteOffModule", (), {"NoteOff": type("NoteOff", (), {})})
+                if module_name == "adafruit_midi.control_change":
+                    return type(
+                        "FakeControlChangeModule",
+                        (),
+                        {"ControlChange": type("ControlChange", (), {})},
+                    )
+                if module_name == "adafruit_midi.pitch_bend":
+                    return type(
+                        "FakePitchBendModule",
+                        (),
+                        {"PitchBend": type("PitchBend", (), {})},
+                    )
+                if module_name == "adafruit_midi.timing_clock":
+                    return type(
+                        "FakeTimingClockModule",
+                        (),
+                        {"TimingClock": type("TimingClock", (), {})},
+                    )
+                if module_name == "adafruit_midi.start":
+                    return type("FakeStartModule", (), {"Start": type("Start", (), {})})
+                if module_name == "adafruit_midi.stop":
+                    return type("FakeStopModule", (), {"Stop": type("Stop", (), {})})
+                if module_name == "adafruit_midi.midi_continue":
+                    return type(
+                        "FakeContinueModule",
+                        (),
+                        {"Continue": type("Continue", (), {})},
+                    )
+                if module_name == "usb_midi":
+                    return type("FakeUsbMidi", (), {"ports": (object(),)})
+                if module_name == "board":
+                    return type(
+                        "FakeBoard",
+                        (),
+                        {"IO3": object(), "IO5": object(), "IO7": object()},
+                    )
+                if module_name == "time":
+                    return no_sleep_cls()
+                raise ImportError(module_name)
+
+        runtime = D1UsbMidiI2sRuntimeFactory(
+            importer=FakeImporter(),
+            output=[].append,
+        ).create_if_enabled(
+            MemoryConfiguration(
+                {
+                    "synth.d1.enabled": True,
+                    "hil.mvp.enabled": True,
+                }
+            )
+        )
+
+        assert runtime is not None
 
     def test_factory_uses_gpio_timing_marker_configuration(self) -> None:
         no_sleep_cls = self.NoSleep
