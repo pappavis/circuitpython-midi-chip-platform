@@ -7,10 +7,13 @@
 # Actienr: MCP-ACT-055-P0-REALTIME-FIX-003
 # ChatID: CHATOD-20260714-MCP-CP-MVP-001 / US-055-REALTIME-ANALYSE-003
 
+import pytest
+
 from midi_chip_platform.audio import AudioStreamFormat, MemoryAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
 from midi_chip_platform.d1_runtime import D1UsbMidiI2sRuntime, D1UsbMidiI2sRuntimeFactory
 from midi_chip_platform.events import NoteEvent
+from midi_chip_platform.hil_diagnostics import HilMvp001TimingRecorder
 from midi_chip_platform.testing import MemoryConfiguration, MemoryMidiInput
 
 
@@ -28,15 +31,18 @@ class TestD1UsbMidiI2sRuntime:
             return self._now
 
     class ToneMemoryAudioOutput(MemoryAudioOutput):
-        def __init__(self, audio_format):
+        def __init__(self, audio_format, timing_observer=None):
             super().__init__(audio_format)
             self._tones = []
+            self._timing_observer = timing_observer
 
         @property
         def tones(self):
             return tuple(self._tones)
 
         def play_tone(self, frequency_hz, duration_seconds, amplitude=8192):
+            if self._timing_observer is not None:
+                self._timing_observer.record_i2s_dma_write()
             self._tones.append(
                 ("play", float(frequency_hz), float(duration_seconds), int(amplitude))
             )
@@ -48,6 +54,18 @@ class TestD1UsbMidiI2sRuntime:
 
         def stop_tone(self):
             self._tones.append(("stop",))
+
+    class ObservedMemoryMidiInput(MemoryMidiInput):
+        def __init__(self, events, observer):
+            super().__init__(events)
+            self._observer = observer
+
+        def receive(self):
+            event = super().receive()
+            if event is not None:
+                self._observer.record_raw_message(0, object())
+                self._observer.record_decoded_event(0, object(), event)
+            return event
 
     class RecordingTimingMarker:
         def __init__(self):
@@ -210,8 +228,7 @@ class TestD1UsbMidiI2sRuntime:
 
         assert result is True
         assert len(audio_output.blocks) == 0
-        assert audio_output.tones[0] == ("start", 440.0, 8192)
-        assert audio_output.tones[-1] == ("stop",)
+        assert audio_output.tones[0] == ("play", 440.0, 0.05, 8192)
         assert marker.calls == ("open", "begin", "end", "close")
         assert any(
             line.startswith(
@@ -223,11 +240,59 @@ class TestD1UsbMidiI2sRuntime:
         )
         assert any(
             line.startswith(
-                "D1_AUDIO_EVENT=audible_note;mode=latched_tone;note=69;"
-                "blocks=5;minimum_seconds=0.050"
+                "D1_AUDIO_EVENT=audible_note;mode=blocking_tone;note=69;"
+                "blocks=5;seconds=0.050"
             )
             for line in output
         ) is False
+
+    @pytest.mark.smoke
+    def test_hil_mvp_001_timing_table_is_opt_in_and_bounded(self) -> None:
+        audio_format = AudioStreamFormat(
+            sample_rate=16000,
+            frames_per_block=160,
+        )
+        sleeper = self.NoSleep()
+        recorder = HilMvp001TimingRecorder(
+            monotonic=sleeper.monotonic,
+            expected_note=60,
+            expected_velocity=100,
+        )
+        midi_input = self.ObservedMemoryMidiInput(
+            (
+                NoteEvent.note_on(channel=1, note=60, velocity=100),
+                NoteEvent.note_off(channel=1, note=60, velocity=64),
+                None,
+            ),
+            observer=recorder,
+        )
+        audio_output = self.ToneMemoryAudioOutput(audio_format, timing_observer=recorder)
+        core = D1SynthCore(
+            D1Patch(waveform="square", audio_format=audio_format, amplitude=0.5)
+        )
+        output = []
+        runtime = D1UsbMidiI2sRuntime(
+            midi_input=midi_input,
+            audio_output=audio_output,
+            core=core,
+            output=output.append,
+            sleeper=sleeper,
+            max_blocks=8,
+            minimum_note_seconds=0.05,
+            event_logging="summary",
+            mvp_timing_recorder=recorder,
+        )
+
+        result = runtime.run()
+
+        assert result is True
+        assert any(line == "HIL-MVP-001 TABLE=Timestamp|Layer|LatencyMs|DeltaMs|Result" for line in output)
+        assert any(line.startswith("HIL-MVP-001 ROW=T0|USB receive|0|") for line in output)
+        assert any(line.startswith("HIL-MVP-001 ROW=T3|play_tone entered|") for line in output)
+        assert any(line.startswith("HIL-MVP-001 ROW=T4|play_tone returned|") for line in output)
+        assert any(line.startswith("HIL-MVP-001 ROW=T5|I2S first DMA write|") for line in output)
+        assert any(line.startswith("HIL-MVP-001 LARGEST_DELTA=") for line in output)
+        assert any(line.startswith("HIL-MVP-001 RESULT=PASS") for line in output)
 
     def test_verbose_event_logging_keeps_diagnostic_midi_and_audio_lines(self) -> None:
         audio_format = AudioStreamFormat(
@@ -263,8 +328,8 @@ class TestD1UsbMidiI2sRuntime:
         assert "D1_MIDI_EVENT=note_on;channel=1;note=69;velocity=100" in output
         assert any(
             line.startswith(
-                "D1_AUDIO_EVENT=audible_note;mode=latched_tone;note=69;"
-                "blocks=5;minimum_seconds=0.050"
+                "D1_AUDIO_EVENT=audible_note;mode=blocking_tone;note=69;"
+                "blocks=5;seconds=0.050"
             )
             for line in output
         )
@@ -311,6 +376,76 @@ class TestD1UsbMidiI2sRuntime:
         factory = D1UsbMidiI2sRuntimeFactory()
 
         assert factory.create_if_enabled(MemoryConfiguration({"synth.d1.enabled": False})) is None
+
+    def test_factory_creates_runtime_with_mvp_timing_enabled(self) -> None:
+        no_sleep_cls = self.NoSleep
+
+        class FakeImporter:
+            def __call__(self, module_name, *args):
+                if module_name == "adafruit_midi":
+                    class FakeMidi:
+                        def __init__(self, midi_in=None, in_channel=None):
+                            self.midi_in = midi_in
+                            self.in_channel = in_channel
+
+                    return type("FakeAdafruitMidi", (), {"MIDI": FakeMidi})
+                if module_name == "adafruit_midi.note_on":
+                    return type("FakeNoteOnModule", (), {"NoteOn": type("NoteOn", (), {})})
+                if module_name == "adafruit_midi.note_off":
+                    return type("FakeNoteOffModule", (), {"NoteOff": type("NoteOff", (), {})})
+                if module_name == "adafruit_midi.control_change":
+                    return type(
+                        "FakeControlChangeModule",
+                        (),
+                        {"ControlChange": type("ControlChange", (), {})},
+                    )
+                if module_name == "adafruit_midi.pitch_bend":
+                    return type(
+                        "FakePitchBendModule",
+                        (),
+                        {"PitchBend": type("PitchBend", (), {})},
+                    )
+                if module_name == "adafruit_midi.timing_clock":
+                    return type(
+                        "FakeTimingClockModule",
+                        (),
+                        {"TimingClock": type("TimingClock", (), {})},
+                    )
+                if module_name == "adafruit_midi.start":
+                    return type("FakeStartModule", (), {"Start": type("Start", (), {})})
+                if module_name == "adafruit_midi.stop":
+                    return type("FakeStopModule", (), {"Stop": type("Stop", (), {})})
+                if module_name == "adafruit_midi.midi_continue":
+                    return type(
+                        "FakeContinueModule",
+                        (),
+                        {"Continue": type("Continue", (), {})},
+                    )
+                if module_name == "usb_midi":
+                    return type("FakeUsbMidi", (), {"ports": (object(),)})
+                if module_name == "board":
+                    return type(
+                        "FakeBoard",
+                        (),
+                        {"IO3": object(), "IO5": object(), "IO7": object()},
+                    )
+                if module_name == "time":
+                    return no_sleep_cls()
+                raise ImportError(module_name)
+
+        runtime = D1UsbMidiI2sRuntimeFactory(
+            importer=FakeImporter(),
+            output=[].append,
+        ).create_if_enabled(
+            MemoryConfiguration(
+                {
+                    "synth.d1.enabled": True,
+                    "hil.mvp.enabled": True,
+                }
+            )
+        )
+
+        assert runtime is not None
 
     def test_factory_uses_gpio_timing_marker_configuration(self) -> None:
         no_sleep_cls = self.NoSleep

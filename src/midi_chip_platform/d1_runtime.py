@@ -10,6 +10,10 @@
 from midi_chip_platform.audio import AudioSafetyProfile, AudioStreamFormat, SafeAudioOutput
 from midi_chip_platform.d1_core import D1Patch, D1SynthCore
 from midi_chip_platform.events import NoteEvent
+from midi_chip_platform.hil_diagnostics import (
+    HilMvp001TimingRecorder,
+    NullHilMvp001TimingRecorder,
+)
 from midi_chip_platform.i2s_audio import CircuitPythonI2sAudioOutput
 from midi_chip_platform.midi_usb import CircuitPythonUsbMidiFactory
 from midi_chip_platform.ports import AudioOutputPort, ConfigurationPort, MidiInputPort
@@ -95,6 +99,7 @@ class D1UsbMidiI2sRuntime:
         audition_tone_amplitude=8192,
         event_logging="none",
         timing_marker=None,
+        mvp_timing_recorder=None,
     ):
         if not isinstance(midi_input, MidiInputPort):
             raise TypeError("midi_input must implement MidiInputPort")
@@ -118,6 +123,11 @@ class D1UsbMidiI2sRuntime:
             raise ValueError("event_logging must be none, summary or verbose")
         self._timing_marker = (
             timing_marker if timing_marker is not None else NullTimingMarker()
+        )
+        self._mvp_timing_recorder = (
+            mvp_timing_recorder
+            if mvp_timing_recorder is not None
+            else NullHilMvp001TimingRecorder()
         )
         self._block_count = 0
         self._note_event_count = 0
@@ -176,6 +186,7 @@ class D1UsbMidiI2sRuntime:
                 event = self._midi_input.receive()
                 if isinstance(event, NoteEvent):
                     playable_event = self._playable_event(event)
+                    self._mvp_timing_recorder.record_scheduler(event)
                     self._core.handle_event(playable_event)
                     self._note_event_count += 1
                     self._log_verbose(
@@ -268,28 +279,37 @@ class D1UsbMidiI2sRuntime:
             requested_blocks = max(0, min(requested_blocks, remaining_blocks))
         if requested_blocks <= 0:
             return
-        if hasattr(self._audio_output, "start_tone"):
+        if hasattr(self._audio_output, "play_tone"):
+            self._mvp_timing_recorder.record_pcm(event)
             self._timing_marker.begin_note_on()
             try:
-                self._audio_output.start_tone(
+                self._mvp_timing_recorder.record_play_tone_entered(event)
+                self._audio_output.play_tone(
                     frequency_hz=self._core.active_frequency_hz,
+                    duration_seconds=self._seconds_for_blocks(requested_blocks),
                     amplitude=self._audition_tone_amplitude,
                 )
+                self._mvp_timing_recorder.record_play_tone_returned(event)
             finally:
                 self._timing_marker.end_note_on()
-            self._tone_started = True
-            self._tone_started_at = self._current_time()
+            self._tone_started = False
+            self._tone_started_at = 0.0
             self._pending_tone_stop_at = None
             self._block_count += requested_blocks
             self._audible_note_count += 1
             self._log_verbose(
                 "D1_AUDIO_EVENT=audible_note;"
-                f"mode=latched_tone;note={event.note};blocks={requested_blocks};"
-                f"minimum_seconds={self._seconds_for_blocks(requested_blocks):.3f};"
+                f"mode=blocking_tone;note={event.note};blocks={requested_blocks};"
+                f"seconds={self._seconds_for_blocks(requested_blocks):.3f};"
                 f"midi_velocity={event.velocity};play_velocity={playable_event.velocity}"
             )
+            self._mvp_timing_recorder.emit_if_ready(self._output)
             return self._current_time()
+        self._mvp_timing_recorder.record_pcm(event)
         self._write_minimum_audible_note(event, playable_event)
+        self._mvp_timing_recorder.record_play_tone_entered(event)
+        self._mvp_timing_recorder.record_play_tone_returned(event)
+        self._mvp_timing_recorder.emit_if_ready(self._output)
         return self._current_time()
 
     def _schedule_tone_stop(self):
@@ -425,12 +445,15 @@ class D1UsbMidiI2sRuntimeFactory:
             sample_width_bits=16,
             frames_per_block=configuration.get("synth.d1.frames_per_block", 128),
         )
+        time_module = self._importer("time")
+        mvp_timing_recorder = self._mvp_timing_recorder_for(configuration, time_module)
         i2s_output = CircuitPythonI2sAudioOutput(
             audio_format=audio_format,
             importer=self._importer,
             bit_clock_pin_name=configuration.get("audio.i2s.bit_clock", "IO5"),
             word_select_pin_name=configuration.get("audio.i2s.word_select", "IO3"),
             data_pin_name=configuration.get("audio.i2s.data", "IO7"),
+            timing_observer=mvp_timing_recorder,
         )
         safe_output = SafeAudioOutput(
             i2s_output,
@@ -454,10 +477,10 @@ class D1UsbMidiI2sRuntimeFactory:
                 amplitude=configuration.get("synth.d1.amplitude", 0.5),
             )
         )
-        time_module = self._importer("time")
         return D1UsbMidiI2sRuntime(
             midi_input=CircuitPythonUsbMidiFactory(self._importer).create_input(
-                port_index=configuration.get("midi.input.port_index", 0)
+                port_index=configuration.get("midi.input.port_index", 0),
+                trace_observer=mvp_timing_recorder,
             ),
             audio_output=safe_output,
             core=core,
@@ -471,6 +494,7 @@ class D1UsbMidiI2sRuntimeFactory:
             audition_tone_amplitude=configuration.get("synth.d1.audition_tone_amplitude", 8192),
             event_logging=configuration.get("synth.d1.event_logging", "none"),
             timing_marker=self._timing_marker_for(configuration),
+            mvp_timing_recorder=mvp_timing_recorder,
         )
 
     def _timing_marker_for(self, configuration):
@@ -479,4 +503,19 @@ class D1UsbMidiI2sRuntimeFactory:
         return CircuitPythonGpioTimingMarker(
             importer=self._importer,
             pin_name=configuration.get("synth.d1.timing_marker_pin", "IO9"),
+        )
+
+    @staticmethod
+    def _mvp_timing_recorder_for(configuration, time_module):
+        if not configuration.get("hil.mvp.enabled", False):
+            return NullHilMvp001TimingRecorder()
+        return HilMvp001TimingRecorder(
+            monotonic=time_module.monotonic,
+            expected_note=configuration.get("hil.mvp.note", 60),
+            expected_velocity=configuration.get("hil.mvp.velocity", 100),
+            average_limit_ms=configuration.get("hil.mvp.average_limit_ms", 25),
+            maximum_limit_ms=configuration.get("hil.mvp.maximum_limit_ms", 100),
+            single_event_limit_ms=configuration.get("hil.mvp.single_event_limit_ms", 250),
+            fail_limit_ms=configuration.get("hil.mvp.fail_limit_ms", 1000),
+            critical_limit_ms=configuration.get("hil.mvp.critical_limit_ms", 10000),
         )

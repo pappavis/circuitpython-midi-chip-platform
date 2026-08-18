@@ -1,11 +1,11 @@
 # Bestand: test_configuration.py
-# Versienommer: 0.20.1
-# Doel: Spesifiseer publieke D1-runtime, realtime-, synthio- en bounded MIDI-investigation-instellings plus private settings.
+# Versienommer: 0.21.0
+# Doel: Spesifiseer publieke D1-runtime, realtime-, synthio-, MIDI- en HIL-diagnostiek plus private settings.
 # Sprint: Sprint 1
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
-# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
+# User-Story: HIL-DIAGNOSTIC-FRAMEWORK-001 Deterministic HIL Diagnostic Framework
+# Actienr: HIL-DIAG-RED-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / HIL-DIAGNOSTIC-FRAMEWORK-001
 
 from midi_chip_platform.configuration import (
     ConfigurationDefaults,
@@ -82,6 +82,16 @@ class TestConfigurationDefaults:
         assert snapshot.get("midi.routing_diagnostic.event_logging") == "summary"
         assert snapshot.get("midi.routing_diagnostic.heartbeat_seconds") == 2.0
         assert snapshot.get("midi.routing_diagnostic.max_trace_lines") == 96
+        assert snapshot.get("hil.diagnostic.enabled") is False
+        assert snapshot.get("hil.deployment.expected_version") is None
+        assert snapshot.get("hil.deployment.expected_release_date") is None
+        assert snapshot.get("hil.deployment.expected_story") is None
+        assert snapshot.get("hil.deployment.expected_code_checksum") is None
+        assert snapshot.get("hil.deployment.expected_boot_checksum") is None
+        assert snapshot.get("hil.raw_midi.max_packets") == 8
+        assert snapshot.get("hil.raw_midi.timeout_seconds") == 0.25
+        assert snapshot.get("hil.parser.max_messages") == 8
+        assert snapshot.get("hil.parser.timeout_seconds") == 0.25
 
     def test_device_settings_example_quotes_non_integer_values_for_circuitpython_10(self) -> None:
         settings_example = (
@@ -135,6 +145,12 @@ class TestConfigurationDefaults:
         assert 'MIDI_ROUTING_DIAGNOSTIC_EVENT_LOGGING = "summary"' in settings_example
         assert 'MIDI_ROUTING_DIAGNOSTIC_HEARTBEAT_SECONDS = "2.0"' in settings_example
         assert "MIDI_ROUTING_DIAGNOSTIC_MAX_TRACE_LINES = 96" in settings_example
+        assert 'HIL_DIAGNOSTIC_ENABLED = "false"' in settings_example
+        assert 'HIL_RAW_MIDI_TIMEOUT_SECONDS = "0.25"' in settings_example
+        assert 'HIL_PARSER_TIMEOUT_SECONDS = "0.25"' in settings_example
+        assert 'HIL_MVP_001_ENABLED = "false"' in settings_example
+        assert "HIL_MVP_001_NOTE = 60" in settings_example
+        assert "HIL_MVP_001_VELOCITY = 100" in settings_example
 
 
 class TestConfigurationSecretBoundary:
@@ -234,6 +250,19 @@ class TestConfigurationSecretBoundary:
             "MIDI_ROUTING_DIAGNOSTIC_SCAN_ALL_PORTS": "false",
             "MIDI_ROUTING_DIAGNOSTIC_MAX_EVENTS": "32",
             "MIDI_ROUTING_DIAGNOSTIC_HEARTBEAT_SECONDS": "0.5",
+            "HIL_DIAGNOSTIC_ENABLED": "true",
+            "HIL_RAW_MIDI_MAX_PACKETS": "4",
+            "HIL_RAW_MIDI_TIMEOUT_SECONDS": "0.5",
+            "HIL_PARSER_MAX_MESSAGES": "5",
+            "HIL_PARSER_TIMEOUT_SECONDS": "0.75",
+            "HIL_MVP_001_ENABLED": "true",
+            "HIL_MVP_001_NOTE": "61",
+            "HIL_MVP_001_VELOCITY": "99",
+            "HIL_MVP_001_AVERAGE_LIMIT_MS": "20",
+            "HIL_MVP_001_MAXIMUM_LIMIT_MS": "80",
+            "HIL_MVP_001_SINGLE_EVENT_LIMIT_MS": "200",
+            "HIL_MVP_001_FAIL_LIMIT_MS": "900",
+            "HIL_MVP_001_CRITICAL_LIMIT_MS": "9000",
             "MIDI_DIAGNOSTIC_ENABLED": "true",
             "MIDI_DIAGNOSTIC_MAX_EVENTS": "12",
         }
@@ -256,6 +285,19 @@ class TestConfigurationSecretBoundary:
         assert snapshot.get("midi.routing_diagnostic.scan_all_ports") is False
         assert snapshot.get("midi.routing_diagnostic.max_events") == 32
         assert snapshot.get("midi.routing_diagnostic.heartbeat_seconds") == 0.5
+        assert snapshot.get("hil.diagnostic.enabled") is True
+        assert snapshot.get("hil.raw_midi.max_packets") == 4
+        assert snapshot.get("hil.raw_midi.timeout_seconds") == 0.5
+        assert snapshot.get("hil.parser.max_messages") == 5
+        assert snapshot.get("hil.parser.timeout_seconds") == 0.75
+        assert snapshot.get("hil.mvp.enabled") is True
+        assert snapshot.get("hil.mvp.note") == 61
+        assert snapshot.get("hil.mvp.velocity") == 99
+        assert snapshot.get("hil.mvp.average_limit_ms") == 20
+        assert snapshot.get("hil.mvp.maximum_limit_ms") == 80
+        assert snapshot.get("hil.mvp.single_event_limit_ms") == 200
+        assert snapshot.get("hil.mvp.fail_limit_ms") == 900
+        assert snapshot.get("hil.mvp.critical_limit_ms") == 9000
         assert snapshot.get("midi.diagnostic.enabled") is True
         assert snapshot.get("midi.diagnostic.max_events") == 12
 

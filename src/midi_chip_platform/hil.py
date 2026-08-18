@@ -1,11 +1,11 @@
 # Bestand: hil.py
-# Versienommer: 0.20.1
-# Doel: Verifieer dependency-closed deploy met MIDI-routing diagnose, synthio-baseline en CircuitPython-vriendelijke tempbestanden.
+# Versienommer: 0.21.0
+# Doel: Verifieer dependency-closed deploy met MIDI-routing diagnose, synthio-baseline en HIL-diagnostics.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
-# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
+# User-Story: HIL-DIAGNOSTIC-FRAMEWORK-001 Layered HIL Diagnostic Framework
+# Actienr: MCP-ACT-HIL-DIAGNOSTIC-FRAMEWORK-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / HIL-DIAGNOSTIC-FRAMEWORK-001
 
 import ast
 import hashlib
@@ -106,6 +106,10 @@ class HilDeploymentManifest:
                 (
                     "src/midi_chip_platform/midi_performance.py",
                     "lib/midi_chip_platform/midi_performance.py",
+                ),
+                (
+                    "src/midi_chip_platform/hil_diagnostics.py",
+                    "lib/midi_chip_platform/hil_diagnostics.py",
                 ),
             )
         )

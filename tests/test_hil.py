@@ -1,11 +1,11 @@
 # Bestand: test_hil.py
-# Versienommer: 0.20.1
-# Doel: Spesifiseer deploy-tempbestanden, execution, MIDI-routing diagnose, synthio-baseline en D1-runtime releasebewys.
+# Versienommer: 0.21.0
+# Doel: Spesifiseer deploy-tempbestanden, execution, MIDI-routing diagnose, synthio-baseline en HIL-diagnostics.
 # Sprint: Sprint 2
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
-# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
+# User-Story: HIL-DIAGNOSTIC-FRAMEWORK-001 Layered HIL Diagnostic Framework
+# Actienr: MCP-ACT-HIL-DIAGNOSTIC-FRAMEWORK-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / HIL-DIAGNOSTIC-FRAMEWORK-001
 
 from io import StringIO
 from pathlib import Path
@@ -26,7 +26,7 @@ class TestHilDeploymentManifest:
     def test_default_manifest_contains_minimal_device_release(self) -> None:
         manifest = HilDeploymentManifest.default()
 
-        assert len(manifest.entries) == 24
+        assert len(manifest.entries) == 25
         assert ("device/boot.py", "boot.py") in manifest.entries
         assert ("device/i2s_test.py", "i2s_test.py") in manifest.entries
         assert (
@@ -100,6 +100,10 @@ class TestHilDeploymentManifest:
         assert (
             "src/midi_chip_platform/midi_performance.py",
             "lib/midi_chip_platform/midi_performance.py",
+        ) in manifest.entries
+        assert (
+            "src/midi_chip_platform/hil_diagnostics.py",
+            "lib/midi_chip_platform/hil_diagnostics.py",
         ) in manifest.entries
 
     def test_default_manifest_is_closed_over_internal_imports(self) -> None:
@@ -354,15 +358,15 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.20.1 | story=MCP-US-080-INV-001 | "
-            "release-date=2026-07-23\n"
+            "circuitpython-midi-chip-platform v0.21.0 | story=HIL-DIAGNOSTIC-FRAMEWORK-001 | "
+            "release-date=2026-07-24\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.20.1 | story=MCP-US-080-INV-001 | "
-            "release-date=2026-07-23\nDEVICE_IMPORT_STATUS=PASS\n"
+            "circuitpython-midi-chip-platform v0.21.0 | story=HIL-DIAGNOSTIC-FRAMEWORK-001 | "
+            "release-date=2026-07-24\nDEVICE_IMPORT_STATUS=PASS\n"
             "DEVICE_EXECUTION_STATUS=READY"
         )
         verifier = HardwareInLoopVerifier(
@@ -398,15 +402,15 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.20.1 | story=MCP-US-080-INV-001 | "
-            "release-date=2026-07-23\n"
+            "circuitpython-midi-chip-platform v0.21.0 | story=HIL-DIAGNOSTIC-FRAMEWORK-001 | "
+            "release-date=2026-07-24\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.20.1 | story=MCP-US-080-INV-001 | "
-            "release-date=2026-07-23\n"
+            "circuitpython-midi-chip-platform v0.21.0 | story=HIL-DIAGNOSTIC-FRAMEWORK-001 | "
+            "release-date=2026-07-24\n"
             "DEVICE_FAST_BOOT_STATUS=ENABLED\n"
             "D1_MIDI_INPUT_STATUS=OPEN\n"
             "D1_RUNTIME_READY;ready_ms=52"
@@ -440,15 +444,15 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.20.1 | story=MCP-US-080-INV-001 | "
-            "release-date=2026-07-23\n"
+            "circuitpython-midi-chip-platform v0.21.0 | story=HIL-DIAGNOSTIC-FRAMEWORK-001 | "
+            "release-date=2026-07-24\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.20.1 | story=MCP-US-080-INV-001 | "
-            "release-date=2026-07-23\n"
+            "circuitpython-midi-chip-platform v0.21.0 | story=HIL-DIAGNOSTIC-FRAMEWORK-001 | "
+            "release-date=2026-07-24\n"
             "DEVICE_FAST_BOOT_STATUS=ENABLED\n"
             "REALTIME_BASELINE_MIDI_INPUT_STATUS=OPEN\n"
             "REALTIME_BASELINE_READY;ready_ms=8"
@@ -482,15 +486,15 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.20.1 | story=MCP-US-080-INV-001 | "
-            "release-date=2026-07-23\n"
+            "circuitpython-midi-chip-platform v0.21.0 | story=HIL-DIAGNOSTIC-FRAMEWORK-001 | "
+            "release-date=2026-07-24\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.20.1 | story=MCP-US-080-INV-001 | "
-            "release-date=2026-07-23\n"
+            "circuitpython-midi-chip-platform v0.21.0 | story=HIL-DIAGNOSTIC-FRAMEWORK-001 | "
+            "release-date=2026-07-24\n"
             "DEVICE_FAST_BOOT_STATUS=ENABLED\n"
             "SYNTHIO_BASELINE_MIDI_INPUT_STATUS=OPEN\n"
             "SYNTHIO_BASELINE_READY;ready_ms=8"
@@ -524,15 +528,15 @@ class TestHardwareInLoopVerifier:
         (device_root / "lib" / "adafruit_midi").mkdir(parents=True)
         (device_root / "boot_out.txt").write_text(
             "Board ID:lolin_s2_mini\n"
-            "circuitpython-midi-chip-platform v0.20.1 | story=MCP-US-080-INV-001 | "
-            "release-date=2026-07-23\n"
+            "circuitpython-midi-chip-platform v0.21.0 | story=HIL-DIAGNOSTIC-FRAMEWORK-001 | "
+            "release-date=2026-07-24\n"
             "BOOT_STATUS=PASS\n",
             encoding="utf-8",
         )
         output = StringIO()
         serial_probe = self.FakeSerialProbe(
-            "circuitpython-midi-chip-platform v0.20.1 | story=MCP-US-080-INV-001 | "
-            "release-date=2026-07-23\n"
+            "circuitpython-midi-chip-platform v0.21.0 | story=HIL-DIAGNOSTIC-FRAMEWORK-001 | "
+            "release-date=2026-07-24\n"
             "DEVICE_FAST_BOOT_STATUS=ENABLED\n"
             "MIDI_ROUTING_DIAGNOSTIC_INPUT_STATUS=OPEN\n"
             "MIDI_ROUTING_DIAGNOSTIC_READY;ready_ms=0"

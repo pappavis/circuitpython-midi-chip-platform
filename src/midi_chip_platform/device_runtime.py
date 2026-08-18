@@ -1,11 +1,11 @@
 # Bestand: device_runtime.py
-# Versienommer: 0.20.1
-# Doel: Lewer toestelbewys en aktiveer NoteOn-investigation, synthio-baseline, realtime-baseline, D1 fast boot of diagnostiek.
+# Versienommer: 0.21.0
+# Doel: Lewer toestelbewys en aktiveer HIL-, NoteOn-, synthio-, realtime-, D1- of MIDI-diagnostiek.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
-# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
+# User-Story: HIL-DIAGNOSTIC-FRAMEWORK-001 Deterministic HIL Diagnostic Framework
+# Actienr: HIL-DIAG-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / HIL-DIAGNOSTIC-FRAMEWORK-001
 
 from midi_chip_platform.release import ReleaseMetadata
 
@@ -31,6 +31,7 @@ class DeviceRuntimeApplication:
         capability_discovery=None,
         configuration_loader=None,
         import_smoke_check=None,
+        hil_diagnostic_factory=None,
         midi_diagnostic_factory=None,
         midi_routing_diagnostic_factory=None,
         synthio_baseline_factory=None,
@@ -44,6 +45,7 @@ class DeviceRuntimeApplication:
         self._capability_discovery = capability_discovery
         self._configuration_loader = configuration_loader
         self._import_smoke_check = import_smoke_check
+        self._hil_diagnostic_factory = hil_diagnostic_factory
         self._midi_diagnostic_factory = midi_diagnostic_factory
         self._midi_routing_diagnostic_factory = midi_routing_diagnostic_factory
         self._synthio_baseline_factory = synthio_baseline_factory
@@ -76,6 +78,10 @@ class DeviceRuntimeApplication:
             diagnostic = self._midi_diagnostic_factory.create_if_enabled(configuration)
             if diagnostic is not None:
                 return bool(diagnostic.run())
+        if self._hil_diagnostic_factory is not None and configuration is not None:
+            diagnostic = self._hil_diagnostic_factory.create_if_enabled(configuration)
+            if diagnostic is not None:
+                return bool(diagnostic.run())
         if (
             self._midi_routing_diagnostic_factory is not None
             and configuration is not None
@@ -105,6 +111,11 @@ class DeviceRuntimeApplication:
         if configuration.get("midi.diagnostic.enabled", False):
             return False
         if (
+            self._hil_diagnostic_factory is not None
+            and configuration.get("hil.diagnostic.enabled", False)
+        ):
+            return True
+        if (
             self._midi_routing_diagnostic_factory is not None
             and configuration.get("midi.routing_diagnostic.enabled", False)
         ):
@@ -126,6 +137,13 @@ class DeviceRuntimeApplication:
         return bool(configuration.get("synth.d1.fast_boot_mode", False))
 
     def _create_runtime(self, configuration):
+        if (
+            self._hil_diagnostic_factory is not None
+            and configuration.get("hil.diagnostic.enabled", False)
+        ):
+            diagnostic = self._hil_diagnostic_factory.create_if_enabled(configuration)
+            if diagnostic is not None:
+                return diagnostic
         if (
             self._midi_routing_diagnostic_factory is not None
             and configuration.get("midi.routing_diagnostic.enabled", False)

@@ -1,15 +1,16 @@
 # Bestand: code.py
-# Versienommer: 0.20.1
-# Doel: Start NoteOn-investigation, synthio-baseline, realtime MIDI-audio baseline of D1 runtime op die toestel.
+# Versienommer: 0.21.0
+# Doel: Start HIL-diagnostiek, NoteOn-investigation, synthio-baseline, realtime-baseline of D1 runtime op die toestel.
 # Sprint: Sprint 3
 # Epic: MCP-EPIC-008 Portability, Quality And Release
-# User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
-# Actienr: MCP-ACT-080-INV-001-INSTRUMENT-001
-# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001
+# User-Story: HIL-DIAGNOSTIC-FRAMEWORK-001 Deterministic HIL Diagnostic Framework
+# Actienr: HIL-DIAG-GREEN-001
+# ChatID: CHATOD-20260714-MCP-CP-MVP-001 / HIL-DIAGNOSTIC-FRAMEWORK-001
 
 from midi_chip_platform.configuration import CircuitPythonConfigurationFactory
 from midi_chip_platform.device_runtime import DeviceImportSmokeCheck, DeviceRuntimeApplication
 from midi_chip_platform.d1_runtime import D1UsbMidiI2sRuntimeFactory
+from midi_chip_platform.hil_diagnostics import CircuitPythonHilDiagnosticFactory
 from midi_chip_platform.midi_routing_diagnostic import MidiRoutingDiagnosticFactory
 from midi_chip_platform.midi_usb import CircuitPythonUsbMidiDiagnosticFactory
 from midi_chip_platform.platform_capabilities import CircuitPythonCapabilityFactory
@@ -43,6 +44,7 @@ if __name__ == "__main__":
                 "midi_chip_platform.d1_core",
                 "midi_chip_platform.d1_runtime",
                 "midi_chip_platform.events",
+                "midi_chip_platform.hil_diagnostics",
                 "midi_chip_platform.i2s_audio",
                 "midi_chip_platform.midi_performance",
                 "midi_chip_platform.midi_routing_diagnostic",
@@ -53,6 +55,11 @@ if __name__ == "__main__":
                 "midi_chip_platform.routing",
                 "midi_chip_platform.synthio_runtime",
             ),
+        ),
+        hil_diagnostic_factory=CircuitPythonHilDiagnosticFactory(
+            release_metadata=ReleaseMetadata(),
+            importer=__import__,
+            output=print,
         ),
         midi_diagnostic_factory=CircuitPythonUsbMidiDiagnosticFactory(
             importer=__import__,
