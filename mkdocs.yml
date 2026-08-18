@@ -33,6 +33,14 @@ nav:
       - Repository identity and synchronization: docs/repository_identity_and_sync_v0.1.0.md
       - Device connection proof: docs/device_connection_proof_v0.1.0.md
 
+  - Project memory and automation:
+      - Current project memory: MEMORY.md
+      - Memory setup guide: docs/memory/README_memory_setup.md
+      - Memory history 2026-08-18 12:27: docs/memory/memory_history_202608181227.md
+      - Memory history 2026-08-18 12:28: docs/memory/memory_history_202608181228.md
+      - Memory history 2026-08-18 12:30: docs/memory/memory_history_202608181230.md
+      - Automatic commit memory notes: scripts/memory_auto_commit.md
+
   - Governance and delivery:
       - Binding agent and delivery rules: AGENTS.md
       - Governance overview: docs/governance/README.md
