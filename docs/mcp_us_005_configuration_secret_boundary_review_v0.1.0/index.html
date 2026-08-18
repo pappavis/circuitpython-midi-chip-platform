@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>MCP-US-005 Configuration and secrets - CircuitPython MIDI Chip Platform</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "MCP-US-005 Configuration and secrets";
+        var mkdocs_page_input_path = "docs/mcp_us_005_configuration_secret_boundary_review_v0.1.0.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CircuitPython MIDI Chip Platform
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Start</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../..">Project overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Documentation index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quickstart_installation_v0.1.0/">Quickstart and installation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Emergency recovery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../00_Start_HERE_Emergency_recovery_pack/">Start here</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../EMERGENCY_DISASTER_RECOVERY/">Detailed disaster recovery handbook</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../repository_identity_and_sync_v0.1.0/">Repository identity and synchronization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../device_connection_proof_v0.1.0/">Device connection proof</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Governance and delivery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../AGENTS/">Binding agent and delivery rules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/">Governance overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/principal_qa_architect_agent_v0.1.0/">Principal QA Architect gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/regression_memory_v0.1.0/">Regression memory</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/instrumentation_design_review_template_v1.0/">Instrumentation Design Review template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/evidence_package_template_v1.0/">Evidence package template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../agile_delivery_release_plan_v0.1.0/">Agile delivery and release plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../team_raci_v0.1.0/">Team and RACI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../risk_register_v0.1.0/">Risk register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../source_register_v0.1.0/">Source register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../backlog_sanity_check_v0.1.0/">Backlog sanity check</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reuse_matrix_v0.1.0/">Reuse matrix</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MVP and product scope</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp_scope_v0.1.0/">Frozen MVP scope</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp/MVP_BUILD_PLAN/">MVP build plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../user_stories_v0.1.0/">User-story catalogue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../audio_priority_amendment_v0.1.0/">Audio priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ble_midi_core_priority_amendment_v0.1.0/">BLE MIDI and core priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../midi_transport_multicore_amendment_v0.1.0/">MIDI transport and multi-core amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../wifi_runtime_fallback_amendment_v0.1.0/">Wi-Fi runtime fallback amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../physical_chip_display_expansion_amendment_v0.1.0/">Physical chip and display expansion</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../burn_in_heap_stability_spec_v0.1.0/">Burn-in and heap stability</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Framework engineering</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/">Framework engineering index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_vision_v0.1.0/">Enterprise vision</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/architecture_v0.1.0/">Architecture</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_meta_model_v0.1.0/">Enterprise meta model</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/artefact_taxonomy_v0.1.0/">Artefact taxonomy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/quality_manual_v0.1.0/">Quality manual</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/test_strategy_v0.1.0/">Test strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/review_engine_v0.1.0/">Review engine</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/adr_repository_index_v0.1.0/">ADR repository index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/context_loader_specification_v0.1.0/">Context loader specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/prompt_compiler_specification_v0.1.0/">Prompt compiler specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/knowledge_base_structure_v0.1.0/">Knowledge-base structure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/glossary_v0.1.0/">Glossary</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Architecture decisions</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-001-repository-strategy/">ADR-001 Repository strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-002-reference-platform/">ADR-002 Reference platform</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-003-audio-strategy/">ADR-003 Audio strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-004-persistent-realtime-audio-graph/">ADR-004 Persistent realtime audio graph</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/MCP-US-101-FIRST-MVP-STEP/">MCP-US-101 First MVP step</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Foundation stories</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../board_capability_matrix_v0.1.0/">Board capability matrix</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_001_device_source_baseline_inventory_v0.1.0/">MCP-US-001 Device and source baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_002_project_skeleton_review_v0.1.0/">MCP-US-002 Project skeleton</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_003_safe_boot_review_v0.1.0/">MCP-US-003 Safe boot</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_004_board_capability_review_v0.1.0/">MCP-US-004 Board capabilities</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">MCP-US-005 Configuration and secrets</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#status">Status</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#konfigurasieprioriteit">Konfigurasieprioriteit</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#geheimegrens">Geheimegrens</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#redgreen-bewys">RED/GREEN-bewys</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#menslike-herhaaltoets">Menslike herhaaltoets</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#virtuele-spanreview">Virtuele spanreview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#llm-gebruik">LLM-gebruik</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_006_portable_event_model_review_v0.1.0/">MCP-US-006 Portable event model</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MIDI stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_007_usb_midi_receive_review_v0.1.0/">MCP-US-007 USB-MIDI receive</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_008_midi_channel_router_review_v0.1.0/">MCP-US-008 MIDI channel router</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_009_note_semantics_review_v0.1.0/">MCP-US-009 Note semantics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_010_pitch_bend_cc1_review_v0.1.0/">MCP-US-010 Pitch bend and CC1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_062_ble_midi_capability_review_v0.1.0/">MCP-US-062 BLE-MIDI capability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../autonomous_midi_batch_host_acceptance_v0.1.0/">Autonomous MIDI batch host acceptance</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Audio and D1 stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_014_audio_output_review_v0.1.0/">MCP-US-014 Audio output</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_016_i2s_diagnostic_review_v0.1.0/">MCP-US-016 I2S diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_055_logic_d1_i2s_review_v0.1.0/">MCP-US-055 Logic D1 I2S acceptance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_063_d1_core_review_v0.1.0/">MCP-US-063 D1 core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_075_safe_audio_gate_review_v0.1.0/">MCP-US-075 Safe audio gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_077_realtime_midi_audio_baseline_review_v0.1.0/">MCP-US-077 Realtime MIDI audio baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_079_persistent_synthio_audio_graph_plan_v0.1.0/">MCP-US-079 Persistent synthio graph</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HIL and investigations</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_hil_runner_review_v0.1.0/">MCP-US-051 HIL runner</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_mcp_us_007_dependency_closed_deployment_impediment_v0.1.0/">MCP-US-051/007 deployment impediment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0/">MCP-US-080 USB-MIDI routing diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_instrumentation_design_review_v0.1.0/">MCP-US-080-INV-001 IDR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_locate_first_disappearance_of_noteon_v0.1.0/">MCP-US-080-INV-001 First disappearance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-100a/screenshots/">MCP-US-100A Screenshots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-102/final-assessment/">MCP-US-102 Final assessment</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Incidents and external review</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../incidents/us_055_realtime_architecture_rebaseline_v0.1.0/">US-055 realtime architecture rebaseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_review_packets/us_055_realtime_failure_copilot_packet_v0.1.0/">US-055 external review packet</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_qa_audit_report_v0.1.0/">External QA audit v0.1.0</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_qa_audit_report_v0.20/">External QA audit v0.20</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lessons learned</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_1_checkpoint_001_v0.1.0/">Sprint 1 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_001_v0.1.0/">Sprint 2 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_002_v0.1.0/">Sprint 2 checkpoint 002</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_003_v0.1.0/">Sprint 2 checkpoint 003</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_3_checkpoint_004_v0.1.0/">Sprint 3 checkpoint 004</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CircuitPython MIDI Chip Platform</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Foundation stories</li>
+      <li class="breadcrumb-item active">MCP-US-005 Configuration and secrets</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform/edit/master/docs/docs/mcp_us_005_configuration_secret_boundary_review_v0.1.0.md">Edit on pappavis/circuitpython-midi-chip-platform</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="mcp-us-005-configuration-and-secret-boundary-review">MCP-US-005 Configuration And Secret Boundary Review<a class="headerlink" href="#mcp-us-005-configuration-and-secret-boundary-review" title="Permanent link">&para;</a></h1>
+<!--
+Bestand: mcp_us_005_configuration_secret_boundary_review_v0.1.0.md
+Versienommer: 0.4.0
+Doel: Dokumenteer die aanvaarde private settings-grens en fisiese leewaarde-herstel.
+Sprint: Sprint 1
+Epic: MCP-EPIC-001 Platform Foundation
+User-Story: MCP-US-005 Configuration And Secret Boundary
+Actienr: MCP-ACT-005-ACCEPT-001-DOC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-005-HIL-ACCEPTED
+-->
+
+<h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">&para;</a></h2>
+<p><strong>DONE / MENSLIK EN FISIES AANVAAR.</strong> Geheime-redaksie en host-regressie is groen. v0.12.3 is fisies gedeploy en connection, manifest, libraries, boot en execution slaag. Die Product Owner het op 2026-07-16 bevestig dat drie leë private waardes as <code>UNSET</code> gerapporteer word terwyl configuration en device execution <code>PASS/READY</code> bly.</p>
+<h2 id="konfigurasieprioriteit">Konfigurasieprioriteit<a class="headerlink" href="#konfigurasieprioriteit" title="Permanent link">&para;</a></h2>
+<p>Van hoogste na laagste:</p>
+<ol>
+<li>Geïnjekteerde runtime-overrides.</li>
+<li><code>CIRCUITPY/settings.toml</code>, gelees deur <code>os.getenv()</code>.</li>
+<li>Publieke, klasinstansie-besitte verstekke.</li>
+</ol>
+<p>Die huidige publieke klankprofiel is mono MAX98357A met IO5 BCLK, IO3 WS/LRC en IO7 DATA/DIN. Geen klank- of Wi-Fi-diens word deur hierdie story begin nie.</p>
+<h2 id="geheimegrens">Geheimegrens<a class="headerlink" href="#geheimegrens" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>wifi.ssid</code>, <code>wifi.password</code> en <code>web.ap.password</code> word as private sleutels behandel.</li>
+<li>Diagnostiek rapporteer slegs <code>SET</code> of <code>UNSET</code>, nooit die waarde nie.</li>
+<li>Leë strings en waardes wat net uit whitespace bestaan, tel as <code>UNSET</code>; nie-leë geheime behou hul presiese waarde intern.</li>
+<li><code>public_items()</code> sluit private sleutels en waardes uit.</li>
+<li><code>settings.toml</code> bly in <code>.gitignore</code>; <code>device/settings.toml.example</code> bevat slegs plekhouers.</li>
+<li>Die ou prototipewagwoord bly 'n roteeraksie vir die Product Owner voordat Wi-Fi-stories begin.</li>
+</ul>
+<h2 id="redgreen-bewys">RED/GREEN-bewys<a class="headerlink" href="#redgreen-bewys" title="Permanent link">&para;</a></h2>
+<ul>
+<li>RED: toetsinsameling het met die verwagte <code>ModuleNotFoundError</code> vir <code>midi_chip_platform.configuration</code> gefaal.</li>
+<li>GREEN: 40 hosttoetse slaag op <code>v0.5.0</code>; AST- en importveiligheidsreëls bly groen.</li>
+<li>Geheimekontrole: kunsmatige SSID- en wagwoordwaardes verskyn nie in <code>report_lines()</code> of publieke items nie.</li>
+<li>Toestelherbewys: CIRCUITPY/CDC, manifest, libraries, boot, config-import en execution het geslaag; private waardes is nie gepubliseer nie.</li>
+<li>RED 2026-07-16: twee nuwe regressietoetse het gewys dat leë en whitespace-private waardes foutief in die snapshot beland.</li>
+<li>GREEN 2026-07-16: die settings source normaliseer daardie waardes na <code>None</code>; 33 geteikende config/CLI/HIL-toetse en die volle stel van 91 hosttoetse slaag op v0.12.3.</li>
+<li>DEVICE 2026-07-16: v0.12.3 se geredigeerde HIL-verslag toon connection, manifest-closure, deployment, libraries, boot en execution as PASS. 'n Waardevrye vormkontrole het bevestig dat al drie private reëls werklik nie-leë waardes bevat; die runtime se drie <code>SET</code>-statusse is dus korrek. Geen waarde, SSID, wagwoord, UID of MAC word as aanvaardingsbewys gepubliseer nie.</li>
+<li>HUMAN HIL 2026-07-16: die Wemos S2 rapporteer <code>CONFIGURATION_STATUS=PASS</code>, al drie private velde as <code>UNSET</code>, <code>DEVICE_IMPORT_STATUS=PASS</code> en <code>DEVICE_EXECUTION_STATUS=READY</code>. Geen private waarde is ontvang of gestoor nie.</li>
+</ul>
+<h2 id="menslike-herhaaltoets">Menslike herhaaltoets<a class="headerlink" href="#menslike-herhaaltoets" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Maak Thonny en enige serial monitor toe.</li>
+<li>Laat die drie private waardes leeg of verwyder hul reëls; hard-reset en verwag drie keer <code>UNSET</code>.</li>
+<li>Stel slegs veilige dummy-toetswaardes; hard-reset en verwag die betrokke velde as <code>SET</code>, nooit die waardes nie.</li>
+<li>Verwyder die dummywaardes of maak hulle weer leeg; hard-reset en verwag weer <code>UNSET</code>.</li>
+</ol>
+<p>Hierdie prosedure is nou 'n regressie-/hersteltoets en nie meer 'n oop storyhek nie.</p>
+<h2 id="virtuele-spanreview">Virtuele spanreview<a class="headerlink" href="#virtuele-spanreview" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Rol</th>
+<th>Bydrae</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Product Owner</td>
+<td>Het US-005 en US-006 vooraf goedgekeur en menslike toetsing vir ná werk beplan.</td>
+</tr>
+<tr>
+<td>Scrum Master</td>
+<td>Hou Wi-Fi-verbinding en klankaktivering buite US-005; log die leesalleen-HIL-hek.</td>
+</tr>
+<tr>
+<td>Business Analyst</td>
+<td>Definieer override, private settings en publieke verstekke as drie eksplisiete lae.</td>
+</tr>
+<tr>
+<td>Solution Architect</td>
+<td>Vereis <code>ConfigurationPort</code>, dependency injection en geen import-newe-effekte.</td>
+</tr>
+<tr>
+<td>Embedded Engineer</td>
+<td>Gebruik CircuitPython <code>os.getenv()</code> en raak nie die bestaande private <code>settings.toml</code> aan nie.</td>
+</tr>
+<tr>
+<td>MIDI Engineer</td>
+<td>Not impacted: geen MIDI-boodskap word in US-005 ontvang of verander nie.</td>
+</tr>
+<tr>
+<td>DSP/Chip Engineer</td>
+<td>Behou die goedgekeurde MAX98357A-penprofiel maar aktiveer geen audio nie.</td>
+</tr>
+<tr>
+<td>Web Engineer</td>
+<td>Bevestig dat latere station/AP-credentials deur dieselfde private grens kom.</td>
+</tr>
+<tr>
+<td>QA/HIL Engineer</td>
+<td>Lewer RED/GREEN, lektoetse, FAT-verifikasie en 'n nie-destruktiewe menslike herstelhek.</td>
+</tr>
+<tr>
+<td>Release/Documentation</td>
+<td>Sinkroniseer weergawe, quickstart, bronne, risiko, lessons learned en Kanban.</td>
+</tr>
+<tr>
+<td>External Architecture Reviewer (Copilot)</td>
+<td>Not impacted: geen nuwe reviewer-inset is vir US-005 ontvang nie.</td>
+</tr>
+<tr>
+<td>Devil's Advocate</td>
+<td>Waarsku dat <code>settings.toml</code> skeiding bied, maar nie enkripsie of credential-rotasie vervang nie.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="llm-gebruik">LLM-gebruik<a class="headerlink" href="#llm-gebruik" title="Permanent link">&para;</a></h2>
+<p>Geen plaaslike Ollama-model is gebruik nie.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../mcp_us_004_board_capability_review_v0.1.0/" class="btn btn-neutral float-left" title="MCP-US-004 Board capabilities"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../mcp_us_006_portable_event_model_review_v0.1.0/" class="btn btn-neutral float-right" title="MCP-US-006 Portable event model">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform" class="fa fa-code-fork" style="color: #fcfcfc"> pappavis/circuitpython-midi-chip-platform</a>
+        </span>
+    
+    
+      <span><a href="../mcp_us_004_board_capability_review_v0.1.0/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../mcp_us_006_portable_event_model_review_v0.1.0/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

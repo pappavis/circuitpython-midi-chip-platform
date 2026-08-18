@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>MCP-US-075 Safe audio gate - CircuitPython MIDI Chip Platform</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "MCP-US-075 Safe audio gate";
+        var mkdocs_page_input_path = "docs/mcp_us_075_safe_audio_gate_review_v0.1.0.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CircuitPython MIDI Chip Platform
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Start</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../..">Project overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Documentation index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quickstart_installation_v0.1.0/">Quickstart and installation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Emergency recovery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../00_Start_HERE_Emergency_recovery_pack/">Start here</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../EMERGENCY_DISASTER_RECOVERY/">Detailed disaster recovery handbook</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../repository_identity_and_sync_v0.1.0/">Repository identity and synchronization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../device_connection_proof_v0.1.0/">Device connection proof</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Governance and delivery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../AGENTS/">Binding agent and delivery rules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/">Governance overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/principal_qa_architect_agent_v0.1.0/">Principal QA Architect gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/regression_memory_v0.1.0/">Regression memory</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/instrumentation_design_review_template_v1.0/">Instrumentation Design Review template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/evidence_package_template_v1.0/">Evidence package template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../agile_delivery_release_plan_v0.1.0/">Agile delivery and release plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../team_raci_v0.1.0/">Team and RACI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../risk_register_v0.1.0/">Risk register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../source_register_v0.1.0/">Source register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../backlog_sanity_check_v0.1.0/">Backlog sanity check</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reuse_matrix_v0.1.0/">Reuse matrix</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MVP and product scope</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp_scope_v0.1.0/">Frozen MVP scope</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp/MVP_BUILD_PLAN/">MVP build plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../user_stories_v0.1.0/">User-story catalogue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../audio_priority_amendment_v0.1.0/">Audio priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ble_midi_core_priority_amendment_v0.1.0/">BLE MIDI and core priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../midi_transport_multicore_amendment_v0.1.0/">MIDI transport and multi-core amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../wifi_runtime_fallback_amendment_v0.1.0/">Wi-Fi runtime fallback amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../physical_chip_display_expansion_amendment_v0.1.0/">Physical chip and display expansion</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../burn_in_heap_stability_spec_v0.1.0/">Burn-in and heap stability</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Framework engineering</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/">Framework engineering index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_vision_v0.1.0/">Enterprise vision</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/architecture_v0.1.0/">Architecture</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_meta_model_v0.1.0/">Enterprise meta model</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/artefact_taxonomy_v0.1.0/">Artefact taxonomy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/quality_manual_v0.1.0/">Quality manual</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/test_strategy_v0.1.0/">Test strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/review_engine_v0.1.0/">Review engine</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/adr_repository_index_v0.1.0/">ADR repository index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/context_loader_specification_v0.1.0/">Context loader specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/prompt_compiler_specification_v0.1.0/">Prompt compiler specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/knowledge_base_structure_v0.1.0/">Knowledge-base structure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/glossary_v0.1.0/">Glossary</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Architecture decisions</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-001-repository-strategy/">ADR-001 Repository strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-002-reference-platform/">ADR-002 Reference platform</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-003-audio-strategy/">ADR-003 Audio strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-004-persistent-realtime-audio-graph/">ADR-004 Persistent realtime audio graph</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/MCP-US-101-FIRST-MVP-STEP/">MCP-US-101 First MVP step</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Foundation stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../board_capability_matrix_v0.1.0/">Board capability matrix</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_001_device_source_baseline_inventory_v0.1.0/">MCP-US-001 Device and source baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_002_project_skeleton_review_v0.1.0/">MCP-US-002 Project skeleton</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_003_safe_boot_review_v0.1.0/">MCP-US-003 Safe boot</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_004_board_capability_review_v0.1.0/">MCP-US-004 Board capabilities</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_005_configuration_secret_boundary_review_v0.1.0/">MCP-US-005 Configuration and secrets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_006_portable_event_model_review_v0.1.0/">MCP-US-006 Portable event model</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MIDI stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_007_usb_midi_receive_review_v0.1.0/">MCP-US-007 USB-MIDI receive</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_008_midi_channel_router_review_v0.1.0/">MCP-US-008 MIDI channel router</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_009_note_semantics_review_v0.1.0/">MCP-US-009 Note semantics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_010_pitch_bend_cc1_review_v0.1.0/">MCP-US-010 Pitch bend and CC1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_062_ble_midi_capability_review_v0.1.0/">MCP-US-062 BLE-MIDI capability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../autonomous_midi_batch_host_acceptance_v0.1.0/">Autonomous MIDI batch host acceptance</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Audio and D1 stories</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_014_audio_output_review_v0.1.0/">MCP-US-014 Audio output</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_016_i2s_diagnostic_review_v0.1.0/">MCP-US-016 I2S diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_055_logic_d1_i2s_review_v0.1.0/">MCP-US-055 Logic D1 I2S acceptance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_063_d1_core_review_v0.1.0/">MCP-US-063 D1 core</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">MCP-US-075 Safe audio gate</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#status">Status</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementering">Implementering</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#redgreen-bewys">RED/GREEN-bewys</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#hostdiagnose">Hostdiagnose</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#oorblywende-menslike-hil">Oorblywende menslike HIL</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#impediment-mcp-us-075-hil-impediment-001">Impediment MCP-US-075-HIL-IMPEDIMENT-001</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#product-owner-uitondering-en-aanvaarding">Product Owner-uitondering en aanvaarding</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#burn-in">Burn-in</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#virtuele-spanreview">Virtuele spanreview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#llm-gebruik">LLM-gebruik</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_077_realtime_midi_audio_baseline_review_v0.1.0/">MCP-US-077 Realtime MIDI audio baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_079_persistent_synthio_audio_graph_plan_v0.1.0/">MCP-US-079 Persistent synthio graph</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HIL and investigations</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_hil_runner_review_v0.1.0/">MCP-US-051 HIL runner</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_mcp_us_007_dependency_closed_deployment_impediment_v0.1.0/">MCP-US-051/007 deployment impediment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0/">MCP-US-080 USB-MIDI routing diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_instrumentation_design_review_v0.1.0/">MCP-US-080-INV-001 IDR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_locate_first_disappearance_of_noteon_v0.1.0/">MCP-US-080-INV-001 First disappearance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-100a/screenshots/">MCP-US-100A Screenshots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-102/final-assessment/">MCP-US-102 Final assessment</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Incidents and external review</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../incidents/us_055_realtime_architecture_rebaseline_v0.1.0/">US-055 realtime architecture rebaseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_review_packets/us_055_realtime_failure_copilot_packet_v0.1.0/">US-055 external review packet</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_qa_audit_report_v0.1.0/">External QA audit v0.1.0</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_qa_audit_report_v0.20/">External QA audit v0.20</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lessons learned</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_1_checkpoint_001_v0.1.0/">Sprint 1 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_001_v0.1.0/">Sprint 2 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_002_v0.1.0/">Sprint 2 checkpoint 002</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_003_v0.1.0/">Sprint 2 checkpoint 003</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_3_checkpoint_004_v0.1.0/">Sprint 3 checkpoint 004</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CircuitPython MIDI Chip Platform</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Audio and D1 stories</li>
+      <li class="breadcrumb-item active">MCP-US-075 Safe audio gate</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform/edit/master/docs/docs/mcp_us_075_safe_audio_gate_review_v0.1.0.md">Edit on pappavis/circuitpython-midi-chip-platform</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="mcp-us-075-safe-development-audio-load-and-volume-gate-review">MCP-US-075 Safe Development Audio Load And Volume Gate Review<a class="headerlink" href="#mcp-us-075-safe-development-audio-load-and-volume-gate-review" title="Permanent link">&para;</a></h1>
+<!--
+Bestand: mcp_us_075_safe_audio_gate_review_v0.1.0.md
+Versienommer: 0.1.0
+Doel: Dokumenteer die master-gain, startup-mute, hoorbare HIL en Product Owner-prototipe-lasuitondering.
+Sprint: Sprint 3
+Epic: MCP-EPIC-007 DSP And Pedal Hardware
+User-Story: MCP-US-075 Safe Development Audio Load And Volume Gate
+Actienr: MCP-ACT-075-REVIEW-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-075-START
+-->
+
+<h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">&para;</a></h2>
+<p><strong>DONE WITH PRODUCT OWNER EXCEPTION.</strong> Die klasgebaseerde veilige-audiokontrak, konfigurasie, lae-volume standalone diagnostiek, hostbewys en hoorbare v0.16.0 HIL is groen. Die Product Owner het op 2026-07-16 bevestig dat G3-C4-D4 hoorbaar was met die bestaande goedkoop TRS-koptelefoon en het die prototipe-lasrisiko voorlopig aanvaar. Hierdie closure sertifiseer slegs die software gain/startup-mute en hoorbare ontwikkelpad; dit sertifiseer nie die direkte BTL-koptelefoonlas as elektries veilig nie. MCP-US-076 parkeer die korrekte speaker/headphone/pedal-uitset-argitektuur ná MVP.</p>
+<h2 id="implementering">Implementering<a class="headerlink" href="#implementering" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>AudioSafetyProfile</code> besit <code>0.08</code> master gain, <code>0.25</code> harde plafon, startup mute en eksplisiete speaker-/GAIN-/shutdown-metadata.</li>
+<li><code>SafeAudioOutput</code> dekoreer enige <code>AudioOutputPort</code>, skryf stilte voor unmute, skaal signed-16 PCM ná unmute en mute weer voor close.</li>
+<li><code>PlatformApplication</code> open audio gedemp, begin kerne, unmute daarna en mute voor core shutdown.</li>
+<li><code>ConfigurationDefaults</code> en <code>settings.toml.example</code> bevat draagbare veilige-audiovelde; CLI/runtime overrides bly hoër prioriteit.</li>
+<li><code>device/i2s_test.py</code> bly synth-onafhanklik, begin met 0.25 s stilte en verlaag sy square-wave amplitude van 4096 na 2048.</li>
+<li>Die huidige fisiese profiel rapporteer eerlik <code>floating-9db</code> en <code>software-mute</code>; dit beweer nie dat 'n SD-pen of 3 dB GAIN-modifikasie reeds bedraad is nie.</li>
+</ul>
+<h2 id="redgreen-bewys">RED/GREEN-bewys<a class="headerlink" href="#redgreen-bewys" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Fase</th>
+<th>Bewys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RED</td>
+<td>Pytest collection faal omdat <code>AudioSafetyProfile</code> nog nie bestaan nie</td>
+</tr>
+<tr>
+<td>GREEN</td>
+<td>Startup mute, begrensde gain, lifecycle, konfigurasie, CLI en standalone I2S-profiel slaag</td>
+</tr>
+<tr>
+<td>REGRESSION</td>
+<td>120 pytest-toetse en Ruff slaag; AST behou geen globals/modulefunksies nie</td>
+</tr>
+<tr>
+<td>HOST</td>
+<td><code>AUDIO_SAFETY_MUTED_PEAK=0</code>, <code>AUDIO_SAFETY_UNMUTED_PEAK=960</code> en finale <code>PASS</code></td>
+</tr>
+<tr>
+<td>HIL</td>
+<td>Wag op 4-8 ohm luidspreker en menslike G-C-D-aanvaarding</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hostdiagnose">Hostdiagnose<a class="headerlink" href="#hostdiagnose" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">/Volumes/data1/michiele/venv/venv3.12/bin/python \
+  -m midi_chip_platform audio-safety-diagnose \
+  --master-gain 0.08 \
+  --input-peak 12000
+</code></pre>
+<p>Verwag:</p>
+<pre><code class="language-text">AUDIO_OUTPUT_LOAD=speaker-4-8-ohm
+AUDIO_MASTER_GAIN=0.080000
+AUDIO_MAXIMUM_MASTER_GAIN=0.250000
+AUDIO_STARTUP_MUTED=true
+AUDIO_SAFETY_MUTED_PEAK=0
+AUDIO_SAFETY_UNMUTED_PEAK=960
+AUDIO_SAFETY_STATUS=PASS
+</code></pre>
+<h2 id="oorblywende-menslike-hil">Oorblywende menslike HIL<a class="headerlink" href="#oorblywende-menslike-hil" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Ontkoppel die TRS-koptelefoon van die MAX98357A.</li>
+<li>Verbind 'n 4-8 ohm luidspreker met gepaste wattgradering slegs tussen die versterker se <code>+</code> en <code>-</code> speakerterminale.</li>
+<li>Hou BCLK=IO5, WS/LRC=IO3 en DIN=IO7; verbind geen speakerterminaal aan ground, line-in of scope-ground nie.</li>
+<li>Deploy v0.16.0 en voer <code>i2s_test.py</code> uit.</li>
+<li>Aanvaar slegs indien G3-C4-D4 sag maar duidelik hoorbaar is, serial <code>amplitude=2048</code>, <code>startup_mute_seconds=0.25</code>, <code>output_load=speaker-4-8-ohm</code> en finale <code>PASS</code> toon.</li>
+</ol>
+<h2 id="impediment-mcp-us-075-hil-impediment-001">Impediment MCP-US-075-HIL-IMPEDIMENT-001<a class="headerlink" href="#impediment-mcp-us-075-hil-impediment-001" title="Permanent link">&para;</a></h2>
+<p>Die eerste hoorbare hertoets het <code>v0.14.0 | story=MCP-US-016</code> en amplitude <code>4096</code> gerapporteer. Dit was 'n geldige US-016-regressiebewys, maar nie US-075-aanvaarding nie: die bord se <code>i2s_test.py</code> was ouer as die goedgekeurde repositoryweergawe.</p>
+<p>Nadat Thonny gesluit is, het die beheerde herstelpad die dependency-geslote v0.16.0-manifes ontplooi, die bord hard gereset en weer geverifieer. Die finale runnerbewys was:</p>
+<pre><code class="language-text">circuitpython-midi-chip-platform v0.16.0 | story=MCP-US-075 | release-date=2026-07-16
+DEVICE CONNECTION PROOF
+connection: PASS - USB CDC + CIRCUITPY
+manifest-closure: PASS - all internal imports are deployed
+deployment: PASS - approved manifest SHA-256 pairs
+device-libraries: PASS - required CircuitPython libraries present
+boot: PASS - current release and USB-MIDI boot marker
+execution: PASS - current release and dependency-import markers via serial REPL
+private-identifiers: REDACTED
+</code></pre>
+<p>Die impediment is tegnies opgelos. Die menslike hertoets het daarna die v0.16.0 US-075-markers, G3-C4-D4, stabiele heap en finale <code>PASS</code> getoon.</p>
+<h2 id="product-owner-uitondering-en-aanvaarding">Product Owner-uitondering en aanvaarding<a class="headerlink" href="#product-owner-uitondering-en-aanvaarding" title="Permanent link">&para;</a></h2>
+<p>Die fisiese toets het nog die bestaande goedkoop TRS-koptelefoon gebruik. Die Product Owner aanvaar hierdie prototiperisiko en het gevra dat die strenger elektriese cleanup eers ver ná die MVP plaasvind. Daarom:</p>
+<ul>
+<li>sluit US-075 op grond van die bewese lae-volume softwarehek en hoorbare HIL;</li>
+<li>bly R-013 oop as 'n aanvaarde prototiperisiko;</li>
+<li>begin US-055 volgens die bindende D1/Logic-volgorde;</li>
+<li>vereis MCP-US-076 voor enige produksie-, draagbare, headphone-, line-out- of pedal-releaseclaim.</li>
+</ul>
+<p>Die aanvaarde toesteluitvoer bevat <code>amplitude=2048</code>, <code>startup_mute_seconds=0.25</code>, <code>gain_pin_profile=floating-9db</code>, <code>shutdown_mode=software-mute</code>, drie note, finale <code>PASS</code> en 'n heapverskil van 320 bytes.</p>
+<h2 id="burn-in">Burn-in<a class="headerlink" href="#burn-in" title="Permanent link">&para;</a></h2>
+<p><code>N/A</code> vir die hostprofiel. Die kort hoorbare ontwikkel-HIL is met 'n Product Owner-lasuitondering aanvaar. Die 30-minute en 8-uur geïntegreerde USB-MIDI/D1/audio/heap-burn-in bly onderskeidelik MCP-US-051, US-055 en US-057; gesertifiseerde fisiese uitsetcleanup is MCP-US-076.</p>
+<h2 id="virtuele-spanreview">Virtuele spanreview<a class="headerlink" href="#virtuele-spanreview" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Rol</th>
+<th>Bydrae</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Product Owner</td>
+<td>Het die hoorbare v0.16.0 HIL en prototipe-lasrisiko eksplisiet aanvaar; produksieveiligheid nie gesertifiseer nie.</td>
+</tr>
+<tr>
+<td>Scrum Master</td>
+<td>Sluit US-075 met uitsondering, parkeer US-076 ná MVP en open US-055.</td>
+</tr>
+<tr>
+<td>Business Analyst</td>
+<td>Skei speaker, headphone en pedal-line-out as verskillende produkkontrakte.</td>
+</tr>
+<tr>
+<td>Chief Enterprise Architect</td>
+<td>Behou die veiligheidslaag as dekorator om vervangbare backends.</td>
+</tr>
+<tr>
+<td>Solution Architect</td>
+<td>Maak gain en mute backend-onafhanklik; fisiese SD/GAIN bly profieldata.</td>
+</tr>
+<tr>
+<td>Embedded Engineer</td>
+<td>Behou gedempte open/start/stop-volgorde en laer standalone amplitude.</td>
+</tr>
+<tr>
+<td>MIDI Engineer</td>
+<td>Not impacted; MIDI-eventkontrak verander nie.</td>
+</tr>
+<tr>
+<td>DSP/Chip Engineer</td>
+<td>Skaal PCM simmetries binne signed-16 en 'n harde gain-plafon.</td>
+</tr>
+<tr>
+<td>Hardware/PCB Engineer</td>
+<td>Spesifiseer speaker-only BTL-toets; latere US-047/048 dek breadboard en KiCad.</td>
+</tr>
+<tr>
+<td>QA/HIL Engineer</td>
+<td>Lewer RED/GREEN/CLI-bewys en blokkeer onveilige menslike HIL.</td>
+</tr>
+<tr>
+<td>Release/Documentation</td>
+<td>Behou v0.16.0-bewys, dokumenteer die uitsondering en merk die story Done.</td>
+</tr>
+<tr>
+<td>External Architecture Reviewer</td>
+<td>Primêre vendorveiligheidsgrense bly gesaghebbend.</td>
+</tr>
+<tr>
+<td>Devil's Advocate</td>
+<td>Risiko-aanvaarding is nie 'n vervanging vir 'n veilige toetslas nie.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="llm-gebruik">LLM-gebruik<a class="headerlink" href="#llm-gebruik" title="Permanent link">&para;</a></h2>
+<p>Geen plaaslike Ollama-model is gebruik nie.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../mcp_us_063_d1_core_review_v0.1.0/" class="btn btn-neutral float-left" title="MCP-US-063 D1 core"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../mcp_us_077_realtime_midi_audio_baseline_review_v0.1.0/" class="btn btn-neutral float-right" title="MCP-US-077 Realtime MIDI audio baseline">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform" class="fa fa-code-fork" style="color: #fcfcfc"> pappavis/circuitpython-midi-chip-platform</a>
+        </span>
+    
+    
+      <span><a href="../mcp_us_063_d1_core_review_v0.1.0/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../mcp_us_077_realtime_midi_audio_baseline_review_v0.1.0/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

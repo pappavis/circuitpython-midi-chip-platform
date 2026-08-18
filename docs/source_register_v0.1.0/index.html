@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Source register - CircuitPython MIDI Chip Platform</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Source register";
+        var mkdocs_page_input_path = "docs/source_register_v0.1.0.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CircuitPython MIDI Chip Platform
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Start</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../..">Project overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Documentation index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quickstart_installation_v0.1.0/">Quickstart and installation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Emergency recovery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../00_Start_HERE_Emergency_recovery_pack/">Start here</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../EMERGENCY_DISASTER_RECOVERY/">Detailed disaster recovery handbook</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../repository_identity_and_sync_v0.1.0/">Repository identity and synchronization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../device_connection_proof_v0.1.0/">Device connection proof</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Governance and delivery</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../AGENTS/">Binding agent and delivery rules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/">Governance overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/principal_qa_architect_agent_v0.1.0/">Principal QA Architect gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/regression_memory_v0.1.0/">Regression memory</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/instrumentation_design_review_template_v1.0/">Instrumentation Design Review template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/evidence_package_template_v1.0/">Evidence package template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../agile_delivery_release_plan_v0.1.0/">Agile delivery and release plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../team_raci_v0.1.0/">Team and RACI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../risk_register_v0.1.0/">Risk register</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Source register</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#primere-tegniese-bronne">Primêre tegniese bronne</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#plaaslike-en-projekbronne">Plaaslike en projekbronne</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bronreel">Bronreël</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../backlog_sanity_check_v0.1.0/">Backlog sanity check</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reuse_matrix_v0.1.0/">Reuse matrix</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MVP and product scope</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp_scope_v0.1.0/">Frozen MVP scope</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp/MVP_BUILD_PLAN/">MVP build plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../user_stories_v0.1.0/">User-story catalogue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../audio_priority_amendment_v0.1.0/">Audio priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ble_midi_core_priority_amendment_v0.1.0/">BLE MIDI and core priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../midi_transport_multicore_amendment_v0.1.0/">MIDI transport and multi-core amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../wifi_runtime_fallback_amendment_v0.1.0/">Wi-Fi runtime fallback amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../physical_chip_display_expansion_amendment_v0.1.0/">Physical chip and display expansion</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../burn_in_heap_stability_spec_v0.1.0/">Burn-in and heap stability</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Framework engineering</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/">Framework engineering index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_vision_v0.1.0/">Enterprise vision</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/architecture_v0.1.0/">Architecture</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_meta_model_v0.1.0/">Enterprise meta model</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/artefact_taxonomy_v0.1.0/">Artefact taxonomy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/quality_manual_v0.1.0/">Quality manual</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/test_strategy_v0.1.0/">Test strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/review_engine_v0.1.0/">Review engine</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/adr_repository_index_v0.1.0/">ADR repository index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/context_loader_specification_v0.1.0/">Context loader specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/prompt_compiler_specification_v0.1.0/">Prompt compiler specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/knowledge_base_structure_v0.1.0/">Knowledge-base structure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/glossary_v0.1.0/">Glossary</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Architecture decisions</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-001-repository-strategy/">ADR-001 Repository strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-002-reference-platform/">ADR-002 Reference platform</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-003-audio-strategy/">ADR-003 Audio strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-004-persistent-realtime-audio-graph/">ADR-004 Persistent realtime audio graph</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/MCP-US-101-FIRST-MVP-STEP/">MCP-US-101 First MVP step</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Foundation stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../board_capability_matrix_v0.1.0/">Board capability matrix</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_001_device_source_baseline_inventory_v0.1.0/">MCP-US-001 Device and source baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_002_project_skeleton_review_v0.1.0/">MCP-US-002 Project skeleton</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_003_safe_boot_review_v0.1.0/">MCP-US-003 Safe boot</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_004_board_capability_review_v0.1.0/">MCP-US-004 Board capabilities</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_005_configuration_secret_boundary_review_v0.1.0/">MCP-US-005 Configuration and secrets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_006_portable_event_model_review_v0.1.0/">MCP-US-006 Portable event model</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MIDI stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_007_usb_midi_receive_review_v0.1.0/">MCP-US-007 USB-MIDI receive</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_008_midi_channel_router_review_v0.1.0/">MCP-US-008 MIDI channel router</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_009_note_semantics_review_v0.1.0/">MCP-US-009 Note semantics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_010_pitch_bend_cc1_review_v0.1.0/">MCP-US-010 Pitch bend and CC1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_062_ble_midi_capability_review_v0.1.0/">MCP-US-062 BLE-MIDI capability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../autonomous_midi_batch_host_acceptance_v0.1.0/">Autonomous MIDI batch host acceptance</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Audio and D1 stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_014_audio_output_review_v0.1.0/">MCP-US-014 Audio output</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_016_i2s_diagnostic_review_v0.1.0/">MCP-US-016 I2S diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_055_logic_d1_i2s_review_v0.1.0/">MCP-US-055 Logic D1 I2S acceptance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_063_d1_core_review_v0.1.0/">MCP-US-063 D1 core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_075_safe_audio_gate_review_v0.1.0/">MCP-US-075 Safe audio gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_077_realtime_midi_audio_baseline_review_v0.1.0/">MCP-US-077 Realtime MIDI audio baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_079_persistent_synthio_audio_graph_plan_v0.1.0/">MCP-US-079 Persistent synthio graph</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HIL and investigations</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_hil_runner_review_v0.1.0/">MCP-US-051 HIL runner</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_mcp_us_007_dependency_closed_deployment_impediment_v0.1.0/">MCP-US-051/007 deployment impediment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0/">MCP-US-080 USB-MIDI routing diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_instrumentation_design_review_v0.1.0/">MCP-US-080-INV-001 IDR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_locate_first_disappearance_of_noteon_v0.1.0/">MCP-US-080-INV-001 First disappearance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-100a/screenshots/">MCP-US-100A Screenshots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-102/final-assessment/">MCP-US-102 Final assessment</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Incidents and external review</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../incidents/us_055_realtime_architecture_rebaseline_v0.1.0/">US-055 realtime architecture rebaseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_review_packets/us_055_realtime_failure_copilot_packet_v0.1.0/">US-055 external review packet</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_qa_audit_report_v0.1.0/">External QA audit v0.1.0</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_qa_audit_report_v0.20/">External QA audit v0.20</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lessons learned</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_1_checkpoint_001_v0.1.0/">Sprint 1 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_001_v0.1.0/">Sprint 2 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_002_v0.1.0/">Sprint 2 checkpoint 002</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_003_v0.1.0/">Sprint 2 checkpoint 003</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_3_checkpoint_004_v0.1.0/">Sprint 3 checkpoint 004</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CircuitPython MIDI Chip Platform</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Governance and delivery</li>
+      <li class="breadcrumb-item active">Source register</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform/edit/master/docs/docs/source_register_v0.1.0.md">Edit on pappavis/circuitpython-midi-chip-platform</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="bronregister">Bronregister<a class="headerlink" href="#bronregister" title="Permanent link">&para;</a></h1>
+<!--
+Bestand: source_register_v0.1.0.md
+Versienommer: 0.10.0
+Doel: Registreer primêre tegniese en plaaslike bronne met gebruiksgrense.
+Sprint: Sprint 0
+Epic: MCP-EPIC-001 Platform Foundation
+User-Story: MCP-US-070 tot MCP-US-073 Physical Chip Expansion
+Actienr: MCP-ACT-PHYSICAL-001-SRC-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-007-ACCEPTANCE-START
+-->
+
+<h2 id="primere-tegniese-bronne">Primêre tegniese bronne<a class="headerlink" href="#primere-tegniese-bronne" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Bron</th>
+<th>Gebruik</th>
+<th>Vertroue/beperking</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://docs.circuitpython.org/en/latest/shared-bindings/usb_midi/">CircuitPython <code>usb_midi</code></a></td>
+<td>USB-MIDI enable/disable, poorte, name en ESP32-S2 endpointwaarskuwing</td>
+<td>Primêre amptelike API; firmwareweergawe moet tydens implementering bevestig word</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/en/latest/shared-bindings/supervisor/">CircuitPython <code>supervisor</code></a></td>
+<td>USB-identiteit, run reason, runtime-status, skryfbare <code>runtime.autoreload</code> en harde reload-grens</td>
+<td>Omitted VID/PID behou bordverstekke; deploy herstel auto-reload ook by fout</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/projects/circup/en/latest/">CircUp</a></td>
+<td>Requirements-gebaseerde CircuitPython library-installering en bord-/bundle-diagnose</td>
+<td>Primêre amptelike tool; werklike library-teenwoordigheid en imports bly HIL-hekke</td>
+</tr>
+<tr>
+<td><a href="https://learn.adafruit.com/customizing-usb-devices-in-circuitpython?view=all">CircuitPython USB customization</a></td>
+<td>Bootvolgorde, <code>boot_out.txt</code>, endpointbegroting en recovery</td>
+<td>ESP32-S2 het 'n beperkte endpointbegroting; HIL bly verpligtend</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/en/stable/shared-bindings/audiobusio/">CircuitPython <code>audiobusio.I2SOut</code></a></td>
+<td>I2S-penkontrak en sample-uitvoer</td>
+<td>Primêre amptelike API; beskikbaarheid is bordbou-afhanklik</td>
+</tr>
+<tr>
+<td><a href="https://docs.wemos.cc/en/latest/s2/s2_mini.html">WEMOS S2 Mini</a></td>
+<td>Verwysingsbord, 3.3 V-logika, 27 I/O, 4 MB flash en 2 MB PSRAM</td>
+<td>Amptelike bordbron; runtime/HIL bevestig werklike aliasse en modules</td>
+</tr>
+<tr>
+<td><a href="https://docs.espressif.com/projects/esp-idf/en/release-v5.2/esp32s2/api-reference/peripherals/i2s.html">Espressif ESP32-S2 I2S</a></td>
+<td>Een I2S-perifeer en BCLK/WS/DOUT-semantiek</td>
+<td>Primêre silikon/driverbron; CircuitPython API bly die firmwarekontrak</td>
+</tr>
+<tr>
+<td><a href="https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp/overview">Adafruit MAX98357 overview</a></td>
+<td>Mono-I2S-versterker, sample rates, mono-meng en geen MCLK</td>
+<td>Amptelike produkhandleiding; werklike bord/HIL bly verpligtend</td>
+</tr>
+<tr>
+<td><a href="https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp/pinouts">Adafruit MAX98357 pinouts</a></td>
+<td>BCLK/LRC/DIN, bridge-tied luidsprekeruitgang, krag en gain/mode</td>
+<td>Primêre veiligheids- en bedradingbron</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/en/latest/shared-bindings/synthio/">CircuitPython <code>synthio</code></a></td>
+<td>Eksperimentele synth, panning, envelope en bend-spike</td>
+<td>Primêre API, maar eksplisiet eksperimenteel; nie ons enigste kernbasis nie</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/projects/midi/en/latest/">Adafruit MIDI Library</a></td>
+<td>Note On/Off, CC, pitch bend, clock, start/stop/continue</td>
+<td>Amptelike biblioteek; bundelweergawe moet vasgepen word</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/projects/midi/en/latest/api.html">Adafruit MIDI API</a></td>
+<td>14-bit bend, 7-bit CC en 24 PPQN timing clock</td>
+<td>Primêre boodskapsemantiek</td>
+</tr>
+<tr>
+<td><a href="https://midi.org/summary-of-midi-1-0-messages">MIDI Association MIDI 1.0 message summary</a></td>
+<td>Kanaalboodskappe, 14-bit bend en Timing Clock-status</td>
+<td>Primêre standaarde-organisasie; gedetailleerde betaalde spesifikasie bly buite die MVP-bronpakket</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/en/latest/shared-bindings/_bleio/">CircuitPython <code>_bleio</code></a></td>
+<td>Native BLE capability discovery en eksplisiete ESP32-S2-uitsondering</td>
+<td>Primêre amptelike API; gebruik hoërvlak <code>adafruit_ble</code> waar beskikbaar</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/projects/ble_midi/en/latest/">Adafruit BLE MIDI</a></td>
+<td>BLE MIDI service en biblioteekafhanklikhede</td>
+<td>Amptelike biblioteek; positiewe HIL vereis ’n BLE-geskikte bord</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/projects/ble_midi/en/stable/api.html">Adafruit BLE MIDI API</a></td>
+<td><code>MIDIService</code> as PortIn/PortOut-agtige transport met MIDI timestamps</td>
+<td>Ondersteun die gemeenskaplike MidiInputPort-ontwerp; nie ’n S2-vermoënsbewys nie</td>
+</tr>
+<tr>
+<td><a href="https://documentation.espressif.com/esp32-s2_datasheet_en.html">Espressif ESP32-S2 datasheet</a></td>
+<td>S2-radio-, Wi-Fi-, USB-, I2S- en geheuevermoëns</td>
+<td>Primêre silikonbron; BLE-afwesigheid word ook eksplisiet deur CircuitPython <code>_bleio</code> bevestig</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/projects/httpserver/en/stable/">Adafruit HTTP Server</a></td>
+<td>Plaaslike HTTP, routing, WebSocket en SSE</td>
+<td>Geheue-/sokbeperkings vereis eenkliënt-MVP</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/projects/httpserver/en/stable/examples.html">HTTP server polling examples</a></td>
+<td>Koöperatiewe polling en asyncio-opsies</td>
+<td>Voorbeeld is nie ’n real-time klankwaarborg nie</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/en/stable/shared-bindings/wifi/">CircuitPython <code>wifi</code></a></td>
+<td>Station/AP-modus, connect timeout, IP-adresse, AP-auth en DHCP</td>
+<td>Primêre amptelike API; capability- en bord-HIL bly verpligtend</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/projects/httpserver/en/latest/starting_methods.html">HTTP server starting methods</a></td>
+<td>Handmatige station- en AP-bedieneropstart</td>
+<td>Primêre biblioteekvoorbeeld; produksiekode gebruik dependency injection en debug af</td>
+</tr>
+<tr>
+<td><a href="https://learn.adafruit.com/networking-in-circuitpython/network-settings">CircuitPython <code>settings.toml</code></a></td>
+<td>Moderne private netwerkconfig</td>
+<td>Geen geheime in Git nie</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/en/latest/docs/environment.html">CircuitPython environment variables</a></td>
+<td><code>settings.toml</code> in die CIRCUITPY-wortel en <code>os.getenv()</code>-toegang</td>
+<td>Primêre amptelike docs; skeiding is nie enkripsie nie en waardes word per toegang geparseer</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/en/10.0.x/docs/environment.html">CircuitPython 10.0.x environment variables</a></td>
+<td>Firmware-gepinde settings-subset vir die 10.0.3-verwysingstoestel</td>
+<td>Primêre amptelike docs; strings en heelgetalle is die ondersteunde subset, dus word booleans/floats vir <code>os.getenv()</code> as strings gestoor en intern omgeskakel</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/en/10.1.1/docs/workflows.html">CircuitPython storage workflow</a></td>
+<td>Verstek host-writable/CircuitPython-read-only massa-opberging</td>
+<td>Primêre amptelike docs; afwykende leesalleen-hostmedia vereis beheerde herstel</td>
+</tr>
+<tr>
+<td><a href="https://docs.circuitpython.org/en/10.0.3/shared-bindings/storage/">CircuitPython <code>storage</code></a></td>
+<td>Remount-, USB-drive- en vernietigende erase-grense</td>
+<td>Primêre amptelike API; geen erase/remount sonder eksplisiete herstelbesluit nie</td>
+</tr>
+<tr>
+<td><a href="https://www.raspberrypi.com/documentation/computers/os.html">Raspberry Pi OS documentation</a></td>
+<td>Skeiding van Linux/Python-teikens van mikrobeheerderfirmware</td>
+<td>Pi Zero/3 kry ’n adapter, nie dieselfde firmwareclaim nie</td>
+</tr>
+<tr>
+<td><a href="https://fishman.com/tripleplay-support/">Fishman TriplePlay Support</a></td>
+<td>USB-MIDI-kitaar, polyfonie en individuele string bends</td>
+<td>Amptelike produkondersteuning; TriplePlay is 'n HIL-verwysing, nie 'n kodekonstante nie</td>
+</tr>
+<tr>
+<td><a href="https://a11.fishman.com/wp-content/uploads/2024/12/TriplePlayUtility-UserGuide.pdf">Fishman TriplePlay Utility User Guide</a></td>
+<td>Trigger/Auto/Smooth/Step bend- en slide-semantiek</td>
+<td>Amptelike handleiding; synth bend range moet konfigureerbaar en ooreenstemmend wees</td>
+</tr>
+<tr>
+<td><a href="https://www.doremidi.cn/h-pd-2.html">DOREMiDi UMH-10</a></td>
+<td>Voorbeeld van klas-kompatibele USB-MIDI-host na 5-pen DIN</td>
+<td>Verwysingstoestel; presiese model/controller-kombinasie vereis eie HIL</td>
+</tr>
+<tr>
+<td><a href="https://raspimidihub.com/">RaspiMIDIHub</a></td>
+<td>Raspberry Pi USB-MIDI ontdekking en roetering sonder DAW</td>
+<td>Eksterne projek; integrasie word as transport-HIL getoets, nie as firmware-afhanklikheid nie</td>
+</tr>
+<tr>
+<td><a href="https://github.com/DhrBaksteen/ArduinoOPL2/tree/master/src">DhrBaksteen ArduinoOPL2 source</a></td>
+<td>Kandidaatbron vir die latere ArduinoOPL2 SPI-adapter in MCP-US-073</td>
+<td>Gebruiker-aangewese bron; Chip Engineer doen lisensie-, register- en HIL-review eers wanneer US-073 aktief is</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Malvineous/pyopl">Malvineous pyopl</a></td>
+<td>Kandidaatgedragsverwysing vir latere OPL2-emulasie/vergelyking</td>
+<td>Gebruiker-aangewese bron; geen kodehergebruik of lisensie-aanname voor US-041-review nie</td>
+</tr>
+</tbody>
+</table>
+<h2 id="plaaslike-en-projekbronne">Plaaslike en projekbronne<a class="headerlink" href="#plaaslike-en-projekbronne" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Bron</th>
+<th>Gebruik</th>
+<th>Publikasiebeleid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pappavis/python-d1-synth</code></td>
+<td>Getoetste MIDI-, voice-, pitch-, CC-, ADSR- en routingkontrakte</td>
+<td>Verwys na openbare repo; port gedrag, nie desktop-backends nie</td>
+</tr>
+<tr>
+<td><code>pappavis/midi-chip-platform</code></td>
+<td>Domeindokumentasie, governance en gearchiveerde modulêre grense</td>
+<td>Hergebruik slegs ná onafhanklike toets/portering</td>
+</tr>
+<tr>
+<td>Verwysingsbord se huidige CIRCUITPY-volume</td>
+<td>PWM/SN76489-prototipe en werklike biblioteekinventaris</td>
+<td>Privaat rugsteun; geen geheime, UID of volledige kopie in Git nie</td>
+</tr>
+<tr>
+<td>Gebruiker se Rigol DHO804 en meettoerusting</td>
+<td>Frekwensie, duty cycle, jitter en stereokanaalbewys</td>
+<td>Resultate word as HIL-verslag gepubliseer, nie persoonlike toesteldata nie</td>
+</tr>
+<tr>
+<td>YouTube-verwysing oor ESP32/I2S</td>
+<td>Oriëntering en praktiese demonstrasie</td>
+<td>Sekondêre bron; argitektuurbesluite steun op amptelike API en eie metings</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bronreel">Bronreël<a class="headerlink" href="#bronreel" title="Permanent link">&para;</a></h2>
+<p>Dokumentasie of video bewys nie dat ’n spesifieke bordbou ’n module bevat of dat real-time klank stabiel is nie. Elke kritieke eis kry ’n runtime-vermoënscheck en, waar toepaslik, ’n ossilloskoop-/luistertoets.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../risk_register_v0.1.0/" class="btn btn-neutral float-left" title="Risk register"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../backlog_sanity_check_v0.1.0/" class="btn btn-neutral float-right" title="Backlog sanity check">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform" class="fa fa-code-fork" style="color: #fcfcfc"> pappavis/circuitpython-midi-chip-platform</a>
+        </span>
+    
+    
+      <span><a href="../risk_register_v0.1.0/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../backlog_sanity_check_v0.1.0/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

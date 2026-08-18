@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>MCP-US-080-INV-001 IDR - CircuitPython MIDI Chip Platform</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "MCP-US-080-INV-001 IDR";
+        var mkdocs_page_input_path = "docs/mcp_us_080_inv_001_instrumentation_design_review_v0.1.0.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CircuitPython MIDI Chip Platform
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Start</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../..">Project overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Documentation index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quickstart_installation_v0.1.0/">Quickstart and installation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Emergency recovery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../00_Start_HERE_Emergency_recovery_pack/">Start here</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../EMERGENCY_DISASTER_RECOVERY/">Detailed disaster recovery handbook</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../repository_identity_and_sync_v0.1.0/">Repository identity and synchronization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../device_connection_proof_v0.1.0/">Device connection proof</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Governance and delivery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../AGENTS/">Binding agent and delivery rules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/">Governance overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/principal_qa_architect_agent_v0.1.0/">Principal QA Architect gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/regression_memory_v0.1.0/">Regression memory</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/instrumentation_design_review_template_v1.0/">Instrumentation Design Review template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/evidence_package_template_v1.0/">Evidence package template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../agile_delivery_release_plan_v0.1.0/">Agile delivery and release plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../team_raci_v0.1.0/">Team and RACI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../risk_register_v0.1.0/">Risk register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../source_register_v0.1.0/">Source register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../backlog_sanity_check_v0.1.0/">Backlog sanity check</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reuse_matrix_v0.1.0/">Reuse matrix</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MVP and product scope</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp_scope_v0.1.0/">Frozen MVP scope</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp/MVP_BUILD_PLAN/">MVP build plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../user_stories_v0.1.0/">User-story catalogue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../audio_priority_amendment_v0.1.0/">Audio priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ble_midi_core_priority_amendment_v0.1.0/">BLE MIDI and core priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../midi_transport_multicore_amendment_v0.1.0/">MIDI transport and multi-core amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../wifi_runtime_fallback_amendment_v0.1.0/">Wi-Fi runtime fallback amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../physical_chip_display_expansion_amendment_v0.1.0/">Physical chip and display expansion</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../burn_in_heap_stability_spec_v0.1.0/">Burn-in and heap stability</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Framework engineering</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/">Framework engineering index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_vision_v0.1.0/">Enterprise vision</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/architecture_v0.1.0/">Architecture</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_meta_model_v0.1.0/">Enterprise meta model</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/artefact_taxonomy_v0.1.0/">Artefact taxonomy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/quality_manual_v0.1.0/">Quality manual</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/test_strategy_v0.1.0/">Test strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/review_engine_v0.1.0/">Review engine</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/adr_repository_index_v0.1.0/">ADR repository index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/context_loader_specification_v0.1.0/">Context loader specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/prompt_compiler_specification_v0.1.0/">Prompt compiler specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/knowledge_base_structure_v0.1.0/">Knowledge-base structure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/glossary_v0.1.0/">Glossary</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Architecture decisions</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-001-repository-strategy/">ADR-001 Repository strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-002-reference-platform/">ADR-002 Reference platform</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-003-audio-strategy/">ADR-003 Audio strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-004-persistent-realtime-audio-graph/">ADR-004 Persistent realtime audio graph</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/MCP-US-101-FIRST-MVP-STEP/">MCP-US-101 First MVP step</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Foundation stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../board_capability_matrix_v0.1.0/">Board capability matrix</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_001_device_source_baseline_inventory_v0.1.0/">MCP-US-001 Device and source baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_002_project_skeleton_review_v0.1.0/">MCP-US-002 Project skeleton</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_003_safe_boot_review_v0.1.0/">MCP-US-003 Safe boot</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_004_board_capability_review_v0.1.0/">MCP-US-004 Board capabilities</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_005_configuration_secret_boundary_review_v0.1.0/">MCP-US-005 Configuration and secrets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_006_portable_event_model_review_v0.1.0/">MCP-US-006 Portable event model</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MIDI stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_007_usb_midi_receive_review_v0.1.0/">MCP-US-007 USB-MIDI receive</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_008_midi_channel_router_review_v0.1.0/">MCP-US-008 MIDI channel router</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_009_note_semantics_review_v0.1.0/">MCP-US-009 Note semantics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_010_pitch_bend_cc1_review_v0.1.0/">MCP-US-010 Pitch bend and CC1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_062_ble_midi_capability_review_v0.1.0/">MCP-US-062 BLE-MIDI capability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../autonomous_midi_batch_host_acceptance_v0.1.0/">Autonomous MIDI batch host acceptance</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Audio and D1 stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_014_audio_output_review_v0.1.0/">MCP-US-014 Audio output</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_016_i2s_diagnostic_review_v0.1.0/">MCP-US-016 I2S diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_055_logic_d1_i2s_review_v0.1.0/">MCP-US-055 Logic D1 I2S acceptance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_063_d1_core_review_v0.1.0/">MCP-US-063 D1 core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_075_safe_audio_gate_review_v0.1.0/">MCP-US-075 Safe audio gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_077_realtime_midi_audio_baseline_review_v0.1.0/">MCP-US-077 Realtime MIDI audio baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_079_persistent_synthio_audio_graph_plan_v0.1.0/">MCP-US-079 Persistent synthio graph</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HIL and investigations</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_hil_runner_review_v0.1.0/">MCP-US-051 HIL runner</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_mcp_us_007_dependency_closed_deployment_impediment_v0.1.0/">MCP-US-051/007 deployment impediment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0/">MCP-US-080 USB-MIDI routing diagnostic</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">MCP-US-080-INV-001 IDR</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#doel">Doel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#investigation-summary">Investigation Summary</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#1-doel-van-de-investigation">1. Doel Van De Investigation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-hypotheses-die-onderzocht-worden">2. Hypotheses Die Onderzocht Worden</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-hypotheses-die-niet-onderzocht-worden">3. Hypotheses Die Niet Onderzocht Worden</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-volledige-observatieketen">4. Volledige Observatieketen</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-tracepoint-definities">5. Tracepoint Definities</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6-observer-effect-analyse">6. Observer-Effect Analyse</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#7-risicoanalyse">7. Risicoanalyse</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#8-meetmatrix">8. Meetmatrix</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#9-verwachte-classificaties">9. Verwachte Classificaties</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#10-hil-run-template">10. HIL-Run Template</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#11-reproduceerbaarheid">11. Reproduceerbaarheid</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#12-verwijderstrategie">12. Verwijderstrategie</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#done-definitie">Done Definitie</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_locate_first_disappearance_of_noteon_v0.1.0/">MCP-US-080-INV-001 First disappearance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-100a/screenshots/">MCP-US-100A Screenshots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-102/final-assessment/">MCP-US-102 Final assessment</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Incidents and external review</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../incidents/us_055_realtime_architecture_rebaseline_v0.1.0/">US-055 realtime architecture rebaseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_review_packets/us_055_realtime_failure_copilot_packet_v0.1.0/">US-055 external review packet</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_qa_audit_report_v0.1.0/">External QA audit v0.1.0</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_qa_audit_report_v0.20/">External QA audit v0.20</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lessons learned</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_1_checkpoint_001_v0.1.0/">Sprint 1 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_001_v0.1.0/">Sprint 2 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_002_v0.1.0/">Sprint 2 checkpoint 002</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_003_v0.1.0/">Sprint 2 checkpoint 003</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_3_checkpoint_004_v0.1.0/">Sprint 3 checkpoint 004</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CircuitPython MIDI Chip Platform</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">HIL and investigations</li>
+      <li class="breadcrumb-item active">MCP-US-080-INV-001 IDR</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform/edit/master/docs/docs/mcp_us_080_inv_001_instrumentation_design_review_v0.1.0.md">Edit on pappavis/circuitpython-midi-chip-platform</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="mcp-us-080-inv-001-instrumentation-design-review-v010">MCP-US-080-INV-001 Instrumentation Design Review v0.1.0<a class="headerlink" href="#mcp-us-080-inv-001-instrumentation-design-review-v010" title="Permanent link">&para;</a></h1>
+<!--
+Bestand: mcp_us_080_inv_001_instrumentation_design_review_v0.1.0.md
+Versienommer: 0.1.0
+Doel: Definieer die tydelike observasie-ontwerp vir MCP-US-080-INV-001 sonder implementasie of fixrichting.
+Sprint: Sprint 3
+Epic: MCP-EPIC-008 Portability, Quality And Release
+User-Story: MCP-US-080-INV-001 Locate First Disappearance Of NoteOn
+Actienr: MCP-ACT-080-INV-001-IDR-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-080-INV-001-IDR-001
+Template: docs/governance/instrumentation_design_review_template_v1.0.md
+-->
+
+<h2 id="doel">Doel<a class="headerlink" href="#doel" title="Permanent link">&para;</a></h2>
+<p>Deze IDR definieert uitsluitend hoe tijdelijke observatie wordt ontworpen om vast te stellen waar <code>NoteOn</code> voor het eerst verdwijnt in de keten van Logic Pro naar de S2 synth.</p>
+<p>Geen implementatie. Geen tracepoints. Geen fix. Geen refactor. Geen optimalisatie. Geen productarchitectuurwijziging.</p>
+<h2 id="investigation-summary">Investigation Summary<a class="headerlink" href="#investigation-summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Veld</th>
+<th>Waarde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Investigation Story ID</td>
+<td><code>MCP-US-080-INV-001</code></td>
+</tr>
+<tr>
+<td>Titel</td>
+<td>Locate First Disappearance Of NoteOn</td>
+</tr>
+<tr>
+<td>Event of gedrag dat wordt gezocht</td>
+<td><code>NoteOn</code></td>
+</tr>
+<tr>
+<td>Huidige status</td>
+<td>P0 Investigation / IDR</td>
+</tr>
+<tr>
+<td>Root cause status</td>
+<td><code>UNKNOWN</code></td>
+</tr>
+<tr>
+<td>Product Owner goedkeuring</td>
+<td>K8M4R2Q7 / B5Q8N2L7 / J6R9T2M4</td>
+</tr>
+<tr>
+<td>Principal QA pre-review</td>
+<td>W4N8K2R6</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-doel-van-de-investigation">1. Doel Van De Investigation<a class="headerlink" href="#1-doel-van-de-investigation" title="Permanent link">&para;</a></h2>
+<p>Lokaliseer objectief:</p>
+<pre><code class="language-text">FIRST_DISAPPEARANCE_OF_NOTEON=&lt;meetpunt&gt;
+</code></pre>
+<p>of rapporteer:</p>
+<pre><code class="language-text">UNKNOWN;reason=&lt;objectief gemotiveerde reden&gt;
+</code></pre>
+<h2 id="2-hypotheses-die-onderzocht-worden">2. Hypotheses Die Onderzocht Worden<a class="headerlink" href="#2-hypotheses-die-onderzocht-worden" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Hypothese</th>
+<th>Welke observatie kan dit bevestigen?</th>
+<th>Welke observatie kan dit falsifiëren?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H-001</td>
+<td>Logic/CoreMIDI levert geen <code>NoteOn</code> aan de S2-route</td>
+<td>Host/CoreMIDI-stage rapporteert <code>NO_EVENTS</code>, <code>CONTROL_ONLY</code> of <code>UNKNOWN</code> terwijl stimulus verwacht is</td>
+<td>Host/CoreMIDI-stage rapporteert <code>NOTEON_PRESENT</code></td>
+</tr>
+<tr>
+<td>H-002</td>
+<td><code>NoteOn</code> bereikt een USB-MIDI endpoint maar niet de device-decode laag</td>
+<td>USB endpoint-stage rapporteert <code>NOTEON_PRESENT</code>, latere decode-stage niet</td>
+<td>Decode-stage rapporteert <code>NOTEON_PRESENT</code></td>
+</tr>
+<tr>
+<td>H-003</td>
+<td><code>NoteOn</code> wordt decoded maar verdwijnt vóór router/dispatcher</td>
+<td>Decode- of receive-stage rapporteert <code>NOTEON_PRESENT</code>, latere stage rapporteert <code>NO_EVENTS</code> of <code>UNKNOWN</code></td>
+<td>Router/dispatcher-stage rapporteert <code>NOTEON_PRESENT</code></td>
+</tr>
+<tr>
+<td>H-004</td>
+<td>De investigation kan met huidige middelen niet objectief lokaliseren</td>
+<td>Een of meer noodzakelijke stages blijven <code>UNKNOWN</code></td>
+<td>Alle noodzakelijke stages leveren objectieve classificaties</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-hypotheses-die-niet-onderzocht-worden">3. Hypotheses Die Niet Onderzocht Worden<a class="headerlink" href="#3-hypotheses-die-niet-onderzocht-worden" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Niet onderzocht</th>
+<th>Reden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NH-001</td>
+<td>Welke bugfix nodig is</td>
+<td>Fixrichting is buiten scope</td>
+</tr>
+<tr>
+<td>NH-002</td>
+<td>Welke architectuurwijziging nodig is</td>
+<td>Productontwerp is buiten scope</td>
+</tr>
+<tr>
+<td>NH-003</td>
+<td>Waarom audio hoorbaar vertraagt</td>
+<td>Deze IDR lokaliseert alleen <code>NoteOn</code>-verdwijning</td>
+</tr>
+<tr>
+<td>NH-004</td>
+<td>Of D1/synthio/I2S verbeterd moet worden</td>
+<td>Audio- en synthwijzigingen zijn buiten scope</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-volledige-observatieketen">4. Volledige Observatieketen<a class="headerlink" href="#4-volledige-observatieketen" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Volgorde</th>
+<th>Stage</th>
+<th>Vraag</th>
+<th>Mogelijke uitkomst</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>LOGIC_PRO_STIMULUS</code></td>
+<td>Is er een bekende note-stimulus gestart?</td>
+<td><code>NOTEON_PRESENT / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>COREMIDI_HOST_SEND</code></td>
+<td>Is vóór de device-grens een <code>NoteOn</code> meetbaar?</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>USB_HOST_DESTINATION</code></td>
+<td>Is de S2-destination/poort objectief bekend?</td>
+<td><code>NOTEON_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>USB_ENDPOINT_PORT_0</code></td>
+<td>Ziet endpoint/port 0 note-events, control-only of niets?</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>USB_ENDPOINT_PORT_1</code></td>
+<td>Ziet endpoint/port 1 note-events, control-only of niets?</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>CIRCUITPY_USB_STACK</code></td>
+<td>Zijn events op de CircuitPython USB-laag observeerbaar?</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>ADAFRUIT_MIDI_DECODE</code></td>
+<td>Is decoded <code>NoteOn</code> observeerbaar?</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>MIDI_RECEIVE_LOOP</code></td>
+<td>Ziet de applicatie-receive-loop <code>NoteOn</code>?</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>ROUTER_OBSERVATION</code></td>
+<td>Is <code>NoteOn</code> vóór of in router-observatie zichtbaar?</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>SYNTH_DISPATCH_OBSERVATION</code></td>
+<td>Is <code>NoteOn</code> vóór synth-dispatch zichtbaar?</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>D1_TRIGGER_OBSERVATION</code></td>
+<td>Is een D1-triggerobservatie mogelijk zonder gedrag te wijzigen?</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>I2S_OBSERVATION</code></td>
+<td>Is een audio-startobservatie mogelijk zonder audio te wijzigen?</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>SPEAKER_OBSERVATION</code></td>
+<td>Is het resultaat menselijk of met meter observeerbaar?</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-tracepoint-definities">5. Tracepoint Definities<a class="headerlink" href="#5-tracepoint-definities" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Naam</th>
+<th>Doel</th>
+<th>Waarom noodzakelijk</th>
+<th>Verwachte observatie</th>
+<th>Observer-effect</th>
+<th>Timingrisico</th>
+<th>Bounded logging</th>
+<th>Debug-only</th>
+<th>Verwijderstrategie</th>
+<th>UNKNOWN-regel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LOGIC_PRO_STIMULUS</code></td>
+<td>Vastleggen welke stimulus de tester uitvoert</td>
+<td>Zonder stimuluscontext is device-output niet interpreteerbaar</td>
+<td>Testscenario en verwachte note(s)</td>
+<td>Geen firmware-effect</td>
+<td>Geen device timingrisico</td>
+<td>Eén HIL-run record</td>
+<td>Documentatie-only</td>
+<td>N.v.t.</td>
+<td>Wanneer stimulus niet reproduceerbaar is</td>
+</tr>
+<tr>
+<td><code>COREMIDI_HOST_SEND</code></td>
+<td>Observeren of hostlaag een note richting S2 verstuurt</td>
+<td>Scheidt hostlaag van device-laag</td>
+<td><code>NOTEON_PRESENT</code>, <code>NOTEOFF_PRESENT</code>, <code>CONTROL_ONLY</code>, <code>NO_EVENTS</code> of <code>UNKNOWN</code></td>
+<td>Hosttooling kan routing beïnvloeden</td>
+<td>Laag tot middel</td>
+<td>Beperkte host-output</td>
+<td>Debug-only HIL-bewijs</td>
+<td>Hosttooling stoppen/verwijderen</td>
+<td>Wanneer geen objectieve hostprobe beschikbaar is</td>
+</tr>
+<tr>
+<td><code>USB_HOST_DESTINATION</code></td>
+<td>Vastleggen welke destination/poort gekozen is</td>
+<td>Zonder poortcontext blijft endpointanalyse ambigu</td>
+<td>Destination/poortstatus of <code>UNKNOWN</code></td>
+<td>Geen firmware-effect</td>
+<td>Geen device timingrisico</td>
+<td>Eén runrecord</td>
+<td>Documentatie-only</td>
+<td>N.v.t.</td>
+<td>Wanneer host geen eenduidige poort toont</td>
+</tr>
+<tr>
+<td><code>USB_ENDPOINT_PORT_0</code></td>
+<td>Observeren welke eventklasse port 0 levert</td>
+<td>Endpointverwisseling uitsluiten of bevestigen</td>
+<td>Classificatie per eventtype</td>
+<td>Serial logging kan polling beïnvloeden</td>
+<td>Middel</td>
+<td>Max events/tijd begrensd</td>
+<td>Debug-only</td>
+<td>Tracepoint verwijderen/deactiveren</td>
+<td>Wanneer port niet meetbaar is</td>
+</tr>
+<tr>
+<td><code>USB_ENDPOINT_PORT_1</code></td>
+<td>Observeren welke eventklasse port 1 levert</td>
+<td>Endpointverwisseling uitsluiten of bevestigen</td>
+<td>Classificatie per eventtype</td>
+<td>Serial logging kan polling beïnvloeden</td>
+<td>Middel</td>
+<td>Max events/tijd begrensd</td>
+<td>Debug-only</td>
+<td>Tracepoint verwijderen/deactiveren</td>
+<td>Wanneer port niet meetbaar is</td>
+</tr>
+<tr>
+<td><code>CIRCUITPY_USB_STACK</code></td>
+<td>Observeren of CircuitPython events beschikbaar stelt</td>
+<td>Lokaliseert vóór/na USB stack-grens</td>
+<td>Classificatie per eventtype</td>
+<td>Extra observeerwerk kan scheduling beïnvloeden</td>
+<td>Middel</td>
+<td>Max events/tijd begrensd</td>
+<td>Debug-only</td>
+<td>Tracepoint verwijderen/deactiveren</td>
+<td>Wanneer stack niet apart observeerbaar is</td>
+</tr>
+<tr>
+<td><code>ADAFRUIT_MIDI_DECODE</code></td>
+<td>Observeren of decoded eventtypes bestaan</td>
+<td>Lokaliseert vóór/na decode</td>
+<td>Classificatie per decoded eventtype</td>
+<td>Extra decode-observatie kan loop vertragen</td>
+<td>Middel</td>
+<td>Max events/tijd begrensd</td>
+<td>Debug-only</td>
+<td>Tracepoint verwijderen/deactiveren</td>
+<td>Wanneer decode niet apart observeerbaar is</td>
+</tr>
+<tr>
+<td><code>MIDI_RECEIVE_LOOP</code></td>
+<td>Observeren of applicatie-receive-loop note-events ziet</td>
+<td>Lokaliseert vóór/na receive-loop</td>
+<td>Classificatie per received event</td>
+<td>Logging in loop kan timing veranderen</td>
+<td>Hoog</td>
+<td>Samenvatting of beperkte events</td>
+<td>Debug-only</td>
+<td>Tracepoint verwijderen/deactiveren</td>
+<td>Wanneer loop niet betrouwbaar observeerbaar is</td>
+</tr>
+<tr>
+<td><code>ROUTER_OBSERVATION</code></td>
+<td>Observeren of event vóór routergrens zichtbaar blijft</td>
+<td>Lokaliseert vóór/na routing</td>
+<td>Classificatie vóór routerbesluit</td>
+<td>Logging kan routing timing raken</td>
+<td>Middel</td>
+<td>Samenvatting of beperkte events</td>
+<td>Debug-only</td>
+<td>Tracepoint verwijderen/deactiveren</td>
+<td>Wanneer router niet actief is in gekozen diagnostic</td>
+</tr>
+<tr>
+<td><code>SYNTH_DISPATCH_OBSERVATION</code></td>
+<td>Observeren of event vóór dispatchgrens zichtbaar blijft</td>
+<td>Lokaliseert vóór/na dispatch</td>
+<td>Classificatie vóór dispatch</td>
+<td>Logging kan dispatch timing raken</td>
+<td>Middel</td>
+<td>Samenvatting of beperkte events</td>
+<td>Debug-only</td>
+<td>Tracepoint verwijderen/deactiveren</td>
+<td>Wanneer dispatch niet actief is in gekozen diagnostic</td>
+</tr>
+<tr>
+<td><code>D1_TRIGGER_OBSERVATION</code></td>
+<td>Observeren of D1-triggergrens bereikt wordt</td>
+<td>Lokaliseert of NoteOn de synthgrens haalt</td>
+<td>Classificatie zonder synthgedrag te wijzigen</td>
+<td>Instrumentatie kan synthloop verstoren</td>
+<td>Hoog</td>
+<td>Alleen bounded summary</td>
+<td>Debug-only</td>
+<td>Tracepoint verwijderen/deactiveren</td>
+<td>Wanneer D1-pad niet actief is in investigation</td>
+</tr>
+<tr>
+<td><code>I2S_OBSERVATION</code></td>
+<td>Observeren of audio-startgrens relevant is</td>
+<td>Scheidt note-disappearance van latere audio-observatie</td>
+<td>Classificatie of <code>UNKNOWN</code></td>
+<td>Audio-observatie kan timing verstoren</td>
+<td>Hoog</td>
+<td>Alleen bounded summary</td>
+<td>Debug-only</td>
+<td>Tracepoint verwijderen/deactiveren</td>
+<td>Wanneer audio buiten gekozen measurement path blijft</td>
+</tr>
+<tr>
+<td><code>SPEAKER_OBSERVATION</code></td>
+<td>Menselijke/meterobservatie vastleggen</td>
+<td>Eindobservatie scheiden van firmwareclaim</td>
+<td>Hoorbaar/meetbaar bewijs als Evidence Package-data</td>
+<td>Geen firmware-effect</td>
+<td>Geen device timingrisico</td>
+<td>Eén HIL-run record</td>
+<td>Documentatie-only</td>
+<td>N.v.t.</td>
+<td>Wanneer geen mens/meterobservatie beschikbaar is</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-observer-effect-analyse">6. Observer-Effect Analyse<a class="headerlink" href="#6-observer-effect-analyse" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Tracepoint</th>
+<th>Mogelijk observer-effect</th>
+<th>Mitigatie</th>
+<th>Resterend risico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host/CoreMIDI observatie</td>
+<td>Hosttool kan routing of timing beïnvloeden</td>
+<td>Alleen naast Logic-run gebruiken en als aparte run registreren</td>
+<td>Middel</td>
+</tr>
+<tr>
+<td>USB endpoint observatie</td>
+<td>Extra serial output kan MIDI polling vertragen</td>
+<td>Bounded eventcount, korte regels, summary waar mogelijk</td>
+<td>Middel</td>
+</tr>
+<tr>
+<td>Receive-loop observatie</td>
+<td>Logging in hot path kan timing wijzigen</td>
+<td>Minimale output, deactiveerbaar, run apart van productmodus</td>
+<td>Hoog</td>
+</tr>
+<tr>
+<td>Router/dispatch observatie</td>
+<td>Observatie kan stagevolgorde beïnvloeden als te invasief</td>
+<td>Alleen grensobservatie; geen beslislogica wijzigen</td>
+<td>Middel</td>
+</tr>
+<tr>
+<td>D1/I2S observatie</td>
+<td>Kan audio timing beïnvloeden</td>
+<td>Alleen gebruiken wanneer eerdere stages NoteOn bewijzen en latere stage nodig is</td>
+<td>Hoog</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-risicoanalyse">7. Risicoanalyse<a class="headerlink" href="#7-risicoanalyse" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Risico</th>
+<th>Impact</th>
+<th>Kans</th>
+<th>Beheersing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tracepoints veranderen timing</td>
+<td>Hoog</td>
+<td>Middel</td>
+<td>Bounded, debug-only, minimale output</td>
+</tr>
+<tr>
+<td>Tracepoints worden productgedrag</td>
+<td>Hoog</td>
+<td>Laag</td>
+<td>Verwijderstrategie en post-investigation QA</td>
+</tr>
+<tr>
+<td>Hostlaag blijft <code>UNKNOWN</code></td>
+<td>Middel</td>
+<td>Middel</td>
+<td>Evidence Package registreert <code>UNKNOWN</code> met reden</td>
+</tr>
+<tr>
+<td>CC7 wordt opnieuw als note-bewijs gelezen</td>
+<td>Hoog</td>
+<td>Middel</td>
+<td>Alleen classificatie <code>CONTROL_ONLY</code>; nooit PASS voor NoteOn</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-meetmatrix">8. Meetmatrix<a class="headerlink" href="#8-meetmatrix" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Meetpunt</th>
+<th>Verwachte invoer</th>
+<th>Verwachte uitvoer</th>
+<th>Mogelijke uitkomst</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LOGIC_PRO_STIMULUS</code></td>
+<td>Tester-runrecord</td>
+<td>C4/E4/G4 stimulus</td>
+<td>Stimulus vastgelegd of ontbrekend</td>
+<td><code>NOTEON_PRESENT / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td><code>COREMIDI_HOST_SEND</code></td>
+<td>Hostobservatie</td>
+<td>Logic/CoreMIDI output</td>
+<td>Eventklasse vóór device</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td><code>USB_HOST_DESTINATION</code></td>
+<td>Destinationrecord</td>
+<td>S2 MIDI destination</td>
+<td>Destinationstatus</td>
+<td><code>NOTEON_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td><code>USB_ENDPOINT_PORT_0</code></td>
+<td>Portobservatie</td>
+<td>USB-MIDI port 0</td>
+<td>Eventklasse per port</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td><code>USB_ENDPOINT_PORT_1</code></td>
+<td>Portobservatie</td>
+<td>USB-MIDI port 1</td>
+<td>Eventklasse per port</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td><code>CIRCUITPY_USB_STACK</code></td>
+<td>Stackobservatie</td>
+<td>CircuitPython USB events</td>
+<td>Eventklasse</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td><code>ADAFRUIT_MIDI_DECODE</code></td>
+<td>Decodeobservatie</td>
+<td>Decoded MIDI message</td>
+<td>Eventklasse</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td><code>MIDI_RECEIVE_LOOP</code></td>
+<td>Receiveobservatie</td>
+<td>Applicatie receive</td>
+<td>Eventklasse</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td><code>ROUTER_OBSERVATION</code></td>
+<td>Routergrens</td>
+<td>Received event</td>
+<td>Eventklasse vóór/na grens</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td><code>SYNTH_DISPATCH_OBSERVATION</code></td>
+<td>Dispatchgrens</td>
+<td>Routed event</td>
+<td>Eventklasse vóór/na grens</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td><code>D1_TRIGGER_OBSERVATION</code></td>
+<td>D1-grens</td>
+<td>Dispatch event</td>
+<td>Triggerobservatie of onbekend</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td><code>I2S_OBSERVATION</code></td>
+<td>Audio-startgrens</td>
+<td>Synth trigger</td>
+<td>Audio-startobservatie of onbekend</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+<tr>
+<td><code>SPEAKER_OBSERVATION</code></td>
+<td>Mens/meter</td>
+<td>Audio-uitvoer</td>
+<td>Hoorbaar/meetbaar record of onbekend</td>
+<td><code>NOTEON_PRESENT / NOTEOFF_PRESENT / CONTROL_ONLY / NO_EVENTS / UNKNOWN</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-verwachte-classificaties">9. Verwachte Classificaties<a class="headerlink" href="#9-verwachte-classificaties" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Classificatie</th>
+<th>Betekenis binnen MCP-US-080-INV-001</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NOTEON_PRESENT</code></td>
+<td>Het meetpunt ziet objectief <code>NoteOn</code></td>
+</tr>
+<tr>
+<td><code>NOTEOFF_PRESENT</code></td>
+<td>Het meetpunt ziet objectief <code>NoteOff</code></td>
+</tr>
+<tr>
+<td><code>CONTROL_ONLY</code></td>
+<td>Het meetpunt ziet control-verkeer, maar geen note-events</td>
+</tr>
+<tr>
+<td><code>NO_EVENTS</code></td>
+<td>Het meetpunt ziet geen events</td>
+</tr>
+<tr>
+<td><code>UNKNOWN</code></td>
+<td>Het meetpunt is niet objectief meetbaar of bewijs ontbreekt</td>
+</tr>
+</tbody>
+</table>
+<h2 id="10-hil-run-template">10. HIL-Run Template<a class="headerlink" href="#10-hil-run-template" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Veld</th>
+<th>Waarde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Story ID</td>
+<td><code>MCP-US-080-INV-001</code></td>
+</tr>
+<tr>
+<td>Firmware versie</td>
+<td><code>&lt;firmware-versie&gt;</code></td>
+</tr>
+<tr>
+<td>Git commit</td>
+<td><code>&lt;commit&gt;</code></td>
+</tr>
+<tr>
+<td>Release versie</td>
+<td><code>&lt;release-versie&gt;</code></td>
+</tr>
+<tr>
+<td>Datum/tijd</td>
+<td><code>&lt;YYYY-MM-DD HH:MM TZ&gt;</code></td>
+</tr>
+<tr>
+<td>Tester</td>
+<td><code>&lt;naam&gt;</code></td>
+</tr>
+<tr>
+<td>Hardware</td>
+<td><code>&lt;S2 / MAX98357 / overige&gt;</code></td>
+</tr>
+<tr>
+<td>Host</td>
+<td><code>&lt;hostnaam / macOS&gt;</code></td>
+</tr>
+<tr>
+<td>Logic versie</td>
+<td><code>&lt;versie / UNKNOWN&gt;</code></td>
+</tr>
+<tr>
+<td>macOS versie</td>
+<td><code>&lt;versie / UNKNOWN&gt;</code></td>
+</tr>
+<tr>
+<td>USB poort</td>
+<td><code>&lt;poort / hub / UNKNOWN&gt;</code></td>
+</tr>
+<tr>
+<td>MIDI kanaal</td>
+<td><code>&lt;All / 1 / ander / UNKNOWN&gt;</code></td>
+</tr>
+<tr>
+<td>Testscenario</td>
+<td><code>Live C4/E4/G4 en MIDI-region C4/E4/G4</code></td>
+</tr>
+<tr>
+<td>Verwachte observatie</td>
+<td><code>NoteOn zichtbaar of UNKNOWN met reden</code></td>
+</tr>
+<tr>
+<td>Werkelijke observatie</td>
+<td><code>&lt;observatie&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="11-reproduceerbaarheid">11. Reproduceerbaarheid<a class="headerlink" href="#11-reproduceerbaarheid" title="Permanent link">&para;</a></h2>
+<p>De run is reproduceerbaar wanneer de Evidence Package Template is ingevuld en ruwe logs of meetobservaties zijn opgenomen. Elk ontbrekend feit wordt <code>UNKNOWN</code>, niet ingevuld op basis van aanname.</p>
+<h2 id="12-verwijderstrategie">12. Verwijderstrategie<a class="headerlink" href="#12-verwijderstrategie" title="Permanent link">&para;</a></h2>
+<p>De toekomstige instrumentatie moet na deze investigation:</p>
+<ul>
+<li>verwijderd of standaard gedeactiveerd worden;</li>
+<li>geen productgedrag achterlaten;</li>
+<li>geen nieuwe API of domeincontract achterlaten;</li>
+<li>door post-investigation QA worden gecontroleerd;</li>
+<li>in een Evidence Package aantonen welke tijdelijke observatie actief was.</li>
+</ul>
+<h2 id="done-definitie">Done Definitie<a class="headerlink" href="#done-definitie" title="Permanent link">&para;</a></h2>
+<p>Deze IDR is Done wanneer:</p>
+<ul>
+<li>alle meetpunten ontworpen zijn;</li>
+<li>observer-effecten en timingrisico's beschreven zijn;</li>
+<li>HIL-run reproduceerbaar is via de template;</li>
+<li>verwijderstrategie vastligt;</li>
+<li>geen fixadvies of implementatiekeuze is opgenomen.</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0/" class="btn btn-neutral float-left" title="MCP-US-080 USB-MIDI routing diagnostic"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../mcp_us_080_inv_001_locate_first_disappearance_of_noteon_v0.1.0/" class="btn btn-neutral float-right" title="MCP-US-080-INV-001 First disappearance">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform" class="fa fa-code-fork" style="color: #fcfcfc"> pappavis/circuitpython-midi-chip-platform</a>
+        </span>
+    
+    
+      <span><a href="../mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../mcp_us_080_inv_001_locate_first_disappearance_of_noteon_v0.1.0/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

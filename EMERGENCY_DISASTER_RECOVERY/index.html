@@ -1,0 +1,2187 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Detailed disaster recovery handbook - CircuitPython MIDI Chip Platform</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Detailed disaster recovery handbook";
+        var mkdocs_page_input_path = "EMERGENCY_DISASTER_RECOVERY.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> CircuitPython MIDI Chip Platform
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Start</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="..">Project overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/">Documentation index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/quickstart_installation_v0.1.0/">Quickstart and installation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Emergency recovery</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../00_Start_HERE_Emergency_recovery_pack/">Start here</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Detailed disaster recovery handbook</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-document-status">1. Document Status</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-purpose">2. Purpose</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-executive-summary">3. Executive Summary</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-business-context">4. Business Context</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-repository-overview">5. Repository Overview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6-architecture-overview">6. Architecture Overview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#7-technology-stack">7. Technology Stack</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#8-directory-structure">8. Directory Structure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#9-build-process">9. Build Process</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#10-configuration">10. Configuration</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#11-environment-variables">11. Environment Variables</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#12-dependencies">12. Dependencies</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#13-data-model">13. Data Model</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#14-application-lifecycle">14. Application Lifecycle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#15-end-to-end-data-flow">15. End-to-End Data Flow</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#16-business-rules">16. Business Rules</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#17-validation-logic">17. Validation Logic</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#18-logging-strategy">18. Logging Strategy</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#19-error-handling">19. Error Handling</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#20-testing-strategy">20. Testing Strategy</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#21-cicd">21. CI/CD</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#22-release-process">22. Release Process</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#23-operational-runbooks">23. Operational Runbooks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#host-sanity-runbook">Host Sanity Runbook</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#device-deploy-runbook">Device Deploy Runbook</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#independent-i2s-runbook">Independent I2S Runbook</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#24-troubleshooting-guide">24. Troubleshooting Guide</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#25-cold-start-recovery">25. Cold Start Recovery</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#26-disaster-recovery-procedure">26. Disaster Recovery Procedure</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#before-recovery">Before Recovery</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#during-recovery">During Recovery</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#after-recovery">After Recovery</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#27-knowledge-transfer-guide">27. Knowledge Transfer Guide</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#28-developer-onboarding">28. Developer Onboarding</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#29-maintenance-guide">29. Maintenance Guide</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#30-known-risks">30. Known Risks</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#31-technical-debt">31. Technical Debt</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#32-open-questions">32. Open Questions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#33-future-improvements">33. Future Improvements</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#34-glossary">34. Glossary</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#35-appendices">35. Appendices</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#appendix-a-key-commands">Appendix A: Key Commands</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#appendix-b-mcp-us-080-device-settings">Appendix B: MCP-US-080 Device Settings</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#36-repository-evidence-matrix">36. Repository Evidence Matrix</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#37-source-traceability-matrix">37. Source Traceability Matrix</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#38-repository-maturity-assessment">38. Repository Maturity Assessment</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#39-unknown-register">39. Unknown Register</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#40-assumption-register">40. Assumption Register</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#41-risk-register">41. Risk Register</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#42-bus-factor-analysis">42. Bus Factor Analysis</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#43-knowledge-capture-checklist">43. Knowledge Capture Checklist</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#44-recovery-validation-procedure">44. Recovery Validation Procedure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#45-ai-usage-policy">45. AI Usage Policy</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#46-continuous-improvement-register">46. Continuous Improvement Register</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#47-disaster-recovery-checklist">47. Disaster Recovery Checklist</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#before-recovery_1">Before Recovery</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#during-recovery_1">During Recovery</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#after-recovery_1">After Recovery</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#validation">Validation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operational-acceptance">Operational Acceptance</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#48-engineering-decision-log">48. Engineering Decision Log</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#49-lessons-learned">49. Lessons Learned</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#50-final-certification-gate">50. Final Certification Gate</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/repository_identity_and_sync_v0.1.0/">Repository identity and synchronization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/device_connection_proof_v0.1.0/">Device connection proof</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Governance and delivery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../AGENTS/">Binding agent and delivery rules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/governance/">Governance overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/governance/principal_qa_architect_agent_v0.1.0/">Principal QA Architect gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/governance/regression_memory_v0.1.0/">Regression memory</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/governance/instrumentation_design_review_template_v1.0/">Instrumentation Design Review template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/governance/evidence_package_template_v1.0/">Evidence package template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/agile_delivery_release_plan_v0.1.0/">Agile delivery and release plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/team_raci_v0.1.0/">Team and RACI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/risk_register_v0.1.0/">Risk register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/source_register_v0.1.0/">Source register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/backlog_sanity_check_v0.1.0/">Backlog sanity check</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/reuse_matrix_v0.1.0/">Reuse matrix</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MVP and product scope</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mvp_scope_v0.1.0/">Frozen MVP scope</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mvp/MVP_BUILD_PLAN/">MVP build plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/user_stories_v0.1.0/">User-story catalogue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/audio_priority_amendment_v0.1.0/">Audio priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/ble_midi_core_priority_amendment_v0.1.0/">BLE MIDI and core priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/midi_transport_multicore_amendment_v0.1.0/">MIDI transport and multi-core amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/wifi_runtime_fallback_amendment_v0.1.0/">Wi-Fi runtime fallback amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/physical_chip_display_expansion_amendment_v0.1.0/">Physical chip and display expansion</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/burn_in_heap_stability_spec_v0.1.0/">Burn-in and heap stability</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Framework engineering</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/">Framework engineering index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/enterprise_vision_v0.1.0/">Enterprise vision</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/architecture_v0.1.0/">Architecture</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/enterprise_meta_model_v0.1.0/">Enterprise meta model</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/artefact_taxonomy_v0.1.0/">Artefact taxonomy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/quality_manual_v0.1.0/">Quality manual</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/test_strategy_v0.1.0/">Test strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/review_engine_v0.1.0/">Review engine</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/adr_repository_index_v0.1.0/">ADR repository index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/context_loader_specification_v0.1.0/">Context loader specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/prompt_compiler_specification_v0.1.0/">Prompt compiler specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/knowledge_base_structure_v0.1.0/">Knowledge-base structure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/framework_engineering/glossary_v0.1.0/">Glossary</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Architecture decisions</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/decisions/ADR-001-repository-strategy/">ADR-001 Repository strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/decisions/ADR-002-reference-platform/">ADR-002 Reference platform</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/decisions/ADR-003-audio-strategy/">ADR-003 Audio strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/decisions/ADR-004-persistent-realtime-audio-graph/">ADR-004 Persistent realtime audio graph</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/decisions/MCP-US-101-FIRST-MVP-STEP/">MCP-US-101 First MVP step</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Foundation stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/board_capability_matrix_v0.1.0/">Board capability matrix</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_001_device_source_baseline_inventory_v0.1.0/">MCP-US-001 Device and source baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_002_project_skeleton_review_v0.1.0/">MCP-US-002 Project skeleton</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_003_safe_boot_review_v0.1.0/">MCP-US-003 Safe boot</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_004_board_capability_review_v0.1.0/">MCP-US-004 Board capabilities</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_005_configuration_secret_boundary_review_v0.1.0/">MCP-US-005 Configuration and secrets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_006_portable_event_model_review_v0.1.0/">MCP-US-006 Portable event model</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MIDI stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_007_usb_midi_receive_review_v0.1.0/">MCP-US-007 USB-MIDI receive</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_008_midi_channel_router_review_v0.1.0/">MCP-US-008 MIDI channel router</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_009_note_semantics_review_v0.1.0/">MCP-US-009 Note semantics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_010_pitch_bend_cc1_review_v0.1.0/">MCP-US-010 Pitch bend and CC1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_062_ble_midi_capability_review_v0.1.0/">MCP-US-062 BLE-MIDI capability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/autonomous_midi_batch_host_acceptance_v0.1.0/">Autonomous MIDI batch host acceptance</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Audio and D1 stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_014_audio_output_review_v0.1.0/">MCP-US-014 Audio output</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_016_i2s_diagnostic_review_v0.1.0/">MCP-US-016 I2S diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_055_logic_d1_i2s_review_v0.1.0/">MCP-US-055 Logic D1 I2S acceptance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_063_d1_core_review_v0.1.0/">MCP-US-063 D1 core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_075_safe_audio_gate_review_v0.1.0/">MCP-US-075 Safe audio gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_077_realtime_midi_audio_baseline_review_v0.1.0/">MCP-US-077 Realtime MIDI audio baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_079_persistent_synthio_audio_graph_plan_v0.1.0/">MCP-US-079 Persistent synthio graph</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HIL and investigations</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_051_hil_runner_review_v0.1.0/">MCP-US-051 HIL runner</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_051_mcp_us_007_dependency_closed_deployment_impediment_v0.1.0/">MCP-US-051/007 deployment impediment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0/">MCP-US-080 USB-MIDI routing diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_080_inv_001_instrumentation_design_review_v0.1.0/">MCP-US-080-INV-001 IDR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/mcp_us_080_inv_001_locate_first_disappearance_of_noteon_v0.1.0/">MCP-US-080-INV-001 First disappearance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/evidence/mcp-us-100a/screenshots/">MCP-US-100A Screenshots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/evidence/mcp-us-102/final-assessment/">MCP-US-102 Final assessment</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Incidents and external review</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/incidents/us_055_realtime_architecture_rebaseline_v0.1.0/">US-055 realtime architecture rebaseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/external_review_packets/us_055_realtime_failure_copilot_packet_v0.1.0/">US-055 external review packet</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/external_qa_audit_report_v0.1.0/">External QA audit v0.1.0</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/external_qa_audit_report_v0.20/">External QA audit v0.20</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lessons learned</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/lessons_learned_sprint_1_checkpoint_001_v0.1.0/">Sprint 1 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/lessons_learned_sprint_2_checkpoint_001_v0.1.0/">Sprint 2 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/lessons_learned_sprint_2_checkpoint_002_v0.1.0/">Sprint 2 checkpoint 002</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/lessons_learned_sprint_2_checkpoint_003_v0.1.0/">Sprint 2 checkpoint 003</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../docs/lessons_learned_sprint_3_checkpoint_004_v0.1.0/">Sprint 3 checkpoint 004</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">CircuitPython MIDI Chip Platform</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Emergency recovery</li>
+      <li class="breadcrumb-item active">Detailed disaster recovery handbook</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform/edit/master/docs/EMERGENCY_DISASTER_RECOVERY.md">Edit on pappavis/circuitpython-midi-chip-platform</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="emergency-disaster-recovery-handbook">Emergency Disaster Recovery Handbook<a class="headerlink" href="#emergency-disaster-recovery-handbook" title="Permanent link">&para;</a></h1>
+<p>Document: <code>EMERGENCY_DISASTER_RECOVERY.md</code><br />
+Repository: <code>pappavis/circuitpython-midi-chip-platform</code><br />
+Assessed local path: <code>/Volumes/data1/Yandex.Disk.localized/michiele/Programmering/Python/python_normaal/github_python_normaal/circuitpython-midi-chip-platform-governance</code><br />
+Current release metadata observed in repository: <code>v0.20.0</code>, <code>MCP-US-080</code>, <code>2026-07-23</code><br />
+Primary evidence: repository files only<br />
+Document purpose: disaster recovery, business continuity, cold start recovery, engineering onboarding, long-term maintenance and technical audit  </p>
+<blockquote>
+<p>Recovery principle: if a fact is not supported by this repository, treat it as <code>UNKNOWN</code> until proven again by code, tests, HIL logs, hardware measurements or a new ADR.</p>
+</blockquote>
+<h2 id="1-document-status">1. Document Status<a class="headerlink" href="#1-document-status" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Status</td>
+<td>Initial disaster recovery baseline</td>
+</tr>
+<tr>
+<td>Intended owner</td>
+<td>Release/Documentation plus Chief Enterprise Architect</td>
+</tr>
+<tr>
+<td>Review status</td>
+<td>Requires Product Owner and technical review before release certification</td>
+</tr>
+<tr>
+<td>Evidence source</td>
+<td>Repository contents, tests, docs and current git state</td>
+</tr>
+<tr>
+<td>Last known commit at creation</td>
+<td><code>146fce5 feat(us080): add usb midi routing diagnostic</code></td>
+</tr>
+<tr>
+<td>Known limitation</td>
+<td>The handbook is generated from repository evidence; it cannot certify external facts not present in Git</td>
+</tr>
+</tbody>
+</table>
+<p>This handbook is not a marketing README. It is the single source of truth for recovering this project if the original author, chat history, external tooling and institutional knowledge are unavailable. It must remain in the repository and be updated whenever architecture, deployment, configuration, risks, release procedure or recovery procedure changes.</p>
+<h2 id="2-purpose">2. Purpose<a class="headerlink" href="#2-purpose" title="Permanent link">&para;</a></h2>
+<p>The purpose of this handbook is to enable an experienced software engineer who has never seen the project to:</p>
+<ul>
+<li>recover the repository from a cold clone;</li>
+<li>understand what the software does and does not do;</li>
+<li>rebuild the host development environment;</li>
+<li>deploy the CircuitPython device package to <code>CIRCUITPY</code>;</li>
+<li>validate hardware-in-the-loop behavior;</li>
+<li>identify current MVP blockers;</li>
+<li>maintain the project without relying on prior chat history;</li>
+<li>continue development under the repository governance rules.</li>
+</ul>
+<p>The handbook assumes there is no internet, no Jira, no Azure DevOps, no Teams, no SharePoint, no Wiki, no Copilot history and no access to the original developer. The repository is the only reliable evidence source.</p>
+<h2 id="3-executive-summary">3. Executive Summary<a class="headerlink" href="#3-executive-summary" title="Permanent link">&para;</a></h2>
+<p><code>circuitpython-midi-chip-platform</code> is a CircuitPython-oriented retro synthesizer platform. Its near-term MVP is deliberately narrow: prove that a LOLIN/Wemos ESP32-S2 Mini running CircuitPython can receive USB-MIDI from Logic Pro, route MIDI events into a D1-style basic synth core, and produce audible mono I2S audio through a MAX98357A amplifier module. The longer-term product vision includes multi-core retro chip emulation such as D1, SN76489, SID 6581 and OPL2/OPL3, plus BLE-MIDI, external USB host scenarios, web control, local sequencer functions, stereo output, DSP and physical chip backends.</p>
+<p>The repository has strong engineering discipline for an MVP-stage embedded project. It contains class-based architecture rules, an enforced no-globals policy, portable event models, host tests, HIL deployment tooling, risk documentation, ADRs, story reviews, burn-in policy and a detailed backlog. At the time this handbook was created, host tests passed with <code>162 passed</code>, and release metadata in <code>pyproject.toml</code> plus <code>src/midi_chip_platform/release.py</code> indicates version <code>0.20.0</code>.</p>
+<p>The most important unresolved issue is the <code>MCP-US-055</code> P0 impediment: Logic Pro to audible D1 synth on the S2 is not yet accepted. Multiple diagnostics show that basic I2S output can be audible and USB-MIDI receive can work, but audible real-time synth playback from Logic has shown delayed behavior. <code>MCP-US-080</code> was added as a MIDI-only routing diagnostic to determine whether events arrive late from Logic/CoreMIDI or whether the delay is introduced after receive in the audio path.</p>
+<p>Recovery is feasible but not trivial. A new engineer can run host tests quickly. Full recovery requires CircuitPython knowledge, a compatible board, <code>adafruit_midi</code>, a serial/REPL workflow, MAX98357A wiring, Logic or an equivalent USB-MIDI source, and careful separation of host tests from physical audio claims.</p>
+<h2 id="4-business-context">4. Business Context<a class="headerlink" href="#4-business-context" title="Permanent link">&para;</a></h2>
+<p>The long-term product definition, as recorded in <code>docs/mvp_scope_v0.1.0.md</code>, is a MIDI-controlled, multi-core retro synthesizer module in pedal form. The product targets music/guitar/synth enthusiasts and should eventually operate without a DAW through USB-MIDI hosts, external controllers or other transports. The immediate MVP is not the full pedal. It is a proof that a reference board can behave as a usable external MIDI synth in Logic Pro and produce audible D1-style sound through the default I2S audio module.</p>
+<p>Business-critical outcome for the current MVP:</p>
+<ol>
+<li>Safe boot and USB-MIDI enumeration.</li>
+<li>Board capability discovery and configuration boundary.</li>
+<li>Independent I2S audio preflight using <code>device/i2s_test.py</code>.</li>
+<li>D1 core host validation.</li>
+<li>USB-MIDI receive from Logic or another host.</li>
+<li>Audible D1 output through the MAX98357A.</li>
+<li>HIL evidence and burn-in before MVP acceptance.</li>
+</ol>
+<p>Anything beyond that, including SN76489, SID, OPL, web UI, BLE, stereo, DSP and physical chip backends, is post-MVP unless explicitly reclassified in the backlog.</p>
+<h2 id="5-repository-overview">5. Repository Overview<a class="headerlink" href="#5-repository-overview" title="Permanent link">&para;</a></h2>
+<p>High-level repository structure:</p>
+<pre><code class="language-text">.
+|-- README.md
+|-- AGENTS.md
+|-- pyproject.toml
+|-- EMERGENCY_DISASTER_RECOVERY.md
+|-- src/midi_chip_platform/
+|-- device/
+|-- tests/
+|-- docs/
+|-- docs/decisions/
+|-- docs/framework_engineering/
+|-- docs/incidents/
+|-- docs/external_review_packets/
+|-- assets/images/
+|-- outputs/
+</code></pre>
+<p>Key repository roles:</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Purpose</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/midi_chip_platform</code></td>
+<td>Host-safe Python package, domain model, ports, runtime factories, HIL tooling</td>
+<td><code>src/midi_chip_platform/*.py</code></td>
+</tr>
+<tr>
+<td><code>device</code></td>
+<td>CircuitPython deployable entrypoints and hardware diagnostics</td>
+<td><code>device/boot.py</code>, <code>device/code.py</code>, <code>device/i2s_test.py</code></td>
+</tr>
+<tr>
+<td><code>tests</code></td>
+<td>Host tests, AST governance tests, HIL tooling tests and runtime contract tests</td>
+<td><code>tests/test_*.py</code></td>
+</tr>
+<tr>
+<td><code>docs</code></td>
+<td>MVP scope, user stories, reviews, risks, lessons learned and operational procedures</td>
+<td><code>docs/*.md</code></td>
+</tr>
+<tr>
+<td><code>docs/decisions</code></td>
+<td>Architecture decision records</td>
+<td><code>ADR-001</code> to <code>ADR-004</code></td>
+</tr>
+<tr>
+<td><code>docs/framework_engineering</code></td>
+<td>Governance, architecture, quality, glossary and context loading</td>
+<td><code>docs/framework_engineering/*.md</code></td>
+</tr>
+<tr>
+<td><code>outputs</code></td>
+<td>Generated Kanban and audit artifacts</td>
+<td><code>outputs/CHATOD-20260714-MCP-CP-MVP-001/*</code></td>
+</tr>
+</tbody>
+</table>
+<p>The package is declared in <code>pyproject.toml</code> as <code>circuitpython-midi-chip-platform</code>, with optional dependencies <code>dev</code> and <code>hil</code>.</p>
+<h2 id="6-architecture-overview">6. Architecture Overview<a class="headerlink" href="#6-architecture-overview" title="Permanent link">&para;</a></h2>
+<p>The architecture is port/adaptor oriented and strongly class-based. The governance file <code>AGENTS.md</code> forbids global runtime state, global variables, module-level helper functions and import-time hardware side effects. <code>tests/test_architecture.py</code> enforces these rules using AST checks.</p>
+<p>Conceptual architecture:</p>
+<pre><code class="language-mermaid">flowchart LR
+  A[&quot;Logic Pro / MIDI Controller&quot;] --&gt; B[&quot;USB MIDI Device Endpoint&quot;]
+  B --&gt; C[&quot;MidiInputPort&quot;]
+  C --&gt; D[&quot;Portable Events: Note, Control, Clock&quot;]
+  D --&gt; E[&quot;Routing / Performance State&quot;]
+  E --&gt; F[&quot;D1 Synth Core&quot;]
+  F --&gt; G[&quot;Audio Blocks or Synth Runtime&quot;]
+  G --&gt; H[&quot;Safe Audio Output&quot;]
+  H --&gt; I[&quot;I2S Backend&quot;]
+  I --&gt; J[&quot;MAX98357A Mono Output&quot;]
+  K[&quot;Configuration&quot;] --&gt; C
+  K --&gt; F
+  K --&gt; H
+  L[&quot;HIL Tooling&quot;] --&gt; M[&quot;CIRCUITPY Deploy / Serial Verify&quot;]
+</code></pre>
+<p>Important components:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Responsibility</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MidiInputPort</code></td>
+<td>Abstract receive/open/close contract</td>
+<td><code>src/midi_chip_platform/ports.py</code></td>
+</tr>
+<tr>
+<td><code>NoteEvent</code>, <code>ControlEvent</code>, <code>ClockEvent</code></td>
+<td>Portable MIDI-domain events</td>
+<td><code>src/midi_chip_platform/events.py</code></td>
+</tr>
+<tr>
+<td><code>CircuitPythonUsbMidiFactory</code></td>
+<td>Creates USB-MIDI input adapters</td>
+<td><code>src/midi_chip_platform/midi_usb.py</code></td>
+</tr>
+<tr>
+<td><code>D1SynthCore</code></td>
+<td>Portable D1-like waveform core</td>
+<td><code>src/midi_chip_platform/d1_core.py</code></td>
+</tr>
+<tr>
+<td><code>SafeAudioOutput</code></td>
+<td>Startup mute and bounded gain decorator</td>
+<td><code>src/midi_chip_platform/audio.py</code></td>
+</tr>
+<tr>
+<td><code>I2sDiagnosticApplication</code></td>
+<td>Independent physical I2S G-C-D test</td>
+<td><code>device/i2s_test.py</code></td>
+</tr>
+<tr>
+<td><code>DeviceRuntimeApplication</code></td>
+<td>CircuitPython composition root</td>
+<td><code>src/midi_chip_platform/device_runtime.py</code></td>
+</tr>
+<tr>
+<td><code>HardwareInLoopDeployer</code></td>
+<td>Dependency-closed deploy to CIRCUITPY</td>
+<td><code>src/midi_chip_platform/hil.py</code></td>
+</tr>
+<tr>
+<td><code>MidiRoutingDiagnosticRuntime</code></td>
+<td>MCP-US-080 MIDI-only routing/timing diagnostic</td>
+<td><code>src/midi_chip_platform/midi_routing_diagnostic.py</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>device/boot.py</code> is intentionally small. It configures safe USB behavior and reports boot metadata. Runtime logic belongs in <code>device/code.py</code> and the injected classes.</p>
+<h2 id="7-technology-stack">7. Technology Stack<a class="headerlink" href="#7-technology-stack" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Technology</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host language</td>
+<td>Python 3.11+</td>
+<td><code>pyproject.toml</code></td>
+</tr>
+<tr>
+<td>Packaging</td>
+<td>setuptools build backend</td>
+<td><code>pyproject.toml</code></td>
+</tr>
+<tr>
+<td>Tests</td>
+<td>pytest</td>
+<td><code>pyproject.toml</code>, <code>tests/</code></td>
+</tr>
+<tr>
+<td>HIL serial</td>
+<td>pyserial optional dependency</td>
+<td><code>pyproject.toml</code>, <code>src/midi_chip_platform/hil.py</code></td>
+</tr>
+<tr>
+<td>Device runtime</td>
+<td>CircuitPython 10.x target</td>
+<td>docs and HIL logs in repository</td>
+</tr>
+<tr>
+<td>MIDI library</td>
+<td><code>adafruit_midi</code> required on device</td>
+<td><code>device/requirements.txt</code>, <code>hil.py</code></td>
+</tr>
+<tr>
+<td>Audio backend</td>
+<td><code>audiobusio.I2SOut</code>, MAX98357A mono default</td>
+<td><code>device/i2s_test.py</code>, <code>i2s_audio.py</code>, <code>mvp_scope</code></td>
+</tr>
+<tr>
+<td>Synth experiment</td>
+<td><code>synthio</code> baseline</td>
+<td><code>src/midi_chip_platform/synthio_runtime.py</code></td>
+</tr>
+<tr>
+<td>DAW acceptance target</td>
+<td>Logic Pro external MIDI</td>
+<td><code>docs/mcp_us_055_logic_d1_i2s_review_v0.1.0.md</code></td>
+</tr>
+</tbody>
+</table>
+<p>There is no evidence of Docker, Makefile, GitHub Actions or other CI/CD configuration in the repository file list at this assessment point.</p>
+<h2 id="8-directory-structure">8. Directory Structure<a class="headerlink" href="#8-directory-structure" title="Permanent link">&para;</a></h2>
+<pre><code class="language-text">src/midi_chip_platform/
+  application.py              Host application skeleton
+  audio.py                    Audio blocks, safety profile and safe output
+  ble_midi.py                 BLE capability gate, not radio startup
+  cli.py                      Host diagnostics and HIL commands
+  configuration.py            Public defaults and CircuitPython settings boundary
+  core.py                     SynthCore interface and registry concepts
+  d1_core.py                  Portable D1 waveform core
+  d1_runtime.py               D1 USB-MIDI/I2S runtime path
+  device_runtime.py           Device composition root
+  events.py                   Portable MIDI event model
+  hil.py                      Deploy, verify, reset and dependency closure
+  i2s_audio.py                CircuitPython I2S output adapter
+  midi_usb.py                 USB-MIDI translation and diagnostics
+  midi_routing_diagnostic.py  MCP-US-080 MIDI-only routing diagnostic
+  realtime_baseline.py        Raw I2S baseline spike
+  synthio_runtime.py          Persistent synthio graph spike
+  release.py                  Runtime release banner
+  ports.py                    Interfaces
+  testing.py                  Host fakes
+
+device/
+  boot.py                     CircuitPython boot entrypoint
+  code.py                     CircuitPython runtime entrypoint
+  i2s_test.py                 Independent audible I2S diagnostic
+  settings.toml.example       Public configuration template
+  requirements.txt            Device library requirements
+
+tests/
+  test_architecture.py        Governance and import-safety
+  test_hil.py                 HIL deploy/verify behavior
+  test_*                      Domain, MIDI, audio, runtime and CLI tests
+
+docs/
+  decisions/                  ADRs
+  framework_engineering/      Governance and architecture
+  incidents/                  P0 incident reviews
+  external_review_packets/    External review handoff packet
+</code></pre>
+<h2 id="9-build-process">9. Build Process<a class="headerlink" href="#9-build-process" title="Permanent link">&para;</a></h2>
+<p>Cold host build:</p>
+<pre><code class="language-bash">python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e &quot;.[dev,hil]&quot;
+python -m midi_chip_platform diagnose
+python -m pytest -q
+</code></pre>
+<p>Windows equivalent:</p>
+<pre><code class="language-powershell">py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e &quot;.[dev,hil]&quot;
+python -m midi_chip_platform diagnose
+python -m pytest -q
+</code></pre>
+<p>Expected current host test result at creation time:</p>
+<pre><code class="language-text">162 passed
+</code></pre>
+<p>The test count will change as the repository evolves. Treat a lower test count as a warning unless explained by an intentional test deletion.</p>
+<h2 id="10-configuration">10. Configuration<a class="headerlink" href="#10-configuration" title="Permanent link">&para;</a></h2>
+<p>Configuration is class-based and loaded from:</p>
+<ol>
+<li>public defaults in <code>ConfigurationDefaults</code>;</li>
+<li>private CircuitPython <code>settings.toml</code> values through <code>os.getenv</code>;</li>
+<li>future runtime overrides where applicable.</li>
+</ol>
+<p>Key default areas:</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Example keys</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audio</td>
+<td><code>audio.backend</code>, <code>audio.i2s.bit_clock</code>, <code>audio.master_gain</code></td>
+<td><code>configuration.py</code></td>
+</tr>
+<tr>
+<td>D1 runtime</td>
+<td><code>synth.d1.enabled</code>, <code>synth.d1.fast_boot_mode</code>, <code>synth.d1.waveform</code></td>
+<td><code>configuration.py</code></td>
+</tr>
+<tr>
+<td>Realtime baseline</td>
+<td><code>realtime_baseline.*</code></td>
+<td><code>configuration.py</code>, <code>realtime_baseline.py</code></td>
+</tr>
+<tr>
+<td>Synthio baseline</td>
+<td><code>synthio_baseline.*</code></td>
+<td><code>configuration.py</code>, <code>synthio_runtime.py</code></td>
+</tr>
+<tr>
+<td>MIDI diagnostic</td>
+<td><code>midi.diagnostic.*</code></td>
+<td><code>configuration.py</code>, <code>midi_usb.py</code></td>
+</tr>
+<tr>
+<td>MIDI routing diagnostic</td>
+<td><code>midi.routing_diagnostic.*</code></td>
+<td><code>configuration.py</code>, <code>midi_routing_diagnostic.py</code></td>
+</tr>
+<tr>
+<td>Wi-Fi future boundary</td>
+<td><code>wifi.mode</code>, <code>wifi.ssid</code>, <code>wifi.password</code></td>
+<td><code>configuration.py</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>device/settings.toml.example</code> is a template. A real <code>settings.toml</code> must not be committed.</p>
+<h2 id="11-environment-variables">11. Environment Variables<a class="headerlink" href="#11-environment-variables" title="Permanent link">&para;</a></h2>
+<p>CircuitPython reads configuration through <code>os.getenv</code>. The public template uses names such as:</p>
+<table>
+<thead>
+<tr>
+<th>Environment/settings key</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AUDIO_BACKEND</code></td>
+<td>Select audio backend profile</td>
+</tr>
+<tr>
+<td><code>I2S_BIT_CLOCK</code>, <code>I2S_WORD_SELECT</code>, <code>I2S_DATA</code></td>
+<td>I2S pin names</td>
+</tr>
+<tr>
+<td><code>AUDIO_MASTER_GAIN</code>, <code>AUDIO_MAXIMUM_MASTER_GAIN</code></td>
+<td>Digital gain boundary</td>
+</tr>
+<tr>
+<td><code>D1_RUNTIME_ENABLED</code>, <code>D1_FAST_BOOT_MODE</code></td>
+<td>D1 runtime startup</td>
+</tr>
+<tr>
+<td><code>REALTIME_BASELINE_ENABLED</code></td>
+<td>Raw I2S realtime baseline</td>
+</tr>
+<tr>
+<td><code>SYNTHIO_BASELINE_ENABLED</code></td>
+<td>Persistent synthio graph baseline</td>
+</tr>
+<tr>
+<td><code>MIDI_ROUTING_DIAGNOSTIC_ENABLED</code></td>
+<td>MIDI-only routing diagnostic</td>
+</tr>
+<tr>
+<td><code>MIDI_DIAGNOSTIC_ENABLED</code></td>
+<td>Bounded Note On/Off diagnostic</td>
+</tr>
+<tr>
+<td><code>WIFI_SSID</code>, <code>WIFI_PASSWORD</code>, <code>WEB_AP_PASSWORD</code></td>
+<td>Private future network values</td>
+</tr>
+</tbody>
+</table>
+<p>Secret-like values are redacted in status output as <code>SET</code> or <code>UNSET</code>. This is not encryption. A historical Wi-Fi credential exposure is recorded as an open human action in <code>docs/risk_register_v0.1.0.md</code>.</p>
+<h2 id="12-dependencies">12. Dependencies<a class="headerlink" href="#12-dependencies" title="Permanent link">&para;</a></h2>
+<p>Host dependencies:</p>
+<ul>
+<li>Python <code>&gt;=3.11</code></li>
+<li><code>pytest&gt;=8,&lt;9</code> for development tests</li>
+<li><code>pyserial&gt;=3.5,&lt;4</code> for HIL commands</li>
+</ul>
+<p>Device dependencies:</p>
+<ul>
+<li>CircuitPython firmware compatible with the target board</li>
+<li><code>adafruit_midi</code>, as declared in <code>device/requirements.txt</code></li>
+<li>Built-in CircuitPython modules such as <code>usb_midi</code>, <code>audiobusio</code>, <code>board</code>, <code>supervisor</code>, <code>storage</code> depending on runtime path</li>
+</ul>
+<p>No pinned <code>requirements.txt</code> exists for the host. Host dependencies are declared through <code>pyproject.toml</code>. Device dependency installation uses CircUp according to <code>docs/quickstart_installation_v0.1.0.md</code>.</p>
+<h2 id="13-data-model">13. Data Model<a class="headerlink" href="#13-data-model" title="Permanent link">&para;</a></h2>
+<p>The core data model is the portable MIDI event model:</p>
+<pre><code class="language-mermaid">classDiagram
+  class MidiEvent {
+    message_type
+    channel
+  }
+  class NoteEvent {
+    note
+    velocity
+    is_note_on
+  }
+  class ControlEvent {
+    control
+    value
+    centered_value
+  }
+  class ClockEvent
+  MidiEvent &lt;|-- NoteEvent
+  MidiEvent &lt;|-- ControlEvent
+  MidiEvent &lt;|-- ClockEvent
+</code></pre>
+<p>Evidence: <code>src/midi_chip_platform/events.py</code>, <code>tests/test_domain_events.py</code>.</p>
+<p>Audio is represented through:</p>
+<ul>
+<li><code>AudioStreamFormat</code>;</li>
+<li><code>AudioBlock</code>;</li>
+<li><code>AudioOutputPort</code>;</li>
+<li>safety profiles and wrappers.</li>
+</ul>
+<p>Evidence: <code>src/midi_chip_platform/audio.py</code>, <code>tests/test_audio_output.py</code>, <code>tests/test_audio_safety.py</code>.</p>
+<p>Synth cores implement class contracts rather than global state. Evidence: <code>src/midi_chip_platform/core.py</code>, <code>src/midi_chip_platform/d1_core.py</code>.</p>
+<h2 id="14-application-lifecycle">14. Application Lifecycle<a class="headerlink" href="#14-application-lifecycle" title="Permanent link">&para;</a></h2>
+<p>CircuitPython startup:</p>
+<pre><code class="language-mermaid">sequenceDiagram
+  participant Boot as boot.py
+  participant Code as code.py
+  participant Config as ConfigurationLoader
+  participant Runtime as DeviceRuntimeApplication
+  participant HIL as Serial/HIL
+
+  Boot-&gt;&gt;Boot: Configure safe USB identity/profile
+  Boot-&gt;&gt;HIL: Print release and BOOT_STATUS
+  Code-&gt;&gt;Config: Load settings.toml via os.getenv
+  Code-&gt;&gt;Runtime: Construct factories and run
+  Runtime-&gt;&gt;Runtime: Decide fast boot or full diagnostics
+  Runtime-&gt;&gt;HIL: Print release/story/status markers
+</code></pre>
+<p><code>DeviceRuntimeApplication</code> selects the active runtime according to configuration. Precedence includes legacy MIDI diagnostic, MCP-US-080 routing diagnostic, synthio baseline, realtime baseline and D1 runtime. Evidence: <code>src/midi_chip_platform/device_runtime.py</code>.</p>
+<h2 id="15-end-to-end-data-flow">15. End-to-End Data Flow<a class="headerlink" href="#15-end-to-end-data-flow" title="Permanent link">&para;</a></h2>
+<p>Intended MVP path:</p>
+<pre><code class="language-text">Logic Pro External MIDI
+  -&gt; ESP32-S2 USB MIDI endpoint
+  -&gt; adafruit_midi receive
+  -&gt; MidiMessageTranslator
+  -&gt; NoteEvent / ControlEvent / ClockEvent
+  -&gt; D1 runtime / D1 core
+  -&gt; audio block or persistent audio graph
+  -&gt; SafeAudioOutput / I2S adapter
+  -&gt; MAX98357A
+  -&gt; audible output
+</code></pre>
+<p>Current diagnostic split:</p>
+<ul>
+<li><code>device/i2s_test.py</code>: proves I2S/MAX98357 independent of MIDI and synth package.</li>
+<li><code>UsbMidiReceiveDiagnostic</code>: proves bounded Note On/Off receive.</li>
+<li><code>RealtimeMidiAudioBaseline</code>: isolates raw I2S event tone behavior.</li>
+<li><code>SynthioBaselineRuntime</code>: isolates persistent <code>synthio</code> graph behavior.</li>
+<li><code>MidiRoutingDiagnosticRuntime</code>: isolates MIDI routing without any audio.</li>
+</ul>
+<h2 id="16-business-rules">16. Business Rules<a class="headerlink" href="#16-business-rules" title="Permanent link">&para;</a></h2>
+<p>Repository-supported business rules:</p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Evidence</th>
+<th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First MVP is Logic USB-MIDI to audible D1 on ESP32-S2 reference board</td>
+<td><code>docs/mvp_scope_v0.1.0.md</code></td>
+<td>High</td>
+</tr>
+<tr>
+<td>SN76489, SID, OPL, web, BLE, stereo, DSP and multi-core are post-MVP</td>
+<td><code>docs/mvp_scope_v0.1.0.md</code>, <code>docs/user_stories_v0.1.0.md</code></td>
+<td>High</td>
+</tr>
+<tr>
+<td><code>python-d1-synth</code> is read-only reference</td>
+<td><code>AGENTS.md</code></td>
+<td>High</td>
+</tr>
+<tr>
+<td>No globals or import side effects are allowed</td>
+<td><code>AGENTS.md</code>, <code>tests/test_architecture.py</code></td>
+<td>High</td>
+</tr>
+<tr>
+<td>Principal QA Architect review is mandatory before every code change</td>
+<td><code>AGENTS.md</code>, <code>docs/governance/principal_qa_architect_agent_v0.1.0.md</code></td>
+<td>High</td>
+</tr>
+<tr>
+<td><code>REG-080-001</code> must be checked for MIDI/audio/HIL work</td>
+<td><code>docs/governance/regression_memory_v0.1.0.md</code></td>
+<td>High</td>
+</tr>
+<tr>
+<td>HIL claims require device evidence, not host tests only</td>
+<td><code>AGENTS.md</code>, <code>docs/agile_delivery_release_plan_v0.1.0.md</code></td>
+<td>High</td>
+</tr>
+<tr>
+<td>Physical audio safety is not production-certified yet</td>
+<td><code>docs/risk_register_v0.1.0.md</code>, <code>docs/mvp_scope_v0.1.0.md</code></td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<h2 id="17-validation-logic">17. Validation Logic<a class="headerlink" href="#17-validation-logic" title="Permanent link">&para;</a></h2>
+<p>Validation layers:</p>
+<ol>
+<li>Principal QA Architect pre-code review: reject on doubt and check active regression memory.</li>
+<li>AST governance validation: no module-level runtime state, no globals, no import-side hardware effects.</li>
+<li>Unit and contract tests: events, MIDI, audio, D1 core, configuration, runtime factories.</li>
+<li>HIL deploy validation: manifest closure, hashes, device libraries.</li>
+<li>HIL execution validation: release banner, boot marker, runtime markers.</li>
+<li>Human HIL validation: audible sound, Logic routing, oscilloscope observations.</li>
+<li>Principal QA Architect post-implementation review: verify regression evidence before Done.</li>
+<li>Burn-in validation: heap and long-run stability per spec.</li>
+</ol>
+<p>Do not mark a story Done solely because tests pass if its acceptance criteria require human hardware evidence.</p>
+<p>Active regression memory: <code>REG-080-001</code> records the MCP-US-080 failure where audition disappeared, Logic note routing produced no <code>NoteOn</code>/<code>NoteOff</code>, only CC7 was observed, and the diagnostic still reported <code>PASS</code>. Future diagnostics that validate musical note routing must fail when note evidence is absent.</p>
+<h2 id="18-logging-strategy">18. Logging Strategy<a class="headerlink" href="#18-logging-strategy" title="Permanent link">&para;</a></h2>
+<p>The project uses serial/console text markers rather than a structured logging framework. Markers are designed for HIL proof and Product Owner reporting.</p>
+<p>Examples:</p>
+<pre><code class="language-text">circuitpython-midi-chip-platform v0.20.0 | story=MCP-US-080 | release-date=2026-07-23
+DEVICE_FAST_BOOT_STATUS=ENABLED
+MIDI_ROUTING_DIAGNOSTIC_INPUT_STATUS=OPEN
+MIDI_ROUTING_EVENT=note_on;channel=1;note=69;velocity=99;event_ms=0
+</code></pre>
+<p>Logging must avoid secrets and raw private device identifiers. <code>hil.py</code> redacts private identifiers in CLI output. Docs warn that UID, MAC, SSID and credentials must not be published.</p>
+<h2 id="19-error-handling">19. Error Handling<a class="headerlink" href="#19-error-handling" title="Permanent link">&para;</a></h2>
+<p>Error handling is implemented through:</p>
+<ul>
+<li>explicit <code>PASS</code>/<code>FAIL</code> status lines;</li>
+<li>typed validation in constructors;</li>
+<li>bounded diagnostic timeouts;</li>
+<li>HIL failure reasons such as <code>missing-source</code>, <code>manifest-open</code>, <code>device-unavailable</code>;</li>
+<li>cleanup in <code>finally</code> blocks for MIDI input and deploy autoreload sessions.</li>
+</ul>
+<p>Known limitation: error handling is not centralized. Each runtime reports its own status. A new engineer should preserve these simple serial markers because they are part of the HIL evidence model.</p>
+<h2 id="20-testing-strategy">20. Testing Strategy<a class="headerlink" href="#20-testing-strategy" title="Permanent link">&para;</a></h2>
+<p>Test categories:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Architecture/governance</td>
+<td><code>tests/test_architecture.py</code></td>
+</tr>
+<tr>
+<td>Domain events</td>
+<td><code>tests/test_domain_events.py</code></td>
+</tr>
+<tr>
+<td>MIDI receive/routing/performance</td>
+<td><code>test_usb_midi_receive.py</code>, <code>test_midi_routing.py</code>, <code>test_midi_performance.py</code></td>
+</tr>
+<tr>
+<td>Audio safety and output</td>
+<td><code>test_audio_output.py</code>, <code>test_audio_safety.py</code>, <code>test_i2s_audio_output.py</code></td>
+</tr>
+<tr>
+<td>D1 core/runtime</td>
+<td><code>test_d1_core.py</code>, <code>test_d1_usb_midi_runtime.py</code></td>
+</tr>
+<tr>
+<td>Device composition</td>
+<td><code>test_device_runtime.py</code></td>
+</tr>
+<tr>
+<td>HIL deploy/verify</td>
+<td><code>test_hil.py</code></td>
+</tr>
+<tr>
+<td>Baseline spikes</td>
+<td><code>test_realtime_baseline.py</code>, <code>test_synthio_runtime.py</code>, <code>test_midi_routing_diagnostic.py</code></td>
+</tr>
+</tbody>
+</table>
+<p>Run:</p>
+<pre><code class="language-bash">python -m pytest -q
+</code></pre>
+<p>At creation time: <code>162 passed</code>.</p>
+<h2 id="21-cicd">21. CI/CD<a class="headerlink" href="#21-cicd" title="Permanent link">&para;</a></h2>
+<p>Repository evidence for CI/CD automation: <code>UNKNOWN</code>.</p>
+<p>The assessment found no visible GitHub Actions workflow, Dockerfile, Makefile or shell scripts in the repository file list. Build, test, deploy and verify are currently local CLI workflows. This is acceptable for an early embedded MVP but weak for disaster recovery and release governance.</p>
+<p>Minimum future CI recommendation:</p>
+<ul>
+<li>run <code>python -m pytest -q</code> on push/PR;</li>
+<li>verify package metadata consistency;</li>
+<li>run secret scanning;</li>
+<li>lint Markdown links where practical;</li>
+<li>preserve HIL as manual or self-hosted runner job because physical hardware is required.</li>
+</ul>
+<h2 id="22-release-process">22. Release Process<a class="headerlink" href="#22-release-process" title="Permanent link">&para;</a></h2>
+<p>Evidence-supported release behavior:</p>
+<ol>
+<li>update release metadata in <code>src/midi_chip_platform/release.py</code>;</li>
+<li>update <code>pyproject.toml</code> version;</li>
+<li>update story/review docs;</li>
+<li>run host tests;</li>
+<li>deploy to <code>CIRCUITPY</code> with <code>hil-deploy</code>;</li>
+<li>reset with <code>hil-reset</code>;</li>
+<li>verify with <code>hil-verify</code>;</li>
+<li>capture human HIL evidence where required;</li>
+<li>commit and push.</li>
+</ol>
+<p>There is no evidence of formal tags or GitHub Releases for the current MVP. Treat tag/release steps as <code>UNKNOWN</code> until implemented or documented.</p>
+<h2 id="23-operational-runbooks">23. Operational Runbooks<a class="headerlink" href="#23-operational-runbooks" title="Permanent link">&para;</a></h2>
+<h3 id="host-sanity-runbook">Host Sanity Runbook<a class="headerlink" href="#host-sanity-runbook" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">git status --short
+python -m pip install -e &quot;.[dev,hil]&quot;
+python -m midi_chip_platform diagnose
+python -m pytest -q
+</code></pre>
+<p>Pass criteria:</p>
+<ul>
+<li>package imports without hardware;</li>
+<li>release banner matches <code>pyproject.toml</code>;</li>
+<li>tests pass.</li>
+</ul>
+<h3 id="device-deploy-runbook">Device Deploy Runbook<a class="headerlink" href="#device-deploy-runbook" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Close Thonny and serial monitors.</li>
+<li>Discover <code>CIRCUITPY</code> and serial port.</li>
+<li>Ensure <code>adafruit_midi</code> is installed on the device.</li>
+<li>Run:</li>
+</ol>
+<pre><code class="language-bash">python -m midi_chip_platform hil-deploy --source-root . --device-root &lt;CIRCUITPY&gt; --serial-port &lt;PORT&gt;
+python -m midi_chip_platform hil-reset --serial-port &lt;PORT&gt;
+python -m midi_chip_platform hil-verify --source-root . --device-root &lt;CIRCUITPY&gt; --serial-port &lt;PORT&gt;
+</code></pre>
+<p>Expected HIL verify categories:</p>
+<ul>
+<li>connection: PASS</li>
+<li>manifest-closure: PASS</li>
+<li>deployment: PASS</li>
+<li>device-libraries: PASS</li>
+<li>boot: PASS</li>
+<li>execution: PASS</li>
+</ul>
+<h3 id="independent-i2s-runbook">Independent I2S Runbook<a class="headerlink" href="#independent-i2s-runbook" title="Permanent link">&para;</a></h3>
+<p>Use <code>device/i2s_test.py</code> from the CircuitPython REPL:</p>
+<pre><code class="language-python">from i2s_test import I2sDiagnosticApplication
+I2sDiagnosticApplication().run()
+</code></pre>
+<p>Expected result: G-C-D square-wave sequence and <code>I2S_DIAGNOSTIC_STATUS=PASS</code>.</p>
+<h2 id="24-troubleshooting-guide">24. Troubleshooting Guide<a class="headerlink" href="#24-troubleshooting-guide" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>No module named midi_chip_platform</code></td>
+<td>editable install missing or wrong directory</td>
+<td>activate venv, reinstall <code>-e ".[dev,hil]"</code></td>
+</tr>
+<tr>
+<td><code>device-libraries: FAIL - missing: adafruit_midi</code></td>
+<td>CircuitPython library absent</td>
+<td>install <code>adafruit_midi</code> with CircUp</td>
+</tr>
+<tr>
+<td><code>boot: FAIL</code>, <code>execution: PASS</code></td>
+<td>stale <code>boot_out.txt</code></td>
+<td>run <code>hil-reset</code>, then <code>hil-verify</code></td>
+</tr>
+<tr>
+<td>CIRCUITPY not writable</td>
+<td>media mounted read-only or busy</td>
+<td>close tools, power-cycle, do not format without explicit recovery decision</td>
+</tr>
+<tr>
+<td>No I2S sound</td>
+<td>wiring, power, amplifier, wrong load or volume</td>
+<td>run independent <code>i2s_test.py</code>; verify IO5/IO3/IO7, GND and power</td>
+</tr>
+<tr>
+<td>MIDI events not visible</td>
+<td>wrong Logic destination, serial conflict, endpoint issue</td>
+<td>run MCP-US-080 routing diagnostic</td>
+</tr>
+<tr>
+<td>MIDI events visible but sound delayed</td>
+<td>audio path/runtime primitive issue</td>
+<td>inspect MCP-US-079/US-055 audio graph</td>
+</tr>
+<tr>
+<td>Secret appears in logs</td>
+<td>governance breach</td>
+<td>stop, rotate secret, scrub logs before publication</td>
+</tr>
+</tbody>
+</table>
+<h2 id="25-cold-start-recovery">25. Cold Start Recovery<a class="headerlink" href="#25-cold-start-recovery" title="Permanent link">&para;</a></h2>
+<p>Cold recovery procedure:</p>
+<pre><code class="language-mermaid">flowchart TD
+  A[&quot;Fresh clone&quot;] --&gt; B[&quot;Create Python 3.11+ venv&quot;]
+  B --&gt; C[&quot;Install .[dev,hil]&quot;]
+  C --&gt; D[&quot;Run diagnose and pytest&quot;]
+  D --&gt; E{&quot;Host tests pass?&quot;}
+  E -- No --&gt; F[&quot;Fix host environment first&quot;]
+  E -- Yes --&gt; G[&quot;Identify CircuitPython board and serial port&quot;]
+  G --&gt; H[&quot;Install device libraries&quot;]
+  H --&gt; I[&quot;hil-deploy&quot;]
+  I --&gt; J[&quot;hil-reset&quot;]
+  J --&gt; K[&quot;hil-verify&quot;]
+  K --&gt; L{&quot;HIL pass?&quot;}
+  L -- No --&gt; M[&quot;Use troubleshooting guide&quot;]
+  L -- Yes --&gt; N[&quot;Run i2s_test.py&quot;]
+  N --&gt; O[&quot;Run active story HIL test&quot;]
+</code></pre>
+<p>Do not start feature work until host tests and basic HIL verification pass.</p>
+<h2 id="26-disaster-recovery-procedure">26. Disaster Recovery Procedure<a class="headerlink" href="#26-disaster-recovery-procedure" title="Permanent link">&para;</a></h2>
+<h3 id="before-recovery">Before Recovery<a class="headerlink" href="#before-recovery" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Identify the intended repository remote and branch.</li>
+<li>[ ] Confirm no private device backup is being restored into Git.</li>
+<li>[ ] Confirm hardware is safe to power.</li>
+<li>[ ] Confirm the Python interpreter is 3.11+ and not <code>/usr/bin/python</code> 2.7.</li>
+<li>[ ] Confirm only one serial client will own the board.</li>
+</ul>
+<h3 id="during-recovery">During Recovery<a class="headerlink" href="#during-recovery" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Clone repository.</li>
+<li>[ ] Read <code>AGENTS.md</code>, <code>README.md</code>, <code>docs/mvp_scope_v0.1.0.md</code>, <code>docs/user_stories_v0.1.0.md</code>.</li>
+<li>[ ] Install host environment.</li>
+<li>[ ] Run all host tests.</li>
+<li>[ ] Install CircuitPython libraries.</li>
+<li>[ ] Deploy and verify.</li>
+<li>[ ] Run independent I2S diagnostic.</li>
+<li>[ ] Run active impediment diagnostic.</li>
+</ul>
+<h3 id="after-recovery">After Recovery<a class="headerlink" href="#after-recovery" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Record commit hash.</li>
+<li>[ ] Record test output.</li>
+<li>[ ] Record HIL output with private IDs redacted.</li>
+<li>[ ] Update unknown/risk registers if new facts appear.</li>
+<li>[ ] Do not mark MVP accepted until Product Owner accepts Logic-to-audible-D1.</li>
+</ul>
+<h2 id="27-knowledge-transfer-guide">27. Knowledge Transfer Guide<a class="headerlink" href="#27-knowledge-transfer-guide" title="Permanent link">&para;</a></h2>
+<p>New engineer reading order:</p>
+<ol>
+<li><code>AGENTS.md</code></li>
+<li><code>README.md</code></li>
+<li><code>docs/mvp_scope_v0.1.0.md</code></li>
+<li><code>docs/framework_engineering/architecture_v0.1.0.md</code></li>
+<li><code>docs/user_stories_v0.1.0.md</code></li>
+<li><code>docs/risk_register_v0.1.0.md</code></li>
+<li><code>docs/decisions/*.md</code></li>
+<li>active story review, currently <code>docs/mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0.md</code></li>
+<li><code>src/midi_chip_platform/device_runtime.py</code></li>
+<li><code>src/midi_chip_platform/hil.py</code></li>
+</ol>
+<p>Minimum concepts to understand:</p>
+<ul>
+<li>why <code>boot.py</code> must stay minimal;</li>
+<li>why <code>i2s_test.py</code> is independent;</li>
+<li>why host tests do not prove audible hardware behavior;</li>
+<li>why the D1 desktop project is read-only reference;</li>
+<li>why secrets must remain outside Git;</li>
+<li>why current work is blocked on US-055/US-080 evidence.</li>
+</ul>
+<h2 id="28-developer-onboarding">28. Developer Onboarding<a class="headerlink" href="#28-developer-onboarding" title="Permanent link">&para;</a></h2>
+<p>Onboarding checklist:</p>
+<ul>
+<li>[ ] Python 3.11+ confirmed.</li>
+<li>[ ] <code>.venv</code> created and activated.</li>
+<li>[ ] <code>python -m pip install -e ".[dev,hil]"</code> completed.</li>
+<li>[ ] <code>python -m pytest -q</code> passes.</li>
+<li>[ ] <code>python -m midi_chip_platform diagnose</code> reports host skeleton ready.</li>
+<li>[ ] <code>AGENTS.md</code> no-globals rule understood.</li>
+<li>[ ] Active story and dependencies identified.</li>
+<li>[ ] HIL hardware and serial ownership rules understood.</li>
+<li>[ ] No changes made to <code>python-d1-synth</code>.</li>
+</ul>
+<h2 id="29-maintenance-guide">29. Maintenance Guide<a class="headerlink" href="#29-maintenance-guide" title="Permanent link">&para;</a></h2>
+<p>When changing code:</p>
+<ol>
+<li>identify the active story;</li>
+<li>update or add tests first where possible;</li>
+<li>preserve class-based architecture;</li>
+<li>update headers in modified <code>.py</code> files;</li>
+<li>update configuration docs if keys change;</li>
+<li>update HIL manifest if deployable modules change;</li>
+<li>run tests;</li>
+<li>run HIL if hardware behavior changes;</li>
+<li>update story review and risk/unknown registers;</li>
+<li>commit with story ID.</li>
+</ol>
+<p>Do not edit device files directly on <code>CIRCUITPY</code> as the only source. The repository remains the source of truth.</p>
+<h2 id="30-known-risks">30. Known Risks<a class="headerlink" href="#30-known-risks" title="Permanent link">&para;</a></h2>
+<p>Highest risks:</p>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Current status</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exposed historical Wi-Fi credential must be rotated</td>
+<td>Open human action</td>
+<td><code>docs/risk_register_v0.1.0.md</code></td>
+</tr>
+<tr>
+<td>Logic realtime audio not accepted</td>
+<td>P0 impediment</td>
+<td><code>docs/user_stories_v0.1.0.md</code>, <code>docs/mcp_us_055_logic_d1_i2s_review_v0.1.0.md</code></td>
+</tr>
+<tr>
+<td>MAX98357 prototype load safety</td>
+<td>PO exception only</td>
+<td><code>docs/risk_register_v0.1.0.md</code>, <code>docs/mcp_us_075_safe_audio_gate_review_v0.1.0.md</code></td>
+</tr>
+<tr>
+<td>No CI/CD automation</td>
+<td>Unknown/absent</td>
+<td>repository file inventory</td>
+</tr>
+<tr>
+<td>Documentation drift</td>
+<td>Present</td>
+<td><code>README.md</code> status vs <code>pyproject.toml</code>/<code>release.py</code></td>
+</tr>
+<tr>
+<td>Physical chip expansion risk</td>
+<td>Post-MVP</td>
+<td><code>docs/physical_chip_display_expansion_amendment_v0.1.0.md</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="31-technical-debt">31. Technical Debt<a class="headerlink" href="#31-technical-debt" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Debt</th>
+<th>Impact</th>
+<th>Recommended action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>README release status drift</td>
+<td>Misleads recovery engineer</td>
+<td>Update README to v0.20.0 and active US-080 status</td>
+</tr>
+<tr>
+<td>No CI workflows</td>
+<td>Regression risk after clone/push</td>
+<td>Add basic GitHub Actions for host tests</td>
+</tr>
+<tr>
+<td>Multiple baseline runtimes</td>
+<td>Cognitive load</td>
+<td>Keep until US-055 resolved, then retire failed spikes</td>
+</tr>
+<tr>
+<td>No formal release tag procedure</td>
+<td>Audit weakness</td>
+<td>Add release checklist and tagging runbook</td>
+</tr>
+<tr>
+<td>Device settings are manual</td>
+<td>HIL repeatability risk</td>
+<td>Add documented settings profiles per diagnostic</td>
+</tr>
+<tr>
+<td>Current MVP P0 blocker unresolved</td>
+<td>Product cannot be accepted</td>
+<td>Complete MCP-US-080 HIL test and decide next architecture move</td>
+</tr>
+</tbody>
+</table>
+<h2 id="32-open-questions">32. Open Questions<a class="headerlink" href="#32-open-questions" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Question</th>
+<th>Impact</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>U-001</td>
+<td>Do Logic/CoreMIDI events arrive late or does audio delay after receive?</td>
+<td>Blocks US-055</td>
+<td>Open, MCP-US-080 active</td>
+</tr>
+<tr>
+<td>U-002</td>
+<td>Is <code>synthio</code> viable for the ESP32-S2 real-time path?</td>
+<td>May require architecture change</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>U-003</td>
+<td>What final speaker/headphone/pedal-safe output circuit will be used?</td>
+<td>Hardware safety</td>
+<td>Open/Post-MVP</td>
+</tr>
+<tr>
+<td>U-004</td>
+<td>Has the historical Wi-Fi credential been rotated?</td>
+<td>Security</td>
+<td>UNKNOWN</td>
+</tr>
+<tr>
+<td>U-005</td>
+<td>Is Windows USB-MIDI acceptance proven?</td>
+<td>Portability</td>
+<td>UNKNOWN/Post-MVP</td>
+</tr>
+<tr>
+<td>U-006</td>
+<td>Is an 8-hour MVP burn-in complete?</td>
+<td>Release readiness</td>
+<td>UNKNOWN/Open</td>
+</tr>
+<tr>
+<td>U-007</td>
+<td>Are release tags/GitHub releases used?</td>
+<td>Recoverability</td>
+<td>UNKNOWN</td>
+</tr>
+</tbody>
+</table>
+<h2 id="33-future-improvements">33. Future Improvements<a class="headerlink" href="#33-future-improvements" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Add CI for host tests and architecture tests.</li>
+<li>Add a generated release evidence bundle.</li>
+<li>Add settings profile files for common HIL modes.</li>
+<li>Add link checker for docs.</li>
+<li>Add pre-commit secret scanning.</li>
+<li>Add a formal recovery drill once US-055 is accepted.</li>
+<li>Add stable USB instance naming story implementation.</li>
+<li>Add second-board validation before broad CircuitPython support claims.</li>
+</ul>
+<h2 id="34-glossary">34. Glossary<a class="headerlink" href="#34-glossary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HIL</td>
+<td>Hardware-in-the-loop: physical device deploy and verification</td>
+</tr>
+<tr>
+<td>CIRCUITPY</td>
+<td>USB mass storage volume exposed by CircuitPython</td>
+</tr>
+<tr>
+<td>D1 core</td>
+<td>Portable basic synth core inspired by D1-style subtractive synth direction</td>
+</tr>
+<tr>
+<td>MAX98357A</td>
+<td>Mono I2S class-D amplifier used for first audio output</td>
+</tr>
+<tr>
+<td>US-055</td>
+<td>MVP Logic Pro audible D1 acceptance story</td>
+</tr>
+<tr>
+<td>US-080</td>
+<td>MIDI-only routing diagnostic to isolate Logic/CoreMIDI timing</td>
+</tr>
+<tr>
+<td>PO</td>
+<td>Product Owner</td>
+</tr>
+<tr>
+<td>ADR</td>
+<td>Architecture Decision Record</td>
+</tr>
+<tr>
+<td>SSOT</td>
+<td>Single Source of Truth</td>
+</tr>
+</tbody>
+</table>
+<h2 id="35-appendices">35. Appendices<a class="headerlink" href="#35-appendices" title="Permanent link">&para;</a></h2>
+<h3 id="appendix-a-key-commands">Appendix A: Key Commands<a class="headerlink" href="#appendix-a-key-commands" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">python -m midi_chip_platform diagnose
+python -m midi_chip_platform events-diagnose
+python -m pytest -q
+python -m midi_chip_platform hil-deploy --source-root . --device-root &lt;CIRCUITPY&gt; --serial-port &lt;PORT&gt;
+python -m midi_chip_platform hil-reset --serial-port &lt;PORT&gt;
+python -m midi_chip_platform hil-verify --source-root . --device-root &lt;CIRCUITPY&gt; --serial-port &lt;PORT&gt;
+</code></pre>
+<h3 id="appendix-b-mcp-us-080-device-settings">Appendix B: MCP-US-080 Device Settings<a class="headerlink" href="#appendix-b-mcp-us-080-device-settings" title="Permanent link">&para;</a></h3>
+<pre><code class="language-toml">MIDI_DIAGNOSTIC_ENABLED = &quot;false&quot;
+REALTIME_BASELINE_ENABLED = &quot;false&quot;
+SYNTHIO_BASELINE_ENABLED = &quot;false&quot;
+MIDI_ROUTING_DIAGNOSTIC_ENABLED = &quot;true&quot;
+MIDI_ROUTING_DIAGNOSTIC_SCAN_ALL_PORTS = &quot;true&quot;
+MIDI_ROUTING_DIAGNOSTIC_MAX_EVENTS = 32
+MIDI_ROUTING_DIAGNOSTIC_TIMEOUT_SECONDS = &quot;120.0&quot;
+MIDI_ROUTING_DIAGNOSTIC_IDLE_SLEEP_SECONDS = &quot;0.001&quot;
+MIDI_ROUTING_DIAGNOSTIC_EVENT_LOGGING = &quot;summary&quot;
+MIDI_ROUTING_DIAGNOSTIC_HEARTBEAT_SECONDS = &quot;2.0&quot;
+</code></pre>
+<h2 id="36-repository-evidence-matrix">36. Repository Evidence Matrix<a class="headerlink" href="#36-repository-evidence-matrix" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Statement</th>
+<th>Evidence</th>
+<th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project package version is 0.20.0</td>
+<td><code>pyproject.toml</code>, <code>src/midi_chip_platform/release.py</code></td>
+<td>High</td>
+</tr>
+<tr>
+<td>Host tests currently pass at 162 tests</td>
+<td>observed local test run; <code>tests/</code></td>
+<td>High for current run</td>
+</tr>
+<tr>
+<td>Architecture forbids globals and import side effects</td>
+<td><code>AGENTS.md</code>, <code>tests/test_architecture.py</code></td>
+<td>High</td>
+</tr>
+<tr>
+<td>Device deployment is manifest-based</td>
+<td><code>src/midi_chip_platform/hil.py</code></td>
+<td>High</td>
+</tr>
+<tr>
+<td><code>adafruit_midi</code> is required on device</td>
+<td><code>device/requirements.txt</code>, <code>hil.py</code></td>
+<td>High</td>
+</tr>
+<tr>
+<td>MVP is not accepted yet</td>
+<td><code>docs/user_stories_v0.1.0.md</code>, US-055 P0 status</td>
+<td>High</td>
+</tr>
+<tr>
+<td>No CI/CD exists</td>
+<td>repository file search found no workflow/config</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Wi-Fi credential rotation remains human action</td>
+<td><code>docs/risk_register_v0.1.0.md</code></td>
+<td>High</td>
+</tr>
+<tr>
+<td>README status is stale</td>
+<td><code>README.md</code> vs <code>pyproject.toml</code></td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<h2 id="37-source-traceability-matrix">37. Source Traceability Matrix<a class="headerlink" href="#37-source-traceability-matrix" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Evidence</th>
+<th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Safe boot must stay minimal</td>
+<td><code>AGENTS.md</code>, <code>device/boot.py</code>, <code>docs/mcp_us_003_safe_boot_review_v0.1.0.md</code></td>
+<td>95%</td>
+</tr>
+<tr>
+<td>I2S diagnostic is independent from synth runtime</td>
+<td><code>device/i2s_test.py</code>, <code>docs/mvp_scope_v0.1.0.md</code></td>
+<td>95%</td>
+</tr>
+<tr>
+<td>HIL verify validates boot and execution markers</td>
+<td><code>src/midi_chip_platform/hil.py</code>, <code>tests/test_hil.py</code></td>
+<td>95%</td>
+</tr>
+<tr>
+<td>D1 core supports sine/saw/square diagnostics</td>
+<td><code>src/midi_chip_platform/d1_core.py</code>, <code>tests/test_d1_core.py</code>, <code>tests/test_cli.py</code></td>
+<td>90%</td>
+</tr>
+<tr>
+<td>US-080 isolates MIDI from audio path</td>
+<td><code>midi_routing_diagnostic.py</code>, <code>docs/mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0.md</code></td>
+<td>95%</td>
+</tr>
+<tr>
+<td>Full pedal product is future vision</td>
+<td><code>README.md</code>, <code>docs/mvp_scope_v0.1.0.md</code></td>
+<td>90%</td>
+</tr>
+<tr>
+<td>Production hardware safety is not certified</td>
+<td><code>docs/risk_register_v0.1.0.md</code></td>
+<td>95%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="38-repository-maturity-assessment">38. Repository Maturity Assessment<a class="headerlink" href="#38-repository-maturity-assessment" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th style="text-align: right;">Score</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Architecture</td>
+<td style="text-align: right;">8/10</td>
+<td>Clear ports, composition root, ADRs and AST enforcement</td>
+</tr>
+<tr>
+<td>Documentation</td>
+<td style="text-align: right;">7/10</td>
+<td>Extensive docs, but drift and no DR handbook before this file</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td style="text-align: right;">8/10</td>
+<td>162 host tests and HIL tooling; no CI</td>
+</tr>
+<tr>
+<td>Security</td>
+<td style="text-align: right;">5/10</td>
+<td>Secret boundary exists, but historical credential rotation is open</td>
+</tr>
+<tr>
+<td>Maintainability</td>
+<td style="text-align: right;">7/10</td>
+<td>Strong rules; many diagnostic runtimes add complexity</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td style="text-align: right;">5/10</td>
+<td>Basic HIL works; US-055 real-time path unresolved</td>
+</tr>
+<tr>
+<td>Recoverability</td>
+<td style="text-align: right;">7/10</td>
+<td>HIL deploy/verify strong; cold-start handbook now added</td>
+</tr>
+<tr>
+<td>Operational readiness</td>
+<td style="text-align: right;">4/10</td>
+<td>MVP not accepted; no formal release/burn-in completion</td>
+</tr>
+<tr>
+<td>Automation</td>
+<td style="text-align: right;">5/10</td>
+<td>CLI automation exists; CI absent</td>
+</tr>
+<tr>
+<td>Overall grade</td>
+<td style="text-align: right;">6.5/10</td>
+<td>Strong engineering prototype, not yet accepted product</td>
+</tr>
+</tbody>
+</table>
+<h2 id="39-unknown-register">39. Unknown Register<a class="headerlink" href="#39-unknown-register" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Description</th>
+<th>Impact</th>
+<th>Priority</th>
+<th>Reason</th>
+<th>Recommended Action</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>U-001</td>
+<td>Logic/CoreMIDI vs audio-path cause of audible delay</td>
+<td>Blocks MVP</td>
+<td>P0</td>
+<td>US-055 unresolved</td>
+<td>Complete MCP-US-080 HIL test</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>U-002</td>
+<td>Credential rotation completion</td>
+<td>Security risk</td>
+<td>P0</td>
+<td>Repository cannot prove human action</td>
+<td>PO confirms rotation outside repo</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>U-003</td>
+<td>CI/CD existence outside repo</td>
+<td>Recovery risk</td>
+<td>P2</td>
+<td>No repo evidence</td>
+<td>Treat as absent until added</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>U-004</td>
+<td>8-hour burn-in completion</td>
+<td>Release risk</td>
+<td>P0</td>
+<td>No final report found</td>
+<td>Run and document burn-in</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>U-005</td>
+<td>Windows acceptance</td>
+<td>Portability risk</td>
+<td>P3</td>
+<td>Post-MVP story</td>
+<td>Execute later story</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>U-006</td>
+<td>Final safe audio hardware design</td>
+<td>Safety risk</td>
+<td>P1</td>
+<td>Prototype exception only</td>
+<td>Complete US-076/post-MVP hardware work</td>
+<td>Open</td>
+</tr>
+</tbody>
+</table>
+<h2 id="40-assumption-register">40. Assumption Register<a class="headerlink" href="#40-assumption-register" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Assumption</th>
+<th>Class</th>
+<th>Rationale</th>
+<th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A-001</td>
+<td><code>origin/main</code> at <code>146fce5</code> is the intended recovery point</td>
+<td>Medium Risk</td>
+<td>Current local and remote state observed</td>
+<td>Confirm with git remote/log during recovery</td>
+</tr>
+<tr>
+<td>A-002</td>
+<td>The reference board remains LOLIN/Wemos ESP32-S2 Mini</td>
+<td>Medium Risk</td>
+<td>MVP docs state this</td>
+<td>Confirm board ID at HIL</td>
+</tr>
+<tr>
+<td>A-003</td>
+<td>MAX98357A wiring uses IO5 BCLK, IO3 WS, IO7 DATA</td>
+<td>Medium Risk</td>
+<td>MVP/config/docs state this</td>
+<td>Confirm physical wiring and i2s test</td>
+</tr>
+<tr>
+<td>A-004</td>
+<td>Logic Pro remains primary DAW acceptance target</td>
+<td>Low Risk</td>
+<td>Multiple docs state this</td>
+<td>Confirm with PO</td>
+</tr>
+<tr>
+<td>A-005</td>
+<td>No external docs are available</td>
+<td>Blocking</td>
+<td>Disaster prompt requires repo-only recovery</td>
+<td>Use UNKNOWN for missing facts</td>
+</tr>
+</tbody>
+</table>
+<h2 id="41-risk-register">41. Risk Register<a class="headerlink" href="#41-risk-register" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Probability</th>
+<th>Impact</th>
+<th>Mitigation</th>
+<th>Owner</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>US-055 real-time audio remains blocked</td>
+<td>High</td>
+<td>Critical</td>
+<td>Complete MCP-US-080, then choose MIDI or audio fix path</td>
+<td>Architect/Embedded/QA</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>Stale docs mislead recovery</td>
+<td>Medium</td>
+<td>High</td>
+<td>Update README and recovery docs per release</td>
+<td>Release/Docs</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>Historical secret not rotated</td>
+<td>Unknown</td>
+<td>Critical</td>
+<td>Rotate outside repo, record non-secret confirmation</td>
+<td>PO/Security</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>No CI allows regressions</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Add host-test GitHub Actions</td>
+<td>DevOps</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>HIL depends on local hardware</td>
+<td>High</td>
+<td>High</td>
+<td>Document hardware and runbooks, keep independent i2s test</td>
+<td>QA/HIL</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>Prototype audio load unsafe</td>
+<td>Medium</td>
+<td>Critical</td>
+<td>No production claim; complete hardware safety story</td>
+<td>Hardware/PO</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>Multiple diagnostic runtimes confuse operators</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Provide settings profiles and active-story runbooks</td>
+<td>Release/Docs</td>
+<td>P2</td>
+</tr>
+</tbody>
+</table>
+<h2 id="42-bus-factor-analysis">42. Bus Factor Analysis<a class="headerlink" href="#42-bus-factor-analysis" title="Permanent link">&para;</a></h2>
+<p>Current bus factor risk is medium-high. The repository captures extensive information, but the project still depends on specialized embedded/MIDI/audio knowledge and the Product Owner's physical hardware validation.</p>
+<p>Single points of failure:</p>
+<ul>
+<li>Product Owner hardware setup and Logic Pro observations.</li>
+<li>Knowledge of current P0 latency history.</li>
+<li>Device wiring and safe audio load practices.</li>
+<li>Manual HIL process and serial ownership discipline.</li>
+<li>Security action outside repository for credential rotation.</li>
+</ul>
+<p>Mitigations already present:</p>
+<ul>
+<li>detailed docs and story reviews;</li>
+<li>HIL deploy/verify automation;</li>
+<li>architecture tests;</li>
+<li>risk register;</li>
+<li>external review packets;</li>
+<li>this disaster recovery handbook.</li>
+</ul>
+<p>Remaining mitigation:</p>
+<ul>
+<li>add reproducible release evidence bundles;</li>
+<li>add CI;</li>
+<li>add a concise active-incident dashboard;</li>
+<li>add photos/schematic for hardware wiring with safety notes.</li>
+</ul>
+<h2 id="43-knowledge-capture-checklist">43. Knowledge Capture Checklist<a class="headerlink" href="#43-knowledge-capture-checklist" title="Permanent link">&para;</a></h2>
+<p>Use at every story close:</p>
+<ul>
+<li>[ ] New business rule documented.</li>
+<li>[ ] New configuration key documented.</li>
+<li>[ ] New dependency documented.</li>
+<li>[ ] New architecture decision documented or ADR updated.</li>
+<li>[ ] Recovery guide updated if operation changes.</li>
+<li>[ ] Tests updated.</li>
+<li>[ ] HIL evidence captured when applicable.</li>
+<li>[ ] Risks/unknowns updated.</li>
+<li>[ ] Lessons learned updated after 3-4 stories or serious impediment.</li>
+<li>[ ] Release metadata matches package version.</li>
+<li>[ ] No secrets or private IDs committed.</li>
+</ul>
+<h2 id="44-recovery-validation-procedure">44. Recovery Validation Procedure<a class="headerlink" href="#44-recovery-validation-procedure" title="Permanent link">&para;</a></h2>
+<p>Recovery is successful only when:</p>
+<ol>
+<li>Fresh clone works.</li>
+<li>Host environment installs.</li>
+<li><code>python -m pytest -q</code> passes.</li>
+<li>Device libraries are present.</li>
+<li><code>hil-deploy</code> passes.</li>
+<li><code>hil-reset</code> is requested.</li>
+<li><code>hil-verify</code> passes.</li>
+<li><code>device/i2s_test.py</code> is audible on the reference hardware.</li>
+<li>Active story HIL test produces expected markers.</li>
+<li>Known unknowns and blockers are acknowledged, not hidden.</li>
+</ol>
+<h2 id="45-ai-usage-policy">45. AI Usage Policy<a class="headerlink" href="#45-ai-usage-policy" title="Permanent link">&para;</a></h2>
+<p>AI may assist with:</p>
+<ul>
+<li>summarizing repository evidence;</li>
+<li>drafting docs;</li>
+<li>generating tests and small code changes;</li>
+<li>comparing docs for drift;</li>
+<li>producing runbooks from verified code.</li>
+</ul>
+<p>AI must not be trusted for:</p>
+<ul>
+<li>claims not supported by repository evidence;</li>
+<li>hardware safety certification;</li>
+<li>secret handling;</li>
+<li>final MVP acceptance;</li>
+<li>interpreting private logs without human review;</li>
+<li>changing read-only reference repositories.</li>
+</ul>
+<p>Mandatory controls:</p>
+<ul>
+<li>repository-first evidence;</li>
+<li>human review for HIL and hardware claims;</li>
+<li>tests before code closure;</li>
+<li>UNKNOWN when evidence is absent;</li>
+<li>no secrets in prompts or generated docs.</li>
+</ul>
+<h2 id="46-continuous-improvement-register">46. Continuous Improvement Register<a class="headerlink" href="#46-continuous-improvement-register" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Recommendation</th>
+<th style="text-align: right;">Estimated Effort</th>
+<th>Expected Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P0</td>
+<td>Complete MCP-US-080 HIL test and decide MIDI vs audio fault domain</td>
+<td style="text-align: right;">1-2 hours</td>
+<td>Unblocks US-055 direction</td>
+</tr>
+<tr>
+<td>P0</td>
+<td>Update README status to v0.20.0/US-080</td>
+<td style="text-align: right;">30 minutes</td>
+<td>Reduces recovery drift</td>
+</tr>
+<tr>
+<td>P0</td>
+<td>Record secret rotation outcome without revealing secret</td>
+<td style="text-align: right;">15 minutes human action</td>
+<td>Reduces security risk</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>Add CI host tests</td>
+<td style="text-align: right;">1-2 hours</td>
+<td>Prevents basic regressions</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>Add release checklist and tag procedure</td>
+<td style="text-align: right;">1 hour</td>
+<td>Improves auditability</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>Add settings profiles for diagnostics</td>
+<td style="text-align: right;">1-2 hours</td>
+<td>Reduces HIL operator error</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>Add Markdown link check</td>
+<td style="text-align: right;">1 hour</td>
+<td>Reduces doc drift</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>Add hardware wiring diagram/photo pack</td>
+<td style="text-align: right;">2-4 hours</td>
+<td>Improves recovery of physical setup</td>
+</tr>
+</tbody>
+</table>
+<h2 id="47-disaster-recovery-checklist">47. Disaster Recovery Checklist<a class="headerlink" href="#47-disaster-recovery-checklist" title="Permanent link">&para;</a></h2>
+<h3 id="before-recovery_1">Before Recovery<a class="headerlink" href="#before-recovery_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Confirm repository URL.</li>
+<li>[ ] Confirm branch/commit.</li>
+<li>[ ] Confirm no private backups will be committed.</li>
+<li>[ ] Confirm hardware safety.</li>
+<li>[ ] Confirm Python 3.11+.</li>
+</ul>
+<h3 id="during-recovery_1">During Recovery<a class="headerlink" href="#during-recovery_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Clone.</li>
+<li>[ ] Read <code>AGENTS.md</code>.</li>
+<li>[ ] Install host environment.</li>
+<li>[ ] Run tests.</li>
+<li>[ ] Install device libraries.</li>
+<li>[ ] Deploy.</li>
+<li>[ ] Reset.</li>
+<li>[ ] Verify.</li>
+<li>[ ] Run independent audio test.</li>
+<li>[ ] Run active diagnostic.</li>
+</ul>
+<h3 id="after-recovery_1">After Recovery<a class="headerlink" href="#after-recovery_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Record evidence.</li>
+<li>[ ] Redact private identifiers.</li>
+<li>[ ] Update unknowns.</li>
+<li>[ ] Update risks.</li>
+<li>[ ] Define next story action.</li>
+</ul>
+<h3 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Host tests pass.</li>
+<li>[ ] HIL passes.</li>
+<li>[ ] Device runtime banner matches expected release.</li>
+<li>[ ] Active acceptance test executed.</li>
+</ul>
+<h3 id="operational-acceptance">Operational Acceptance<a class="headerlink" href="#operational-acceptance" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Product Owner accepts hardware result.</li>
+<li>[ ] Burn-in complete if required.</li>
+<li>[ ] Release docs updated.</li>
+<li>[ ] Tag/release created if applicable.</li>
+</ul>
+<h2 id="48-engineering-decision-log">48. Engineering Decision Log<a class="headerlink" href="#48-engineering-decision-log" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Use clean repository with controlled reuse</td>
+<td><code>docs/decisions/ADR-001-repository-strategy.md</code></td>
+</tr>
+<tr>
+<td>ESP32-S2 Mini is MVP reference platform</td>
+<td><code>docs/decisions/ADR-002-reference-platform.md</code></td>
+</tr>
+<tr>
+<td>Standalone I2S diagnostic before integrated synth</td>
+<td><code>docs/decisions/ADR-003-audio-strategy.md</code></td>
+</tr>
+<tr>
+<td>Use persistent realtime audio graph rather than per-event play/stop</td>
+<td><code>docs/decisions/ADR-004-persistent-realtime-audio-graph.md</code></td>
+</tr>
+<tr>
+<td>Use class-only/no-global architecture</td>
+<td><code>AGENTS.md</code>, <code>tests/test_architecture.py</code></td>
+</tr>
+<tr>
+<td>Treat MCP-US-080 as MIDI-only diagnostic</td>
+<td><code>docs/mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0.md</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="49-lessons-learned">49. Lessons Learned<a class="headerlink" href="#49-lessons-learned" title="Permanent link">&para;</a></h2>
+<p>Visible lessons from the repository:</p>
+<ol>
+<li>Host tests are necessary but insufficient for hardware audio claims.</li>
+<li>Independent I2S diagnostics are critical before debugging integrated synth paths.</li>
+<li>HIL deploy must be dependency-closed; missing deployed modules caused earlier impediments.</li>
+<li>Serial/REPL ownership matters; Thonny and CLI tools can conflict.</li>
+<li>Documentation can drift even in well-governed repositories; release state must be synchronized.</li>
+<li>Secrets in prototypes become long-lived business risks unless rotated.</li>
+<li>Repeated small patches to a failing real-time path should trigger architecture rebaseline.</li>
+<li>Diagnostic runtimes are useful, but they must be clearly scoped and disabled when not active.</li>
+<li>The backlog must protect MVP scope from attractive post-MVP synth features.</li>
+<li>Recovery documentation should be created before institutional knowledge is lost, not after.</li>
+</ol>
+<h2 id="50-final-certification-gate">50. Final Certification Gate<a class="headerlink" href="#50-final-certification-gate" title="Permanent link">&para;</a></h2>
+<p>Internal audit for this document:</p>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mandatory chapters included</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>Evidence policy applied</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>Unknowns explicitly registered</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>Assumptions classified</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>Risks registered</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>Recovery validation procedure included</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>AI usage policy included</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>No intentional placeholders</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>Remaining non-repository facts marked UNKNOWN</td>
+<td>PASS</td>
+</tr>
+</tbody>
+</table>
+<p>This handbook is usable for cold-start recovery and onboarding, but it does not make the project MVP Accepted. That status remains blocked until the repository contains accepted evidence for Logic Pro USB-MIDI to audible D1 output on the reference board and required burn-in/release criteria.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../00_Start_HERE_Emergency_recovery_pack/" class="btn btn-neutral float-left" title="Start here"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../docs/repository_identity_and_sync_v0.1.0/" class="btn btn-neutral float-right" title="Repository identity and synchronization">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform" class="fa fa-code-fork" style="color: #fcfcfc"> pappavis/circuitpython-midi-chip-platform</a>
+        </span>
+    
+    
+      <span><a href="../00_Start_HERE_Emergency_recovery_pack/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../docs/repository_identity_and_sync_v0.1.0/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

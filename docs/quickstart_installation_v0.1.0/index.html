@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Quickstart and installation - CircuitPython MIDI Chip Platform</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Quickstart and installation";
+        var mkdocs_page_input_path = "docs/quickstart_installation_v0.1.0.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CircuitPython MIDI Chip Platform
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Start</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../..">Project overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Documentation index</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Quickstart and installation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#wat-hierdie-weergawe-doen">Wat hierdie weergawe doen</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#wat-jy-nodig-het">Wat jy nodig het</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#1-kry-die-projek">1. Kry die projek</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-skep-n-afsonderlike-python-omgewing">2. Skep 'n afsonderlike Python-omgewing</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-installeer-die-projek-en-toetsgereedskap">3. Installeer die projek en toetsgereedskap</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-voer-diagnose-en-toetse-uit">4. Voer diagnose en toetse uit</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#toets-die-draagbare-midi-eventmodel">Toets die draagbare MIDI-eventmodel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#toets-ble-gating-en-performance-controls-op-die-host">Toets BLE-gating en performance-controls op die host</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#private-circuitpython-instellings">Private CircuitPython-instellings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mcp-us-003-toestelfirmware">MCP-US-003 toestelfirmware</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mcp-us-051-hil-verifikasie">MCP-US-051 HIL-verifikasie</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#vs-code">VS Code</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#thonny">Thonny</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#slegs-command-line">Slegs command line</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#probleemoplossing">Probleemoplossing</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#opsionele-plaaslike-ollama">Opsionele plaaslike Ollama</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#device-connection-proof">Device Connection Proof</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#us-055-logic-pro-d1-toets">US-055 Logic Pro D1-toets</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#huidige-pausepunt">Huidige pausepunt</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#max98357a-veilige-toetslas">MAX98357A veilige toetslas</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Emergency recovery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../00_Start_HERE_Emergency_recovery_pack/">Start here</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../EMERGENCY_DISASTER_RECOVERY/">Detailed disaster recovery handbook</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../repository_identity_and_sync_v0.1.0/">Repository identity and synchronization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../device_connection_proof_v0.1.0/">Device connection proof</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Governance and delivery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../AGENTS/">Binding agent and delivery rules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/">Governance overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/principal_qa_architect_agent_v0.1.0/">Principal QA Architect gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/regression_memory_v0.1.0/">Regression memory</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/instrumentation_design_review_template_v1.0/">Instrumentation Design Review template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/evidence_package_template_v1.0/">Evidence package template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../agile_delivery_release_plan_v0.1.0/">Agile delivery and release plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../team_raci_v0.1.0/">Team and RACI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../risk_register_v0.1.0/">Risk register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../source_register_v0.1.0/">Source register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../backlog_sanity_check_v0.1.0/">Backlog sanity check</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reuse_matrix_v0.1.0/">Reuse matrix</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MVP and product scope</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp_scope_v0.1.0/">Frozen MVP scope</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp/MVP_BUILD_PLAN/">MVP build plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../user_stories_v0.1.0/">User-story catalogue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../audio_priority_amendment_v0.1.0/">Audio priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ble_midi_core_priority_amendment_v0.1.0/">BLE MIDI and core priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../midi_transport_multicore_amendment_v0.1.0/">MIDI transport and multi-core amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../wifi_runtime_fallback_amendment_v0.1.0/">Wi-Fi runtime fallback amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../physical_chip_display_expansion_amendment_v0.1.0/">Physical chip and display expansion</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../burn_in_heap_stability_spec_v0.1.0/">Burn-in and heap stability</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Framework engineering</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/">Framework engineering index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_vision_v0.1.0/">Enterprise vision</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/architecture_v0.1.0/">Architecture</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_meta_model_v0.1.0/">Enterprise meta model</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/artefact_taxonomy_v0.1.0/">Artefact taxonomy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/quality_manual_v0.1.0/">Quality manual</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/test_strategy_v0.1.0/">Test strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/review_engine_v0.1.0/">Review engine</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/adr_repository_index_v0.1.0/">ADR repository index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/context_loader_specification_v0.1.0/">Context loader specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/prompt_compiler_specification_v0.1.0/">Prompt compiler specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/knowledge_base_structure_v0.1.0/">Knowledge-base structure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/glossary_v0.1.0/">Glossary</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Architecture decisions</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-001-repository-strategy/">ADR-001 Repository strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-002-reference-platform/">ADR-002 Reference platform</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-003-audio-strategy/">ADR-003 Audio strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-004-persistent-realtime-audio-graph/">ADR-004 Persistent realtime audio graph</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/MCP-US-101-FIRST-MVP-STEP/">MCP-US-101 First MVP step</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Foundation stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../board_capability_matrix_v0.1.0/">Board capability matrix</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_001_device_source_baseline_inventory_v0.1.0/">MCP-US-001 Device and source baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_002_project_skeleton_review_v0.1.0/">MCP-US-002 Project skeleton</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_003_safe_boot_review_v0.1.0/">MCP-US-003 Safe boot</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_004_board_capability_review_v0.1.0/">MCP-US-004 Board capabilities</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_005_configuration_secret_boundary_review_v0.1.0/">MCP-US-005 Configuration and secrets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_006_portable_event_model_review_v0.1.0/">MCP-US-006 Portable event model</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MIDI stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_007_usb_midi_receive_review_v0.1.0/">MCP-US-007 USB-MIDI receive</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_008_midi_channel_router_review_v0.1.0/">MCP-US-008 MIDI channel router</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_009_note_semantics_review_v0.1.0/">MCP-US-009 Note semantics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_010_pitch_bend_cc1_review_v0.1.0/">MCP-US-010 Pitch bend and CC1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_062_ble_midi_capability_review_v0.1.0/">MCP-US-062 BLE-MIDI capability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../autonomous_midi_batch_host_acceptance_v0.1.0/">Autonomous MIDI batch host acceptance</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Audio and D1 stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_014_audio_output_review_v0.1.0/">MCP-US-014 Audio output</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_016_i2s_diagnostic_review_v0.1.0/">MCP-US-016 I2S diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_055_logic_d1_i2s_review_v0.1.0/">MCP-US-055 Logic D1 I2S acceptance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_063_d1_core_review_v0.1.0/">MCP-US-063 D1 core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_075_safe_audio_gate_review_v0.1.0/">MCP-US-075 Safe audio gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_077_realtime_midi_audio_baseline_review_v0.1.0/">MCP-US-077 Realtime MIDI audio baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_079_persistent_synthio_audio_graph_plan_v0.1.0/">MCP-US-079 Persistent synthio graph</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HIL and investigations</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_hil_runner_review_v0.1.0/">MCP-US-051 HIL runner</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_mcp_us_007_dependency_closed_deployment_impediment_v0.1.0/">MCP-US-051/007 deployment impediment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0/">MCP-US-080 USB-MIDI routing diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_instrumentation_design_review_v0.1.0/">MCP-US-080-INV-001 IDR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_locate_first_disappearance_of_noteon_v0.1.0/">MCP-US-080-INV-001 First disappearance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-100a/screenshots/">MCP-US-100A Screenshots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-102/final-assessment/">MCP-US-102 Final assessment</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Incidents and external review</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../incidents/us_055_realtime_architecture_rebaseline_v0.1.0/">US-055 realtime architecture rebaseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_review_packets/us_055_realtime_failure_copilot_packet_v0.1.0/">US-055 external review packet</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_qa_audit_report_v0.1.0/">External QA audit v0.1.0</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_qa_audit_report_v0.20/">External QA audit v0.20</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lessons learned</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_1_checkpoint_001_v0.1.0/">Sprint 1 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_001_v0.1.0/">Sprint 2 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_002_v0.1.0/">Sprint 2 checkpoint 002</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_003_v0.1.0/">Sprint 2 checkpoint 003</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_3_checkpoint_004_v0.1.0/">Sprint 3 checkpoint 004</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CircuitPython MIDI Chip Platform</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Start</li>
+      <li class="breadcrumb-item active">Quickstart and installation</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform/edit/master/docs/docs/quickstart_installation_v0.1.0.md">Edit on pappavis/circuitpython-midi-chip-platform</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="snelbegin-installasie-en-ontwikkelomgewing">Snelbegin: installasie en ontwikkelomgewing<a class="headerlink" href="#snelbegin-installasie-en-ontwikkelomgewing" title="Permanent link">&para;</a></h1>
+<!--
+Bestand: quickstart_installation_v0.1.0.md
+Versienommer: 0.14.0
+Doel: Beginnerstappe vir installasie, US-055 Logic-toets, diagnose en ontwikkeling sonder IDE-afhanklikheid.
+Sprint: Sprint 0
+Epic: MCP-EPIC-001 Platform Foundation
+User-Story: MCP-US-005, MCP-US-055, MCP-US-075 en MCP-US-076
+Actienr: MCP-ACT-055-HIL-READY-001
+ChatID: CHATOD-20260714-MCP-CP-MVP-001 / MCP-US-055-START
+-->
+
+<h2 id="wat-hierdie-weergawe-doen">Wat hierdie weergawe doen<a class="headerlink" href="#wat-hierdie-weergawe-doen" title="Permanent link">&para;</a></h2>
+<p>Hierdie weergawe bevat die host-skelet, USB-MIDI-bootprofiel, capability discovery, veilige konfigurasiegrens, draagbare events, USB/BLE-vervoergrense, kanaalroetering, note-off-semantiek, per-kanaal pitch bend/CC1-toestand, 'n draagbare D1-basiskern, 'n hoorbare lae-volume I2S-diagnose en die eerste Logic/USB-MIDI na D1 na I2S runtime. Hosttoetse bewys die klasse; <code>hil-deploy</code> kopieer 'n dependency-geslote manifest en <code>hil-verify</code> bewys verbinding, libraries, boot, clean imports en uitvoering op die bord.</p>
+<h2 id="wat-jy-nodig-het">Wat jy nodig het<a class="headerlink" href="#wat-jy-nodig-het" title="Permanent link">&para;</a></h2>
+<p>Installeer eers:</p>
+<ol>
+<li><a href="https://git-scm.com/downloads">Git</a>.</li>
+<li><a href="https://www.python.org/downloads/">Python 3.11 of nuwer</a>. Merk op Windows die opsie <strong>Add Python to PATH</strong> tydens installasie.</li>
+<li>Opsioneel: <a href="https://code.visualstudio.com/">VS Code</a> of <a href="https://thonny.org/">Thonny</a>. Geen IDE is verpligtend nie.</li>
+</ol>
+<p>Maak daarna Terminal op macOS/Linux/Raspberry Pi, of PowerShell op Windows, oop.</p>
+<h2 id="1-kry-die-projek">1. Kry die projek<a class="headerlink" href="#1-kry-die-projek" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">git clone https://github.com/pappavis/circuitpython-midi-chip-platform.git
+cd circuitpython-midi-chip-platform
+</code></pre>
+<h2 id="2-skep-n-afsonderlike-python-omgewing">2. Skep 'n afsonderlike Python-omgewing<a class="headerlink" href="#2-skep-n-afsonderlike-python-omgewing" title="Permanent link">&para;</a></h2>
+<p>macOS, Linux en Raspberry Pi:</p>
+<pre><code class="language-bash">python3 -m venv .venv
+source .venv/bin/activate
+</code></pre>
+<p>Windows PowerShell:</p>
+<pre><code class="language-powershell">py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+</code></pre>
+<p>Windows Command Prompt:</p>
+<pre><code class="language-bat">py -3.11 -m venv .venv
+.venv\Scripts\activate.bat
+</code></pre>
+<p>Die prompt behoort nou <code>(.venv)</code> te wys. Hierdie omgewing hou projekpakkette weg van jou stelsel-Python.</p>
+<p>Bevestig nou dat die aktiewe interpreter werklik uit <code>.venv</code> kom en Python 3.11 of nuwer is:</p>
+<pre><code class="language-bash">python -c &quot;import sys; print(sys.executable); print(sys.version)&quot;
+</code></pre>
+<p>Op Windows PowerShell gebruik jy dieselfde opdrag nadat <code>.venv</code> geaktiveer is. Stop indien die pad <code>/usr/bin/python</code> toon of die weergawe met <code>2.7</code> begin; aktiveer <code>.venv</code> weer. 'n Absolute ontwikkelaarspad hoort nooit in projekconfig of startupkode nie.</p>
+<h2 id="3-installeer-die-projek-en-toetsgereedskap">3. Installeer die projek en toetsgereedskap<a class="headerlink" href="#3-installeer-die-projek-en-toetsgereedskap" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">python -m pip install --upgrade pip
+python -m pip install -e &quot;.[dev,hil]&quot;
+</code></pre>
+<h2 id="4-voer-diagnose-en-toetse-uit">4. Voer diagnose en toetse uit<a class="headerlink" href="#4-voer-diagnose-en-toetse-uit" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">python -m midi_chip_platform diagnose
+python -m pytest
+</code></pre>
+<p>Die diagnose behoort onder meer te wys:</p>
+<pre><code class="language-text">circuitpython-midi-chip-platform v0.12.3 | story=MCP-US-005 | release-date=2026-07-16
+circuitpython-midi-chip-platform: host skeleton ready
+hardware access: disabled
+runtime state: class instances only
+</code></pre>
+<p>Die toetsuitvoer behoort met <code>passed</code> te eindig. Hosttoetse alleen bewys nie die fisiese bord nie.</p>
+<h2 id="toets-die-draagbare-midi-eventmodel">Toets die draagbare MIDI-eventmodel<a class="headerlink" href="#toets-die-draagbare-midi-eventmodel" title="Permanent link">&para;</a></h2>
+<p>Hierdie toets benodig geen MIDI-keyboard, DAW of CircuitPython-bord nie:</p>
+<pre><code class="language-bash">python -m midi_chip_platform events-diagnose
+python -m pytest -q tests/test_domain_events.py
+</code></pre>
+<p>Verwag <code>EVENT_MODEL_STATUS=PASS</code>, gevolg deur een note-, control-, pitch-bend- en clockreël. Die pytest-opdrag moet met <code>passed</code> eindig. Dit bewys die interne model, nie fisiese USB-MIDI-ontvangs nie.</p>
+<h2 id="toets-ble-gating-en-performance-controls-op-die-host">Toets BLE-gating en performance-controls op die host<a class="headerlink" href="#toets-ble-gating-en-performance-controls-op-die-host" title="Permanent link">&para;</a></h2>
+<p>Hierdie opdragte begin geen BLE-radio en maak geen klank nie:</p>
+<pre><code class="language-bash">python -m midi_chip_platform ble-diagnose --board-id lolin_s2_mini
+python -m midi_chip_platform performance-diagnose --channel 4 --pitch-bend 12288 --modulation 127 --pitch-bend-range 2
+</code></pre>
+<p>Die eerste opdrag eindig doelbewus met statuskode <code>1</code> en rapporteer <code>board_has_no_native_ble</code>; dit is die korrekte veilige gedrag vir die ESP32-S2. Die tweede rapporteer <code>MIDI_PERFORMANCE_STATUS=PASS</code>, <code>PITCH_BEND_SEMITONES=1.000000</code> en <code>CC1_NORMALIZED=1.000000</code>.</p>
+<h2 id="private-circuitpython-instellings">Private CircuitPython-instellings<a class="headerlink" href="#private-circuitpython-instellings" title="Permanent link">&para;</a></h2>
+<p>CircuitPython lees omgewingswaardes uit <code>settings.toml</code> in die wortel van <code>CIRCUITPY</code>. Die repository se <code>device/settings.toml.example</code> bevat slegs plekhouers.</p>
+<ol>
+<li>Maak 'n kopie met die naam <code>settings.toml</code> in die <code>CIRCUITPY</code>-wortel.</li>
+<li>Vervang slegs die plekhouers wat jy benodig.</li>
+<li>Moenie jou voltooide <code>settings.toml</code> na Git kopieer of commit nie.</li>
+<li>Die synth rapporteer slegs of 'n private waarde <code>SET</code> of <code>UNSET</code> is.</li>
+<li>'n Leë waarde of een wat net uit spasies bestaan, word as <code>UNSET</code> behandel; gebruik aanhalingstekens vir doelbewus leë strings, byvoorbeeld <code>WIFI_SSID = ""</code>.</li>
+</ol>
+<p>Prioriteit: toekomstige runtime-/commandline-overrides wen eerste, daarna <code>settings.toml</code>, daarna publieke verstekke. <code>settings.toml</code> skei geheime van bronkode maar enkripteer dit nie.</p>
+<h2 id="mcp-us-003-toestelfirmware">MCP-US-003 toestelfirmware<a class="headerlink" href="#mcp-us-003-toestelfirmware" title="Permanent link">&para;</a></h2>
+<p>Die repository hou deploybare lêers in <code>device/</code>. Werk steeds in die repository en nooit direk op CIRCUITPY as jou enigste bronkopie nie.</p>
+<p>Die goedgekeurde HIL-proses:</p>
+<ol>
+<li>Ontdek CIRCUITPY en die USB-seriële poort.</li>
+<li>Maak Thonny/Serial Monitor toe sodat net een client die poort besit.</li>
+<li>Neem 'n private herstelkopie buite die repository.</li>
+<li>Installeer die verklaarde CircuitPython-biblioteke met CircUp.</li>
+<li>Gebruik <code>hil-deploy</code> om die 16 dependency-geslote projeklêers te kopieer.</li>
+<li>Wag totdat writes klaar is en voer 'n harde reset/power cycle uit sodat <code>boot.py</code> weer loop.</li>
+<li>Kontroleer <code>boot_out.txt</code>, USB-MIDI-enumerasie en die runtimebanner.</li>
+</ol>
+<p>Moenie 'n voorbeeldpad blind op 'n ander rekenaar gebruik nie.</p>
+<h2 id="mcp-us-051-hil-verifikasie">MCP-US-051 HIL-verifikasie<a class="headerlink" href="#mcp-us-051-hil-verifikasie" title="Permanent link">&para;</a></h2>
+<p>Maak eers Thonny, Serial Monitor en enige ander REPL-kliënt toe. Ontdek daarna die werklike volume en serial-poort vir jou rekenaar.</p>
+<p>macOS:</p>
+<pre><code class="language-bash">ls /Volumes
+ls /dev/cu.usbmodem*
+</code></pre>
+<p>Linux/Raspberry Pi:</p>
+<pre><code class="language-bash">ls /media/$USER
+ls /dev/ttyACM*
+</code></pre>
+<p>Windows PowerShell:</p>
+<pre><code class="language-powershell">Get-Volume
+[System.IO.Ports.SerialPort]::GetPortNames()
+</code></pre>
+<p>Vervang <code>&lt;CIRCUITPY-PAD&gt;</code> en <code>&lt;SERIAL-POORT&gt;</code> met die ontdekte waardes:</p>
+<pre><code class="language-bash">python -m pip install circup
+circup --path &lt;CIRCUITPY-PAD&gt; install -r device/requirements.txt
+python -m midi_chip_platform hil-deploy --source-root . --device-root &lt;CIRCUITPY-PAD&gt; --serial-port &lt;SERIAL-POORT&gt;
+python -m midi_chip_platform hil-reset --serial-port &lt;SERIAL-POORT&gt;
+python -m midi_chip_platform hil-verify --source-root . --device-root &lt;CIRCUITPY-PAD&gt; --serial-port &lt;SERIAL-POORT&gt;
+</code></pre>
+<p>CircUp installeer <code>adafruit_midi</code> uit <code>device/requirements.txt</code>; sien die amptelike <a href="https://docs.circuitpython.org/projects/circup/en/latest/">CircUp-dokumentasie</a> en <a href="https://docs.circuitpython.org/projects/midi/en/latest/">Adafruit MIDI-dokumentasie</a>. Geen plaaslike volume-, toestel- of virtualenv-pad is in die kode vasgeskryf nie.</p>
+<p><code>hil-deploy</code> hou dieselfde serial-sessie oop om CircuitPython auto-reload tydelik af te skakel en herstel dit ook wanneer 'n kopiefout plaasvind. <code>hil-reset</code> voer daarna 'n harde boot uit sodat <code>boot.py</code> en <code>boot_out.txt</code> by die nuwe release pas.</p>
+<p>Sukses wys <code>HIL_DEPLOY_STATUS=PASS;files=16</code>, <code>HIL_RESET_STATUS=REQUESTED</code>, gevolg deur PASS-reëls vir connection, manifest-closure, deployment, device-libraries, boot en execution, plus <code>private-identifiers: REDACTED</code>. Execution vereis <code>DEVICE_IMPORT_STATUS=PASS</code> voordat die runtime READY is. Die klankmetingsdeel van MCP-US-051 word eers bygevoeg nadat US-015/016 die fisiese PWM/MAX98357-pad lewer.</p>
+<h2 id="vs-code">VS Code<a class="headerlink" href="#vs-code" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Installeer VS Code en die amptelike Microsoft <strong>Python</strong>-uitbreiding.</li>
+<li>Kies <strong>File &gt; Open Folder</strong> en open die gekloonde projeklêergids.</li>
+<li>Druk <code>Cmd+Shift+P</code> op macOS of <code>Ctrl+Shift+P</code> op Windows/Linux.</li>
+<li>Kies <strong>Python: Select Interpreter</strong> en kies die Python binne <code>.venv</code>.</li>
+<li>Open <strong>Run and Debug</strong> en kies <strong>MCP: Diagnose Host Skeleton</strong>, of kies <strong>Terminal &gt; Run Task &gt; MCP: Run Tests</strong>.</li>
+</ol>
+<p>Die <code>.vscode</code>-lêers verskaf gerieflike knoppies, maar roep presies dieselfde Python-opdragte as die command line aan. Die kode bevat geen VS Code-afhanklikheid nie.</p>
+<h2 id="thonny">Thonny<a class="headerlink" href="#thonny" title="Permanent link">&para;</a></h2>
+<p>Vir die huidige host-skelet:</p>
+<ol>
+<li>Kies <strong>Tools &gt; Options &gt; Interpreter</strong>.</li>
+<li>Kies 'n plaaslike Python 3.11+ interpreter. Indien jou Thonny-weergawe dit ondersteun, kies die <code>.venv</code>-interpreter.</li>
+<li>Gebruik <strong>View &gt; System shell</strong> en voer die diagnose- en toetsopdragte hierbo uit.</li>
+</ol>
+<p>Vir die huidige CircuitPython-bord:</p>
+<ol>
+<li>Kies <strong>CircuitPython (generic)</strong> as interpreter.</li>
+<li>Kies die bord se huidige USB-seriële poort; moenie 'n poortnaam as universeel aanvaar nie.</li>
+<li>Gebruik REPL om bordstatus te lees, maar maak Thonny toe voordat <code>hil-verify</code> die poort gebruik.</li>
+</ol>
+<p>Thonny is dus 'n opsionele redigeerder en REPL-kliënt, nie 'n runtime-afhanklikheid nie.</p>
+<h2 id="slegs-command-line">Slegs command line<a class="headerlink" href="#slegs-command-line" title="Permanent link">&para;</a></h2>
+<p>Dieselfde projek werk sonder VS Code of Thonny op macOS, Windows, Linux en Raspberry Pi:</p>
+<pre><code class="language-bash">python -m midi_chip_platform diagnose
+python -m pytest -q
+</code></pre>
+<p>Later kan 'n bord se seriële poort met bedryfstelselgereedskap ontdek word:</p>
+<ul>
+<li>macOS: <code>ls /dev/cu.usbmodem*</code></li>
+<li>Linux/Raspberry Pi: <code>ls /dev/ttyACM*</code></li>
+<li>Windows PowerShell: <code>[System.IO.Ports.SerialPort]::GetPortNames()</code></li>
+</ul>
+<p>Die werklike naam verskil per rekenaar, kabel, bord en aansluitvolgorde.</p>
+<h2 id="probleemoplossing">Probleemoplossing<a class="headerlink" href="#probleemoplossing" title="Permanent link">&para;</a></h2>
+<p><strong><code>No module named midi_chip_platform</code></strong></p>
+<p>Maak seker dat jy in die projek se hooflêergids is, dat <code>(.venv)</code> sigbaar is en dat <code>python -m pip install -e ".[dev,hil]"</code> suksesvol voltooi het.</p>
+<p><strong>PowerShell weier om <code>Activate.ps1</code> uit te voer</strong></p>
+<p>Gebruik vir die huidige sessie:</p>
+<pre><code class="language-powershell">Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+</code></pre>
+<p>Aktiveer daarna weer <code>.\.venv\Scripts\Activate.ps1</code>.</p>
+<p><strong>VS Code gebruik die verkeerde Python</strong></p>
+<p>Voer <strong>Python: Select Interpreter</strong> weer uit en kies <code>.venv</code>. Open daarna 'n nuwe ingeboude terminal.</p>
+<p><strong>Thonny sien nie die bord nie</strong></p>
+<p>Kontroleer dat CircuitPython gemonteer is, probeer 'n data-geskikte USB-kabel en kies die poort opnieuw. Geen UF2-flash of skyfuitvee is deel van hierdie story nie.</p>
+<p><strong><code>CIRCUITPY</code> is leesalleen</strong></p>
+<p>Maak Thonny en serial monitors toe, ontkoppel USB, wag vyf sekondes en koppel weer sonder BOOT. Toets daarna met 'n nuwe onskadelike tekslêer. Indien dit steeds leesalleen is, stop: moenie formatteer, <code>storage.erase_filesystem()</code> gebruik of concurrent-write-beskerming afskakel nie. Deel die mount- en <code>boot_out.txt</code>-resultaat vir 'n beheerde herstelplan.</p>
+<p><strong><code>device-libraries: FAIL - missing: adafruit_midi</code></strong></p>
+<p>Maak seker dat die bord as <code>CIRCUITPY</code> gemonteer is en voer weer uit:</p>
+<pre><code class="language-bash">circup --path &lt;CIRCUITPY-PAD&gt; install -r device/requirements.txt
+</code></pre>
+<p>Moenie 'n host-Python <code>pip install adafruit-circuitpython-midi</code> as bewys gebruik nie; die library moet op die CircuitPython-volume se <code>lib/</code>-pad wees.</p>
+<p><strong><code>execution: FAIL</code> ná 'n suksesvolle deploy</strong></p>
+<p>Maak Thonny en ander serial-kliënte toe, power-cycle die bord en voer <code>hil-verify</code> weer uit. Indien <code>DEVICE_IMPORT_STATUS=PASS</code> ontbreek, deel die gesaniteerde traceback; moenie READY handmatig byvoeg om die hek te omseil nie.</p>
+<h2 id="opsionele-plaaslike-ollama">Opsionele plaaslike Ollama<a class="headerlink" href="#opsionele-plaaslike-ollama" title="Permanent link">&para;</a></h2>
+<p>Ollama is nie nodig vir installasie, toetse, firmware of uitvoering nie. Dit mag later slegs vir 'n goedgekeurde klein ontwikkeltaak gebruik word. Voor gebruik moet die model met <code>ollama list</code> bevestig en met 'n klein tydbegrensde proef getoets word. Die verstek bly <code>default</code>; indien die Mac stadig word, stop die plaaslike model en gebruik die verstek-Codex/LLM-pad.</p>
+<h2 id="device-connection-proof">Device Connection Proof<a class="headerlink" href="#device-connection-proof" title="Permanent link">&para;</a></h2>
+<p>Lees <a href="../device_connection_proof_v0.1.0/">Device Connection Proof</a>. Dit onderskei:</p>
+<ul>
+<li>verbinding met 'n CircuitPython-bord;</li>
+<li>deploy van die bedoelde commit/hashes;</li>
+<li>toesteluitvoering van die verwagte weergawe en story.</li>
+</ul>
+<p>Private UID-, MAC-, SSID- en geheime-data word nooit in chat of Git geplaas nie.</p>
+<h2 id="us-055-logic-pro-d1-toets">US-055 Logic Pro D1-toets<a class="headerlink" href="#us-055-logic-pro-d1-toets" title="Permanent link">&para;</a></h2>
+<p>Hierdie toets is die huidige menslike acceptatiehek. Gebruik net een serial tool op 'n slag: Thonny of <code>screen</code>, nie albei nie.</p>
+<ol>
+<li>Maak Thonny en serial monitors toe.</li>
+<li>Deploy die huidige firmware:</li>
+</ol>
+<pre><code class="language-bash">python -m midi_chip_platform hil-deploy \
+  --source-root . \
+  --device-root /Volumes/CIRCUITPY \
+  --serial-port &lt;jou-/dev/cu.usbmodem...-poort&gt;
+</code></pre>
+<ol>
+<li>Herstart die bord of gebruik <code>hil-reset</code>.</li>
+<li>Open Thonny REPL of 'n enkele serial monitor.</li>
+<li>Verwag:</li>
+</ol>
+<pre><code class="language-text">circuitpython-midi-chip-platform v0.17.8 | story=MCP-US-055 | release-date=2026-07-16
+DEVICE_FAST_BOOT_STATUS=ENABLED
+D1_RUNTIME_STATUS=START;core=d1;sample_rate=16000;frames_per_block=128;max_blocks=0;minimum_note_seconds=0.05;minimum_note_velocity=64;stream_active_blocks=false;audition_tone_amplitude=8192;event_logging=none;timing_marker=IO9;master_gain=0.250
+D1_MIDI_INPUT_STATUS=OPEN
+D1_RUNTIME_READY;ready_ms=...
+</code></pre>
+<ol>
+<li>Open Logic Pro.</li>
+<li>Maak <code>MIDI -&gt; External MIDI</code>.</li>
+<li>Kies die CircuitPython/Wemos bestemming, tans waarskynlik <code>S2 Mini</code>.</li>
+<li>Kies MIDI Channel <code>All</code> of <code>1</code>.</li>
+<li>Speel 'n noot of kort MIDI-region.</li>
+</ol>
+<p>PASS:</p>
+<p>Jy hoor D1-klank deur die MAX98357A-prototipe-opstelling. In default performance mode verskyn daar geen per-note serial output nie.</p>
+<p>Opsioneel: meet <code>IO9</code> met die Rigol. Elke note-on gee 'n kort marker-pulse rondom die firmware/audio-startpad. <code>D1_REALTIME_MIDI_NOTE</code> verskyn net wanneer jy tydelik <code>D1_EVENT_LOGGING = "summary"</code> stel. <code>D1_MIDI_EVENT</code> en <code>D1_AUDIO_EVENT</code> verskyn net met <code>verbose</code>.</p>
+<p>Stop met <code>Ctrl-C</code>. <code>D1_RUNTIME_STATUS=INTERRUPTED</code> is normaal wanneer jy self stop.</p>
+<h2 id="huidige-pausepunt">Huidige pausepunt<a class="headerlink" href="#huidige-pausepunt" title="Permanent link">&para;</a></h2>
+<p>MCP-US-005, MCP-US-007, MCP-US-008, MCP-US-009, MCP-US-014, MCP-US-016, MCP-US-063 en MCP-US-075 is Done. US-075 is met 'n eksplisiete prototipe-lasuitondering aanvaar; US-076 parkeer die gesertifiseerde hardware-cleanup. US-055 is In Review: hosttoetse is groen en die Product Owner moet nou Logic/USB-MIDI-na-hoorbare-D1/I2S op die bord toets. Die v0.17.8 hertest moet <code>master_gain=0.250</code>, <code>minimum_note_velocity=64</code>, <code>D1_MIDI_INPUT_STATUS=OPEN</code>, <code>event_logging=none</code> en <code>timing_marker=IO9</code> wys; die I2S-adapter gebruik 'n korter latched RawSample-tone sonder per-note serial backpressure.</p>
+<h2 id="max98357a-veilige-toetslas">MAX98357A veilige toetslas<a class="headerlink" href="#max98357a-veilige-toetslas" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ontkoppel 'n direk-gekoppelde koptelefoon en moenie dit op jou ore sit tydens synthontwikkeling nie.</li>
+<li>Gebruik vir die MAX98357A 'n bewegende-spoel-luidspreker van 4-8 ohm met geskikte kraggradering, direk tussen <code>+</code> en <code>-</code>.</li>
+<li>Verbind geen uitsetterminaal aan grond, Scarlett/line-in, 'n tweede versterker of 'n geaarde scope-klem nie.</li>
+<li>Plaas geen gewone enkelpotmeter in of oor die bridge-tied speakeruitset nie.</li>
+<li>US-075 spesifiseer lae digitale master gain, startup mute en die GAIN/SD-penprofiel. 'n Toekomstige koptelefoon- of pedal-line-out gebruik 'n geskikte DAC/headphone-amp-pad.</li>
+</ul>
+<p>Toets die sagtewaregrens sonder hardeware:</p>
+<pre><code class="language-bash">/Volumes/data1/michiele/venv/venv3.12/bin/python \
+  -m midi_chip_platform audio-safety-diagnose \
+  --master-gain 0.08 --input-peak 12000
+</code></pre>
+<p><code>AUDIO_SAFETY_MUTED_PEAK=0</code>, <code>AUDIO_SAFETY_UNMUTED_PEAK=960</code> en <code>AUDIO_SAFETY_STATUS=PASS</code> bewys die digitale grens. Dit bewys nog nie die fisiese luidspreker nie.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../" class="btn btn-neutral float-left" title="Documentation index"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../00_Start_HERE_Emergency_recovery_pack/" class="btn btn-neutral float-right" title="Start here">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform" class="fa fa-code-fork" style="color: #fcfcfc"> pappavis/circuitpython-midi-chip-platform</a>
+        </span>
+    
+    
+      <span><a href="../" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../00_Start_HERE_Emergency_recovery_pack/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

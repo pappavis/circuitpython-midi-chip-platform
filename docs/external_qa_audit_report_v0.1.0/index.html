@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>External QA audit v0.1.0 - CircuitPython MIDI Chip Platform</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "External QA audit v0.1.0";
+        var mkdocs_page_input_path = "docs/external_qa_audit_report_v0.1.0.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CircuitPython MIDI Chip Platform
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Start</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../..">Project overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Documentation index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quickstart_installation_v0.1.0/">Quickstart and installation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Emergency recovery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../00_Start_HERE_Emergency_recovery_pack/">Start here</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../EMERGENCY_DISASTER_RECOVERY/">Detailed disaster recovery handbook</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../repository_identity_and_sync_v0.1.0/">Repository identity and synchronization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../device_connection_proof_v0.1.0/">Device connection proof</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Governance and delivery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../AGENTS/">Binding agent and delivery rules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/">Governance overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/principal_qa_architect_agent_v0.1.0/">Principal QA Architect gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/regression_memory_v0.1.0/">Regression memory</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/instrumentation_design_review_template_v1.0/">Instrumentation Design Review template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/evidence_package_template_v1.0/">Evidence package template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../agile_delivery_release_plan_v0.1.0/">Agile delivery and release plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../team_raci_v0.1.0/">Team and RACI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../risk_register_v0.1.0/">Risk register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../source_register_v0.1.0/">Source register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../backlog_sanity_check_v0.1.0/">Backlog sanity check</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reuse_matrix_v0.1.0/">Reuse matrix</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MVP and product scope</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp_scope_v0.1.0/">Frozen MVP scope</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp/MVP_BUILD_PLAN/">MVP build plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../user_stories_v0.1.0/">User-story catalogue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../audio_priority_amendment_v0.1.0/">Audio priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ble_midi_core_priority_amendment_v0.1.0/">BLE MIDI and core priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../midi_transport_multicore_amendment_v0.1.0/">MIDI transport and multi-core amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../wifi_runtime_fallback_amendment_v0.1.0/">Wi-Fi runtime fallback amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../physical_chip_display_expansion_amendment_v0.1.0/">Physical chip and display expansion</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../burn_in_heap_stability_spec_v0.1.0/">Burn-in and heap stability</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Framework engineering</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/">Framework engineering index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_vision_v0.1.0/">Enterprise vision</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/architecture_v0.1.0/">Architecture</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_meta_model_v0.1.0/">Enterprise meta model</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/artefact_taxonomy_v0.1.0/">Artefact taxonomy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/quality_manual_v0.1.0/">Quality manual</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/test_strategy_v0.1.0/">Test strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/review_engine_v0.1.0/">Review engine</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/adr_repository_index_v0.1.0/">ADR repository index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/context_loader_specification_v0.1.0/">Context loader specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/prompt_compiler_specification_v0.1.0/">Prompt compiler specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/knowledge_base_structure_v0.1.0/">Knowledge-base structure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/glossary_v0.1.0/">Glossary</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Architecture decisions</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-001-repository-strategy/">ADR-001 Repository strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-002-reference-platform/">ADR-002 Reference platform</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-003-audio-strategy/">ADR-003 Audio strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-004-persistent-realtime-audio-graph/">ADR-004 Persistent realtime audio graph</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/MCP-US-101-FIRST-MVP-STEP/">MCP-US-101 First MVP step</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Foundation stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../board_capability_matrix_v0.1.0/">Board capability matrix</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_001_device_source_baseline_inventory_v0.1.0/">MCP-US-001 Device and source baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_002_project_skeleton_review_v0.1.0/">MCP-US-002 Project skeleton</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_003_safe_boot_review_v0.1.0/">MCP-US-003 Safe boot</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_004_board_capability_review_v0.1.0/">MCP-US-004 Board capabilities</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_005_configuration_secret_boundary_review_v0.1.0/">MCP-US-005 Configuration and secrets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_006_portable_event_model_review_v0.1.0/">MCP-US-006 Portable event model</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MIDI stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_007_usb_midi_receive_review_v0.1.0/">MCP-US-007 USB-MIDI receive</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_008_midi_channel_router_review_v0.1.0/">MCP-US-008 MIDI channel router</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_009_note_semantics_review_v0.1.0/">MCP-US-009 Note semantics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_010_pitch_bend_cc1_review_v0.1.0/">MCP-US-010 Pitch bend and CC1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_062_ble_midi_capability_review_v0.1.0/">MCP-US-062 BLE-MIDI capability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../autonomous_midi_batch_host_acceptance_v0.1.0/">Autonomous MIDI batch host acceptance</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Audio and D1 stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_014_audio_output_review_v0.1.0/">MCP-US-014 Audio output</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_016_i2s_diagnostic_review_v0.1.0/">MCP-US-016 I2S diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_055_logic_d1_i2s_review_v0.1.0/">MCP-US-055 Logic D1 I2S acceptance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_063_d1_core_review_v0.1.0/">MCP-US-063 D1 core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_075_safe_audio_gate_review_v0.1.0/">MCP-US-075 Safe audio gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_077_realtime_midi_audio_baseline_review_v0.1.0/">MCP-US-077 Realtime MIDI audio baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_079_persistent_synthio_audio_graph_plan_v0.1.0/">MCP-US-079 Persistent synthio graph</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HIL and investigations</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_hil_runner_review_v0.1.0/">MCP-US-051 HIL runner</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_mcp_us_007_dependency_closed_deployment_impediment_v0.1.0/">MCP-US-051/007 deployment impediment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0/">MCP-US-080 USB-MIDI routing diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_instrumentation_design_review_v0.1.0/">MCP-US-080-INV-001 IDR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_locate_first_disappearance_of_noteon_v0.1.0/">MCP-US-080-INV-001 First disappearance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-100a/screenshots/">MCP-US-100A Screenshots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-102/final-assessment/">MCP-US-102 Final assessment</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Incidents and external review</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../incidents/us_055_realtime_architecture_rebaseline_v0.1.0/">US-055 realtime architecture rebaseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_review_packets/us_055_realtime_failure_copilot_packet_v0.1.0/">US-055 external review packet</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">External QA audit v0.1.0</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-uitvoerende-gevolgtrekking">1. Uitvoerende gevolgtrekking</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-auditmandaat-en-metode">2. Auditmandaat en metode</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-onafhanklike-maturity-scorekaart">3. Onafhanklike maturity-scorekaart</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-wat-aantoonbaar-goed-werk">4. Wat aantoonbaar goed werk</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#41-eerlike-statuskommunikasie">4.1 Eerlike statuskommunikasie</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#42-importveilige-instansiegebaseerde-ontwerp">4.2 Importveilige, instansiegebaseerde ontwerp</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#43-veilige-bootbesluit">4.3 Veilige bootbesluit</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#44-bordvermoens-en-hardewareveiligheid">4.4 Bordvermoëns en hardewareveiligheid</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#45-midi-domeinfondasie">4.5 MIDI-domeinfondasie</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#46-repository-en-geheimedissipline">4.6 Repository- en geheimedissipline</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-kritieke-bevindinge">5. Kritieke bevindinge</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#p0-01-die-hil-deploymanifest-is-nie-dependency-gesluit-nie">P0-01: Die HIL-deploymanifest is nie dependency-gesluit nie</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#p0-02-device-library-afhanklikhede-is-nie-reproduceerbaar-nie">P0-02: Device library-afhanklikhede is nie reproduceerbaar nie</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#p0-03-geen-geintegreerde-vertikale-runtime-bestaan-nie">P0-03: Geen geïntegreerde vertikale runtime bestaan nie</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#p0-04-die-mvp-is-te-groot-om-as-minimum-te-funksioneer">P0-04: Die MVP is te groot om as minimum te funksioneer</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6-kode-en-argitektuurreview">6. Kode- en argitektuurreview</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#61-poortkontrakte-is-bruikbaar-maar-te-dun-vir-realtime-audio">6.1 Poortkontrakte is bruikbaar maar te dun vir realtime audio</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#62-clock-events-word-tans-doelbewus-weggegooi">6.2 Clock events word tans doelbewus weggegooi</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#63-note-state-verloor-herhaalde-identiese-noteon-semantiek">6.3 Note-state verloor herhaalde identiese NoteOn-semantiek</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#64-ble-gate-is-te-optimisties-vir-onbekende-borde">6.4 BLE-gate is te optimisties vir onbekende borde</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#65-bootfout-isolasie-kan-verbeter">6.5 Bootfout-isolasie kan verbeter</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#66-streng-geen-modulevlak-funksies-het-koste">6.6 Streng “geen modulevlak funksies” het koste</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#7-midi-en-controller-risikos">7. MIDI- en controller-risiko's</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#71-fishmanslide-ondersteuning-vereis-meer-as-pitch-bend">7.1 Fishman/slide-ondersteuning vereis meer as pitch bend</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#72-midi-flood-en-clock-moet-begrens-word">7.2 MIDI flood en clock moet begrens word</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#73-midi-library-buffer-en-poortkeuse-is-nog-ongetoets">7.3 MIDI library buffer en poortkeuse is nog ongetoets</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#8-audio-dsp-en-hardewarerisikos">8. Audio-, DSP- en hardewarerisiko's</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#81-eerste-klank-is-die-korrekte-harde-hek">8.1 Eerste klank is die korrekte harde hek</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#82-max98357-is-nie-n-pedal-line-output-nie">8.2 MAX98357 is nie 'n pedal line output nie</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#83-stereo-en-per-voice-panning-is-te-vroeg-vir-die-eerste-mvp">8.3 Stereo en per-voice panning is te vroeg vir die eerste MVP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#84-dsp-moet-n-no-go-uitkoms-kan-he">8.4 DSP moet 'n no-go-uitkoms kan hê</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#9-qa-toets-en-release-assessering">9. QA-, toets- en release-assessering</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#91-groen-hosttoetse-is-nuttig-maar-smal">9.1 Groen hosttoetse is nuttig maar smal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#92-geen-ci-matriks-bestaan-nie">9.2 Geen CI-matriks bestaan nie</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#93-hil-verbinding-is-nie-sterk-genoeg-geverifieer-nie">9.3 HIL-verbinding is nie sterk genoeg geverifieer nie</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#94-releaseweergawe-kommunikeer-meer-volwassenheid-as-gelewer">9.4 Releaseweergawe kommunikeer meer volwassenheid as gelewer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#95-bewysbewaring-is-goed-maar-nie-altyd-aktueel-nie">9.5 Bewysbewaring is goed, maar nie altyd aktueel nie</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#10-sekuriteits-en-privaatheidsreview">10. Sekuriteits- en privaatheidsreview</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#101-sterk-huidige-grense">10.1 Sterk huidige grense</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#102-oop-mensaksie-credentialrotasie">10.2 Oop mensaksie: credentialrotasie</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#103-toekomstige-apwebsekuriteit-is-groter-as-n-wagwoord">10.3 Toekomstige AP/websekuriteit is groter as 'n wagwoord</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#104-supply-chain-en-license-register-ontbreek-nog">10.4 Supply-chain en license register ontbreek nog</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#11-agile-en-governance-retrospektief">11. Agile- en governance-retrospektief</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#wat-goed-verloop-het">Wat goed verloop het</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#wat-nie-goed-verloop-het-nie">Wat nie goed verloop het nie</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#prosesverbetering">Prosesverbetering</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#12-review-van-die-eksterne-copilot-audit">12. Review van die eksterne Copilot-audit</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#aanvaarbare-aanbevelings">Aanvaarbare aanbevelings</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#aanbevelings-wat-aangepas-moet-word">Aanbevelings wat aangepas moet word</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bevindinge-wat-verouderd-of-ooroptimisties-is">Bevindinge wat verouderd of ooroptimisties is</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#13-gekonsolideerde-risikotabel">13. Gekonsolideerde risikotabel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#14-gedetailleerde-verbeteraksieplan">14. Gedetailleerde verbeteraksieplan</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#fase-0-bevries-claims-en-herstel-bewysketting-p0-eerste">Fase 0: Bevries claims en herstel bewysketting (P0, eerste)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fase-1-early-audible-increment-p0">Fase 1: Early Audible Increment (P0)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fase-2-eerste-musikale-vertikale-sny-p0p1">Fase 2: Eerste musikale vertikale sny (P0/P1)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fase-3-performance-en-guitar-midi-p1">Fase 3: Performance en guitar-MIDI (P1)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fase-4-release-engineering-en-scopebesluit-p1">Fase 4: Release engineering en scopebesluit (P1)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fase-5-uitbreidings-na-bewese-baseline-p2later">Fase 5: Uitbreidings ná bewese baseline (P2/later)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#15-voorgestelde-backlogwysigings-vir-product-owner-besluit">15. Voorgestelde backlogwysigings vir Product Owner-besluit</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#16-finale-qa-oordeel">16. Finale QA-oordeel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#17-bronne">17. Bronne</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#18-auditverklaring">18. Auditverklaring</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#19-bewysregister-en-beperkings">19. Bewysregister en beperkings</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_qa_audit_report_v0.20/">External QA audit v0.20</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lessons learned</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_1_checkpoint_001_v0.1.0/">Sprint 1 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_001_v0.1.0/">Sprint 2 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_002_v0.1.0/">Sprint 2 checkpoint 002</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_003_v0.1.0/">Sprint 2 checkpoint 003</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_3_checkpoint_004_v0.1.0/">Sprint 3 checkpoint 004</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CircuitPython MIDI Chip Platform</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Incidents and external review</li>
+      <li class="breadcrumb-item active">External QA audit v0.1.0</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform/edit/master/docs/docs/external_qa_audit_report_v0.1.0.md">Edit on pappavis/circuitpython-midi-chip-platform</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="onafhanklike-qa-audit-circuitpython-midi-chip-platform">Onafhanklike QA-audit: CircuitPython MIDI Chip Platform<a class="headerlink" href="#onafhanklike-qa-audit-circuitpython-midi-chip-platform" title="Permanent link">&para;</a></h1>
+<p>Bestand: <code>external_qa_audit_report_v0.1.0.md</code>
+Versienommer: 0.1.0
+Doel: Onafhanklike produk-, kode-, argitektuur-, QA-, sekuriteits- en Agile-oudit
+Auditdatum: 2026-07-15
+Geouditeerde commit: <code>a4ba993</code>
+ChatID: <code>CHATOD-20260714-MCP-CP-MVP-001 / EXTERNAL-QA-AUDIT-001</code>
+Status: Advies vir Product Owner-hersiening; geen backlog- of kodeverandering is hierdeur goedgekeur nie</p>
+<p><img alt="Konsepvisualisering vir die onafhanklike QA-audit" src="../../assets/images/audit/external-qa-audit-cover-concept-v0.1.0.png" /></p>
+<blockquote>
+<p><strong>Bewysgrens:</strong> Die beeld hierbo is 'n gegenereerde konsepvisualisering vir kommunikasie. Dit is nie 'n foto van gelewerde hardeware en nie HIL-bewys nie.</p>
+</blockquote>
+<h2 id="1-uitvoerende-gevolgtrekking">1. Uitvoerende gevolgtrekking<a class="headerlink" href="#1-uitvoerende-gevolgtrekking" title="Permanent link">&para;</a></h2>
+<p>Die CircuitPython MIDI Chip Platform is tans 'n besonder goed gedokumenteerde en doelbewus bestuurde ontwikkelingsprojek, maar nog nie 'n werkende synthesizerproduk nie. Die repository toon sterk produkdenke, noukeurige naspeurbaarheid, 'n waardevolle klasgebaseerde skeiding van verantwoordelikhede en eerlike onderskeid tussen hosttoetse en fisiese toestelbewys. Dit is aansienlik beter as die gemiddelde eksperiment waar prototipekode, hardewareaannames en produkbeloftes sonder beheer saamgroei.</p>
+<p>Die belangrikste onafhanklike QA-oordeel is egter dat die projek se <strong>governance-volwassenheid veel hoër as sy produkvolwassenheid</strong> is. Weergawe <code>0.11.0</code>, 68 groen hosttoetse, 63 user stories en 33 Markdown-dokumente wek maklik die indruk van 'n gevorderde implementering. Die huidige <code>device/code.py</code> begin in werklikheid net capability- en konfigurasiediagnose. Dit instansieer nog nie die USB-MIDI ontvangslus, note-semantiek, performance state, router, synth core of audio-uitvoer nie. Geen synth core bestaan nie en geen huidige release lewer klank nie. Die README erken dit korrek; die release- en presentasiesemantiek behoort dieselfde realiteit nog sterker te weerspieël.</p>
+<p>Die mees dringende tegniese bevinding is 'n defek in die HIL-deploymanifest. Die manifest kopieer modules wat <code>ports.py</code> en <code>core.py</code> invoer, maar kopieer nie daardie afhanklikhede nie. Die bestaande HIL-toets vergelyk slegs voorafgeskepte bron-/device-hashes en toets nie dependency closure of invoerbaarheid op CircuitPython nie. Daarom kan die runner vier groen bewysreëls lewer vir 'n pakket wat by die eerste werklike MIDI-import faal. Dit is 'n <strong>P0 release-proof-defek</strong>, nie bloot 'n toekomstige verbetering nie.</p>
+<p>Die tweede dringende probleem is scope. Die MVP bevat tegelyk USB-MIDI, BLE-MIDI op 'n tweede bord, DIN/UART, D1 en SN76489, stereo, web station/AP, 'n virtuele keyboard, sequencer, DSP, guitar-MIDI, multi-core runtime, installasie, Windows/macOS-aanvaarding en herstel. Dit is 'n produkroadmap, nie 'n minimale MVP nie. Die korrekte volgende mylpaal is 'n kleiner <strong>Early Audible Increment</strong>: herstel die deployketting, voeg die minimale AudioOutput-kontrak by, bewys een veilige MAX98357-toon op die werklike S2, en verbind daarna USB Note On/Off deur die D1-basiskern na mono-I2S.</p>
+<p>Die audit beveel dus 'n gekontroleerde koerskorreksie aan, nie 'n herskryf nie. Die bestaande poorte, eventmodel, bordprofiel en veilige boot is bruikbare fondasie. Die span moet eers die vertikale runtime saamstel en meet voordat web, BLE, multi-core of chipakkuraatheid momentum kry.</p>
+<h2 id="2-auditmandaat-en-metode">2. Auditmandaat en metode<a class="headerlink" href="#2-auditmandaat-en-metode" title="Permanent link">&para;</a></h2>
+<p>Die audit is uitgevoer as 'n kombinasie van eksterne QA-review, argitektuurassessering, Agile-retrospektief, produk-risikoanalise en release-governance-oudit. Die doel was om bewerings te probeer falsifiseer, nie om die projek te bemark nie. Positiewe bevindinge word behou waar bronkode, toetse of gedokumenteerde HIL-bewys hulle ondersteun. Aannames en voorstelle word apart van geverifieerde feite gehou.</p>
+<p>Die volgende materiaal is ondersoek:</p>
+<ul>
+<li>die volledige geversioneerde repository by commit <code>a4ba993</code>;</li>
+<li>19 Python-modules onder <code>src</code>, twee device-entrypoints en 15 testmodules;</li>
+<li>33 Markdown-dokumente, drie ADR's, README, AGENTS en die Excel-Kanban;</li>
+<li>Git-geskiedenis en file churn oor 18 commits;</li>
+<li>die 63-story katalogus en status-/afhanklikheidsinligting;</li>
+<li>huidige en historiese HIL-bewysdokumente;</li>
+<li>die eksterne Copilot-audit as adviserend bronmateriaal;</li>
+<li>amptelike CircuitPython-, Adafruit MIDI-, BLE- en MAX98357-dokumentasie;</li>
+<li>die Product Owner se gerapporteerde hosttoetsresultate.</li>
+</ul>
+<p>Die volgende verifikasies is self uitgevoer:</p>
+<ul>
+<li><code>68 passed</code> met Python 3.12.13;</li>
+<li>bron- en testkompilasie met die eksplisiete Python 3.12-interpreter;</li>
+<li><code>ruff check</code> oor <code>src</code>, <code>device</code> en <code>tests</code>, met geen bevindinge nie;</li>
+<li>geheime- en plaaslike-padskandering oor die huidige checkout;</li>
+<li>beperkte Git-geskiedenisskandering vir die bekende prototipecredential;</li>
+<li>AST-gebaseerde ontleding van die HIL-manifest se plaaslike importafhanklikhede;</li>
+<li>volledigheidskontrole dat MCP-US-001 tot MCP-US-063 in Markdown voorkom;</li>
+<li>status- en dokumentdriftkontrole;</li>
+<li>inspeksie van installasiegedrag teen die werklike host waar <code>python</code> na Python 2.7 wys en Python 3.12 eksplisiet gekies moet word.</li>
+</ul>
+<p>Hierdie audit het nie 'n nuwe firmwaredeploy, luidsprekertoets, Logic Pro-toets, BLE-advertensie, Windows-toets of lang duurtoets uitgevoer nie. Sulke gedrag word dus nie as geslaag verklaar nie. Die vorige device proof vir ouer commits word as historiese bewys aanvaar, maar bewys nie dat die huidige <code>v0.11.0</code>-manifest uitvoerbaar is nie.</p>
+<h2 id="3-onafhanklike-maturity-scorekaart">3. Onafhanklike maturity-scorekaart<a class="headerlink" href="#3-onafhanklike-maturity-scorekaart" title="Permanent link">&para;</a></h2>
+<p>Die telling meet huidige bewys, nie entoesiasme of toekomstige potensiaal nie.</p>
+<table>
+<thead>
+<tr>
+<th>Gebied</th>
+<th style="text-align: right;">Telling</th>
+<th>QA-oordeel</th>
+<th>Kernrede</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Produkvisie en doelgroep</td>
+<td style="text-align: right;">8.5/10</td>
+<td>Sterk</td>
+<td>Duidelike pedal-/MIDI-gebruik, kernvolgorde en verwysingshardeware</td>
+</tr>
+<tr>
+<td>Dokumentasie en naspeurbaarheid</td>
+<td style="text-align: right;">8.5/10</td>
+<td>Sterk</td>
+<td>ChatID, story, weergawe, ADR's, reviews en lessons learned is sigbaar</td>
+</tr>
+<tr>
+<td>Kode-organisasie</td>
+<td style="text-align: right;">7.0/10</td>
+<td>Goed, onvolledig</td>
+<td>Poorte en dependency injection is bruikbaar; runtimekomposisie ontbreek</td>
+</tr>
+<tr>
+<td>Host-eenheidstoetse</td>
+<td style="text-align: right;">7.0/10</td>
+<td>Goed vir huidige eenhede</td>
+<td>68 vinnige groen toetse; geen coverage-, mutation- of property-meting</td>
+</tr>
+<tr>
+<td>Device/HIL-betroubaarheid</td>
+<td style="text-align: right;">3.5/10</td>
+<td>Onvoldoende</td>
+<td>Historiese proof bestaan, maar huidige manifest is nie dependency-gesluit nie</td>
+</tr>
+<tr>
+<td>MIDI-implementasie</td>
+<td style="text-align: right;">4.5/10</td>
+<td>Fondasie</td>
+<td>Events, vertaling en state bestaan; geen huidige end-to-end devicepad nie</td>
+</tr>
+<tr>
+<td>Audio-implementasie</td>
+<td style="text-align: right;">1.0/10</td>
+<td>Nie gelewer nie</td>
+<td>Geen AudioOutput-backend, bufferloop, D1-kern of hoorbare release nie</td>
+</tr>
+<tr>
+<td>Sekuriteit en privaatheidsgrens</td>
+<td style="text-align: right;">6.5/10</td>
+<td>Redelik</td>
+<td>Goeie redaksie en ignore-reëls; credentialrotasie en toekomstige websekuriteit oop</td>
+</tr>
+<tr>
+<td>Portabiliteit en release engineering</td>
+<td style="text-align: right;">3.5/10</td>
+<td>Vroeg</td>
+<td>Een bordprofiel, geen CI-matriks, geen library lock, geen Windows/Linux-bewys</td>
+</tr>
+<tr>
+<td>Scope- en Agile-beheer</td>
+<td style="text-align: right;">5.5/10</td>
+<td>Gemeng</td>
+<td>Sterk prosesreëls, maar MVP bevat te veel produklyne en dokumentdrift bestaan</td>
+</tr>
+<tr>
+<td><strong>Algehele produkvolwassenheid</strong></td>
+<td style="text-align: right;"><strong>4.6/10</strong></td>
+<td><strong>Below MVP</strong></td>
+<td>Sterk fondasie en beheer; nog geen hoorbare vertikale produkinkrement nie</td>
+</tr>
+</tbody>
+</table>
+<p>Hierdie telling is doelbewus laer as die Copilot-oordeel van 8.4/10. Copilot het die kwaliteit van visie en governance korrek raakgesien, maar het dokumentasievolwassenheid te sterk as produkvolwassenheid geïnterpreteer. 'n Synthesizer sonder 'n aktiewe synth- of audiopad kan nie as 8.4/10 produkvolwasse geklassifiseer word nie, selfs wanneer sy beplanning uitstekend is.</p>
+<h2 id="4-wat-aantoonbaar-goed-werk">4. Wat aantoonbaar goed werk<a class="headerlink" href="#4-wat-aantoonbaar-goed-werk" title="Permanent link">&para;</a></h2>
+<h3 id="41-eerlike-statuskommunikasie">4.1 Eerlike statuskommunikasie<a class="headerlink" href="#41-eerlike-statuskommunikasie" title="Permanent link">&para;</a></h3>
+<p>Die sterkste kwaliteitseienskap is nie 'n spesifieke klas nie, maar die herhaalde onderskeid tussen hostgroen, deviceproof en hoorbare aanvaarding. Die README sê uitdruklik dat daar nog geen synth core en geen geaktiveerde audio-, MIDI-receive-, BLE- of Wi-Fi-diens op die toestel is nie. MCP-US-010 bly <code>In Review (host accepted)</code> omdat die hoorbare bend eers ná I2S en D1 bewys kan word. MCP-US-062 erken die S2 as 'n negatiewe BLE-toets en maak nie 'n positiewe claim sonder 'n geskikte tweede bord nie. Hierdie dissipline verminder ernstige hallucinasie- en release-risiko.</p>
+<h3 id="42-importveilige-instansiegebaseerde-ontwerp">4.2 Importveilige, instansiegebaseerde ontwerp<a class="headerlink" href="#42-importveilige-instansiegebaseerde-ontwerp" title="Permanent link">&para;</a></h3>
+<p>Die bronmodules het geen modulevlak runtime-toekennings of globale diensinstansies nie. <code>ruff</code> slaag en die AST-argitektuurtoetse dwing die verbod op globale state, modulevlak helperfunksies en import-side effects af. Vir hierdie projek is die hoofdoel geldig: die MIDI-, kern-, audio- en weblae moet later deur verskillende entrypoints saamgestel kan word sonder dat 'n import USB, radio of klank begin.</p>
+<p>Die skeiding tussen <code>MidiInputPort</code>, <code>AudioOutputPort</code>, <code>ClockPort</code>, <code>ConfigurationPort</code> en <code>SynthCore</code> is klein en verstaanbaar. <code>CoreRegistry</code> besit kanaaltoewysing per instansie. <code>MidiMessageTranslator</code> verberg die Adafruit-boodskapklasse agter draagbare events. Die ontwerp maak hostfakes moontlik sonder om CircuitPython op die host na te boots.</p>
+<h3 id="43-veilige-bootbesluit">4.3 Veilige bootbesluit<a class="headerlink" href="#43-veilige-bootbesluit" title="Permanent link">&para;</a></h3>
+<p>Die huidige <code>boot.py</code> het geen Wi-Fi-, audio- of synthruntime nie. Dit stel slegs USB-identiteit, HID-beleid en USB-MIDI op. Dit pas by CircuitPython se bootmodel en verminder die kans dat 'n fout in netwerk- of businesslogika die device onnodig moeilik herstelbaar maak. Die besluit om VID/PID nie te oorskryf nie is verstandig vir 'n ontwikkelrelease. Die historiese bewys dat USB MIDI descriptors en <code>usb_midi.ports</code> op die S2 verskyn het, is waardevol.</p>
+<h3 id="44-bordvermoens-en-hardewareveiligheid">4.4 Bordvermoëns en hardewareveiligheid<a class="headerlink" href="#44-bordvermoens-en-hardewareveiligheid" title="Permanent link">&para;</a></h3>
+<p>Die Lolin S2-profiel is eksplisiet en die IO5/IO3/IO7-toewysing word as profieldata behandel. Die runtime ontdek of <code>audiobusio</code>, <code>audiopwmio</code>, <code>synthio</code>, <code>usb_midi</code> en <code>wifi</code> werklik bestaan. Onbekende borde kry geen stil I2S-aanname nie. Die MAX98357 ADR waarsku korrek dat die luidsprekeruitgang bridge-tied is, nie na grond of 'n line-input mag gaan nie, en dat 'n MAX98357 nie die finale pedal-line-out verteenwoordig nie.</p>
+<h3 id="45-midi-domeinfondasie">4.5 MIDI-domeinfondasie<a class="headerlink" href="#45-midi-domeinfondasie" title="Permanent link">&para;</a></h3>
+<p>Die eventmodel valideer kanale en waardereekse, gebruik <code>__slots__</code> en vermy onnodige CPython-swaar konstrukte. USB en BLE kan dieselfde vertaler gebruik. Pitch bend en CC1 word per kanaal gestoor, wat noodsaaklik is vir MPE-agtige of guitar-MIDI-gedrag waar verskillende snare op verskillende kanale kan bend. Die S2 se gebrek aan native BLE is volgens amptelike CircuitPython-dokumentasie korrek gegate.</p>
+<h3 id="46-repository-en-geheimedissipline">4.6 Repository- en geheimedissipline<a class="headerlink" href="#46-repository-en-geheimedissipline" title="Permanent link">&para;</a></h3>
+<p><code>settings.toml</code>, <code>secrets.py</code>, firmwarebeelde, private backups en gegenereerde caches word geïgnoreer. Die huidige checkout bevat geen bekende werklike SSID, wagwoord, token, plaaslike serial-ID of hardgekodeerde <code>/Users</code>-/<code>/Volumes</code>-pad in geversioneerde produkmateriaal nie. Konfigurasieverslae wys slegs <code>SET</code> of <code>UNSET</code> vir private waardes. Die ou prototipecredential is nie in die huidige Git-geskiedenis gevind nie; dit is nogtans korrek om rotasie as mensaksie oop te hou indien dit ooit aktief was.</p>
+<h2 id="5-kritieke-bevindinge">5. Kritieke bevindinge<a class="headerlink" href="#5-kritieke-bevindinge" title="Permanent link">&para;</a></h2>
+<h3 id="p0-01-die-hil-deploymanifest-is-nie-dependency-gesluit-nie">P0-01: Die HIL-deploymanifest is nie dependency-gesluit nie<a class="headerlink" href="#p0-01-die-hil-deploymanifest-is-nie-dependency-gesluit-nie" title="Permanent link">&para;</a></h3>
+<p><code>HilDeploymentManifest.default()</code> deploy twaalf pakketmodules plus <code>boot.py</code> en <code>code.py</code>. Die modules <code>configuration.py</code>, <code>midi_usb.py</code> en <code>ble_midi.py</code> voer <code>midi_chip_platform.ports</code> in. <code>routing.py</code> voer <code>midi_chip_platform.core</code> in. Nie <code>ports.py</code> of <code>core.py</code> is in die manifest nie.</p>
+<p>Die bestaande HIL-toets skep vir elke manifestinskrywing 'n kunsmatige bronlêer en 'n identiese devicelêer, vergelyk hashes en laat die serial probe 'n voorafbepaalde banner teruggee. Dit probeer nooit die gedeployde modules invoer of hul plaaslike afhanklikhede ontleed nie. Die runner kan dus <code>deployment: PASS</code> en <code>execution: PASS</code> rapporteer omdat <code>device/code.py</code> slegs release-, capability- en configurationmodules gebruik, terwyl <code>midi_usb.py</code> later op die device met <code>ImportError</code> sou faal.</p>
+<p><strong>Impak:</strong> Die huidige MCP-US-051-bewysmodel kan 'n vals groen releasesein lewer. MCP-US-007 se fisiese Note On/Off-aanvaarding is nie uitvoerbaar met die huidige manifest nie.</p>
+<p><strong>Aanbeveling:</strong> Maak hierdie 'n impediment teen MCP-US-051/MCP-US-007. Voeg <code>ports.py</code> en <code>core.py</code> by die manifest, skep 'n dependency-closure-toets wat AST-imports of 'n eksplisiete device-package-manifest valideer, en voer 'n werklike device-import smoke test uit voordat die volgende funksionele story begin.</p>
+<h3 id="p0-02-device-library-afhanklikhede-is-nie-reproduceerbaar-nie">P0-02: Device library-afhanklikhede is nie reproduceerbaar nie<a class="headerlink" href="#p0-02-device-library-afhanklikhede-is-nie-reproduceerbaar-nie" title="Permanent link">&para;</a></h3>
+<p><code>CircuitPythonUsbMidiFactory</code> importeer <code>adafruit_midi</code> en sy message modules dinamies. Die amptelike Adafruit-dokumentasie vereis dat die library en afhanklikhede op die CircuitPython-filesystem beskikbaar is, gewoonlik via die Adafruit bundle. Die repository het geen <code>requirements.txt</code>/bundle manifest, geen <code>circup</code>-stap, geen vasgepende libraryweergawe en geen HIL-kontrole dat <code>adafruit_midi</code> op <code>CIRCUITPY/lib</code> bestaan nie.</p>
+<p><strong>Impak:</strong> 'n Skoon installasie kan boot en diagnose groen toon maar by eerste USB-MIDI runtime-import faal. 'n Ontwikkelaar kan toevallig 'n ou library op sy bord hê, waardeur 'n nie-reproduceerbare sukses ontstaan.</p>
+<p><strong>Aanbeveling:</strong> Definieer 'n device dependency manifest met CircuitPython 10.x-versoenbare bundleweergawe en vereiste librarymodules. Voeg 'n preflight- en clean-device-install toets by. Moenie CPython se leë <code>project.dependencies</code> as bewys vir firmware-selfgenoegsaamheid gebruik nie.</p>
+<h3 id="p0-03-geen-geintegreerde-vertikale-runtime-bestaan-nie">P0-03: Geen geïntegreerde vertikale runtime bestaan nie<a class="headerlink" href="#p0-03-geen-geintegreerde-vertikale-runtime-bestaan-nie" title="Permanent link">&para;</a></h3>
+<p><code>DeviceRuntimeApplication.run()</code> druk release-, capability- en konfigurasielyne en eindig met <code>DEVICE_EXECUTION_STATUS=READY</code>. Dit begin nie MIDI of audio nie. <code>PlatformApplication.step()</code> kan 'n reeds-vertaalde event direk uit 'n <code>MidiInputPort</code> haal, na 'n core roeteer en presies een frame skryf. Dit gebruik nie <code>MidiReceiveLoop</code>, <code>MidiNoteState</code> of <code>MidiPerformanceState</code> nie. <code>MidiReceiveLoop</code> aanvaar slegs een <code>event_processor</code>, terwyl die werklike ketting ten minste note-semantiek en performance-state moet kombineer.</p>
+<p>Daar is geen composition root wat die Adafruit factory, ontvangslus, prosesseerpyplyn, router, D1-kern, audio-backend en scheduler as instansies verbind nie. Die 68 toetse bewys daarom klasse in isolasie, nie die produkseinpad nie.</p>
+<p><strong>Impak:</strong> Integrasiefoute, prioriteitsprobleme en resourcegedrag word na laat stories uitgestel. Die span kan baie stories “host-Done” maak sonder om nader aan hoorbare waarde te beweeg.</p>
+<p><strong>Aanbeveling:</strong> Definieer een vertikale runtime-acceptance test met fakes en daarna HIL: rou NoteOn via die werklike translator, note-state en performance-state na een D1 voice, dan 'n begrensde audio-buffer. Die composition root moet klein bly en alle status deur instansies besit.</p>
+<h3 id="p0-04-die-mvp-is-te-groot-om-as-minimum-te-funksioneer">P0-04: Die MVP is te groot om as minimum te funksioneer<a class="headerlink" href="#p0-04-die-mvp-is-te-groot-om-as-minimum-te-funksioneer" title="Permanent link">&para;</a></h3>
+<p>Die huidige MVP-scope bevat meer as een produkrelease: USB, BLE, DIN/UART, twee synth cores, guitar-MIDI, web station en AP, webkeyboard, sequencer, patchbeheer, stereo, DSP, multi-core runtime, cross-platform host acceptance en install/recovery. Sommige items is eksplisiet “late MVP”, maar hulle bly deel van die suksesdefinisie. Dit skep 'n bewegende eindstreep en maak prioritisering moeilik.</p>
+<p><strong>Impak:</strong> Die span spandeer baie tyd aan dokument- en kontrakoppervlak voordat die kernproduk bewys is. Harde realtime-beperkings kan eers ná web- en multi-core-ontwerp sigbaar word.</p>
+<p><strong>Aanbeveling:</strong> Herklassifiseer sonder om idees te skrap:</p>
+<ol>
+<li><strong>Early Audible Increment:</strong> safe boot, reproduceerbare deploy, AudioOutput/Null, MAX98357-toon, meetbare herstel.</li>
+<li><strong>MVP-A:</strong> USB Note On/Off, D1 sine/saw/square, mono I2S, drie-note polifonie, stop/all-notes-off.</li>
+<li><strong>MVP-B:</strong> velocity, per-kanaal pitch bend/CC1, MIDI-guitar acceptance, startupdiagnose en Logic/externe-host demo.</li>
+<li><strong>Release 1.x:</strong> SN76489, stereo-besluit en klok.</li>
+<li><strong>Later:</strong> web, BLE, DIN-host, sequencer, DSP, multi-core, SID en OPL.</li>
+</ol>
+<h2 id="6-kode-en-argitektuurreview">6. Kode- en argitektuurreview<a class="headerlink" href="#6-kode-en-argitektuurreview" title="Permanent link">&para;</a></h2>
+<h3 id="61-poortkontrakte-is-bruikbaar-maar-te-dun-vir-realtime-audio">6.1 Poortkontrakte is bruikbaar maar te dun vir realtime audio<a class="headerlink" href="#61-poortkontrakte-is-bruikbaar-maar-te-dun-vir-realtime-audio" title="Permanent link">&para;</a></h3>
+<p><code>AudioOutputPort.write(frame)</code> definieer nie sampleformaat, kanaaltelling, blokgrootte, sample rate, buffering, backpressure of lifecycle-foute nie. <code>SynthCore.render_frame()</code> impliseer enkel-frame rendering, terwyl CircuitPython-audio waarskynlik blokke, <code>synthio</code> of samplebuffers benodig. 'n Abstraksie wat te vroeg te dun is kan adapters dwing om duur per-sample Python-oproepe te maak.</p>
+<p>Voor MCP-US-014 moet die span 'n klein audio contract decision neem: skryf die core samples in vaste blokke, bied 'n pull-model aan die backend, of gebruik 'n synthio-spesifieke adapter. Die kontrak moet sample rate, mono/stereo, numeric range en buffer ownership benoem sonder om alle cores aan MAX98357 te koppel.</p>
+<h3 id="62-clock-events-word-tans-doelbewus-weggegooi">6.2 Clock events word tans doelbewus weggegooi<a class="headerlink" href="#62-clock-events-word-tans-doelbewus-weggegooi" title="Permanent link">&para;</a></h3>
+<p><code>ClockEvent</code> het geen kanaal nie en <code>MidiChannelRouter.route()</code> gee <code>None</code> vir kanaallose events. <code>PlatformApplication.step()</code> doen dan niks daarmee nie. Dit is veilig vir die huidige routerstory, maar die argitektuur het nog nie 'n clock consumer of control bus nie. MCP-US-011/012 moet clock nie deur 'n synth-channel router probeer forseer nie; 'n aparte clock/scheduler-ingang is nodig.</p>
+<h3 id="63-note-state-verloor-herhaalde-identiese-noteon-semantiek">6.3 Note-state verloor herhaalde identiese NoteOn-semantiek<a class="headerlink" href="#63-note-state-verloor-herhaalde-identiese-noteon-semantiek" title="Permanent link">&para;</a></h3>
+<p><code>MidiNoteState</code> stoor aktiewe note as 'n <code>set</code> van <code>(channel, note)</code>. Twee NoteOn-boodskappe vir dieselfde noot en kanaal word een inskrywing. Die eerste NoteOff verwyder dit. Sommige controllers en sequencers kan note retrigger of oorvleuel. Die gewenste policy moet eksplisiet wees: refcount, retrigger voice, voice-id of “latest wins”. Sonder 'n policy kan 'n geldige oorvleueling te vroeg stop of 'n voice-allokator van die note-state verskil.</p>
+<p>CC120 All Sound Off en CC123 All Notes Off word ook identies na sintetiese NoteOffs vertaal. Dit is 'n aanvaarbare vroeë stuck-note veiligheidskeuse, maar later verskil hulle: All Sound Off behoort onmiddellik stil te maak, terwyl All Notes Off met sustain/envelopes kan interaksie hê. Die dokumentasie moet dit as vereenvoudiging merk.</p>
+<h3 id="64-ble-gate-is-te-optimisties-vir-onbekende-borde">6.4 BLE-gate is te optimisties vir onbekende borde<a class="headerlink" href="#64-ble-gate-is-te-optimisties-vir-onbekende-borde" title="Permanent link">&para;</a></h3>
+<p>Die gate hardkodeer bekende S2-benamings as unsupported en verklaar enige ander bord “ready” wanneer <code>adafruit_ble</code> en <code>adafruit_ble_midi</code> invoerbaar is. Amptelike CircuitPython-dokumentasie sê native BLE steun op <code>_bleio</code>; sommige borde kan libraries bevat maar geen werkende native adapter hê, of 'n eksterne co-processor vereis.</p>
+<p>Die huidige impedimentstatus voorkom 'n vals produkclaim, maar die kode se positiewe pad is nog net 'n library-presence gate. MCP-US-052/062 moet <code>_bleio</code>, adapterbeskikbaarheid, advertising, connect, ontvangstyd en disconnect recovery op 'n benoemde bord bewys.</p>
+<h3 id="65-bootfout-isolasie-kan-verbeter">6.5 Bootfout-isolasie kan verbeter<a class="headerlink" href="#65-bootfout-isolasie-kan-verbeter" title="Permanent link">&para;</a></h3>
+<p>Die minimale boot is 'n goeie besluit, maar <code>set_usb_identification()</code>, <code>usb_hid.disable()</code> en <code>usb_midi.enable()</code> word sonder afsonderlike foutgrense uitgevoer. Een onverwante API- of endpointfout kan verhoed dat <code>BOOT_STATUS=PASS</code> verskyn. Omdat bootgedrag sensitief is, behoort die product owner te besluit of 'n gedeeltelike fallback wenslik is: behou CDC/mass storage, rapporteer 'n veilige foutkode en laat recovery toe. Dit moet teen werklike CircuitPython safe mode getoets word; 'n algemene <code>except Exception</code> sonder rede is nie voldoende nie.</p>
+<h3 id="66-streng-geen-modulevlak-funksies-het-koste">6.6 Streng “geen modulevlak funksies” het koste<a class="headerlink" href="#66-streng-geen-modulevlak-funksies-het-koste" title="Permanent link">&para;</a></h3>
+<p>Die geen-globals-reël het waarde vir mutable runtime-state en importveiligheid. Die huidige reël verbied egter ook suiwer modulevlak funksies en onveranderlike konstantes. Dit lei tot klasse soos <code>ReleaseMetadata</code> vir eenvoudige waardes en dwing elke toets en hulpmiddel in klasse. Op 'n resource-beperkte interpreter kan ekstra objek- en class-overhead betekenisvol wees. Dit verhoog ook dokumentchurn omdat elke veranderde <code>.py</code>-header herhaal word.</p>
+<p>Die audit beveel nie aan om die Product Owner-reël nou te breek nie. Dit beveel aan om ná die eerste audio-meting 'n ADR te maak wat die werklike doel presiseer: <strong>geen mutable globale runtime-state en geen import-side effects</strong>. Indien modulevlak compile-time konstantes of suiwer helpers ooit nodig is vir geheue/werkverrigting, moet 'n meetbare uitsondering moontlik wees. Tot dan bly die bestaande reël bindend.</p>
+<h2 id="7-midi-en-controller-risikos">7. MIDI- en controller-risiko's<a class="headerlink" href="#7-midi-en-controller-risikos" title="Permanent link">&para;</a></h2>
+<h3 id="71-fishmanslide-ondersteuning-vereis-meer-as-pitch-bend">7.1 Fishman/slide-ondersteuning vereis meer as pitch bend<a class="headerlink" href="#71-fishmanslide-ondersteuning-vereis-meer-as-pitch-bend" title="Permanent link">&para;</a></h3>
+<p>Per-kanaal bendstate is 'n goeie begin, maar guitar-MIDI-aanvaarding moet ten minste controller mode, kanaaltoewysing, bend range, note/bend-volgorde, bend reset, noot-hertrigger, string crossing en message flood dek. Die huidige <code>MidiPerformanceState</code> neem een globale bend range vir alle kanale. Dit kan vir 'n aanvanklike TriplePlay-profiel voldoende wees, maar die config en diagnose moet die werklike controllerinstelling wys en nie 'n handelsnaam hardkodeer nie.</p>
+<p>MIDI Polyphonic Expression is nie identies aan elke guitar-MIDI-protokol nie. Die projek moet nie “slide support” as 'n unieke boodskap voorstel nie; hoorbare slide kom gewoonlik uit 'n reeks per-kanaal pitch-bendwaardes terwyl 'n noot aktief is. Die toekomstige core en audio loop moet hierdie hoëfrekwensie controlupdates kan toepas sonder bufferstotter.</p>
+<h3 id="72-midi-flood-en-clock-moet-begrens-word">7.2 MIDI flood en clock moet begrens word<a class="headerlink" href="#72-midi-flood-en-clock-moet-begrens-word" title="Permanent link">&para;</a></h3>
+<p>Die Adafruit MIDI-dokumentasie waarsku dat Timing Clock 24 keer per kwartnoot voorkom en onnodige verwerking op CircuitPython vermy moet word. By 120 BPM is dit 48 clocks per sekonde nog vóór notes, bends en CC. 'n Pitch wheel of guitar slide kan honderde controlboodskappe in 'n kort tyd stuur.</p>
+<p>Daar is geen queue, prioriteitsbeleid, floodmeter, dropped-message-teller of backpressure in die huidige ontvangslus nie. <code>poll_once()</code> verwerk een event en verhoog een teller. Die schedulerstory moet 'n begrensde policy bevat: NoteOff/All Sound Off mag nie agter diagnostiese of webwerk vasval nie; clock kan saamgevat of apart verwerk word; controlupdates kan “latest value wins” gebruik waar musikale semantiek dit toelaat.</p>
+<h3 id="73-midi-library-buffer-en-poortkeuse-is-nog-ongetoets">7.3 MIDI library buffer en poortkeuse is nog ongetoets<a class="headerlink" href="#73-midi-library-buffer-en-poortkeuse-is-nog-ongetoets" title="Permanent link">&para;</a></h3>
+<p><code>AdafruitMidiObjectFactory</code> kies <code>usb_midi.ports[port_index]</code> en skep <code>MIDI(..., in_channel=None)</code> met die library se verstek <code>in_buf_size</code>. Die historiese descriptorbewys wys een in- en uitpoort, maar die huidige firmware het nie 'n clean-device runtime receive bewys nie. HIL moet port direction, index, buffer grootte en onbekende messagegedrag rapporteer. Die product code moet nie op toevallige poortvolgorde staatmaak wanneer toekomstige USB-profiele verander nie.</p>
+<h2 id="8-audio-dsp-en-hardewarerisikos">8. Audio-, DSP- en hardewarerisiko's<a class="headerlink" href="#8-audio-dsp-en-hardewarerisikos" title="Permanent link">&para;</a></h2>
+<h3 id="81-eerste-klank-is-die-korrekte-harde-hek">8.1 Eerste klank is die korrekte harde hek<a class="headerlink" href="#81-eerste-klank-is-die-korrekte-harde-hek" title="Permanent link">&para;</a></h3>
+<p>Die Product Owner se uitspraak dat die ontwikkeling min waarde het as klank nie vroeg werk nie, is tegnies en produkmatig korrek. Die huidige volgorde het egter ses MIDI-stories geïmplementeer voordat MCP-US-014/016. Dié stories is nie vermors nie, maar verdere horisontale uitbreiding behoort nou te stop totdat die MAX98357-pad hoorbaar en meetbaar is.</p>
+<p>Die eerste audio-HIL moet nie net “ek hoor 'n toon” wees nie. Dit moet bedrading, luidsprekerimpedansie, veilige volume, sample rate, bufferduur, vrye heap voor/na, looplatensie, dropout en Ctrl-C/soft-reset/hard-reset recovery vaslê. Die Rigol DHO804 kan frekwensie en stabiliteit aan die digitale I2S- of 'n veilige meetpunt help bevestig, maar die bridge-tied speakeruitgang mag nie verkeerd na scope ground gekoppel word nie.</p>
+<h3 id="82-max98357-is-nie-n-pedal-line-output-nie">8.2 MAX98357 is nie 'n pedal line output nie<a class="headerlink" href="#82-max98357-is-nie-n-pedal-line-output-nie" title="Permanent link">&para;</a></h3>
+<p>Die module dryf 'n luidspreker en sy uitset is bridge-tied PWM. Dit is geskik vir die vroeë hoorbare bewys, maar nie direk vir 'n guitar effects chain of Scarlett line-input nie. Die MVP moet dus twee begrippe skei: “ontwikkelaar kan klank hoor” en “produk kan veilig line-level stereo lewer”. Laasgenoemde vereis 'n geskikte DAC/codec, vlakke, filtering, grond- en beskermingsontwerp.</p>
+<h3 id="83-stereo-en-per-voice-panning-is-te-vroeg-vir-die-eerste-mvp">8.3 Stereo en per-voice panning is te vroeg vir die eerste MVP<a class="headerlink" href="#83-stereo-en-per-voice-panning-is-te-vroeg-vir-die-eerste-mvp" title="Permanent link">&para;</a></h3>
+<p>Een MAX98357 kan 'n mono-mengsel lewer. Twee modules of 'n PCM5102-agtige DAC voeg pin-, voeding-, fase-, routing- en line-level-vrae by. Per-voice links/regs/stereo is nuttige roadmapwaarde, maar behoort ná stabiele mono-polifonie en bend te kom. Anders word die kernkontrak rondom 'n onbevestigde stereo-backend gevorm.</p>
+<h3 id="84-dsp-moet-n-no-go-uitkoms-kan-he">8.4 DSP moet 'n no-go-uitkoms kan hê<a class="headerlink" href="#84-dsp-moet-n-no-go-uitkoms-kan-he" title="Permanent link">&para;</a></h3>
+<p>Delay en veral reverb kan vinnig RAM en CPU gebruik. Op die S2 moet 'n DSP-spike eers 'n vaste sample rate, maximale buffer, heap floor en toegelate latency/dropout kry. “No-go op hierdie bord” is 'n geldige resultaat. DSP mag nie 'n MVP-release blokkeer wat reeds goeie MIDI-chipklank lewer nie.</p>
+<h2 id="9-qa-toets-en-release-assessering">9. QA-, toets- en release-assessering<a class="headerlink" href="#9-qa-toets-en-release-assessering" title="Permanent link">&para;</a></h2>
+<h3 id="91-groen-hosttoetse-is-nuttig-maar-smal">9.1 Groen hosttoetse is nuttig maar smal<a class="headerlink" href="#91-groen-hosttoetse-is-nuttig-maar-smal" title="Permanent link">&para;</a></h3>
+<p>Die 68 toetse loop vinnig en toets belangrike validasie, lifecycle en importveiligheid. <code>ruff</code> vind geen lintprobleme nie. Die suite het egter geen coverage-plugin of gerapporteerde coverage, geen mutation testing, geen property-based MIDI-range-toetse, geen concurrency-/timingmodel en geen regressietoets van die volledige seinpad nie.</p>
+<p>Die audit kon nie <code>--cov</code> uitvoer nie omdat <code>pytest-cov</code> nie in die dev-dependencies is nie. Coverage is nie 'n kwaliteitstelling op sigself nie, maar dit help hier om te wys watter foutpaaie, factories en device branches net dokumentêr bestaan. 'n Beginteiken van branch coverage op die hostkern is nuttig, mits HIL apart bly.</p>
+<h3 id="92-geen-ci-matriks-bestaan-nie">9.2 Geen CI-matriks bestaan nie<a class="headerlink" href="#92-geen-ci-matriks-bestaan-nie" title="Permanent link">&para;</a></h3>
+<p>Daar is geen <code>.github/workflows</code>, tox/nox, pre-commit, pyright/mypy of geformaliseerde quality command nie. Die pakket beweer Python <code>&gt;=3.11</code>, macOS/Windows/Linux-bruikbaarheid en VS Code-onafhanklikheid, maar die outomatiese suite is net in die Product Owner se Python 3.12-omgewing bewys.</p>
+<p>Die gebrek is sigbaar op die huidige Mac: <code>python</code> wys na Python 2.7.18, terwyl die quickstart ná venv-aktivering <code>python</code> gebruik. Die venv-instruksie is korrek; 'n beginner wat aktivering mis, kry syntax errors. Die diagnose moet <code>sys.version_info</code>, projekroot en aktiewe interpreter wys of die docs moet platformspesifiek <code>python3</code>/<code>py</code> gebruik totdat aktivering bevestig is.</p>
+<h3 id="93-hil-verbinding-is-nie-sterk-genoeg-geverifieer-nie">9.3 HIL-verbinding is nie sterk genoeg geverifieer nie<a class="headerlink" href="#93-hil-verbinding-is-nie-sterk-genoeg-geverifieer-nie" title="Permanent link">&para;</a></h3>
+<p><code>_verify_connection()</code> kontroleer net of die device root en <code>boot_out.txt</code> bestaan. Dit toets nie dat die opgegewe serial endpoint bestaan of dieselfde fisiese device verteenwoordig nie. <code>SerialExecutionProbe</code> stuur beheerkarakters en soft reload, maar <code>_verify_execution()</code> sluk alle exceptions en rapporteer net 'n generiese mislukking. Dit bemoeilik herstel en kan 'n stale gemonteerde volume met 'n ander serial device kombineer.</p>
+<p>Aanbevole verbetering: preflight volume en serial, lees board/release marker uit albei, korreleer hulle sonder private ID te publiseer, rapporteer gesanitiseerde foutkategorieë, maak die probe idempotent en hou 'n bounded timeout. 'n HIL-pass moet ook die gedeployde import smoke test en device dependencies insluit.</p>
+<h3 id="94-releaseweergawe-kommunikeer-meer-volwassenheid-as-gelewer">9.4 Releaseweergawe kommunikeer meer volwassenheid as gelewer<a class="headerlink" href="#94-releaseweergawe-kommunikeer-meer-volwassenheid-as-gelewer" title="Permanent link">&para;</a></h3>
+<p>Die projek het oor 'n kort reeks stories van <code>0.1.0</code> na <code>0.11.0</code> beweeg. Dit is tegnies geldige pre-1.0 SemVer, maar elke story bump verander <code>pyproject</code>, release class, HIL, CLI-toetse, docs en headers. Hierdie churn skep foute en laat 'n diagnose-only firmware soos 'n elfde funksionele release lyk.</p>
+<p>Gebruik eerder een releasebron en genereer of valideer afgeleide metadata. Oorweeg buildmetadata of commit-SHA in HIL/release bundles, terwyl story-ID in release notes en headers bly. Die startupbanner moet nog traceerbaar wees, maar nie handmatig op baie plekke gedupliseer word nie.</p>
+<h3 id="95-bewysbewaring-is-goed-maar-nie-altyd-aktueel-nie">9.5 Bewysbewaring is goed, maar nie altyd aktueel nie<a class="headerlink" href="#95-bewysbewaring-is-goed-maar-nie-altyd-aktueel-nie" title="Permanent link">&para;</a></h3>
+<p><code>device_connection_proof_v0.1.0.md</code> is 'n waardevolle bewyslog. <code>mcp_us_051_hil_runner_review</code> sê egter dat die manifest ses minimale pare bevat, terwyl die huidige manifest veertien entries het. Die sanity check sê MCP-US-051 is die enigste <code>In Progress</code>-story, maar die user-story-katalogus merk dit <code>In Review</code> en bevat geen <code>In Progress</code>-story nie. Dit bewys dat handmatige naspeurbaarheid nie dieselfde as gesinchroniseerde naspeurbaarheid is nie.</p>
+<h2 id="10-sekuriteits-en-privaatheidsreview">10. Sekuriteits- en privaatheidsreview<a class="headerlink" href="#10-sekuriteits-en-privaatheidsreview" title="Permanent link">&para;</a></h2>
+<h3 id="101-sterk-huidige-grense">10.1 Sterk huidige grense<a class="headerlink" href="#101-sterk-huidige-grense" title="Permanent link">&para;</a></h3>
+<p>Die repository bevat slegs placeholdercredentials. Die huidige source- en Git-scan het nie die bekende ou SSID/wagwoord in hierdie skoon repo gevind nie. Logs redigeer serial paths en publiseer nie UID/MAC/SSID nie. <code>settings.toml</code> word korrek as plain text, nie as enkripsie nie, beskryf.</p>
+<h3 id="102-oop-mensaksie-credentialrotasie">10.2 Oop mensaksie: credentialrotasie<a class="headerlink" href="#102-oop-mensaksie-credentialrotasie" title="Permanent link">&para;</a></h3>
+<p>Omdat 'n werklike credential in historiese prototipemateriaal verskyn het, moet die Product Owner bevestig dat dit geroteer of permanent afgeskakel is. 'n kodeverandering kan dit nie bewys nie. Die finale auditstatus vir R-001 moet “closed by owner evidence” of “accepted risk” word, nie onbepaald oop bly nie.</p>
+<h3 id="103-toekomstige-apwebsekuriteit-is-groter-as-n-wagwoord">10.3 Toekomstige AP/websekuriteit is groter as 'n wagwoord<a class="headerlink" href="#103-toekomstige-apwebsekuriteit-is-groter-as-n-wagwoord" title="Permanent link">&para;</a></h3>
+<p>Die toekomstige fallback access point en web UI benodig provisioning, credential reset, sessielimiete, request size/timeouts, een-kliëntbeleid, CSRF-agtige plaaslike beheergrense, denial-of-service gedrag en foutveilige network disable. CircuitPython TLS- en geheuebeperkings kan 'n tradisionele websekuriteitsmodel onprakties maak. Die MVP moet op 'n vertroude plaaslike netwerk en fisieke toegang gebaseer word, met eerlike beperkings.</p>
+<h3 id="104-supply-chain-en-license-register-ontbreek-nog">10.4 Supply-chain en license register ontbreek nog<a class="headerlink" href="#104-supply-chain-en-license-register-ontbreek-nog" title="Permanent link">&para;</a></h3>
+<p>Die Adafruit libraries, toekomstige chipemulasiebronne, webassets en SID/OPL-implementasies benodig vasgepende oorsprong, lisensie en weergawe. Die huidige source register is 'n goeie begin, maar is nie 'n masjienleesbare dependency/SBOM nie. Veral chipemulasiekode mag nie uit onbekende repositories gekopieer word sonder lisensiekontrole nie.</p>
+<h2 id="11-agile-en-governance-retrospektief">11. Agile- en governance-retrospektief<a class="headerlink" href="#11-agile-en-governance-retrospektief" title="Permanent link">&para;</a></h2>
+<h3 id="wat-goed-verloop-het">Wat goed verloop het<a class="headerlink" href="#wat-goed-verloop-het" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Die Product Owner maak hardeware, doelgroep en prioriteite eksplisiet.</li>
+<li>Side quests word meestal in stories/amendments georden eerder as stilweg in kode gebou.</li>
+<li>Host- en devicebewys word konsekwent apart benoem.</li>
+<li>Die virtuele rolle dwing MIDI-, embedded-, QA-, security- en releaseperspektiewe af.</li>
+<li>Lessons learned vang werklike ontdekkings vas, soos ontbrekende <code>audiopwmio</code>, USB-herenumerasie en leesalleen CIRCUITPY.</li>
+<li>Afsonderlike commits per story maak regressie- en besluitgeskiedenis leesbaar.</li>
+</ul>
+<h3 id="wat-nie-goed-verloop-het-nie">Wat nie goed verloop het nie<a class="headerlink" href="#wat-nie-goed-verloop-het-nie" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Ses MIDI-verwante stories het momentum gekry voordat die audio-first hek gerealiseer is.</li>
+<li>“MVP” het as etiket vir 30 stories en ses <code>MVP-late</code> stories begin dien; dit verloor prioriteitswaarde.</li>
+<li>Sommige stories is gedeeltelik teen onvoltooide afhanklikhede geïmplementeer. Die status is eerlik, maar die WIP- en volgordereël is nie konsekwent toegepas nie.</li>
+<li>Elke virtuele rol per story, headers op elke Python-lêer en lessons learned elke drie/vier stories skep beduidende administratiewe churn vir 'n solo Product Owner plus LLM-span.</li>
+<li>Die governance self is nie geoutomatiseer nie: Markdown, Excel, release metadata en reviewdocs kan uit sync raak.</li>
+<li>Die definisie van Done vereis menslike hardewarebewys, docs, Kanban, commit en push, maar die katalogus gebruik ook <code>Done</code> vir kernkontrakte wat nog nie in die huidige device runtime gebruik word nie. “Component Done” en “Product increment Done” moet onderskei word.</li>
+</ul>
+<h3 id="prosesverbetering">Prosesverbetering<a class="headerlink" href="#prosesverbetering" title="Permanent link">&para;</a></h3>
+<p>Gebruik drie vlakke in elke story:</p>
+<ol>
+<li><strong>Contract complete:</strong> hosttoetse en API-gedrag is groen.</li>
+<li><strong>Integrated:</strong> die gedrag loop in die composition root met naburige komponente.</li>
+<li><strong>Accepted on target:</strong> HIL/menslike bewys op die bedoelde bord en releasecommit.</li>
+</ol>
+<p>Hierdie vlakke maak dit moontlik om 'n bruikbare komponent te erken sonder om produkvolwassenheid te oordryf. Beperk verpligte rolterugvoer tot relevante rolle plus PO, Architect en QA; laat die volledige RACI by epic-/risikobesluite geld. Behou die anti-hallucinasieheaders, maar maak 'n toekomstige generator/sanity checker verantwoordelik vir sinkronisasie.</p>
+<h2 id="12-review-van-die-eksterne-copilot-audit">12. Review van die eksterne Copilot-audit<a class="headerlink" href="#12-review-van-die-eksterne-copilot-audit" title="Permanent link">&para;</a></h2>
+<h3 id="aanvaarbare-aanbevelings">Aanvaarbare aanbevelings<a class="headerlink" href="#aanvaarbare-aanbevelings" title="Permanent link">&para;</a></h3>
+<p>Copilot se sterkste punt is die waarskuwing dat scope creep, nie gebrek aan idees nie, die grootste projekrisiko is. Die voorstel vir 'n Early Audible Increment is korrek. Die aanbevelings om SID later te hou, die S2 as primêre bord te behandel, Fishman-semantiek eksplisiet te modelleer, latency/stress/burn-in te meet en credentials te roteer is waardevol.</p>
+<p>Copilot is ook korrek dat die projek meer governance as baie kommersiële projekte het, dat die bootlaag minimaal moet bly en dat MAX98357 'n goeie vroeë hoorbare module is.</p>
+<h3 id="aanbevelings-wat-aangepas-moet-word">Aanbevelings wat aangepas moet word<a class="headerlink" href="#aanbevelings-wat-aangepas-moet-word" title="Permanent link">&para;</a></h3>
+<p>Die voorstel dat ESP32-S3 “ondersteun” is, is te vroeg. Daar is geen S3-profiel of positiewe HIL nie; dit moet “kandidaat vir tweede-bordbewys” wees. 'n 24-uur burn-in en 1000 reboot-toets is nuttige latere release engineering, maar nie die eerste aksie vóór die hoorbare sny nie. Die spesifieke Ollama-modeltaakverdeling is nie deur kwaliteitdata bewys nie en moet opsioneel bly.</p>
+<h3 id="bevindinge-wat-verouderd-of-ooroptimisties-is">Bevindinge wat verouderd of ooroptimisties is<a class="headerlink" href="#bevindinge-wat-verouderd-of-ooroptimisties-is" title="Permanent link">&para;</a></h3>
+<p>Copilot se aksieplan sê MCP-US-003 en MCP-US-004 moet nog afgerond word, terwyl die huidige repository hulle <code>Done</code> merk en historiese HIL-bewys bevat. Die audit is dus op 'n ouer snapshot of beperkte GitHub-lees gebaseer. Dit noem “HIL Tests: goed” sonder om die deploymanifest se ontbrekende afhanklikhede te ontdek. Dit gee 8.4/10 maturity ondanks geen synth core of audio, wat dokumentasie en visie te swaar weeg.</p>
+<p>Die attachment beweer dat 'n PowerPoint gegenereer en gerender is, maar die gelewerde teks bevat nie 'n verifieerbare PPTX-artefak of slidebron nie. Daardie claim kan nie in hierdie audit as bewys aanvaar word nie.</p>
+<h2 id="13-gekonsolideerde-risikotabel">13. Gekonsolideerde risikotabel<a class="headerlink" href="#13-gekonsolideerde-risikotabel" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Risiko</th>
+<th style="text-align: right;">Kans</th>
+<th style="text-align: right;">Impak</th>
+<th>Prioriteit</th>
+<th>Aanbeveling</th>
+<th>Aanvaardingsbewys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QA-R01</td>
+<td>HIL-manifest mis <code>ports.py</code> en <code>core.py</code></td>
+<td style="text-align: right;">Hoog</td>
+<td style="text-align: right;">Kritiek</td>
+<td>P0</td>
+<td>Dependency-closure en device import smoke test</td>
+<td>Clean deploy voer alle manifestmodules in</td>
+</tr>
+<tr>
+<td>QA-R02</td>
+<td>Adafruit MIDI library nie vasgepen/deploybaar nie</td>
+<td style="text-align: right;">Hoog</td>
+<td style="text-align: right;">Hoog</td>
+<td>P0</td>
+<td>Device dependency manifest en bundle-install</td>
+<td>Skoon CIRCUITPY ontvang NoteOn</td>
+</tr>
+<tr>
+<td>QA-R03</td>
+<td>Geen end-to-end runtime composition</td>
+<td style="text-align: right;">Hoog</td>
+<td style="text-align: right;">Kritiek</td>
+<td>P0</td>
+<td>Composition root en vertikale integrasietoets</td>
+<td>Rou MIDI tot audio-buffer op host en device</td>
+</tr>
+<tr>
+<td>QA-R04</td>
+<td>MVP bevat veelvuldige releases</td>
+<td style="text-align: right;">Hoog</td>
+<td style="text-align: right;">Hoog</td>
+<td>P0</td>
+<td>Scope split in EAI, MVP-A/B en later</td>
+<td>PO-goedgekeurde herklassifikasie</td>
+</tr>
+<tr>
+<td>QA-R05</td>
+<td>Geen hoorbare output in huidige release</td>
+<td style="text-align: right;">Seker</td>
+<td style="text-align: right;">Kritiek</td>
+<td>P0</td>
+<td>US-014 dan US-016</td>
+<td>Veilige MAX98357-toon en meetlog</td>
+</tr>
+<tr>
+<td>QA-R06</td>
+<td>Audio contract per-frame/onbeskryf</td>
+<td style="text-align: right;">Hoog</td>
+<td style="text-align: right;">Hoog</td>
+<td>P1</td>
+<td>ADR vir blok/sample/backend-kontrak</td>
+<td>Null- en I2S-kontraktoetse</td>
+</tr>
+<tr>
+<td>QA-R07</td>
+<td>MIDI flood/clock verdring NoteOff</td>
+<td style="text-align: right;">Medium</td>
+<td style="text-align: right;">Hoog</td>
+<td>P1</td>
+<td>Begrensde queue/prioriteit/telemetrie</td>
+<td>Floodtest sonder stuck notes/dropout</td>
+</tr>
+<tr>
+<td>QA-R08</td>
+<td>Herhaalde identiese NoteOn verloor state</td>
+<td style="text-align: right;">Medium</td>
+<td style="text-align: right;">Medium</td>
+<td>P1</td>
+<td>Besluit retrigger/refcount/voice policy</td>
+<td>Overlap- en retriggertoetse</td>
+</tr>
+<tr>
+<td>QA-R09</td>
+<td>BLE-gate gee vals positief op onbekende bord</td>
+<td style="text-align: right;">Medium</td>
+<td style="text-align: right;">Hoog</td>
+<td>P1</td>
+<td><code>_bleio</code>/adapter + werklike advertise/connect HIL</td>
+<td>Positiewe tweede-bordbewys</td>
+</tr>
+<tr>
+<td>QA-R10</td>
+<td>MAX98357 verkeerd as line-out gebruik</td>
+<td style="text-align: right;">Medium</td>
+<td style="text-align: right;">Kritiek</td>
+<td>P0 veiligheid</td>
+<td>Bedradingsrunbook en duidelike waarskuwing</td>
+<td>Menslike preflight voor energisering</td>
+</tr>
+<tr>
+<td>QA-R11</td>
+<td>Geen CI vir Python/OS-matriks</td>
+<td style="text-align: right;">Hoog</td>
+<td style="text-align: right;">Medium</td>
+<td>P1</td>
+<td>GitHub Actions vir 3.11/3.12/3.13 en OS</td>
+<td>Groen matriks en lint</td>
+</tr>
+<tr>
+<td>QA-R12</td>
+<td>Geen coverage/performancebaseline</td>
+<td style="text-align: right;">Hoog</td>
+<td style="text-align: right;">Medium</td>
+<td>P2</td>
+<td>Coverage plus latency/heap/dropoutmetings</td>
+<td>Gepubliseerde baseline en drempels</td>
+</tr>
+<tr>
+<td>QA-R13</td>
+<td>Release-/storymetadata handmatig gedupliseer</td>
+<td style="text-align: right;">Hoog</td>
+<td style="text-align: right;">Medium</td>
+<td>P1</td>
+<td>Een bron en sanity generator</td>
+<td>Geen drift in pyproject/banner/docs</td>
+</tr>
+<tr>
+<td>QA-R14</td>
+<td>Backlog sanity doc en katalogus verskil</td>
+<td style="text-align: right;">Seker</td>
+<td style="text-align: right;">Medium</td>
+<td>P1</td>
+<td>Outomatiese Markdown/XLSX/statuskontrole</td>
+<td>CI faal by drift</td>
+</tr>
+<tr>
+<td>QA-R15</td>
+<td><code>python</code> kan verkeerde interpreter wees</td>
+<td style="text-align: right;">Medium</td>
+<td style="text-align: right;">Medium</td>
+<td>P1</td>
+<td>Interpreterpreflight en beginnerdocs</td>
+<td>Skoon macOS/Windows install</td>
+</tr>
+<tr>
+<td>QA-R16</td>
+<td>Oude Wi-Fi credential moontlik aktief</td>
+<td style="text-align: right;">Onbekend</td>
+<td style="text-align: right;">Kritiek</td>
+<td>P0 mensaksie</td>
+<td>Roteer/deaktiveer en eienaarbevestiging</td>
+<td>Geslote security action, geen secret publiseer</td>
+</tr>
+<tr>
+<td>QA-R17</td>
+<td>Web/AP destabiliseer realtime audio</td>
+<td style="text-align: right;">Hoog</td>
+<td style="text-align: right;">Hoog</td>
+<td>P2/later</td>
+<td>Web eers ná audio baseline; budget</td>
+<td>MIDI/audio stress met een webkliënt</td>
+</tr>
+<tr>
+<td>QA-R18</td>
+<td>Multi-core/SID/OPL oorskry S2 resources</td>
+<td style="text-align: right;">Hoog</td>
+<td style="text-align: right;">Hoog</td>
+<td>P2/later</td>
+<td>Resource guard en no-go-kriteria</td>
+<td>Heap/CPU/dropout-meting per core</td>
+</tr>
+<tr>
+<td>QA-R19</td>
+<td>HIL serial probe is indringend en foutarm</td>
+<td style="text-align: right;">Medium</td>
+<td style="text-align: right;">Hoog</td>
+<td>P1</td>
+<td>Preflight, korrelasie, foutkodes, timeout</td>
+<td>Herhaalbare recoverytoets</td>
+</tr>
+<tr>
+<td>QA-R20</td>
+<td>Governancekoste verdring produkwaarde</td>
+<td style="text-align: right;">Medium</td>
+<td style="text-align: right;">Medium</td>
+<td>P1</td>
+<td>Vereenvoudig rol/checkpoint-ritme</td>
+<td>Minder churn, selfde bewyskwaliteit</td>
+</tr>
+</tbody>
+</table>
+<h2 id="14-gedetailleerde-verbeteraksieplan">14. Gedetailleerde verbeteraksieplan<a class="headerlink" href="#14-gedetailleerde-verbeteraksieplan" title="Permanent link">&para;</a></h2>
+<h3 id="fase-0-bevries-claims-en-herstel-bewysketting-p0-eerste">Fase 0: Bevries claims en herstel bewysketting (P0, eerste)<a class="headerlink" href="#fase-0-bevries-claims-en-herstel-bewysketting-p0-eerste" title="Permanent link">&para;</a></h3>
+<p><strong>Aksie 0.1:</strong> Open 'n impediment teen MCP-US-051/MCP-US-007 vir die onvolledige deploymanifest. Voeg geen nuwe produkfunksie by nie. Eienaar: QA/HIL + Release.
+<strong>Aksie 0.2:</strong> Voeg <code>ports.py</code> en <code>core.py</code> by die manifest en laat 'n toets elke plaaslike <code>midi_chip_platform.*</code>-import teen die deploylys kontroleer.
+<strong>Aksie 0.3:</strong> Skep 'n device dependency manifest vir Adafruit MIDI en dokumenteer 'n clean-device install.
+<strong>Aksie 0.4:</strong> Verbeter HIL-preflight om volume, serial en releasemarker te korreleer; behou privaatheidsredaksie.
+<strong>Hek:</strong> Op 'n skoon/gemerkte CIRCUITPY kan die huidige packagemodules invoer, die releasebanner wys en <code>adafruit_midi</code> vind. Geen klankclaim nie.</p>
+<h3 id="fase-1-early-audible-increment-p0">Fase 1: Early Audible Increment (P0)<a class="headerlink" href="#fase-1-early-audible-increment-p0" title="Permanent link">&para;</a></h3>
+<p><strong>Aksie 1.1:</strong> Voer MCP-US-014 uit met 'n hersiene blokgebaseerde AudioOutput-kontrak en Null/Memory backend.
+<strong>Aksie 1.2:</strong> Voer MCP-US-016 uit as die enigste aktiewe HIL-story: veilige MAX98357 mono-toon op IO5/IO3/IO7.
+<strong>Aksie 1.3:</strong> Meet sample rate, toonfrekwensie, heap, looplatensie en dropout; dokumenteer speaker/bridge-tied veiligheid en recovery.
+<strong>Hek:</strong> Hoorbare toon plus meetbare frekwensie; Ctrl-D/power-cycle herstel; geen stuck audio; sourcecommit en devicehashes korreleer.</p>
+<h3 id="fase-2-eerste-musikale-vertikale-sny-p0p1">Fase 2: Eerste musikale vertikale sny (P0/P1)<a class="headerlink" href="#fase-2-eerste-musikale-vertikale-sny-p0p1" title="Permanent link">&para;</a></h3>
+<p><strong>Aksie 2.1:</strong> MCP-US-063 implementeer eers een eenvoudige D1-sine voice, daarna saw en square, met 'n begrensde buffer.
+<strong>Aksie 2.2:</strong> Skep die composition root: USB factory -&gt; translator -&gt; processor pipeline -&gt; router/core -&gt; audio.
+<strong>Aksie 2.3:</strong> Sluit NoteOn, NoteOff, velocity-zero en All Sound Off in. Laat clock/web/BLE af.
+<strong>Hek:</strong> 'n Generiese USB-MIDI-controller speel een noot en 'n C-E-G-triad hoorbaar; note stop deterministies; geen hardgekodeerde controllernaam nie.</p>
+<h3 id="fase-3-performance-en-guitar-midi-p1">Fase 3: Performance en guitar-MIDI (P1)<a class="headerlink" href="#fase-3-performance-en-guitar-midi-p1" title="Permanent link">&para;</a></h3>
+<p><strong>Aksie 3.1:</strong> Integreer per-kanaal pitch bend en CC1 in die werklike core/audio loop.
+<strong>Aksie 3.2:</strong> Definieer retrigger/overlap, voice allocation en bend reset.
+<strong>Aksie 3.3:</strong> Meet floodgedrag met 'n SMK/Arturia/Fishman of kunsmatige MIDI-stroom.
+<strong>Hek:</strong> Enkelnoot, triad, aangehoue noot, bend en slide speel sonder dubbele/stuck notes of onaanvaarbare dropout.</p>
+<h3 id="fase-4-release-engineering-en-scopebesluit-p1">Fase 4: Release engineering en scopebesluit (P1)<a class="headerlink" href="#fase-4-release-engineering-en-scopebesluit-p1" title="Permanent link">&para;</a></h3>
+<p><strong>Aksie 4.1:</strong> Voeg CI vir ondersteunde Pythonweergawes en bedryfstelsels by.
+<strong>Aksie 4.2:</strong> Voeg coverage, release/story-sanity en Markdown/XLSX-statusversoening by.
+<strong>Aksie 4.3:</strong> Herklassifiseer SN76489, stereo, klok, BLE, web, DSP en multi-core volgens gemete S2-begrotings.
+<strong>Hek:</strong> PO keur die nuwe EAI/MVP-A/MVP-B-roadmap goed; README en releaseclaims stem met werklike proof ooreen.</p>
+<h3 id="fase-5-uitbreidings-na-bewese-baseline-p2later">Fase 5: Uitbreidings ná bewese baseline (P2/later)<a class="headerlink" href="#fase-5-uitbreidings-na-bewese-baseline-p2later" title="Permanent link">&para;</a></h3>
+<p>SN76489 volg D1. Daarna kan clock en stereo besluit word. BLE benodig 'n werklike tweede bord. Web station/AP volg slegs wanneer die scheduler met audio gemeet is. SID/OPL, DSP en multi-core bly afsonderlike releases met no-go-kriteria. Geen van hierdie idees word geskrap nie; hulle word beskerm teen 'n te vroeë implementering wat die werkende kernpad kan breek.</p>
+<h2 id="15-voorgestelde-backlogwysigings-vir-product-owner-besluit">15. Voorgestelde backlogwysigings vir Product Owner-besluit<a class="headerlink" href="#15-voorgestelde-backlogwysigings-vir-product-owner-besluit" title="Permanent link">&para;</a></h2>
+<p>Hierdie audit verander nog geen story nie. Na goedkeuring word die volgende wysigings aanbeveel:</p>
+<ol>
+<li>Voeg <code>MCP-US-051-IMP-001: Dependency-Closed Device Deployment</code> as impedimentwerk binne die bestaande story by, nie as nuwe featurestory nie.</li>
+<li>Verander MCP-US-051 se statusbeskrywing om die huidige manifestdefek en clean-device library proof te noem.</li>
+<li>Laat MCP-US-014 en MCP-US-016 die volgende funksionele stories bly; trek geen web-, BLE- of SN76489-werk voor hulle in nie.</li>
+<li>Voeg later stories vir audio underrun/overrun telemetry, MIDI flood/stuck-note recovery, brownout/boot recovery, memory-pressure guard en boot-time benchmark by of plaas dit onder MCP-US-050/051/056/061 se aanvaardingskriteria.</li>
+<li>Verdeel die huidige MVP-label in EAI, MVP-A, MVP-B, Release 1.x en Later sonder om IDs te hernommer.</li>
+<li>Maak een masjienleesbare statusbron waaruit Markdown en Excel afgelei of ten minste geverifieer word.</li>
+</ol>
+<p>Die <strong>eerste logiese aksie ná auditgoedkeuring</strong> is dus nie 'n nuwe synthfeature nie. Dit is die MCP-US-051/MCP-US-007 impedimentfix vir die deploymanifest en Adafruit device dependency. Daarna volg MCP-US-014 en MCP-US-016 streng in dié volgorde.</p>
+<h2 id="16-finale-qa-oordeel">16. Finale QA-oordeel<a class="headerlink" href="#16-finale-qa-oordeel" title="Permanent link">&para;</a></h2>
+<p>Hierdie projek het 'n realistiese kans om 'n interessante retro-MIDI-pedaal te word. Die Product Owner se praktiese hardeware, MIDI-opstelling, PCB-ervaring en bereidheid om menslike HIL uit te voer is 'n sterk voordeel. Die repository se eerlike status, klasgebaseerde grense en gedokumenteerde leerlesse is goeie fondasie. Die span hoef nie van voor af te begin nie.</p>
+<p>Die projek moet wel ophou om dokumentvolume, storytelling en geïsoleerde hostgroen as momentumvervangers te gebruik. Die volgende waarde-eenheid is nie nog 'n transport, core-roadmap of webstory nie. Dit is 'n reproduceerbare devicebundle wat een noot veilig en hoorbaar speel. Sodra daardie vertikale sny bestaan, kan die bestaande governance werklik sy waarde wys deur regressies te voorkom. Voor daardie punt is governance 'n belofte; daarna word dit produkbeheer.</p>
+<p>Die onafhanklike aanbeveling is daarom <strong>voorwaardelik voortgaan</strong>:</p>
+<ul>
+<li>voortgaan met die bestaande repository en argitektuurrigting;</li>
+<li>onmiddellik die HIL/dependency-defek herstel;</li>
+<li>scope vries rondom die eerste hoorbare vertikale sny;</li>
+<li>MCP-US-014 en MCP-US-016 as volgende funksionele hekke handhaaf;</li>
+<li>produkclaims en maturity tellings aan werklike device- en audio-bewys koppel;</li>
+<li>web, BLE, multi-core, DSP, SID en OPL behou, maar later lewer.</li>
+</ul>
+<p>Met dié korreksies skuif die projek van 'n indrukwekkende spesifikasie en komponentlaboratorium na 'n toetsbare synthesizerplatform. Sonder hulle is die waarskynlikste mislukking nie swak kode nie, maar 'n goed gedokumenteerde stelsel wat te lank nog geen musiek maak nie.</p>
+<h2 id="17-bronne">17. Bronne<a class="headerlink" href="#17-bronne" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Repository by commit <code>a4ba993</code>, insluitend <code>src/</code>, <code>device/</code>, <code>tests/</code>, <code>docs/</code>, README, AGENTS en Git-geskiedenis.</li>
+<li><a href="https://docs.circuitpython.org/en/latest/docs/workflow.html">CircuitPython workflow en bootgedrag</a></li>
+<li><a href="https://docs.circuitpython.org/en/latest/shared-bindings/_bleio/index.html">CircuitPython <code>_bleio</code> en ondersteunde families</a></li>
+<li><a href="https://docs.circuitpython.org/projects/midi/en/latest/api.html">Adafruit MIDI API</a></li>
+<li><a href="https://docs.circuitpython.org/projects/midi/en/latest/">Adafruit MIDI installasie en dependencies</a></li>
+<li><a href="https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp/pinouts">Adafruit MAX98357 pinouts en bridge-tied veiligheidsgrens</a></li>
+<li>Copilot-uitset <code>M8R5K2Q7</code>/<code>K8P4N7Q2</code>, as adviserend en onafhanklik geverifieer waar moontlik.</li>
+</ul>
+<h2 id="18-auditverklaring">18. Auditverklaring<a class="headerlink" href="#18-auditverklaring" title="Permanent link">&para;</a></h2>
+<p>Geverifieerde bevindinge is gebaseer op die geouditeerde commit en die genoemde toets-/bronbewys. HIL wat nie tydens hierdie audit herhaal is nie word as histories of hangend benoem. Geen aanbeveling in hierdie dokument wysig outomaties die backlog, Definition of Done of produkbron nie. Product Owner-goedkeuring en 'n afsonderlike uitvoerplan bly nodig voordat die impedimentfix of enige nuwe story begin.</p>
+<h2 id="19-bewysregister-en-beperkings">19. Bewysregister en beperkings<a class="headerlink" href="#19-bewysregister-en-beperkings" title="Permanent link">&para;</a></h2>
+<p>Die hostregressie is op 2026-07-15 met die eksplisiete interpreter <code>/Volumes/data1/michiele/venv/venv3.12/bin/python</code> uitgevoer. Die resultaat was 68 groen toetse in minder as een sekonde. Diezelfde interpreter het <code>src</code>, <code>device</code> en <code>tests</code> suksesvol gekompileer. Die kaal <code>python</code>-opdrag op die host het na Python 2.7.18 gewys en het dus verwagte syntax errors op moderne tipe-annotasies in die toetse gelewer. Dit is omgewingsbewys, nie 'n bronkode-defek nie, en motiveer 'n interpreterpreflight vir beginners.</p>
+<p><code>ruff check src device tests</code> het geen lintbevinding opgelewer nie. Coverage kon nie gemeet word nie omdat <code>pytest-cov</code> nie in die gedeclareerde ontwikkelafhanklikhede geïnstalleer is nie. <code>mpy-cross</code> en <code>circup</code> was nie in die geouditeerde hosttoolchain ontdek nie. Die audit maak daarom geen claim dat alle device-modules deur dieselfde CircuitPython bytecodecompiler of 'n skoon bundle-install gevalideer is nie.</p>
+<p>Die AST-afhanklikheidskontrole het die volgende ontbrekende manifestkante gerapporteer: <code>configuration.py -&gt; ports.py</code>, <code>midi_usb.py -&gt; ports.py</code>, <code>ble_midi.py -&gt; ports.py</code> en <code>routing.py -&gt; core.py</code>. Hierdie resultaat is direk uit die huidige manifest en bronimports bereken. Dit is reproduceerbaar sonder die fisiese bord en behoort later as 'n permanente kontraktoets geïmplementeer te word.</p>
+<p>Die storyvolledigheidskontrole het 63 unieke IDs gevind en geen gaping tussen MCP-US-001 en MCP-US-063 nie. Die statustelling was sewe <code>Done</code>, vier variasies van <code>In Review</code>, een BLE-impediment, 30 <code>MVP</code>, ses <code>MVP-late</code>, twaalf <code>Later</code>, twee <code>Stretch</code> en een <code>Parking lot</code>. Hierdie verspreiding ondersteun die scope-bevinding: die meerderheid van die katalogus is nog nie geïmplementeer nie, maar 'n baie groot deel word steeds as MVP geklassifiseer.</p>
+<p>Die secret scan van die huidige checkout het slegs placeholders, toetswaardes en beleidsverwysings gevind. Die beperkte Git-geskiedenisscan het nie die bekende werklike prototipecredential in hierdie skoon repository gevind nie. Omdat die credential wel in deur die Product Owner gedeelde historiese bron verskyn het, bly rotasie 'n menslike verifikasiepunt.</p>
+<p>Laastens: die gegenereerde auditvisual, bestaande README-argitektuurbeeld en enige toekomstige produkmockup is kommunikasiebates. Hulle mag nie in 'n release pack langs HIL-foto's of meetgrafieke geplaas word sonder 'n sigbare <code>CONCEPT</code>-etiket nie. Bewys moet altyd na commit, device runtime, meetopstelling en toetsresultaat teruglei.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../external_review_packets/us_055_realtime_failure_copilot_packet_v0.1.0/" class="btn btn-neutral float-left" title="US-055 external review packet"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../external_qa_audit_report_v0.20/" class="btn btn-neutral float-right" title="External QA audit v0.20">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform" class="fa fa-code-fork" style="color: #fcfcfc"> pappavis/circuitpython-midi-chip-platform</a>
+        </span>
+    
+    
+      <span><a href="../external_review_packets/us_055_realtime_failure_copilot_packet_v0.1.0/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../external_qa_audit_report_v0.20/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

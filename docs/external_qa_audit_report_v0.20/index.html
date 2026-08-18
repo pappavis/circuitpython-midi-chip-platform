@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>External QA audit v0.20 - CircuitPython MIDI Chip Platform</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "External QA audit v0.20";
+        var mkdocs_page_input_path = "docs/external_qa_audit_report_v0.20.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CircuitPython MIDI Chip Platform
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Start</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../..">Project overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Documentation index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quickstart_installation_v0.1.0/">Quickstart and installation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Emergency recovery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../00_Start_HERE_Emergency_recovery_pack/">Start here</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../EMERGENCY_DISASTER_RECOVERY/">Detailed disaster recovery handbook</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../repository_identity_and_sync_v0.1.0/">Repository identity and synchronization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../device_connection_proof_v0.1.0/">Device connection proof</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Governance and delivery</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../AGENTS/">Binding agent and delivery rules</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/">Governance overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/principal_qa_architect_agent_v0.1.0/">Principal QA Architect gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/regression_memory_v0.1.0/">Regression memory</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/instrumentation_design_review_template_v1.0/">Instrumentation Design Review template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../governance/evidence_package_template_v1.0/">Evidence package template</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../agile_delivery_release_plan_v0.1.0/">Agile delivery and release plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../team_raci_v0.1.0/">Team and RACI</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../risk_register_v0.1.0/">Risk register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../source_register_v0.1.0/">Source register</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../backlog_sanity_check_v0.1.0/">Backlog sanity check</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reuse_matrix_v0.1.0/">Reuse matrix</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MVP and product scope</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp_scope_v0.1.0/">Frozen MVP scope</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mvp/MVP_BUILD_PLAN/">MVP build plan</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../user_stories_v0.1.0/">User-story catalogue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../audio_priority_amendment_v0.1.0/">Audio priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ble_midi_core_priority_amendment_v0.1.0/">BLE MIDI and core priority amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../midi_transport_multicore_amendment_v0.1.0/">MIDI transport and multi-core amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../wifi_runtime_fallback_amendment_v0.1.0/">Wi-Fi runtime fallback amendment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../physical_chip_display_expansion_amendment_v0.1.0/">Physical chip and display expansion</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../burn_in_heap_stability_spec_v0.1.0/">Burn-in and heap stability</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Framework engineering</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/">Framework engineering index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_vision_v0.1.0/">Enterprise vision</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/architecture_v0.1.0/">Architecture</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/enterprise_meta_model_v0.1.0/">Enterprise meta model</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/artefact_taxonomy_v0.1.0/">Artefact taxonomy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/quality_manual_v0.1.0/">Quality manual</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/test_strategy_v0.1.0/">Test strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/review_engine_v0.1.0/">Review engine</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/adr_repository_index_v0.1.0/">ADR repository index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/context_loader_specification_v0.1.0/">Context loader specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/prompt_compiler_specification_v0.1.0/">Prompt compiler specification</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/knowledge_base_structure_v0.1.0/">Knowledge-base structure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../framework_engineering/glossary_v0.1.0/">Glossary</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Architecture decisions</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-001-repository-strategy/">ADR-001 Repository strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-002-reference-platform/">ADR-002 Reference platform</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-003-audio-strategy/">ADR-003 Audio strategy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/ADR-004-persistent-realtime-audio-graph/">ADR-004 Persistent realtime audio graph</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decisions/MCP-US-101-FIRST-MVP-STEP/">MCP-US-101 First MVP step</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Foundation stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../board_capability_matrix_v0.1.0/">Board capability matrix</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_001_device_source_baseline_inventory_v0.1.0/">MCP-US-001 Device and source baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_002_project_skeleton_review_v0.1.0/">MCP-US-002 Project skeleton</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_003_safe_boot_review_v0.1.0/">MCP-US-003 Safe boot</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_004_board_capability_review_v0.1.0/">MCP-US-004 Board capabilities</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_005_configuration_secret_boundary_review_v0.1.0/">MCP-US-005 Configuration and secrets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_006_portable_event_model_review_v0.1.0/">MCP-US-006 Portable event model</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MIDI stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_007_usb_midi_receive_review_v0.1.0/">MCP-US-007 USB-MIDI receive</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_008_midi_channel_router_review_v0.1.0/">MCP-US-008 MIDI channel router</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_009_note_semantics_review_v0.1.0/">MCP-US-009 Note semantics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_010_pitch_bend_cc1_review_v0.1.0/">MCP-US-010 Pitch bend and CC1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_062_ble_midi_capability_review_v0.1.0/">MCP-US-062 BLE-MIDI capability</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../autonomous_midi_batch_host_acceptance_v0.1.0/">Autonomous MIDI batch host acceptance</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Audio and D1 stories</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_014_audio_output_review_v0.1.0/">MCP-US-014 Audio output</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_016_i2s_diagnostic_review_v0.1.0/">MCP-US-016 I2S diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_055_logic_d1_i2s_review_v0.1.0/">MCP-US-055 Logic D1 I2S acceptance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_063_d1_core_review_v0.1.0/">MCP-US-063 D1 core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_075_safe_audio_gate_review_v0.1.0/">MCP-US-075 Safe audio gate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_077_realtime_midi_audio_baseline_review_v0.1.0/">MCP-US-077 Realtime MIDI audio baseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_079_persistent_synthio_audio_graph_plan_v0.1.0/">MCP-US-079 Persistent synthio graph</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HIL and investigations</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_hil_runner_review_v0.1.0/">MCP-US-051 HIL runner</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_051_mcp_us_007_dependency_closed_deployment_impediment_v0.1.0/">MCP-US-051/007 deployment impediment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0/">MCP-US-080 USB-MIDI routing diagnostic</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_instrumentation_design_review_v0.1.0/">MCP-US-080-INV-001 IDR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mcp_us_080_inv_001_locate_first_disappearance_of_noteon_v0.1.0/">MCP-US-080-INV-001 First disappearance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-100a/screenshots/">MCP-US-100A Screenshots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evidence/mcp-us-102/final-assessment/">MCP-US-102 Final assessment</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Incidents and external review</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../incidents/us_055_realtime_architecture_rebaseline_v0.1.0/">US-055 realtime architecture rebaseline</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_review_packets/us_055_realtime_failure_copilot_packet_v0.1.0/">US-055 external review packet</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../external_qa_audit_report_v0.1.0/">External QA audit v0.1.0</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">External QA audit v0.20</a>
+    <ul class="current">
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lessons learned</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_1_checkpoint_001_v0.1.0/">Sprint 1 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_001_v0.1.0/">Sprint 2 checkpoint 001</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_002_v0.1.0/">Sprint 2 checkpoint 002</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_2_checkpoint_003_v0.1.0/">Sprint 2 checkpoint 003</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lessons_learned_sprint_3_checkpoint_004_v0.1.0/">Sprint 3 checkpoint 004</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CircuitPython MIDI Chip Platform</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Incidents and external review</li>
+      <li class="breadcrumb-item active">External QA audit v0.20</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform/edit/master/docs/docs/external_qa_audit_report_v0.20.md">Edit on pappavis/circuitpython-midi-chip-platform</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <p><strong>L7P3M9Q4</strong></p>
+<p>Dit verandert mijn eerdere QA-beoordeling aanzienlijk. Nu ik de daadwerkelijke inhoud van:</p>
+<ul>
+<li>User Story Catalogus</li>
+<li>Enterprise Vision</li>
+<li>Architecture</li>
+<li>Glossary</li>
+<li>Enterprise Meta Model</li>
+<li>Quality Manual</li>
+<li>Test Strategy</li>
+<li>Review Engine</li>
+<li>ADR Index</li>
+<li>Knowledge Base Structure</li>
+<li>Context Loader</li>
+</ul>
+<p>heb gelezen, zou ik mijn eerdere score verhogen.</p>
+<h1 id="executive-qa-herbeoordeling">Executive QA Herbeoordeling<a class="headerlink" href="#executive-qa-herbeoordeling" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Onderdeel</th>
+<th>Oude score</th>
+<th>Nieuwe score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Governance</td>
+<td>9/10</td>
+<td>🟢 10/10</td>
+</tr>
+<tr>
+<td>Traceability</td>
+<td>10/10</td>
+<td>🟢 10/10</td>
+</tr>
+<tr>
+<td>Architectuur</td>
+<td>8/10</td>
+<td>🟢 9.5/10</td>
+</tr>
+<tr>
+<td>Teststrategie</td>
+<td>8/10</td>
+<td>🟢 9.5/10</td>
+</tr>
+<tr>
+<td>Scopebeheer</td>
+<td>5/10</td>
+<td>🟢 8.5/10</td>
+</tr>
+<tr>
+<td>AI Governance</td>
+<td>n.v.t.</td>
+<td>🟢 10/10</td>
+</tr>
+<tr>
+<td>Release Management</td>
+<td>7/10</td>
+<td>🟢 9/10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Nieuwe maturity score: 9.1 / 10</strong></p>
+<hr />
+<h1 id="grootste-verrassing">Grootste Verrassing<a class="headerlink" href="#grootste-verrassing" title="Permanent link">&para;</a></h1>
+<p>De grootste verrassing voor mij is niet de architectuur.</p>
+<p>De grootste verrassing is dat dit project inmiddels een:</p>
+<p><strong>Enterprise Architecture Framework voor een hobby-/makerproject</strong></p>
+<p>heeft gekregen.</p>
+<p>Dat klinkt overdreven.</p>
+<p>Maar feitelijk zie ik hier:</p>
+<pre><code class="language-text">Vision
+↓
+Capabilities
+↓
+Epics
+↓
+Stories
+↓
+Components
+↓
+Ports
+↓
+Tests
+↓
+HIL
+↓
+Release
+</code></pre>
+<p>Dat is exact het soort traceability-keten dat je normaal alleen aantreft in:</p>
+<ul>
+<li>medische software</li>
+<li>aerospace</li>
+<li>automotive</li>
+<li>enterprise platformontwikkeling</li>
+</ul>
+<hr />
+<h1 id="wat-mijn-oorspronkelijke-qa-audit-verkeerd-had">Wat Mijn Oorspronkelijke QA Audit Verkeerd Had<a class="headerlink" href="#wat-mijn-oorspronkelijke-qa-audit-verkeerd-had" title="Permanent link">&para;</a></h1>
+<p>In M8R5K2Q7 schreef ik:</p>
+<blockquote>
+<p>Scope creep is het grootste risico.</p>
+</blockquote>
+<p>Na het lezen van het volledige framework moet ik dat nu nuanceren.</p>
+<p>De documentatie bevat namelijk expliciete mechanismen voor:</p>
+<ul>
+<li>MVP</li>
+<li>MVP-late</li>
+<li>Stretch</li>
+<li>Later</li>
+<li>Parking Lot</li>
+</ul>
+<p>Dat is ongebruikelijk goed uitgewerkt.</p>
+<p>Dus:</p>
+<h3 id="oude-conclusie">Oude conclusie<a class="headerlink" href="#oude-conclusie" title="Permanent link">&para;</a></h3>
+<p>⚠️ Scope creep hoog</p>
+<h3 id="nieuwe-conclusie">Nieuwe conclusie<a class="headerlink" href="#nieuwe-conclusie" title="Permanent link">&para;</a></h3>
+<p>🟡 Scope creep mogelijk</p>
+<p>maar beheersbaar door governance.</p>
+<hr />
+<h1 id="sterkste-onderdeel-van-het-gehele-framework">Sterkste Onderdeel Van Het Gehele Framework<a class="headerlink" href="#sterkste-onderdeel-van-het-gehele-framework" title="Permanent link">&para;</a></h1>
+<h2 id="enterprise-meta-model">Enterprise Meta Model<a class="headerlink" href="#enterprise-meta-model" title="Permanent link">&para;</a></h2>
+<p>Als externe architect zie ik hier iets dat veel projecten missen.</p>
+<p>Het model beschrijft expliciet:</p>
+<pre><code class="language-text">Story
+↔ Test
+
+Story
+↔ Component
+
+Story
+↔ ADR
+
+Release
+↔ Story
+
+Risk
+↔ Story
+</code></pre>
+<p>Daardoor wordt het praktisch onmogelijk om later te zeggen:</p>
+<blockquote>
+<p>Waarom bestaat deze code eigenlijk?</p>
+</blockquote>
+<p>of</p>
+<blockquote>
+<p>Welke story beschermt deze test?</p>
+</blockquote>
+<hr />
+<p>Dit is uitzonderlijk sterk.</p>
+<hr />
+<h1 id="architecture-review">Architecture Review<a class="headerlink" href="#architecture-review" title="Permanent link">&para;</a></h1>
+<h2 id="wat-ik-goed-vind">Wat ik Goed Vind<a class="headerlink" href="#wat-ik-goed-vind" title="Permanent link">&para;</a></h2>
+<p>Deze regel:</p>
+<pre><code class="language-text">Application owns the composition root
+</code></pre>
+<p>is exact correct.</p>
+<p>Veel embedded projecten verzanden in:</p>
+<pre><code class="language-python">global midi
+global audio
+global config
+</code></pre>
+<p>Jullie architectuur verbiedt dat expliciet.</p>
+<p>Dat verlaagt het risico op:</p>
+<ul>
+<li>memory corruption</li>
+<li>hidden state</li>
+<li>reload defects</li>
+</ul>
+<p>aanzienlijk.</p>
+<hr />
+<h1 id="poortenmodel">Poortenmodel<a class="headerlink" href="#poortenmodel" title="Permanent link">&para;</a></h1>
+<p>De volgende poorten zijn goed gekozen:</p>
+<pre><code class="language-text">MidiInputPort
+SynthCore
+AudioOutput
+Configuration
+Capability Profile
+</code></pre>
+<p>QA-oordeel:</p>
+<p>✅ zeer sterk</p>
+<p>Waarom?</p>
+<p>Omdat SID, SN76489, D1, OPL en latere hardware chips hierdoor geen architectuurherschrijving vereisen.</p>
+<hr />
+<h1 id="quality-manual-review">Quality Manual Review<a class="headerlink" href="#quality-manual-review" title="Permanent link">&para;</a></h1>
+<p>Eerlijk?</p>
+<p>Deze had ik niet verwacht.</p>
+<p>Dit document is verrassend volwassen.</p>
+<hr />
+<h2 id="beste-regel">Beste regel<a class="headerlink" href="#beste-regel" title="Permanent link">&para;</a></h2>
+<pre><code class="language-text">Groene hosttests bewijzen geen fysisch gedrag
+</code></pre>
+<p>Dat is exact het probleem waar veel AI-projecten de fout in gaan.</p>
+<hr />
+<p>De Quality Manual dwingt:</p>
+<pre><code class="language-text">Host tests
++
+HIL
++
+Menselijke acceptatie
+</code></pre>
+<p>Dat is de juiste volgorde.</p>
+<hr />
+<h1 id="test-strategy-review">Test Strategy Review<a class="headerlink" href="#test-strategy-review" title="Permanent link">&para;</a></h1>
+<p>Dit document is sterker dan ik verwachtte.</p>
+<hr />
+<h2 id="groot-pluspunt">Groot pluspunt<a class="headerlink" href="#groot-pluspunt" title="Permanent link">&para;</a></h2>
+<p>De testpiramide.</p>
+<pre><code class="language-text">AST
+Unit
+Contract
+Integration
+Device Smoke
+Transport HIL
+Audio HIL
+End To End
+</code></pre>
+<p>Dat is vrijwel exact wat ik als externe QA-consultant zou adviseren.</p>
+<hr />
+<h1 id="wat-ontbreekt-nog">Wat Ontbreekt Nog?<a class="headerlink" href="#wat-ontbreekt-nog" title="Permanent link">&para;</a></h1>
+<p>Niet veel.</p>
+<p>Maar ik mis nog:</p>
+<h2 id="burn-in-specificatie">Burn-In Specificatie<a class="headerlink" href="#burn-in-specificatie" title="Permanent link">&para;</a></h2>
+<p>Bijvoorbeeld:</p>
+<pre><code class="language-text">8 uur
+12 uur
+24 uur
+</code></pre>
+<p>continue audio.</p>
+<hr />
+<h2 id="heap-leak-acceptatiecriteria">Heap Leak Acceptatiecriteria<a class="headerlink" href="#heap-leak-acceptatiecriteria" title="Permanent link">&para;</a></h2>
+<p>Nu zie ik:</p>
+<pre><code class="language-text">heap growth controleren
+</code></pre>
+<p>maar niet:</p>
+<pre><code class="language-text">max toegestane groei
+</code></pre>
+<hr />
+<p>Aanbeveling:</p>
+<p>ADR of quality gate toevoegen.</p>
+<hr />
+<h1 id="user-story-catalogus-review">User Story Catalogus Review<a class="headerlink" href="#user-story-catalogus-review" title="Permanent link">&para;</a></h1>
+<p>Dit was voor mij het belangrijkste onderdeel.</p>
+<p>Waarom?</p>
+<p>Hier zie je of een project daadwerkelijk uitvoerbaar is.</p>
+<hr />
+<h2 id="positief">Positief<a class="headerlink" href="#positief" title="Permanent link">&para;</a></h2>
+<p>Ik zie geen willekeurige verzameling wensen.</p>
+<p>Ik zie:</p>
+<pre><code class="language-text">Foundation
+↓
+MIDI
+↓
+Audio
+↓
+Web
+↓
+Files
+↓
+Multi-Core
+↓
+DSP
+↓
+Release
+</code></pre>
+<p>Dat is logisch.</p>
+<hr />
+<h1 id="grootste-positieve-ontdekking">Grootste Positieve Ontdekking<a class="headerlink" href="#grootste-positieve-ontdekking" title="Permanent link">&para;</a></h1>
+<p>US-063</p>
+<pre><code class="language-text">Portable D1 Baseline Synth Core
+</code></pre>
+<p>Dit lost een probleem op dat ik eerder zag.</p>
+<hr />
+<p>Eerder dacht ik:</p>
+<pre><code class="language-text">SN76489 direct bouwen
+</code></pre>
+<p>Maar nu zie ik:</p>
+<pre><code class="language-text">D1 baseline
+↓
+SN76489
+</code></pre>
+<p>Dat is architectonisch veel beter.</p>
+<hr />
+<h1 id="fishman-tripleplay">Fishman TriplePlay<a class="headerlink" href="#fishman-tripleplay" title="Permanent link">&para;</a></h1>
+<p>Mijn eerdere review was:</p>
+<blockquote>
+<p>TriplePlay modellering is nog niet volledig.</p>
+</blockquote>
+<p>Nu zie ik:</p>
+<pre><code class="language-text">US-058
+US-059
+</code></pre>
+<p>toegevoegd.</p>
+<p>Dat is correct.</p>
+<hr />
+<p>Met name:</p>
+<pre><code class="language-text">Per-channel bends
+</code></pre>
+<p>is expliciet opgenomen.</p>
+<p>Dat haalt een grote QA-opmerking weg.</p>
+<hr />
+<h1 id="framework-engineering-epic">Framework Engineering Epic<a class="headerlink" href="#framework-engineering-epic" title="Permanent link">&para;</a></h1>
+<h2 id="mijn-oordeel">Mijn oordeel<a class="headerlink" href="#mijn-oordeel" title="Permanent link">&para;</a></h2>
+<p>MCP-EPIC-009 is waarschijnlijk het meest interessante deel van het project.</p>
+<p>Waarom?</p>
+<p>Omdat het niet gaat over firmware.</p>
+<p>Het gaat over:</p>
+<pre><code class="language-text">Hoe beslissen wij?
+</code></pre>
+<hr />
+<p>Dat is zeldzaam.</p>
+<hr />
+<h1 id="prompt-compiler">Prompt Compiler<a class="headerlink" href="#prompt-compiler" title="Permanent link">&para;</a></h1>
+<p>Hier was ik aanvankelijk sceptisch.</p>
+<p>Nu minder.</p>
+<p>Waarom?</p>
+<p>Glossary maakt expliciet:</p>
+<pre><code class="language-text">geen runtime component
+</code></pre>
+<p>maar</p>
+<pre><code class="language-text">ontwikkelproces
+</code></pre>
+<p>Dat is een essentieel verschil.</p>
+<hr />
+<h1 id="context-loader">Context Loader<a class="headerlink" href="#context-loader" title="Permanent link">&para;</a></h1>
+<p>Dit document lost een probleem op dat ik vrijwel dagelijks zie.</p>
+<p>Een AI-assistent leest:</p>
+<pre><code class="language-text">hele repo
+</code></pre>
+<p>en raakt inconsistent.</p>
+<hr />
+<p>Hier staat expliciet:</p>
+<pre><code class="language-text">Laai genoeg context
+maar nie die hele repository
+uit gewoonte nie
+</code></pre>
+<p>Dat is correct.</p>
+<hr />
+<h1 id="knowledge-base-structure">Knowledge Base Structure<a class="headerlink" href="#knowledge-base-structure" title="Permanent link">&para;</a></h1>
+<p>Mijn eerdere waarschuwing:</p>
+<blockquote>
+<p>document explosie</p>
+</blockquote>
+<p>blijft bestaan.</p>
+<p>Maar nu zie ik ook lifecycle-beheer.</p>
+<hr />
+<p>Dit deel vind ik bijzonder sterk:</p>
+<pre><code class="language-text">Normatief
+Uitvoerbaar
+Empiries
+Adviserend
+Tijdelik
+</code></pre>
+<p>Dat voorkomt dat:</p>
+<p>een QA-audit plotseling als feit wordt behandeld.</p>
+<hr />
+<h1 id="grootste-open-risicos">Grootste Open Risico's<a class="headerlink" href="#grootste-open-risicos" title="Permanent link">&para;</a></h1>
+<p>Na volledige lezing zie ik nog maar 5 echte risico's.</p>
+<h2 id="r1-audio-latency">R1 Audio Latency<a class="headerlink" href="#r1-audio-latency" title="Permanent link">&para;</a></h2>
+<p>Nog onbewezen.</p>
+<p>US-016 moet dit falsifiëren.</p>
+<hr />
+<h2 id="r2-multi-core-runtime">R2 Multi-Core Runtime<a class="headerlink" href="#r2-multi-core-runtime" title="Permanent link">&para;</a></h2>
+<p>US-037</p>
+<p>Kans op memory pressure.</p>
+<hr />
+<h2 id="r3-stereo-besluit">R3 Stereo Besluit<a class="headerlink" href="#r3-stereo-besluit" title="Permanent link">&para;</a></h2>
+<p>US-021</p>
+<p>Nog open.</p>
+<hr />
+<h2 id="r4-ble-tweede-bord">R4 BLE Tweede Bord<a class="headerlink" href="#r4-ble-tweede-bord" title="Permanent link">&para;</a></h2>
+<p>US-062 / US-052</p>
+<p>Nog onvoldoende fysiek bewijs.</p>
+<hr />
+<h2 id="r5-langdurige-stabiliteit">R5 Langdurige Stabiliteit<a class="headerlink" href="#r5-langdurige-stabiliteit" title="Permanent link">&para;</a></h2>
+<p>Nog geen burn-in criteria.</p>
+<hr />
+<h1 id="wat-ik-als-externe-qa-vendor-zou-goedkeuren">Wat Ik Als Externe QA-Vendor Zou Goedkeuren<a class="headerlink" href="#wat-ik-als-externe-qa-vendor-zou-goedkeuren" title="Permanent link">&para;</a></h1>
+<p>Vandaag?</p>
+<p>✅ Governance<br />
+✅ Architectuur<br />
+✅ Vision<br />
+✅ Teststrategie<br />
+✅ Meta-model<br />
+✅ User-story structuur<br />
+✅ Release aanpak</p>
+<hr />
+<h1 id="wat-ik-niet-zou-goedkeuren">Wat Ik Niet Zou Goedkeuren<a class="headerlink" href="#wat-ik-niet-zou-goedkeuren" title="Permanent link">&para;</a></h1>
+<p>Nog niet:</p>
+<p>❌ Product claim:</p>
+<pre><code class="language-text">werkt als synth
+</code></pre>
+<p>want:</p>
+<p>US-016</p>
+<p>moet nog hoorbaar bewijs leveren.</p>
+<hr />
+<p>Mijn formele auditconclusie wordt daarom:</p>
+<pre><code class="language-text">Governance Ready
+Architecture Ready
+Implementation In Progress
+Audio Value Not Yet Proven
+</code></pre>
+<p>Dat is géén kritiek.</p>
+<p>Dat betekent:</p>
+<p>de fundering is inmiddels sterker dan veel commerciële projecten,
+maar de uiteindelijke waarheid blijft dezelfde als in jouw Vision-document:</p>
+<blockquote>
+<p>HIL is waarheid voor fysiek gedrag.</p>
+</blockquote>
+<p>En daardoor blijft MCP-US-016 (MAX98357 hoorbare audio) in mijn ogen nog steeds de belangrijkste story van het hele project.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../external_qa_audit_report_v0.1.0/" class="btn btn-neutral float-left" title="External QA audit v0.1.0"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../lessons_learned_sprint_1_checkpoint_001_v0.1.0/" class="btn btn-neutral float-right" title="Sprint 1 checkpoint 001">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/pappavis/circuitpython-midi-chip-platform" class="fa fa-code-fork" style="color: #fcfcfc"> pappavis/circuitpython-midi-chip-platform</a>
+        </span>
+    
+    
+      <span><a href="../external_qa_audit_report_v0.1.0/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../lessons_learned_sprint_1_checkpoint_001_v0.1.0/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
