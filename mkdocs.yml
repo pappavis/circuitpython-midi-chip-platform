@@ -1,0 +1,137 @@
+site_name: CircuitPython MIDI Chip Platform
+site_description: Engineering, recovery, architecture, story and HIL documentation
+repo_url: https://github.com/pappavis/circuitpython-midi-chip-platform
+repo_name: pappavis/circuitpython-midi-chip-platform
+
+docs_dir: .mkdocs-source
+site_dir: site
+
+theme:
+  name: readthedocs
+  locale: en
+  highlightjs: true
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - fenced_code
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Start:
+      - Project overview: README.md
+      - Documentation index: docs/README.md
+      - Quickstart and installation: docs/quickstart_installation_v0.1.0.md
+
+  - Emergency recovery:
+      - Start here: 00_Start_HERE_Emergency_recovery_pack.md
+      - Detailed disaster recovery handbook: EMERGENCY_DISASTER_RECOVERY.md
+      - Repository identity and synchronization: docs/repository_identity_and_sync_v0.1.0.md
+      - Device connection proof: docs/device_connection_proof_v0.1.0.md
+
+  - Project memory and automation:
+      - Current project memory: MEMORY.md
+      - Memory setup guide: docs/memory/README_memory_setup.md
+      - Memory history 2026-08-18 12:27: docs/memory/memory_history_202608181227.md
+      - Memory history 2026-08-18 12:28: docs/memory/memory_history_202608181228.md
+      - Memory history 2026-08-18 12:30: docs/memory/memory_history_202608181230.md
+      - Automatic commit memory notes: scripts/memory_auto_commit.md
+
+  - Governance and delivery:
+      - Binding agent and delivery rules: AGENTS.md
+      - Governance overview: docs/governance/README.md
+      - Principal QA Architect gate: docs/governance/principal_qa_architect_agent_v0.1.0.md
+      - Regression memory: docs/governance/regression_memory_v0.1.0.md
+      - Instrumentation Design Review template: docs/governance/instrumentation_design_review_template_v1.0.md
+      - Evidence package template: docs/governance/evidence_package_template_v1.0.md
+      - Agile delivery and release plan: docs/agile_delivery_release_plan_v0.1.0.md
+      - Team and RACI: docs/team_raci_v0.1.0.md
+      - Risk register: docs/risk_register_v0.1.0.md
+      - Source register: docs/source_register_v0.1.0.md
+      - Backlog sanity check: docs/backlog_sanity_check_v0.1.0.md
+      - Reuse matrix: docs/reuse_matrix_v0.1.0.md
+
+  - MVP and product scope:
+      - Frozen MVP scope: docs/mvp_scope_v0.1.0.md
+      - MVP build plan: docs/mvp/MVP_BUILD_PLAN.md
+      - User-story catalogue: docs/user_stories_v0.1.0.md
+      - Audio priority amendment: docs/audio_priority_amendment_v0.1.0.md
+      - BLE MIDI and core priority amendment: docs/ble_midi_core_priority_amendment_v0.1.0.md
+      - MIDI transport and multi-core amendment: docs/midi_transport_multicore_amendment_v0.1.0.md
+      - Wi-Fi runtime fallback amendment: docs/wifi_runtime_fallback_amendment_v0.1.0.md
+      - Physical chip and display expansion: docs/physical_chip_display_expansion_amendment_v0.1.0.md
+      - Burn-in and heap stability: docs/burn_in_heap_stability_spec_v0.1.0.md
+
+  - Framework engineering:
+      - Framework engineering index: docs/framework_engineering/README.md
+      - Enterprise vision: docs/framework_engineering/enterprise_vision_v0.1.0.md
+      - Architecture: docs/framework_engineering/architecture_v0.1.0.md
+      - Enterprise meta model: docs/framework_engineering/enterprise_meta_model_v0.1.0.md
+      - Artefact taxonomy: docs/framework_engineering/artefact_taxonomy_v0.1.0.md
+      - Quality manual: docs/framework_engineering/quality_manual_v0.1.0.md
+      - Test strategy: docs/framework_engineering/test_strategy_v0.1.0.md
+      - Review engine: docs/framework_engineering/review_engine_v0.1.0.md
+      - ADR repository index: docs/framework_engineering/adr_repository_index_v0.1.0.md
+      - Context loader specification: docs/framework_engineering/context_loader_specification_v0.1.0.md
+      - Prompt compiler specification: docs/framework_engineering/prompt_compiler_specification_v0.1.0.md
+      - Knowledge-base structure: docs/framework_engineering/knowledge_base_structure_v0.1.0.md
+      - Glossary: docs/framework_engineering/glossary_v0.1.0.md
+
+  - Architecture decisions:
+      - ADR-001 Repository strategy: docs/decisions/ADR-001-repository-strategy.md
+      - ADR-002 Reference platform: docs/decisions/ADR-002-reference-platform.md
+      - ADR-003 Audio strategy: docs/decisions/ADR-003-audio-strategy.md
+      - ADR-004 Persistent realtime audio graph: docs/decisions/ADR-004-persistent-realtime-audio-graph.md
+      - MCP-US-101 First MVP step: docs/decisions/MCP-US-101-FIRST-MVP-STEP.md
+
+  - Foundation stories:
+      - Board capability matrix: docs/board_capability_matrix_v0.1.0.md
+      - MCP-US-001 Device and source baseline: docs/mcp_us_001_device_source_baseline_inventory_v0.1.0.md
+      - MCP-US-002 Project skeleton: docs/mcp_us_002_project_skeleton_review_v0.1.0.md
+      - MCP-US-003 Safe boot: docs/mcp_us_003_safe_boot_review_v0.1.0.md
+      - MCP-US-004 Board capabilities: docs/mcp_us_004_board_capability_review_v0.1.0.md
+      - MCP-US-005 Configuration and secrets: docs/mcp_us_005_configuration_secret_boundary_review_v0.1.0.md
+      - MCP-US-006 Portable event model: docs/mcp_us_006_portable_event_model_review_v0.1.0.md
+
+  - MIDI stories:
+      - MCP-US-007 USB-MIDI receive: docs/mcp_us_007_usb_midi_receive_review_v0.1.0.md
+      - MCP-US-008 MIDI channel router: docs/mcp_us_008_midi_channel_router_review_v0.1.0.md
+      - MCP-US-009 Note semantics: docs/mcp_us_009_note_semantics_review_v0.1.0.md
+      - MCP-US-010 Pitch bend and CC1: docs/mcp_us_010_pitch_bend_cc1_review_v0.1.0.md
+      - MCP-US-062 BLE-MIDI capability: docs/mcp_us_062_ble_midi_capability_review_v0.1.0.md
+      - Autonomous MIDI batch host acceptance: docs/autonomous_midi_batch_host_acceptance_v0.1.0.md
+
+  - Audio and D1 stories:
+      - MCP-US-014 Audio output: docs/mcp_us_014_audio_output_review_v0.1.0.md
+      - MCP-US-016 I2S diagnostic: docs/mcp_us_016_i2s_diagnostic_review_v0.1.0.md
+      - MCP-US-055 Logic D1 I2S acceptance: docs/mcp_us_055_logic_d1_i2s_review_v0.1.0.md
+      - MCP-US-063 D1 core: docs/mcp_us_063_d1_core_review_v0.1.0.md
+      - MCP-US-075 Safe audio gate: docs/mcp_us_075_safe_audio_gate_review_v0.1.0.md
+      - MCP-US-077 Realtime MIDI audio baseline: docs/mcp_us_077_realtime_midi_audio_baseline_review_v0.1.0.md
+      - MCP-US-079 Persistent synthio graph: docs/mcp_us_079_persistent_synthio_audio_graph_plan_v0.1.0.md
+
+  - HIL and investigations:
+      - MCP-US-051 HIL runner: docs/mcp_us_051_hil_runner_review_v0.1.0.md
+      - MCP-US-051/007 deployment impediment: docs/mcp_us_051_mcp_us_007_dependency_closed_deployment_impediment_v0.1.0.md
+      - MCP-US-080 USB-MIDI routing diagnostic: docs/mcp_us_080_usb_midi_routing_diagnostic_review_v0.1.0.md
+      - MCP-US-080-INV-001 IDR: docs/mcp_us_080_inv_001_instrumentation_design_review_v0.1.0.md
+      - MCP-US-080-INV-001 First disappearance: docs/mcp_us_080_inv_001_locate_first_disappearance_of_noteon_v0.1.0.md
+      - MCP-US-100A Screenshots: docs/evidence/mcp-us-100a/screenshots.md
+      - MCP-US-102 Final assessment: docs/evidence/mcp-us-102/final-assessment.md
+
+  - Incidents and external review:
+      - US-055 realtime architecture rebaseline: docs/incidents/us_055_realtime_architecture_rebaseline_v0.1.0.md
+      - US-055 external review packet: docs/external_review_packets/us_055_realtime_failure_copilot_packet_v0.1.0.md
+      - External QA audit v0.1.0: docs/external_qa_audit_report_v0.1.0.md
+      - External QA audit v0.20: docs/external_qa_audit_report_v0.20.md
+
+  - Lessons learned:
+      - Sprint 1 checkpoint 001: docs/lessons_learned_sprint_1_checkpoint_001_v0.1.0.md
+      - Sprint 2 checkpoint 001: docs/lessons_learned_sprint_2_checkpoint_001_v0.1.0.md
+      - Sprint 2 checkpoint 002: docs/lessons_learned_sprint_2_checkpoint_002_v0.1.0.md
+      - Sprint 2 checkpoint 003: docs/lessons_learned_sprint_2_checkpoint_003_v0.1.0.md
+      - Sprint 3 checkpoint 004: docs/lessons_learned_sprint_3_checkpoint_004_v0.1.0.md
