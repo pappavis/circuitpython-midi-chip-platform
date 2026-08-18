@@ -1,0 +1,15 @@
+{
+    "last_updated_utc": "2026-08-18T12:27:58.718768+00:00",
+    "trace_id": "GIT-PRE-COMMIT",
+    "mode": "pre-commit",
+    "current_branch": "main",
+    "last_commit": "f50e800 - fix(audio): retain i2s raw sample buffer",
+    "modified_files": "M .vscode/settings.json\nA  scripts/update_memory.py\n?? MEMORY.md\n?? circuitpython-midi-chip-platform.code-workspace\n?? docs/memory/\n?? scripts/append_chatlog.py\n?? scripts/commit_with_memory.py\n?? scripts/memory_auto_commit.md\n?? scripts/pre_commit_memory.ps1\n?? scripts/run_tests.ps1",
+    "staged_files": "scripts/update_memory.py",
+    "current_work_package": "Commit checkpoint",
+    "last_completed_action": "Preparing commit and updating operational memory",
+    "next_action": "Continue from memory_state.json after commit",
+    "next_command": "python -m pytest",
+    "expected_result": "All tests pass or failures are captured as evidence",
+    "latest_memory_history_file": "/Volumes/data1/Yandex.Disk.localized/michiele/Programmering/circuitpython/github/circuitpython-midi-chip-platform/docs/memory/memory_history_202608181227.md"
+}
