@@ -3,6 +3,7 @@ __pycache__/
 *.egg-info/
 *.py[cod]
 .pytest_cache/
+.mkdocs-source/
 .coverage
 htmlcov/
 .venv/
@@ -13,6 +14,7 @@ secrets.py
 device_backups/
 build/
 dist/
+site/
 *.uf2
 *.bin
 *.mpy
